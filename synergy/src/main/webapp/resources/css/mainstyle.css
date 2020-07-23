@@ -1,0 +1,99 @@
+/* Desktop Device : over 768px width */
+* {
+  margin: 1%;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  border: 1px solid red;
+  height: 2000px;
+}
+.menuContainer {
+  display: flex;
+  border: 1px solid orange;
+  position: static;
+}
+
+.logoContainer {
+  margin: 5px;
+  border: 1px solid yellowgreen;
+  width: 100px;
+}
+
+#logo {
+  margin: 5px;
+}
+
+.menuButtonContainer {
+  margin: 5px;
+  border: 1px solid green;
+  display: flex;
+  justify-content: flex-end;
+  width: 800px;
+}
+
+.menuButtons {
+  margin: 5px;
+  border: 1px solid grey;
+}
+
+.firstBanner {
+  background-image: url("../image/firstBanner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid black;
+  height: 500px;
+}
+
+p {
+  position: relative;
+  color: white;
+  text-align: right;
+  font-size: 3rem;
+  font-style: oblique;
+  font-weight: 800;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  top: 350px;
+}
+.indexButtons {
+  display: flex;
+  flex-flow: row-reverse;
+  position: relative;
+  top: 150px;
+}
+.indexButtons input {
+  width: 160px;
+  height: 50px;
+  background-color: bisque;
+  position: relative;
+}
+
+.secondBanner {
+  background-image: url("../image/secondBanner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid black;
+  height: 500px;
+}
+.thirdBanner {
+  background-image: url("../image/firstBanner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid black;
+  height: 500px;
+}
+.fourthBanner {
+  background-image: url("../image/secondBanner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid black;
+  height: 500px;
+}
+
+/* Mobile Device : under 768px width */
+@media (max-width: 768px) {
+  body {
+    background-color: aquamarine;
+  }
+}
