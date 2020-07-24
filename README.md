@@ -19,7 +19,7 @@
 </p>
 # Join Synergy, and get synergy!<br>
 <p>
-구성원 : 김근형, 양병주, 장하진, 전형중, 한세진<br>
+구성원 : 김근형, 양병주, 정하진, 전형중, 한세진<br>
 기간 : 2020.07.22 (수) ~ 2020.08.10 (월)<br>
 사용기술 : Java, JavaScript, Spring, Oracle Database, KakaoMap
 </p>
