@@ -19,4 +19,11 @@ public class HomeController {
 		return "/main/index.jsp";
 	}
 	
+	@GetMapping(path = "/login")
+	public String login(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		return "/main/login.jsp";
+	}
+	
+
 }
