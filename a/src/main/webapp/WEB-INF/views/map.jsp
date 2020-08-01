@@ -63,15 +63,21 @@ function xydbclose() {
 	let x = circles[0].circle.getPosition().Ga
 	let y = circles[0].circle.getPosition().Ha
 	let range = circles[0].polyline.getLength();
-	alert('선택하신 결과입니다. 경도x: '+x+'  위도y: '+y+'   범위range(m): '+range);
 	
-	document.getElementById('x').value = x;
-	document.getElementById('y').value = y;
-	document.getElementById('range').value = range;
+	let ob = new Object();
+	ob.x = x;
+	ob.y = y;
+	ob.range = range;
+	alert('선택하신 결과입니다. 경도x: '+ob.x+'  위도y: '+ob.y+'   범위range(m): '+ob.range);
 	
-	document.forms[0].method = "POST";
-	document.forms[0].action = "./insertMatch";
-	document.forms[0].submit();
+	
+	let url = './insertMatch';
+	let options = {
+			method: 'POST', 
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json; charset=utf-8'},
+			body: JSON.stringify(ob)
+			};
+	fetch(url, options);
 	
 }
 

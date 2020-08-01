@@ -5,29 +5,36 @@
 
 <mapper namespace="userSQL">
 
+	<select id="selectAll" resultType="userDTO">
+		SELECT * FROM db.usertable
+	</select>
+
+	<insert id="insertMatch" parameterType="matchDTO">
+		insert into db.match values(#{email}, #{x}, #{y}, #{range})
+	</insert>
+
+
+
+
+
 	<select id="selectOne" parameterType="java.lang.String"	resultType="userDTO">
-		SELECT * FROM db.user WHERE id=#{id}
+		SELECT * FROM db.usertable WHERE id=#{id}
 	</select>
 
 	<insert id="insert" parameterType="userDTO">
-		INSERT INTO db.user(`id`, `pw`, `nickname`, `email`, `birthyear`) values(#{id}, #{password}, #{nickname}, #{email}, #{birthyear})
+		INSERT INTO db.usertable(`id`, `pw`, `nickname`, `email`, `birthyear`) values(#{id}, #{password}, #{nickname}, #{email}, #{birthyear})
 	</insert>
 	
-	<insert id="insertMatch" parameterType="matchDTO">
-		INSERT INTO db.match values(#{email}, #{x}, #{y}, #{range})
-	</insert>
+
 
 	<update id="update" parameterType="userDTO">
-		update db.user set `id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname}, `birthyear`=#{birthyear} where `email`=#{email}
+		update db.usertable set `id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname}, `birthyear`=#{birthyear} where `email`=#{email}
 	</update>
 
 	<delete id="delete" parameterType="userDTO">
-		DELETE FROM db.user WHERE `email`=#{email}
+		DELETE FROM db.usertable WHERE `email`=#{email}
 	</delete>
 
-	<select id="selectAll" resultType="userDTO">
-		SELECT * FROM db.user
-	</select>
 
 	<select id="searchUserList" parameterType="java.util.Map" resultType="userDTO">
 		<!-- select * from usertable where ${key} like '%'||#{value}||'%' -->

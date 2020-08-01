@@ -1,15 +1,11 @@
 package user;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Scope("prototype")
 @Service
-@Setter
-@Getter
+@Data
 public class UserDTO {
 	private int seq;
 	private String id;

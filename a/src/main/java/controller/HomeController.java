@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.sf.json.JSONObject;
 import user.MatchDTO;
 import user.UserDAO;
 import user.UserDTO;
@@ -49,11 +51,13 @@ public class HomeController {
 		return "/WEB-INF/views/map.jsp";
 	}
 	
-	@PostMapping(path="/insertMatch", produces="application/x-www-form-urlencoded;charset=UTF-8")
-	public String insertMatch(@RequestBody MatchDTO matchDTO) {
-		logger.info(matchDTO.toString());
-		logger.info(userDAO.insertMatch(matchDTO)+"");
-		return "/WEB-INF/views/home.jsp";
+	@PostMapping(path="/insertMatch", produces="application/json;charset=UTF-8")
+	public @ResponseBody String insertMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
+		matchDTO.setX(json.getDouble("x"));
+		matchDTO.setY(json.getDouble("y"));
+		matchDTO.setRange(json.getDouble("range"));
+		int result = userDAO.insertMatch(matchDTO);
+		return result+"개 성공";
 	}
 	
 	

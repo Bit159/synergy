@@ -51,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int insertMatch(MatchDTO matchDTO) {
-		return sqlSession.insert("userSQL.insertMatch");
+		return sqlSession.insert("userSQL.insertMatch", matchDTO);
 	}
 	
 	

@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Service
-@Getter
 @Setter
+@Getter
 public class MatchDTO {
 
 	private String email;
