@@ -1,8 +1,5 @@
 package controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -18,32 +15,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.sf.json.JSONObject;
 import user.MatchDTO;
 import user.UserDAO;
-import user.UserDTO;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
-	
 	@Autowired
 	private UserDAO userDAO;
 	
 	@GetMapping(path = "/")
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		List<UserDTO> list = userDAO.selectAll();
-		return "/WEB-INF/views/home.jsp";
+		return "/WEB-INF/views/index.jsp";
+	}
+	
+	@GetMapping(path = "/login")
+	public String login() {
+		return "/WEB-INF/views/login.jsp";
+	}
+	@GetMapping(path = "/signup")
+	public String signup() {
+		return "/WEB-INF/views/signup.jsp";
 	}
 	
 	@GetMapping(path="/map")
@@ -58,21 +49,6 @@ public class HomeController {
 		matchDTO.setRange(json.getDouble("range"));
 		int result = userDAO.insertMatch(matchDTO);
 		return result+"개 성공";
-	}
-	
-	
-	@GetMapping(path = "/login")
-	public String login(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "/WEB-INF/views/login.jsp";
 	}
 	
 }
