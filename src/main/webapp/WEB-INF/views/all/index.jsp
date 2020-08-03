@@ -14,16 +14,9 @@
     <div class="nav">
       <nav>
         <div id="logoDiv">
-          <a href="index.html"><img src="../resources/image/logo.png" /></a>
+          <a href="/synergy/index"><img src="../resources/image/logo.png" /></a>
         </div>
         <div id="menuButtons">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
           <span></span>
           <span>프로젝트소개</span>
           <span>이용 방법</span>
@@ -43,8 +36,8 @@
     <div class="firstBanner">
       <div class="container" id="firstContent">
         <section class="banner1">
-			<input type="button" value="LOGIN" class="buttons" id="loginButton">
-			<input type="button" value="JOINUS"class="buttons" onclick="location='../login/joinForm.html'">
+			<input type="button" value="LOGIN" class="buttons" id="loginButton" onclick="location='/synergy/all/loginForm'">
+			<input type="button" value="JOINUS"class="buttons" onclick="location='/synergy/all/joinForm'">
 
         </section>
       </div>

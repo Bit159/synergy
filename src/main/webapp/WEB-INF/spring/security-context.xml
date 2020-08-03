@@ -5,20 +5,43 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<bean id="loginSuccess" class="member.controller.LoginSuccessHandler"></bean>
+
 	<security:http>
 		<security:intercept-url pattern="/all/*" access="permitAll"/>
 		<security:intercept-url pattern="/member/*" access="hasRole('ROLE_MEMBER')"/> <!-- hasRole 값은 ROLE_* 형태로 작성해야 한다. -->
 		<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
 	
-		<security:form-login login-page="/all/loginForm" />
+		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess"/>
+		<!-- <security:csrf disabled="true"/>  -->
 	</security:http>
 	
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
+				<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN, ROLE_MEMBER"/>
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
 			</security:user-service>
 		</security:authentication-provider>
 	</security:authentication-manager>
 
 </beans>
+
+<!-- 
+intercept-url 의 access 값  (SqEL 문법)
+1. permitAll : 모든 접근 허용
+2. denyAll   : 모든 접근 불허
+3. hasRole('role') : 지정한 role 권한이 있어야 접근이 가능. 지정된 role을 가지고 있으면 true를 반환한다.
+4. hasAnyRole('role1, role2') : role1, role2 권한 모두 접근 가능. 둘 중 하나라도 가지고 있으면 true를 반환한다.
+5. isAnonymous() : 인증을 사용하지 않은 사용자일 경우 (로그인을 하지 않은 사용자일 경우) true를 반환
+6. isRememberMe() : remember-me 기능으로 로그인 한 사용자일 경우 true를 반환
+7. isAuthenticated() : 인증을 사용한 사용자일 경우 true 반환
+8. isFullyAuthentiated() : anonymous사용자가 아니고 remember-me 기능으로 로그인 하지 않은 사용자일 경우 true를 반환
+
+9. principal : 현재 사용자를 나타내는 principal 객체에 직접 접근할 수 있음
+10. authentication : SecurityContext로 부터 얻은 Authentication 객체에 직접 접근할 수 있습니다.
+
+11. hasPermission(Object target, Object permission) : 사용자가 주어진 권한으로 제공된 대상에 액세스 할 수 있으면 true 를 반환합니다. 예, hasPermission(domainObject, 'read')
+12. hasPermission(Object targetId, String targetType, Object permission)
+
+-->

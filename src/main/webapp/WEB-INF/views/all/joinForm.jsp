@@ -4,23 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
+<link rel="stylesheet" href="../resources/css/join.css">
+<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script defer type="text/javascript" scr="../resources/js/join.js"></script>
 </head>
 <body>
 <div class="nav">
 	<nav>
 		<div id="logoDiv">
-		<a href="gogogo.html"><img src="../resources/image/testLogo.png" /></a>
+		<a href="/synergy/index"><img src="../resources/image/testLogo.png" /></a>
 		</div>
 		<div id="menuButtons">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
 			<span>프로젝트소개</span>
 			<span>이용 방법</span>
 			<span>자주 묻는 질문</span>
@@ -53,23 +48,23 @@
 		</div>
 		
 		<div class="join-area">
-			<input type="text" name="email" id="email" autocomplete="off" required>
-			<label for="email">E-MAIL</label>
+			<input type="password" name="repwd" id="repwd" autocomplete="off" required>
+			<label for="REpwd">RE-PASSWORD</label>
 		</div>
 		
 		<div class="join-area">
-			<input type="text" name="phone" id="phone" autocomplete="off" placeholder="                                              - 를 입력해주세요." required>
-			<label for="phone">PHONE</label>
+			<input type="text" name="email" id="email" autocomplete="off" required>
+			<label for="email">E-MAIL</label>
 		</div>
 
 		<div class="join-area">
-			<input type="text" id="birthYear" style="width: 45%;">
+			<input type="text" id="birthYear" style="width: 45%;" autocomplete="off" required>
 			<label for="birthYear">BIRTH</label>
 		</div>
 		
 		<div class="btn-area">
 			<button type="button">JOIN!</button>
-			<button type="button" name="back" id="back" onclick="location='login.html'">BACK</button>
+			<button type="button" name="back" id="back" onclick="javascript='history.go(-1)'">BACK</button>
 		</div>
 	</form>
 </section>
