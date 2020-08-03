@@ -22,7 +22,8 @@
 			<span><a href="#">회원가입</a></span>
 		</div>
 			<input type="checkbox" id="sideicon">
-			<label for="sideicon">
+			<label for="sideicon" id="ham">
+				<span></span>
 				<span></span>
 				<span></span>
 				<span></span>
@@ -39,7 +40,9 @@
 			</div>
 	</nav>
 	<section class="login-form">
-		<label for="sideicon" id="back"></label>
+			<label for="sideicon" id="back">
+				<span></span>
+			</label>
 		<h1>Let's Synergy</h1>
 		<form method="post" action="" >
 			<div class="info-area">
@@ -52,7 +55,7 @@
 				<label for="pwd">PASSWORD</label>
 			</div>
 			<div class="btn-area">
-				<button id="loginBtn">LOGIN</button>
+				<button type="button" id="loginBtn">LOGIN</button>
 				<button onclick="location='index.html'">BACK</button>
 			</div>
 		</form>
