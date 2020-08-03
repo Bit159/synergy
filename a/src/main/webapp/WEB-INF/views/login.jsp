@@ -2,15 +2,15 @@
 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <head>
-    <meta charset="UTF-8" />
-    <title>로그인</title>
+    <%@ include file="include/head_include.jsp" %>
     <script src="/a/resources/js/login.js" defer></script>
     <link rel="stylesheet" href="/a/resources/css/login.css" />
+    <title>로그인</title>
   </head>
   <body>
     <%@ include file="include/nav_include.jsp" %> 
+    <br><br>
     <%@ include file="include/loginForm_include.jsp" %>
   </body>
 </html>
