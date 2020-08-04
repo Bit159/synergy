@@ -5,7 +5,7 @@
         SELECT * FROM member WHERE id = #{username}
     </select>
     <select id="readAuthority" parameterType="String" resultType="String">
-        SELECT authority_name FROM authority WHERE username = #{username}
+        SELECT authority_name FROM authority WHERE id = #{username}
     </select>
 </mapper>
 
