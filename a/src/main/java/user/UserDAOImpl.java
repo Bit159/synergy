@@ -45,13 +45,23 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<UserDTO> selectAll() {
-		return sqlSession.selectList("userSQL.selectAll");
+	public List<UserDTO> selectAllFromUsertable() {
+		return sqlSession.selectList("userSQL.selectAllFromUsertable");
 	}
 
 	@Override
 	public int insertMatch(MatchDTO matchDTO) {
 		return sqlSession.insert("userSQL.insertMatch", matchDTO);
+	}
+
+	@Override
+	public List<MatchDTO> selectAllFromMatch() {
+		return sqlSession.selectList("userSQL.selectAllFromMatch");
+	}
+
+	@Override
+	public int deleteMatched(List<MatchDTO> list) {
+		return sqlSession.delete("userSQL.deleteMatched", list);
 	}
 	
 	

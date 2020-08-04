@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
+#loading {
+	width:200px;
+	height:200px;
+	position:fixed;
+	top:20%;
+	left:40%;
+	float:left;
+	z-index: 1;
+	display:none;
+}
+
 .info {
 	position: relative;
 	top: 5px;

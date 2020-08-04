@@ -5,15 +5,23 @@
 
 <mapper namespace="userSQL">
 
-	<select id="selectAll" resultType="userDTO">
+	<select id="selectAllFromUsertable" resultType="userDTO">
 		SELECT * FROM db.usertable
 	</select>
 
+	
+	<select id="selectAllFromMatch" resultType="matchDTO">
+		SELECT * FROM db.match
+	</select>
+	
+	
 	<insert id="insertMatch" parameterType="matchDTO">
-		insert into db.match values(#{email}, #{x}, #{y}, #{range})
+		INSERT INTO db.match VALUES(#{email}, #{x}, #{y}, #{range})
 	</insert>
 
-
+	<delete id="deleteMatched" parameterType="matchDTO">
+		DELETE FROM db.match WHERE `email`=#{email} AND `x`=#{x} AND `y`=#{y} AND `range`=#{range}
+	</delete>
 
 
 

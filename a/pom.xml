@@ -37,7 +37,7 @@
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
+			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
 
@@ -184,6 +184,13 @@
 			<classifier>jdk15</classifier>
 		</dependency>
 		<!-- End of JSON 통신을 위해 Jackson Core, Jackson Databind, Json lib 3가지를 DI -->
+
+		<!-- JavaX Mail -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 
 		<!-- Spring Security Web, Config -->
 		<dependency>
