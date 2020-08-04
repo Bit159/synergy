@@ -8,6 +8,6 @@ public interface MemberDAO {
 
 	public MemberDTO login(Map<String, String> map);
 
-	public void join(Map<String, Object> map);
+	public void join(Map<String, String> map);
 
 }

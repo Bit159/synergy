@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,27 +26,32 @@ public class MemberController {
 		return "/all/index";
 	}
 
-	@RequestMapping(value = "/all/loginForm", method = RequestMethod.GET)
+	@GetMapping("/all/loginForm")
 	public String loginForm() {
 		return "/all/loginForm";
 	}
 
-	@RequestMapping(value = "/all/joinForm", method = RequestMethod.GET)
+	@GetMapping("/all/joinForm")
 	public String joinForm() {
 		return "/all/joinForm";
 	}
+	
+	@GetMapping("/all/joinus")
+	public String joinus() {
+		return "/all/joinus";
+	}
 
-	@RequestMapping(value = "/member/myPage", method = RequestMethod.GET)
+	@GetMapping("/member/myPage")
 	public String myPage() {
 		return "/member/myPage";
 	}
 
-	@RequestMapping(value = "/member/myPage_Update", method = RequestMethod.GET)
+	@GetMapping("/member/myPage_Update")
 	public String myPageUpdate() {
 		return "/member/myPage_Update";
 	}
 
-	@RequestMapping(value = "/all/login", method = RequestMethod.POST)
+	@PostMapping("/all/login")
 	public @ResponseBody String login(@RequestParam Map<String, String> map, HttpSession session) {
 		System.out.println(map.get("id") + "," + map.get("pw"));
 
@@ -68,15 +74,28 @@ public class MemberController {
 		return loginResult;
 	}
 
-	@RequestMapping(value = "/all/join", method = RequestMethod.POST)
+	@PostMapping("/all/join")
 	@ResponseBody
-	public void join(@RequestParam Map<String, Object> map) {
+	public void join(@RequestParam Map<String, String> map) {
 		/*
 		 * Set set = map.keySet(); Iterator iterator = set.iterator();
 		 * while(iterator.hasNext()){ String key = (String) iterator.next();
 		 * System.out.println("KEY : " + key); // Key2 , Key1, Key5, Key4, Key3 }
 		 */
+		
+		System.out.println(map.get("username"));
 		memberService.join(map);
 
 	}
+	
+	@GetMapping("/admin/admin_index")
+	public String admin_index() {
+		return "/admin/admin_index";
+	}
+	
+	@PostMapping("/logout")
+	public void logout() {
+		
+	}
+
 }

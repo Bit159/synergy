@@ -21,7 +21,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public void join(Map<String, Object> map) {
+	public void join(Map<String, String> map) {
 		sqlSession.insert("memberSQL.join", map);
 		
 	}

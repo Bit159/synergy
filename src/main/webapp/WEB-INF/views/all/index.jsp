@@ -23,6 +23,7 @@
           <span>자주 묻는 질문</span>
           <span>로그인</span>
           <span>회원가입</span>
+          <span>로그아웃</span>
         </div>
         <div id="menuButtonsM">
           <a href="javascript:mobileMenu()">

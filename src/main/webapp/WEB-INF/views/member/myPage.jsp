@@ -35,7 +35,7 @@
 </div>
 <section class="myPage_Form">
     <h1>My Page</h1>
-    <form>
+    <form method="post" action="/synergy/logout">
         <div class="myInfo-area">
             <aside id="profile"><img src="../image/profile.png" width="50%"></aside>
             <section id="myInfo">
@@ -49,8 +49,10 @@
         </div>
 		
 		<div class="btn-area">
-			<button name="updateForm" id="updateForm" onclick="location='/finalProject/myPage/myPage_Update'">UPDATE</button>
-			<button name="back" id="back" onclick="location='javascript:history.go(-1)'">BACK</button>
+			<button type="button" name="updateForm" id="updateForm" onclick="location='/synergy/member/myPage_Update'">UPDATE</button>
+			<button type="button" name="back" id="back" onclick="location='javascript:history.go(-1)'">BACK</button>
+			<button name="logout" id="logout">LOGOUT</button>
+			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 		</div>
     </form>
 </section>

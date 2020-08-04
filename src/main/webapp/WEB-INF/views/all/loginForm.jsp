@@ -56,7 +56,7 @@
 				<button type="button" onclick="location='/synergy/index'">BACK</button>
 			</div>
 			
-			<input type="hidden" name="${$_csrf.parameterName }" value="${_csrf.token }">
+			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 		</form>
 		<div class="thirdParty" align="center" style="margin-top:30px;">
 			<img src="../resources/image/google.png"><br>

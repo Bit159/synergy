@@ -8,6 +8,8 @@
 	</select>
 	
 	<insert id="join" parameterType="java.util.Map">
-		insert into usertable(id, pw, nickname, email, birthyear) values(#{id}, #{pw}, #{nickname}, #{email}, #{birthYear})
+		insert into users(username, password) values(#{username}, #{password})
 	</insert>
  </mapper>
+ 
+ <!-- insert into usertable(id, pw, nickname, email, birthyear) values(#{id}, #{pw}, #{nickname}, #{email}, #{birthYear}) -->
