@@ -3,7 +3,7 @@
 
 <mapper namespace="memberSQL">
 	<select id="login" parameterType="map" resultType="member">
-		select * from `member` where id=#{id} and pwd=#{pwd};
+		select * from usertable where id=#{id} and pw=#{pw}
 	</select>
 
 </mapper>

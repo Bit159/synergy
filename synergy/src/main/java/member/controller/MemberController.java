@@ -38,7 +38,9 @@ public class MemberController {
 		}
 		return result;
 	}
-	@RequestMapping(value="/member/welcome",method=RequestMethod.GET)
+	
+	
+	@RequestMapping(value="/member/welcome",method=RequestMethod.POST)
 	public String welcome() {
 		return "/member/welcome";
 	}
@@ -47,7 +49,6 @@ public class MemberController {
 		session.invalidate();
 		return "/member/loginForm";
 	}
-	
 	@RequestMapping(value="/member/signUpForm",method=RequestMethod.POST)
 	public String signUpForm() {
 		return "/member/signUpForm";

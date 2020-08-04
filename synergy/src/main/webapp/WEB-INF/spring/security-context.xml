@@ -4,25 +4,32 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-5.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-	<security:http use-expressions="true">
-		<security:intercept-url pattern="/synergy/member/loginForm" access="permitAll" />
-		<security:intercept-url pattern="/synergy/member/welcome" access="hasAnyRole('USER, ADMIN')" />
+	
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	<security:http auto-config="true" use-expressions="true">
+		<security:csrf disabled = "false" />
+		<!-- 정적 리소스는 모두 접근 허용 -->
+		<security:intercept-url pattern="/resources/**" access="permitAll"/>
+		<security:intercept-url pattern="/member/loginForm" access="isAnonymous()" />
+		<security:intercept-url pattern="/member/welcome" access="hasAnyRole('USER, ADMIN')" />
+		<!-- 로그인 설정 -->
 		<security:form-login 
-			login-page="/synergy/member/loginForm" 
-			default-target-url="/synergy/member/login" 
-			authentication-failure-url="/login/loginForm.do?error" 
+			login-page="/member/loginForm" 
+			authentication-failure-url="/member/loginForm" 
+			default-target-url="/member/welcome"
 			username-parameter="id" 
-			password-parameter="password"/>
-		<security:logout 
-		    logout-success-url="/synergy/member/loginForm"/>
+			password-parameter="pwd"/> 
+		<!--로그아웃 설정  -->
+		<security:logout	
+			 logout-url="/member/logout"
+			 logout-success-url="/member/loginForm"
+			 invalidate-session="true"
+			 delete-cookies="true"/>
 	</security:http>
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="user" password="{noop}password" authorities="ROLE_USER" />
-				<security:user name="admin" password="{noop}123" authorities="ROLE_ADMIN" />
-			</security:user-service>
+		<security:authentication-provider user-service-ref="">
+			<security:jdbc-user-service data-source-ref="dataSource"/>
+			<security:password-encoder ref="bcryptPasswordEncoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>

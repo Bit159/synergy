@@ -15,6 +15,7 @@ import member.bean.MemberDTO;
 public class MemberDAOMybatis implements MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
+	// 안만들어도 상관없지만 Warning이 발생함
 
 	@Override
 	public MemberDTO login(String id, String pwd) {

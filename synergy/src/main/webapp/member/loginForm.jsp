@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +45,8 @@
 				<span></span>
 			</label>
 		<h1>Let's Synergy</h1>
-		<form method="post" action="" >
+		<form id="loginForm" method="post" action="" >
+			<sec:csrfInput />
 			<div class="info-area">
 				<input type="text" name="id" id="id" autocomplete="off" required>
 				<label for="id">EMAIL</label>
@@ -55,7 +57,7 @@
 				<label for="pwd">PASSWORD</label>
 			</div>
 			<div class="btn-area">
-				<button type="button" id="loginBtn">LOGIN</button>
+				<button type="button" id="loginBtn" onclick="location.href='/synergy/member/login'">LOGIN</button>
 				<button onclick="location='index.html'">BACK</button>
 			</div>
 		</form>
@@ -94,6 +96,8 @@
 				}
 			});
 		});
+	});
+
 	</script>
 </body>
 </html>
