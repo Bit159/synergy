@@ -14,7 +14,7 @@ import member.service.MemberService;
 
 @Controller
 public class MemberController {
-	@Autowired
+	@Autowired(required=false)
 	private MemberService memberService;
 
 	@RequestMapping(value="/member/loginForm",method= {RequestMethod.GET,RequestMethod.POST})

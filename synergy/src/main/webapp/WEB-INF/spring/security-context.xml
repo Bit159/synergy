@@ -5,11 +5,24 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-5.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<security:http>
-  <security:intercept-url pattern="/all/*" access="permitAll"/>
-  <security:intercept-url pattern="/member/*" access="hasRole('ROLE_MEMBER')"/> 
-  <!-- hasRole 값은 ROLE_* 형태로 작성해야 한다. -->
-	<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
-	<security:form-login login-page="/all/loginForm" />
-</security:http>
+	<security:http use-expressions="true">
+		<security:intercept-url pattern="/synergy/member/loginForm" access="permitAll" />
+		<security:intercept-url pattern="/synergy/member/welcome" access="hasAnyRole('USER, ADMIN')" />
+		<security:form-login 
+			login-page="/synergy/member/loginForm" 
+			default-target-url="/synergy/member/login" 
+			authentication-failure-url="/login/loginForm.do?error" 
+			username-parameter="id" 
+			password-parameter="password"/>
+		<security:logout 
+		    logout-success-url="/synergy/member/loginForm"/>
+	</security:http>
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="user" password="{noop}password" authorities="ROLE_USER" />
+				<security:user name="admin" password="{noop}123" authorities="ROLE_ADMIN" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
 </beans>
