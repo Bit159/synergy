@@ -1,30 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<nav class="navbar">
-  <div class="logoDiv">
-    <a href="/a"><img id="logoImg" src="/a/resources/image/logo.png" /></a>
-  </div>
-  <div class="menuButtons">
-    <span><a href="#">프로젝트소개</a></span>
-    <span><a href="#">이용 방법</a></span>
-    <span><a href="/a/map">지도를 띄우거라</a></span>
-    <span><a href="/a/login">로그인</a></span>
-    <span><a href="/a/signup">회원가입</a></span>
-  </div>
-  <input type="checkbox" id="sideicon" />
-  <label for="sideicon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </label>
-  <div class="sidebar">
-    <ul>
-      <li><a>프로젝트소개</a></li>
-      <li><a>이용방법</a></li>
-      <li><a>자주 묻는 질문</a></li>
-      <li><a>로그인</a></li>
-      <li><a>회원가입</a></li>
-    </ul>
-    <label for="sideicon"></label>
-  </div>
-</nav>
+ <!-- navbar -->
+ <div class="nav">
+   <nav>
+     <a href="/a/"><img src="/a/resources/image/logo.png" id="logo" /></a>
+
+     <!-- PC ver. 메뉴 -->
+     <div id="menuButtons">
+       <span></span><span></span><span></span>
+       <a href="/a/info"><span>프로젝트소개</span></a>
+       <a href="/a/howto"><span>이용 방법</span></a>
+       <a href="/a/board"><span>모집게시판</span></a>
+       <a href="/a/login"><span>로그인</span></a>
+       <a href="/a/join"><span>회원가입</span></a>
+       <span></span>
+     </div>
+
+     <!-- Mobile ver. 햄버거 -->
+     <input type="checkbox" id="sideicon" />
+     <label for="sideicon">
+       <div id="hamburgerDiv">
+         <div class="hamburger"></div>
+         <div class="hamburger"></div>
+         <div class="hamburger"></div>
+       </div>
+     </label>
+     <!---->
+   </nav>
+ </div>
+
+ <!-- Mobile ver. 메뉴 -->
+ <div id="sidebar">
+   <a href="/a/info"><span>프로젝트소개</span></a>
+   <a href="/a/howto"><span>이용 방법</span></a>
+   <a href="/a/board"><span>모집게시판</span></a>
+   <a href="/a/join"><span>회원가입</span></a>
+   <a href="/a/login"><span>로그인</span></a>
+ </div>
+ <!-- End of navbar -->
+
+ <div id="margin"></div>

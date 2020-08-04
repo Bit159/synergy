@@ -10,7 +10,6 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <%@ include file="include/nav_include.jsp" %> 
-    <br><br>
     <%@ include file="include/loginForm_include.jsp" %>
   </body>
 </html>

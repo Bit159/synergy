@@ -184,6 +184,20 @@
 			<classifier>jdk15</classifier>
 		</dependency>
 		<!-- End of JSON 통신을 위해 Jackson Core, Jackson Databind, Json lib 3가지를 DI -->
+
+		<!-- Spring Security Web, Config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.2.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.2.0.RELEASE</version>
+		</dependency>
+		<!-- End of Spring Security Web, Config -->
+
 	</dependencies>
 	<build>
 		<plugins>

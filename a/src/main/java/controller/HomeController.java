@@ -32,9 +32,9 @@ public class HomeController {
 	public String login() {
 		return "/WEB-INF/views/login.jsp";
 	}
-	@GetMapping(path = "/signup")
+	@GetMapping(path = "/join")
 	public String signup() {
-		return "/WEB-INF/views/signup.jsp";
+		return "/WEB-INF/views/join.jsp";
 	}
 	
 	@GetMapping(path="/map")
