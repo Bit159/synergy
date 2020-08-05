@@ -57,7 +57,9 @@ public class AOP_Config {
 				List<String> targetList = new ArrayList<String>();
 				for (MatchDTO dto : matchedList) targetList.add(dto.getEmail());
 				email.sendToList(targetList);
-				userDAO.deleteMatched(matchedList);
+				int result = userDAO.deleteMatched(matchedList);
+				System.out.println("메일 발송 완료. 삭제한 rows : " + result);
+				return;
 			}
 			
 			

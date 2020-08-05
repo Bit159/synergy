@@ -32,6 +32,7 @@ public class HomeController {
 
 	@PostMapping(path="/insertMatch", produces="application/json;charset=UTF-8")
 	public @ResponseBody String insertMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
+		matchDTO.setEmail("jpcnani@naver.com");
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
 		matchDTO.setRange(json.getDouble("range"));

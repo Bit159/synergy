@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import controller.HomeController;
 
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = { "user", "aop" })
+@ComponentScan(basePackages = { "user" })
 @PropertySource("classpath:/db.properties")
 @Configuration
 public class Config {
@@ -104,7 +104,6 @@ public class Config {
 		return beanNameViewResolver;
 	}
 	//----------------------------- End of Resolver -------------------------------------	
-	
 	
 
 }

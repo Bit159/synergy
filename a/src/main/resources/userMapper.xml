@@ -6,45 +6,58 @@
 <mapper namespace="userSQL">
 
 	<select id="selectAllFromUsertable" resultType="userDTO">
-		SELECT * FROM db.usertable
+		SELECT * FROM
+		db.usertable
 	</select>
 
-	
+
 	<select id="selectAllFromMatch" resultType="matchDTO">
-		SELECT * FROM db.match
+		SELECT * FROM
+		db.match
 	</select>
-	
-	
+
+
 	<insert id="insertMatch" parameterType="matchDTO">
-		INSERT INTO db.match VALUES(#{email}, #{x}, #{y}, #{range})
+		INSERT INTO db.match
+		VALUES(#{email}, #{x}, #{y}, #{range})
 	</insert>
 
-	<delete id="deleteMatched" parameterType="matchDTO">
-		DELETE FROM db.match WHERE `email`=#{email} AND `x`=#{x} AND `y`=#{y} AND `range`=#{range}
+	<delete id="deleteMatched" parameterType="java.util.List">
+		DELETE FROM db.match
+		<where>
+			<foreach collection="list" item="item" separator="OR">
+				(`email`=#{item.email} AND `x`=#{item.x} AND `y`=#{item.y} AND `range`=#{item.range})
+			</foreach>
+		</where>
 	</delete>
 
-
-
-	<select id="selectOne" parameterType="java.lang.String"	resultType="userDTO">
+	<select id="selectOne" parameterType="java.lang.String"
+		resultType="userDTO">
 		SELECT * FROM db.usertable WHERE id=#{id}
 	</select>
 
 	<insert id="insert" parameterType="userDTO">
-		INSERT INTO db.usertable(`id`, `pw`, `nickname`, `email`, `birthyear`) values(#{id}, #{password}, #{nickname}, #{email}, #{birthyear})
+		INSERT INTO db.usertable(`id`,
+		`pw`, `nickname`, `email`, `birthyear`) values(#{id}, #{password},
+		#{nickname}, #{email}, #{birthyear})
 	</insert>
-	
+
 
 
 	<update id="update" parameterType="userDTO">
-		update db.usertable set `id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname}, `birthyear`=#{birthyear} where `email`=#{email}
+		update db.usertable set
+		`id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname},
+		`birthyear`=#{birthyear} where `email`=#{email}
 	</update>
 
 	<delete id="delete" parameterType="userDTO">
-		DELETE FROM db.usertable WHERE `email`=#{email}
+		DELETE FROM db.usertable WHERE
+		`email`=#{email}
 	</delete>
 
 
-	<select id="searchUserList" parameterType="java.util.Map" resultType="userDTO">
+	<select id="searchUserList" parameterType="java.util.Map"
+		resultType="userDTO">
 		<!-- select * from usertable where ${key} like '%'||#{value}||'%' -->
 		select * from usertable where
 		<if test="key == 'name'">
