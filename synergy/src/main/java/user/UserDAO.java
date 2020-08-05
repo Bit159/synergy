@@ -13,4 +13,6 @@ public interface UserDAO {
 
 	public abstract UserDTO selectOne(String id);
 
+	public abstract UserDTO login(String id, String pwd);
+
 }

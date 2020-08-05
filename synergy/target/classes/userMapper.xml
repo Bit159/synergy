@@ -11,9 +11,7 @@
 
 	<insert id="insert" parameterType="userDTO">
 		INSERT INTO db.usertable(`id`, `pw`, `nickname`, `email`, `birthyear`) values(#{id}, #{password}, #{nickname}, #{email}, #{birthyear})
-	</insert>
-	
-
+	</insert>	
 
 	<update id="update" parameterType="userDTO">
 		update db.usertable set `id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname}, `birthyear`=#{birthyear} where `email`=#{email}
@@ -36,6 +34,10 @@
 		<if test="key == 'id'">
 			id like '%'||#{value}||'%'
 		</if>
+	</select>
+	
+	<select id="login" parameterType="map" resultType="userDTO">
+		select * from db.usertable where id=#{id} and pw=#{pwd};
 	</select>
 
 </mapper>

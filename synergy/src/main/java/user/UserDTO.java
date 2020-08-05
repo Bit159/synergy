@@ -1,14 +1,9 @@
 package user;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import lombok.Data;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Service
-@Setter
-@Getter
+@Data
 public class UserDTO {
    private int seq;
    private String id;
@@ -20,8 +15,4 @@ public class UserDTO {
    private int kakao;
    private int github;
    
-   @Override
-   public String toString() {
-      return id+" "+pw+" "+nickname+" "+email;
-   }
 }

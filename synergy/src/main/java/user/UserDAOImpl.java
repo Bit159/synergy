@@ -1,6 +1,8 @@
 package user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class UserDAOImpl implements UserDAO {
    
    @Autowired
    private SqlSession sqlSession;
-   @Autowired
+   
    private UserDTO dto;
    
    @Override
@@ -48,6 +50,16 @@ public class UserDAOImpl implements UserDAO {
    public List<UserDTO> selectAll() {
       return sqlSession.selectList("userSQL.selectAll");
    }
+
+	@Override
+	public UserDTO login(String id, String pwd) {
+		Map<String, String> map = new HashMap<String, String>();
+		System.out.println("dao "+ id);
+		map.put("id", id);
+		map.put("pwd", pwd);
+		UserDTO userDTO = sqlSession.selectOne("userSQL.login",map);
+		return userDTO;
+	}
 
    
    

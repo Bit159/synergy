@@ -42,7 +42,7 @@ public class HomeController {
 		List<UserDTO> list = userDAO.selectAll();
 		for(UserDTO dto: list) System.out.println(dto.toString());
 		 
-		return "/WEB-INF/views/home";
+		return "home";
 	}
 	
 }
