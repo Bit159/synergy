@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import controller.HomeController;
 
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = { "user" })
+@ComponentScan(basePackages = { "user", "controller", "aop", "security" })
 @PropertySource("classpath:/db.properties")
 @Configuration
 public class Config {
@@ -75,13 +75,7 @@ public class Config {
 		return dataSourceTransactionManager;		
 	}
 	//-----------------------------데이터 접속을 위한 설정 끝-------------------------------------
-	
-	
-	// 홈 컨트롤러
-	@Bean
-	public HomeController homeController() {
-		return new HomeController();
-	}
+
 	
 	//----------------------------- Resolver -------------------------------------
 

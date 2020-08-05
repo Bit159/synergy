@@ -23,7 +23,6 @@
 	<context:annotation-config></context:annotation-config>
 
 	<beans:bean class="conf.Config" />
-	<beans:bean class="security.WebSecurityConfig" />
 	<resources mapping="/resources/**"	location="/resources/" />
 
 </beans:beans>
