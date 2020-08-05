@@ -33,13 +33,8 @@
 	<h1>Let's Synergy</h1>
 	<form action="" method="post">
 		<div class="join-area">
-			<input type="text" name="name" id="name" autocomplete="off" required>
-			<label for="name">NAME</label>
-		</div>
-	
-		<div class="join-area">
 			<input type="text" name="id" id="id" autocomplete="off" required>
-			<label for="id">USER NAME</label>
+			<label for="id">NICKNAME</label>
 		</div>
 		
 		<div class="join-area">
@@ -59,7 +54,7 @@
 
 		<div class="join-area">
 			<input type="text" id="birthYear" style="width: 45%;" autocomplete="off" required>
-			<label for="birthYear">BIRTH</label>
+			<label for="birthYear">BIRTH YEAR</label>
 		</div>
 		
 		<div class="btn-area">

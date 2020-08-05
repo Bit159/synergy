@@ -1,0 +1,117 @@
+*{margin : 0; padding: 0; box-sizing: border-box;}
+
+body{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background: url("../image/firstBanner.jpg") no-repeat center;
+    background-size: cover;
+}
+
+body::before{
+    content:"";
+    position: absolute;
+    z-index: 1;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(0,0,0,.3);
+
+}
+
+/*
+background-size : 
+1. auto : 이미지 크기를 유지
+2. length : 값을 두 개 넣으면 첫번째 값이 가로 크기, 두번째 값이 세로 크기입니다.
+           값을 한 개 넣으면 가로 크기이며, 세로 크기는 원본 이미지의 가로 세로 비율에 맞게 자동으로 정해집니다. 백분율을 사용할 수도 있습니다.
+3. cover : 배경을 사용하는 요소를 다 채울 수 있게 이미지를 확대 또는 축소합니다. 가로 세로 비율을 유지합니다.
+4. contain : 배경을 사용하는 요소를 벗어나지 않는 최대 크기로 이미지를 확대 또는 축소합니다. 가로 세로 비율을 유지합니다.
+5. initial : 기본값으로 설정합니다.
+6. inherit : 부모 요소의 속성값을 상속받습니다
+*/
+
+.nav{
+    width: 100%;
+    height: 60px;
+    align-content: center; /* flex-wrap 속성의 동작을 변경. align-items와 비슷 */
+    position: absolute;
+    display: flex;
+    justify-content: center; /* 좌우 정렬 */
+    transition: all 0.3;
+}
+/* aling-items : 수직 정렬 */
+
+nav {
+    width: 1024px;
+    display: flex;
+	align-items: center;
+	z-index: 2;
+}
+  
+#menuButtons {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    font-size: 1.2rem;
+}
+  
+#menuButtonsM {
+    display: none;
+}
+
+span{
+    color: white;
+}
+
+.myPage_Form{
+    width: 1024px;
+    height: 80vh;
+    margin-top: 100px;
+
+    color : white;
+    text-align: center;
+    z-index: 2;
+
+    background-color: white;
+    box-shadow: 5px 5px 5px 5px lightgray;
+}
+
+/* ============ 몸통 부분 ============*/
+
+h1{
+    margin-bottom: 60px;
+}
+aside{
+    float: left;
+    width: 30%;
+    height: 50%;
+    margin-top: 5px;
+}
+
+#myInfo{
+    float: left;
+    width: 70%;
+    height: 50%;
+    text-align: left;
+
+}
+
+#pr{
+    clear: both;
+
+}
+
+.infoDiv{
+    border-bottom: 1px solid gray;
+
+}
+
+.btn-area { margin-top: 30px;}
+.btn-area button {
+    width : 30%; height: 50px;
+    background: #166cea;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    
+}

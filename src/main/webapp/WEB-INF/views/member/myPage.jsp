@@ -11,7 +11,7 @@
 <div class="nav">
     <nav>
         <div id="logoDiv">
-            <a href="index.html"><img src="../image/testLogo.png" /></a>
+            <a href="/synergy/index"><img src="../resources/image/testLogo.png" /></a>
         </div>
         <div id="menuButtons">
             <span></span>
@@ -22,7 +22,7 @@
             <span>로그인</span>
             <span>회원가입</span>
             <span></span>
-            <span><a href="../login/myPage_Update.html"><img src="../image/my.png" width="30" height="30"></a></span>
+            <span><a href="/synergy/member/myPage_Update"><img src="../resources/image/my.png" width="30" height="30"></a></span>
         </div>
         <div id="menuButtonsM">
             <a href="javascript:mobileMenu()">
@@ -37,7 +37,7 @@
     <h1>My Page</h1>
     <form method="post" action="/synergy/logout">
         <div class="myInfo-area">
-            <aside id="profile"><img src="../image/profile.png" width="50%"></aside>
+            <aside id="profile"><img src="../resources/image/profile.png" width="50%"></aside>
             <section id="myInfo">
                 <div class="infoDiv">
                     <label>이 름 : </label>

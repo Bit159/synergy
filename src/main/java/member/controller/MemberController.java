@@ -51,7 +51,7 @@ public class MemberController {
 		return "/member/myPage_Update";
 	}
 
-	@PostMapping("/all/login")
+	/*@PostMapping("/all/login")
 	public @ResponseBody String login(@RequestParam Map<String, String> map, HttpSession session) {
 		System.out.println(map.get("id") + "," + map.get("pw"));
 
@@ -72,7 +72,7 @@ public class MemberController {
 
 		System.out.println(loginResult);
 		return loginResult;
-	}
+	}*/
 
 	@PostMapping("/all/join")
 	@ResponseBody

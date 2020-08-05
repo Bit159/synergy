@@ -2,10 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="loginSuccess" class="member.controller.LoginSuccessHandler"></bean>
 	<bean id="passwordEncoder" class="member.controller.CustomPasswordEncoder"></bean>
@@ -15,8 +13,26 @@
 		<security:intercept-url pattern="/all/*" access="permitAll"/>
 		<security:intercept-url pattern="/member/*" access="hasRole('ROLE_MEMBER')"/> 
 		<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
+		
+		<!-- 
+		intercept-url 의 access 값  (SqEL 문법)
+		1. permitAll : 모든 접근 허용
+		2. denyAll   : 모든 접근 불허
+		3. hasRole('role') : 지정한 role 권한이 있어야 접근이 가능. 지정된 role을 가지고 있으면 true를 반환한다.
+		4. hasAnyRole('role1, role2') : role1, role2 권한 모두 접근 가능. 둘 중 하나라도 가지고 있으면 true를 반환한다.
+		5. isAnonymous() : 인증을 사용하지 않은 사용자일 경우 (로그인을 하지 않은 사용자일 경우) true를 반환
+		6. isRememberMe() : remember-me 기능으로 로그인 한 사용자일 경우 true를 반환
+		7. isAuthenticated() : 인증을 사용한 사용자일 경우 true 반환
+		8. isFullyAuthentiated() : anonymous사용자가 아니고 remember-me 기능으로 로그인 하지 않은 사용자일 경우 true를 반환
+		
+		9. principal : 현재 사용자를 나타내는 principal 객체에 직접 접근할 수 있음
+		10. authentication : SecurityContext로 부터 얻은 Authentication 객체에 직접 접근할 수 있습니다.
+		
+		11. hasPermission(Object target, Object permission) : 사용자가 주어진 권한으로 제공된 대상에 액세스 할 수 있으면 true 를 반환합니다. 예, hasPermission(domainObject, 'read')
+		12. hasPermission(Object targetId, String targetType, Object permission)
+		-->
 	
-		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess" />
+		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess"/>
 		
 		<!-- 
 		1. login-page : login form 페이지 URL
@@ -30,18 +46,39 @@
 		9. authentication-failure-handler-ref : 로그인 실패 시 프로세스 정의, bean id 입력
 		-->
 		
-		<security:logout logout-success-url="/all/loginForm" invalidate-session="true"/>
+		<security:logout logout-success-url="/all/loginForm" invalidate-session="true" />
+		
 		
 		<!-- 
 		logout 요소
 		1. logout-url : 로그아웃 요청할 경로. 기본값은 /logout. 사용자가 원하는 경로 지정해서 로그아웃 페이지로 이동해 처리 할 수 있음. 기본적으로 post로 요청할 수 있고 csrf가 적용되어 있음.
 		2. logout-success-url : 로그아웃이 성공하면 이동할 경로를 지정. controller에서 redirect 지정해 줄 수도 있다.
-		3. success-hanlder-erf : 로그아웃 후 처리될 내용을 담은 클래스를 지정. 핸들러가 지정되면 logout-success-url 값은 무시된다.
+		3. success-hanlder-ref : 로그아웃 후 처리될 내용을 담은 클래스를 지정. 핸들러가 지정되면 logout-success-url 값은 무시된다.
 		4. invalidate-session : 로그 아웃시 세션정보 제거 여부. 기본값은 true
-		5. delete-dookies : 로그아웃시 제거할 쿠키 이름을 지정.
+		5. delete-cookies : 로그아웃시 제거할 쿠키 이름을 지정.
 		-->
+		
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/all/loginForm"/>
+		</security:session-management> 
 		 
 		<!-- <security:csrf disabled="true"/>  -->
+		
+		<!-- 
+		* csrf(Cross-Site Request Forgery) 토큰 
+		스프링 시큐리티의 경우 post 방식을 사용하는경우 기본적으로 CRSF 토큰이라는 것을 이용한다.
+		사이트간 위조방지를 목적으로 특정한 토큰값을 사용하는 방식이다.
+		<security:csrf disabled="true"/>로 설정할 경우 토큰을 이용하지 않으나 추천하지 않는다.
+		사용자 계정탈취, 개인정보 유츌, 조회수 조작등이 가능해짐.
+		
+		기본적으로 post 방식으로 보낸다 하면
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+		이 값을 넣어줘야 한다. 이 히든값이 없으면 403에러가 뜬다.
+		
+		CSRF토큰은 사용자가 임의의 변하는 토큰 값을 서버에서 체크하는 방식이다.
+		서버에는 브라우저에 데이터를 전송할 때 토큰값을 같이 전송하며 브라우저의 CSRF값과 서버가 보관하는 토큰 값을 비교해
+		값이 다르면 작업을 처리하지 않는 방식이다.
+		-->
 		
 		<!-- 
 		session-management 
@@ -60,28 +97,12 @@
 			<security:password-encoder ref="bcryptPasswordEncoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
-
 </beans>
 
-<!-- 
-intercept-url 의 access 값  (SqEL 문법)
-1. permitAll : 모든 접근 허용
-2. denyAll   : 모든 접근 불허
-3. hasRole('role') : 지정한 role 권한이 있어야 접근이 가능. 지정된 role을 가지고 있으면 true를 반환한다.
-4. hasAnyRole('role1, role2') : role1, role2 권한 모두 접근 가능. 둘 중 하나라도 가지고 있으면 true를 반환한다.
-5. isAnonymous() : 인증을 사용하지 않은 사용자일 경우 (로그인을 하지 않은 사용자일 경우) true를 반환
-6. isRememberMe() : remember-me 기능으로 로그인 한 사용자일 경우 true를 반환
-7. isAuthenticated() : 인증을 사용한 사용자일 경우 true 반환
-8. isFullyAuthentiated() : anonymous사용자가 아니고 remember-me 기능으로 로그인 하지 않은 사용자일 경우 true를 반환
 
-9. principal : 현재 사용자를 나타내는 principal 객체에 직접 접근할 수 있음
-10. authentication : SecurityContext로 부터 얻은 Authentication 객체에 직접 접근할 수 있습니다.
-
-11. hasPermission(Object target, Object permission) : 사용자가 주어진 권한으로 제공된 대상에 액세스 할 수 있으면 true 를 반환합니다. 예, hasPermission(domainObject, 'read')
-12. hasPermission(Object targetId, String targetType, Object permission)
-
-			<security:user-service>
-				<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN, ROLE_MEMBER"/> authorities 값은 ROLE_* 형태로 작성해야 한다.
-				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
-			</security:user-service>
--->
+<!--
+<security:user-service>
+		<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN, ROLE_MEMBER"/> authorities 값은 ROLE_* 형태로 작성해야 한다.
+		<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+</security:user-service>
+  -->
