@@ -9,18 +9,21 @@
 <title>촛됐다</title>
 </head>
 <body>
-${memId} 님 안녕하세요ㅎㅎ
+${login_id} 님 안녕하세요ㅎㅎ
 <br>
-<input type="button" value="logout" id="logoutBtn" onclick="location.href='/synergy/member/logout'">
+<form method="post" id="welcome" action="/synergy/all/loginForm">
+<input type="submit" value="logout" id="logoutBtn">
+<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+</form>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$(document).ajaxSend(function(e, xhr, options) {
-		xhr.setRequestHeader(header,token);
-	});
-});
+// $(document).ready(function(){
+// 	var token = $("meta[name='_csrf']").attr("content");
+// 	var header = $("meta[name='_csrf_header']").attr("content");
+// 	$(document).ajaxSend(function(e, xhr, options) {
+// 		xhr.setRequestHeader(header,token);
+// 	});
+// });
 </script>
 </html>

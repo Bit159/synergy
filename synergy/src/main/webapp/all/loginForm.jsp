@@ -45,21 +45,21 @@
 				<span></span>
 			</label>
 		<h1>Let's Synergy</h1>
-		<form id="loginForm" method="post" action="" >
-			<sec:csrfInput />
+		<form id="loginForm" method="post" action="/synergy/all/login">
 			<div class="info-area">
-				<input type="text" name="id" id="id" autocomplete="off" required>
-				<label for="id">EMAIL</label>
+				<input type="text" name="login_id" id="login_id" autocomplete="off" required>
+				<label for="login_id">EMAIL</label>
 			</div>
 
 			<div class="info-area">
-				<input type="password" name="pwd" autocomplete="off" id="pwd" required>
-				<label for="pwd">PASSWORD</label>
+				<input type="password" name="login_pw" id="login_pw" autocomplete="off"  required>
+				<label for="login_pw">PASSWORD</label>
 			</div>
 			<div class="btn-area">
-				<button type="button" id="loginBtn" onclick="location.href='/synergy/member/login'">LOGIN</button>
+				<button type="submit" id="loginBtn" >LOGIN</button>
 				<button onclick="location='index.html'">BACK</button>
 			</div>
+			<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
 		</form>
 		<div class="thirdParty" align="center" style="margin-top:30px;">
 			<img src="../resources/image/google.png"><br>
@@ -67,37 +67,35 @@
 		</div>
 
 		<div class="caption">
-			<a href="joinForm.html">회원가입</a>&emsp;
+			<a href="/synergy/all/joinForm">회원가입</a>&emsp;
 			<a href="">아이디/비밀번호 찾기</a>
 		</div>
 	</section>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script type="text/javascript">
-		$('#loginBtn').click(function(){
-			if($('#id').val()==''){
-				return;
-			}
-			$.ajax({
-				type:'post',
-				url:'/synergy/member/login',
-				data:{'id':$('#id').val(),'pwd':$('#pwd').val()},
-				dataType:'text',
-				success:function(data){
-					alert(data);
-					if(data=='fail'){
-						alert('실패');
-					}else if(data=='success'){
-						alert('성공');
-						location.href='/synergy/member/welcome';
-					}
-				},
-				error:function(){
-					alert('error');
-				}
-			});
-		});
-	});
-
+// 		$('#loginBtn').click(function(){
+// 			if($('#id').val()==''){
+// 				return; 
+// 			}
+// 			$.ajax({
+// 				type:'post',
+// 				url:'/synergy/member/login',
+// 				data:{'id':$('#id').val(),'pwd':$('#pwd').val()},
+// 				dataType:'text',
+// 				success:function(data){
+// 					alert(data);
+// 					if(data=='fail'){
+// 						alert('실패');
+// 					}else if(data=='success'){
+// 						alert('성공');
+// 						location.href='/synergy/member/welcome';
+// 					}
+// 				},
+// 				error:function(){
+// 					alert('error');
+// 				}
+// 			});
+// 		});
 	</script>
 </body>
 </html>

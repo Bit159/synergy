@@ -6,28 +6,32 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	<bean id="loginSuccess" class="member.controller.LoginSuccessHandler"></bean>
 	<security:http auto-config="true" use-expressions="true">
-		<security:csrf disabled = "false" />
 		<!-- 정적 리소스는 모두 접근 허용 -->
 		<security:intercept-url pattern="/resources/**" access="permitAll"/>
-		<security:intercept-url pattern="/member/loginForm" access="isAnonymous()" />
-		<security:intercept-url pattern="/member/welcome" access="hasAnyRole('USER, ADMIN')" />
+		<security:intercept-url pattern="/all/**" access="permitAll"/>
+		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<!-- 로그인 설정 -->
 		<security:form-login 
-			login-page="/member/loginForm" 
-			authentication-failure-url="/member/loginForm" 
-			default-target-url="/member/welcome"
-			username-parameter="id" 
-			password-parameter="pwd"/> 
+			login-page="/all/loginForm" 
+			authentication-success-handler-ref="loginSuccess"
+			authentication-failure-url="/all/loginForm" 
+			login-processing-url="/all/login"
+			username-parameter="login_id" 
+			password-parameter="login_pw"/> 
 		<!--로그아웃 설정  -->
 		<security:logout	
-			 logout-url="/member/logout"
-			 logout-success-url="/member/loginForm"
-			 invalidate-session="true"
-			 delete-cookies="true"/>
+			 logout-url="/member/welcome"
+			 logout-success-url="/all/loginForm"
+			 invalidate-session="true"/>
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/all/loginForm"/>
+		</security:session-management> 	 
 	</security:http>
 	<security:authentication-manager>
-		<security:authentication-provider user-service-ref="">
+		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource"/>
 			<security:password-encoder ref="bcryptPasswordEncoder" />
 		</security:authentication-provider>
