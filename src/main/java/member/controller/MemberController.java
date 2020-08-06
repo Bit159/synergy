@@ -28,6 +28,7 @@ public class MemberController {
 
 	@GetMapping("/all/loginForm")
 	public String loginForm() {
+		System.out.println("loginForm");
 		return "/all/loginForm";
 	}
 
@@ -74,17 +75,18 @@ public class MemberController {
 		return loginResult;
 	}*/
 
-	@PostMapping("/all/join")
-	@ResponseBody
-	public void join(@RequestParam Map<String, String> map) {
+	@PostMapping("/join")
+	public String join(@RequestParam Map<String, String> map) {
 		/*
 		 * Set set = map.keySet(); Iterator iterator = set.iterator();
 		 * while(iterator.hasNext()){ String key = (String) iterator.next();
 		 * System.out.println("KEY : " + key); // Key2 , Key1, Key5, Key4, Key3 }
 		 */
 		
-		System.out.println(map.get("username"));
+		System.out.println(map.get("birthYear"));
 		memberService.join(map);
+		
+		return "/all/loginForm";
 
 	}
 	
@@ -93,9 +95,9 @@ public class MemberController {
 		return "/admin/admin_index";
 	}
 	
-	@PostMapping("/logout")
+	/*@PostMapping("/logout")
 	public void logout() {
 		
-	}
+	}*/
 
 }

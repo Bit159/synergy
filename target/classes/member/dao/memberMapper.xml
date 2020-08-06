@@ -3,10 +3,13 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="memberSQL">
-
-	<insert id="join" parameterType="java.util.Map">
+	<insert id="join1" parameterType="java.util.Map">
 		insert into users(username, password) values(#{username}, #{password});
 		insert into authorities values(#{username}, #{auth});
+	</insert>
+	
+	<insert id="join" parameterType="java.util.Map">
+		insert into membertable(username, nickname, password, birthyear ) values(#{username}, #{nickname}, #{password}, #{birthYear})
 	</insert>
  </mapper>
  

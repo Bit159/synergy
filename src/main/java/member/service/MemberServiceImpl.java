@@ -25,7 +25,6 @@ public class MemberServiceImpl implements MemberService {
 	public void join(Map<String, String> map) {
 		String password = encoder.encode(map.get("password"));
 		map.replace("password", password);
-		map.put("auth", "ROLE_MEMBER");
 		memberDAO.join(map);
 		
 	}

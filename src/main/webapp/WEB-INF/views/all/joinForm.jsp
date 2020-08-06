@@ -31,14 +31,19 @@
 </div>
 <section class="join-form">
 	<h1>Let's Synergy</h1>
-	<form action="" method="post">
+	<form action="/synergy/join" method="post">
 		<div class="join-area">
-			<input type="text" name="id" id="id" autocomplete="off" required>
+			<input type="text" name="username" id="username" autocomplete="off" required>
+			<label for="email">E-MAIL</label>
+		</div>
+		
+		<div class="join-area">
+			<input type="text" name="nickname" id="nickname" autocomplete="off" required>
 			<label for="id">NICKNAME</label>
 		</div>
 		
 		<div class="join-area">
-			<input type="password" name="pwd" id="pwd" autocomplete="off" required>
+			<input type="password" name="password" id="password" autocomplete="off" required>
 			<label for="pwd">PASSWORD</label>
 		</div>
 		
@@ -46,21 +51,17 @@
 			<input type="password" name="repwd" id="repwd" autocomplete="off" required>
 			<label for="REpwd">RE-PASSWORD</label>
 		</div>
-		
+	
 		<div class="join-area">
-			<input type="text" name="email" id="email" autocomplete="off" required>
-			<label for="email">E-MAIL</label>
-		</div>
-
-		<div class="join-area">
-			<input type="text" id="birthYear" style="width: 45%;" autocomplete="off" required>
+			<input type="text" id="birthYear" name="birthYear" style="width: 45%;" autocomplete="off" required>
 			<label for="birthYear">BIRTH YEAR</label>
 		</div>
 		
 		<div class="btn-area">
-			<button type="button">JOIN!</button>
+			<button>JOIN!</button>
 			<button type="button" name="back" id="back" onclick="javascript='history.go(-1)'">BACK</button>
 		</div>
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 	</form>
 </section>
 </body>

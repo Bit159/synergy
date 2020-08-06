@@ -51,6 +51,7 @@
 				<input type="password" name="password" id="password" autocomplete="off" required>
 				<label for="pw">PASSWORD</label>
 			</div>
+			<input type="checkbox" name="remember-me">자동로그인
 			<div class="btn-area">
 				<button id="loginBtn">LOGIN</button>
 				<button type="button" onclick="location='/synergy/index'">BACK</button>
