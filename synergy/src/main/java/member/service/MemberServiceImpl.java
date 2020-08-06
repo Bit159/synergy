@@ -24,9 +24,7 @@ public class MemberServiceImpl implements MemberService {
 	public void join(Map<String, String> map) {
 		String pwd = bcrypt.encode(map.get("password"));
 		map.replace("password", pwd);
-		if(map.get("username").equals("admin")) {
-			map.put("authority", "ROLE_ADMIN");
-		}else map.put("authority","ROLE_MEMBER");
+		map.put("authority","ROLE_MEMBER");
 		memberDAO.join(map);
 	}
 

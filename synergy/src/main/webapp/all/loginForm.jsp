@@ -50,11 +50,11 @@
 				<input type="text" name="login_id" id="login_id" autocomplete="off" required>
 				<label for="login_id">EMAIL</label>
 			</div>
+
 			<div class="info-area">
 				<input type="password" name="login_pw" id="login_pw" autocomplete="off"  required>
 				<label for="login_pw">PASSWORD</label>
 			</div>
-			<input type="checkbox" name="remember-me"> 자동로그인
 			<div class="btn-area">
 				<button type="submit" id="loginBtn" >LOGIN</button>
 				<button onclick="location='index.html'">BACK</button>

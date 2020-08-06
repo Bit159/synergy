@@ -9,7 +9,7 @@
 <title>촛됐다</title>
 </head>
 <body>
-안녕하세요ㅎㅎ
+${login_id} 님 안녕하세요ㅎㅎ
 <br>
 <form method="post" id="welcome" action="/synergy/all/loginForm">
 <input type="submit" value="logout" id="logoutBtn">

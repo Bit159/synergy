@@ -73,6 +73,7 @@
 			<input type="date" id="birth" style="width: 45%;">
 			<label for="birth">BIRTH</label>
 		</div>
+		
 		<div class="btn-area">
 			<button type="submit">JOIN!</button>
 			<button name="back" id="back" onclick="location='login.html'">BACK</button>
