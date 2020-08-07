@@ -8,11 +8,17 @@
 </head>
 <body>
     <div id=body_wrapper>
-		<div id=header_wrapper>
+        <div id="loginBar_wrapper">
+            <div id="loginBar" class="container">
+            <a href="#">회원가입</a>
+            <a href="#">로그인</a> 
+        </div>
+        </div>
+        <div id=header_wrapper>
 			<header id="header" class="container">
                 <!-- 로고 -->
 				<div id="logo">
-					<a href="home.html"><img alt="" src="../image/logo.png"/></a>
+					<a href="home.html"><img alt="" style="width:155px;height:55px;" src="../image/logo.png"/></a>
                 </div>
                 <!-- nav -->
 				<nav id="nav">
@@ -27,10 +33,10 @@
 							<a href="#">스터디 모집</a>
 						</li>
 						<li class="menu2" style="white-space: nowrap;">
-							<a href="#">메뉴2</a>
+							<a href="#">메뉴</a>
 						</li>
 						<li class="menu3" style="white-space: nowrap;">
-							<a href="#" >메뉴3</a>
+							<a href="#" >문의</a>
 						</li>
 					</ul>
 				</nav>

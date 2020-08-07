@@ -8,21 +8,37 @@ section,article,aside {
 	font: inherit;
 	vertical-align: baseline;   
 }
+.container {
+    margin: 0 auto;
+    width: 1280px;
+    max-width: 100%;
+}
 body{
     font-size: 13pt;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+/* header */
+div[id=loginBar_wrapper] {
+    background:rgb(50, 190, 120);
+    height: 30px;
+}
+div[id=loginBar] {
+    margin:0 auto;
+}
+div[id=loginBar] a {
+    text-decoration: none;
+    color: white;
+    font-size: 10pt;
+    padding-left: 10px;
+    line-height: 30px;
+    float: right;
+}
 #header_wrapper {
-    padding: 40px 0 30px;
+    padding: 5px 0 5px;
 }
 header {
     position:relative;
     display:flex;
-}
-.container {
-    margin: 0 auto;
-    width: 1200px;
-    max-width: 100%;
 }
 #logo {
     display:inline-block;
@@ -32,29 +48,28 @@ header {
     position:absolute;
     right:0px;
     top:0px;
-    font-size: 1.2em;
+    height: 50px;
 }
 #nav ul li {
     display: list-item;
     list-style: none;
     float:left;
     padding-left:2em;
-    line-height: 4.2em;
+    line-height: 59.8px;
 }
 #nav ul li a{
-    font-weight: 800;
+    font-weight: 550;
     text-decoration: none;
     color:black;
     padding: .5em;
     border-radius: 1rem;
     transition: all .3s;
 }
-/* #nav ul li a:hover{
-    background: rgb(50, 190, 120, 0.6);
-    color:white;
-    transition: all .3s;
-    border-radius: 1.5rem;
-} */
+#nav ul li[class="welcome"] a{
+    font-size: 16pt;
+    line-height: 40px;
+}
+/* banner */
 #banner{
     position: relative;
 }
