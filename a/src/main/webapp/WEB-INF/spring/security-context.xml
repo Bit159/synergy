@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="customLoginSuccess" class="user.CustomLoginSuccessHandler" />
+<!-- 기본값은 표현식이다. security:http 선언문 우측에 속성을 추가하면 된다-->
+<!-- <security:http auto-config="true" use-expressions="false"> -->
+<!-- intercept-url 태그를 이용해서 url 패턴에 따라 권한 체크해서 로그인창으로 보내버리는 코드이다. -->
+<!-- 여기서 사용되는 pattern 값은 Controller에서 매핑되는 path값과 같다는 것에 유의하자 -->
+<!-- 전체를 막고 일부를 permitAll 주던가, 아니면 전체를 막는 설정을 안하면 전체 열리니까 막을 것만 hasRole을 사용하던가. -->
+<security:http auto-config="true" use-expressions="true">
+	<security:intercept-url pattern="/map" access="hasRole('ROLE_ADMIN')" />
+	<security:intercept-url pattern="/board" access="hasRole('ROLE_MEMBER')" />
+	<!-- 시큐리티 기본 로그인 폼 -->
+	<!--<security:form-login/>-->
+	<!-- 커스텀 로그인 폼 : 반드시 GET 방식이어야 한다-->
+	<security:form-login login-page="/all/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
+	
+	<!-- 로그인은 되어있으나 없는 권한이 요구되었을 때 이동할 페이지를 관리해주는 핸들러-->
+	<!-- 인터페이스를 구현하는 방법이 더 권장되는 방식이다 -->
+	<!-- AccessDeniedHandler 인터페이스를 구현한 클래스를 작성한 뒤 ref 값으로 주면 된다 -->
+	<security:access-denied-handler error-page="/accessError"/>
+</security:http>
+<security:authentication-manager>
+	<security:authentication-provider>
+		<security:user-service>
+			<!-- member 게정으로 접속하면 권한이 한개이기 때문에 board는 되지만 map은 deny 뜬다 리디렉팅 보드다-->
+			<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER" />
+			<!-- admin 계정으로 접속하면 권한을 두개 갖기 때문에 map과 board 모두 갈 수 있다 리디렉팅 맵이다-->
+			<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN" />
+			<!-- lowMember 게정으로 접속하면 낮은 권한만 주어져서 메인페이지로 간다-->
+			<security:user name="lowMember" password="{noop}lowMember" authorities="ROLE_LOWMEMBER" />
+		</security:user-service>
+	</security:authentication-provider>
+</security:authentication-manager>
+
+</beans>

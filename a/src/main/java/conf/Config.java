@@ -78,10 +78,14 @@ public class Config {
 
 	
 	//----------------------------- Resolver -------------------------------------
-
+	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
-		return new InternalResourceViewResolver();
+		InternalResourceViewResolver irvr = new InternalResourceViewResolver();
+		irvr.setPrefix("/WEB-INF/views/");
+		irvr.setSuffix(".jsp");
+		irvr.setContentType("text/html;charset=utf-8");
+		return irvr;
 	}
 	
 	@Bean

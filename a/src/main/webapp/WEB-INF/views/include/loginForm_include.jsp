@@ -1,22 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+	
+<h1><c:out value="${error}" /></h1>
+<h1><c:out value="${logout}" /></h1>
 <section class="login-form">
 	<label for="sideicon" id="back"></label>
 	<h1>Let's Synergy</h1>
-	<form method="post" action="">
+	<form method="post" action="/login">
 		<div class="info-area">
-			<input type="text" name="id" id="id" autocomplete="off" required />
+			<input type="text" name="username" id="id" autocomplete="off" required />
 			<label for="id">EMAIL</label>
 		</div>
 
 		<div class="info-area">
-			<input type="password" name="pwd" autocomplete="off" id="pwd"
+			<input type="password" name="password" autocomplete="off" id="pwd"
 				required /> <label for="pwd">PASSWORD</label>
 		</div>
 		<div class="btn-area">
-			<button type="button" id="loginBtn">LOGIN</button>
+			<button type="submit" id="loginBtn">LOGIN</button>
 			<button onclick="location='index.jsp'">BACK</button>
 		</div>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
 	</form>
 	<div class="thirdParty" align="center" style="margin-top: 30px;">
 		<img src="/a/resources/image/google.png" /><br /> <img
@@ -30,7 +35,7 @@
 
 
 
-
+<!-- 
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
@@ -59,5 +64,6 @@
 				alert('error');
 			}
 		});
-	});
+	}); 
 </script>
+-->
