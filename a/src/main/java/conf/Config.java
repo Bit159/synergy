@@ -16,12 +16,14 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import controller.HomeController;
 
+@EnableAsync
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = { "user", "controller", "aop", "security" })
 @PropertySource("classpath:/db.properties")

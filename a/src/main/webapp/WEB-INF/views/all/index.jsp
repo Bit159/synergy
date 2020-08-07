@@ -5,8 +5,7 @@
 <head>
 <%@ include file="../include/head_include.jsp"%>
 <script async defer src="/a/resources/js/index.js"></script>
-<title>Synergy1
-</title>
+<title>Synergy1</title>
 
 <style>
 div[id="firstBanner"] {
@@ -86,11 +85,33 @@ button[id="joinButton"] {
 	}
 }
 </style>
+<meta name="google-signin-scope" content="profile email" />
+<meta name="google-site-verification"
+	content="fb6rIsh8WzJKvF5SCARFAzqdWF95ZEKdhPfXX2lLTzw" />
+<meta name="google-signin-client_id"
+	content="752749290235-0lrjurm4fdk31il80d87i99knklc9650.apps.googleusercontent.com" />
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
 	<%@ include file="../include/nav_include.jsp"%>
+	<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+	<script>
+		function onSignIn(googleUser) {
+			// Useful data for your client-side scripts:
+			var profile = googleUser.getBasicProfile();
+			console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+			console.log("Full Name: " + profile.getName());
+			console.log("Given Name: " + profile.getGivenName());
+			console.log("Family Name: " + profile.getFamilyName());
+			console.log("Image URL: " + profile.getImageUrl());
+			console.log("Email: " + profile.getEmail());
 
+			// The ID token you need to pass to your backend:
+			var id_token = googleUser.getAuthResponse().id_token;
+			console.log("ID Token: " + id_token);
+		}
+	</script>
 	<div id="firstBanner">
 		<img src="/a/resources/image/firstBanner.svg" id="firstBannerImage">
 		<span id="slogan">내 생애 첫 스터디는<br>Synergy와 함께!
@@ -101,8 +122,8 @@ button[id="joinButton"] {
 
 
 	<div>
-		<img src="/a/resources/image/firstBanner.svg"> <span
-			id="slogan">내 생애 첫 스터디는<br>Synergy와 함께!
+		<img src="/a/resources/image/firstBanner.svg"> <span id="slogan">내
+			생애 첫 스터디는<br>Synergy와 함께!
 		</span>
 	</div>
 	<a id="copyright" href="https://stories.freepik.com/technology">Illustration

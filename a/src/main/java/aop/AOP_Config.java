@@ -1,12 +1,12 @@
 package aop;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import user.Email;
@@ -22,6 +22,7 @@ public class AOP_Config {
 	@Autowired
 	private Email email;
 
+	@Async
 	@AfterReturning("execution(public * controller.HomeController.insertMatch(..))")
 	public void after() {
 		System.out.println("afterreturning 어드바이스 삽입!");
