@@ -7,22 +7,24 @@
 <title>synergy</title>
 </head>
 <body>
-	<div id=body_wrapper>
+    <div id=body_wrapper>
 		<div id=header_wrapper>
 			<header id="header" class="container">
+                <!-- 로고 -->
 				<div id="logo">
 					<a href="home.html"><img alt="" src="../image/logo.png"/></a>
-				</div>
+                </div>
+                <!-- nav -->
 				<nav id="nav">
 					<ul>
 						<li class="welcome" style="white-space: nowrap;">
-							<a href="home.html">welcome</a>
+							<a href="home.html">Welcome</a>
 						</li>
 						<li class="matching" style="white-space: nowrap;">
 							<a href="#">스터디 매칭</a>
 						</li>
 						<li class="menu1" style="white-space: nowrap;">
-							<a href="#">메뉴1</a>
+							<a href="#">스터디 모집</a>
 						</li>
 						<li class="menu2" style="white-space: nowrap;">
 							<a href="#">메뉴2</a>
@@ -33,7 +35,28 @@
 					</ul>
 				</nav>
 			</header>
-		</div>
+        </div>
+        <!-- 배너 -->
+        <div id="banner_wrapper">
+            <div id="banner" class="box container">
+                <div class=banner_content>
+                    <div class="banner_left">
+                        <div class="homeImg">
+                        <img src="../image/home.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="banner_right">
+                        <h2>Synergy Together</h2>
+                        <p>쉽고 빠른 스터디 매칭</p>
+                        <ul>
+                            <li>
+                                <a href="/synergy/all/loginForm" class="loginIcon">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 	</div>
 </body>
 </html>
