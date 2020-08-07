@@ -14,4 +14,5 @@ public class MemberDTO {
 	private String id;
 	private String nickname;
 	private String pw;
+	private String auth;
 }

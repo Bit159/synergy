@@ -11,7 +11,7 @@
 	
 	<security:http>
 		<security:intercept-url pattern="/all/*" access="permitAll"/>
-		<security:intercept-url pattern="/member/*" access="hasRole('ROLE_MEMBER')"/> 
+		<security:intercept-url pattern="/member/*" access="hasRole('ROLE_MEMBER')"/> <!-- ROLE_* -->
 		<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
 		
 		<!-- 
@@ -32,7 +32,7 @@
 		12. hasPermission(Object targetId, String targetType, Object permission)
 		-->
 	
-		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess"  />
+		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess" />
 		
 		<!-- 
 		1. login-page : login form 페이지 URL
@@ -47,7 +47,6 @@
 		-->
 		
 		<security:logout logout-success-url="/all/loginForm" invalidate-session="true" delete-cookies="remember-me,JSESSIONID" />
-		
 		
 		<!-- 
 		logout 요소

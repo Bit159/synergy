@@ -2,18 +2,15 @@ package member.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import member.bean.MemberDTO;
 import member.service.MemberService;
 
 @Controller
@@ -27,8 +24,15 @@ public class MemberController {
 	}
 
 	@GetMapping("/all/loginForm")
-	public String loginForm() {
+	public String loginForm(Model model) {
 		System.out.println("loginForm");
+		/*OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		String url = oauthOperations.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+		
+		System.out.println("구글 : " + url);
+		
+		model.addAttribute("google_url", url);*/
+		
 		return "/all/loginForm";
 	}
 
@@ -86,7 +90,12 @@ public class MemberController {
 		System.out.println(map.get("birthYear"));
 		memberService.join(map);
 		
-		return "/all/loginForm";
+		return "redirect:/all/loginForm";
+		
+		/*
+		 redirect:/ 방식은 주소를  url 요청을 다시 하는것.
+		 return 주소 방식은 단순히 해당하는 view를 보여주는 것.
+		 */
 
 	}
 	
@@ -99,5 +108,15 @@ public class MemberController {
 	public void logout() {
 		
 	}*/
+	
+	
+	//================================구글 로그인 콜백메소드
+	@RequestMapping(value="/oauth2callback", method= {RequestMethod.GET, RequestMethod.POST})
+	public String googleCallBack(Model model, @RequestParam String code) {
+		System.out.println("googleCallBack Method");
+		
+		return "googleSuccess";
+	}
+
 
 }

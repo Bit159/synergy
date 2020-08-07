@@ -41,7 +41,8 @@
 	<section class="login-form">
 		<label for="sideicon" id="back"></label>
 		<h1>Let's Synergy</h1>
-		<form method="post" action="/synergy/login" >
+		
+		<form id="loginForm" name="loginForm" method="post" action="/synergy/login" >
 			<div class="info-area">
 				<input type="text" name="username" id="username" autocomplete="off" required>
 				<label for="id">EMAIL</label>
@@ -53,14 +54,15 @@
 			</div>
 			<input type="checkbox" name="remember-me">자동로그인
 			<div class="btn-area">
-				<button id="loginBtn">LOGIN</button>
+				<button type="button" id="loginBtn" onclick="checkLogin()">LOGIN</button>
 				<button type="button" onclick="location='/synergy/index'">BACK</button>
 			</div>
 			
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 		</form>
+		
 		<div class="thirdParty" align="center" style="margin-top:30px;">
-			<img src="../resources/image/google.png"><br>
+			<a href="${google_url}"><img src="../resources/image/google.png"></a><br>
 			<img src="../resources/image/kakao_login_medium_narrow.png"><br>
 		</div>
 
