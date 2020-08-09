@@ -2,18 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:google="http://www.springframework.org/schema/social/google"
+	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/security/oauth2 https://www.springframework.org/schema/security/spring-security-oauth2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/social/google http://www.springframework.org/schema/social/spring-social-google.xsd">
 
 	<bean id="loginSuccess" class="member.controller.LoginSuccessHandler"></bean>
-	<bean id="passwordEncoder" class="member.controller.CustomPasswordEncoder"></bean>
-	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	
 	<security:http>
 		<security:intercept-url pattern="/all/*" access="permitAll"/>
 		<security:intercept-url pattern="/member/*" access="hasRole('ROLE_MEMBER')"/> <!-- ROLE_* -->
 		<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
 		
+
 		<!-- 
 		intercept-url 의 access 값  (SqEL 문법)
 		1. permitAll : 모든 접근 허용
@@ -47,7 +51,6 @@
 		-->
 		
 		<security:logout logout-success-url="/all/loginForm" invalidate-session="true" delete-cookies="remember-me,JSESSIONID" />
-		
 		<!-- 
 		logout 요소
 		1. logout-url : 로그아웃 요청할 경로. 기본값은 /logout. 사용자가 원하는 경로 지정해서 로그아웃 페이지로 이동해 처리 할 수 있음. 기본적으로 post로 요청할 수 있고 csrf가 적용되어 있음.
@@ -87,7 +90,7 @@
 		4. error-if-maximum-exceeded : max-sessions을 넘었을때 접속한 세션을 실패처리할지 여부 (expired-url와 얘중에 하나만 쓰면 될듯)
 		-->
 		
-		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800" />
 		
 		<!-- 
 		remember-me 속성
@@ -96,7 +99,7 @@
 		3. remember-me-cookies : 브라우저에 보관되는 쿠키의 이름을 지정. 기본값은 remember-me
 		4. remember-me-parameter : 웹 화면에서 로그인할 때 'remember-me'는 대부분 체크박스를 이용한다. 이 때 체크박스 태그는 name 속성을 의미.
 		5. token-validity-seconds : 쿠키의 유효시간 지정. 초단위이다. 7일 : 604800
-		 -->
+		 --> 
 		
 	</security:http>
 	
@@ -104,11 +107,12 @@
 		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource" 
 										users-by-username-query="select username, password, enabled from membertable where username=?"
-										authorities-by-username-query="select username, auth as authority from membertable where username=?"/>
+										authorities-by-username-query="select username, auth as authority from membertable where username=?" />
 										
-			<security:password-encoder ref="bcryptPasswordEncoder" />
+			<security:password-encoder ref="passwordEncoder" />
 		</security:authentication-provider>
-	</security:authentication-manager>
+	</security:authentication-manager>	
+	
 </beans>
 
 

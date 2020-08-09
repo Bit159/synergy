@@ -7,7 +7,7 @@
 <title>회원가입</title>
 <link rel="stylesheet" href="../resources/css/join.css">
 <script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script defer type="text/javascript" scr="../resources/js/join.js"></script>
+<script defer type="text/javascript" src="../resources/js/join.js"></script>
 </head>
 <body>
 <div class="nav">

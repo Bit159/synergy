@@ -5,7 +5,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
@@ -24,6 +26,34 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+	<!-- json -->
+	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<beans:property name="contentType" value="text/html;charset=UTF-8"/>
+	</beans:bean>
+	
+	<beans:bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	
+	<!-- 구글 로그인 -->
+	<beans:bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<beans:constructor-arg value="484831364576-cb7gn0d6givpfgleqee8dat0i8da8rc1.apps.googleusercontent.com"></beans:constructor-arg>
+		<beans:constructor-arg value="E_aX6i5hmM0TA6FhEnMUoSVh"></beans:constructor-arg>
+	</beans:bean>
+	
+	<beans:bean id="googleOAuth2Parameter" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<beans:property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
+		<beans:property name="redirectUri" value="http://localhost:8080/synergy/googleLogin"/>
+	</beans:bean>
+	
+	<websocket:handlers>
+		<websocket:mapping handler="chatHandler" path="/chat"/>
+	</websocket:handlers>
+	
+	<beans:bean id="chatHandler" class="member.controller.ChatHandler"></beans:bean>
+	
 	
 	<context:component-scan base-package="member.controller"/>
 </beans:beans>

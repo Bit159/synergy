@@ -22,6 +22,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 			roleNames.add(authority.getAuthority());
 		});
 		
+		
 		System.out.println(roleNames.get(0));
 		
 		if(roleNames.contains("ROLE_ADMIN")) { 

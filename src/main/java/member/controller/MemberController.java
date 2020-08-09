@@ -3,6 +3,17 @@ package member.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.google.security.GoogleAuthenticationService;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import member.service.MemberService;
 
 @Controller
-public class MemberController {
+public class MemberController{
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameter;
 	
 	@GetMapping("index")
 	public String index() {
@@ -25,13 +40,9 @@ public class MemberController {
 
 	@GetMapping("/all/loginForm")
 	public String loginForm(Model model) {
-		System.out.println("loginForm");
-		/*OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-		String url = oauthOperations.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-		
-		System.out.println("구글 : " + url);
-		
-		model.addAttribute("google_url", url);*/
+		OAuth2Operations oauth2Operations = googleConnectionFactory.getOAuthOperations();
+		String url = oauth2Operations.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameter);
+		model.addAttribute("google_url", url);
 		
 		return "/all/loginForm";
 	}
@@ -109,13 +120,16 @@ public class MemberController {
 		
 	}*/
 	
+	@GetMapping("/all/googleSuccess")
+	public String googleSuccess() {
+		return "/all/googleSuccess";
+	}
+	
 	
 	//================================구글 로그인 콜백메소드
-	@RequestMapping(value="/oauth2callback", method= {RequestMethod.GET, RequestMethod.POST})
-	public String googleCallBack(Model model, @RequestParam String code) {
-		System.out.println("googleCallBack Method");
-		
-		return "googleSuccess";
+	@RequestMapping(value="/googleLogin", method= {RequestMethod.GET, RequestMethod.POST})
+	public String googleCallBack(@RequestParam String code) {
+		return "redirect:/all/googleSuccess";
 	}
 
 
