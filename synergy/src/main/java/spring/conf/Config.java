@@ -23,7 +23,7 @@ import com.spring.synergy.HomeController;
 
 
 
-@ComponentScan(basePackages = { "user" })
+@ComponentScan(basePackages = { "user", "board" })
 @PropertySource("classpath:/db.properties")
 @Configuration
 public class Config {

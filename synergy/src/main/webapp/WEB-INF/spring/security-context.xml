@@ -7,6 +7,11 @@
 	
 	<!-- <bean id="customAccessDenied" class="com.spring.security.CustomAccessDeniedHandler"></bean> -->
 	<bean id="customLoginSuccess" class="com.spring.security.CustomLoginSuccessHandler"></bean>
+	
+	<!-- <bean id="customPasswordEncoder" class="com.spring.security.CustomNoOpPasswordEncoder"></bean> -->
+	
+	<bean id="bcryPasswordEncorder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
 	<security:http auto-config="true" use-expressions="true">
 	
 		<security:intercept-url pattern="/sample/all" access="permitAll"/>
@@ -39,13 +44,24 @@
 	<security:authentication-manager>
 	
 		<security:authentication-provider>
+		
+			
+			<!-- 
 			<security:user-service>
 				
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
 				
 				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
 				
-			</security:user-service>
+			</security:user-service> 
+			--> 
+			
+			
+			<security:jdbc-user-service data-source-ref="dataSource"/>
+			
+			<!-- change to Bcrypt <security:password-encoder ref="customPasswordEncoder"/> -->
+			
+			<security:password-encoder ref="bcryPasswordEncorder"/>
 			
 		</security:authentication-provider>
 	

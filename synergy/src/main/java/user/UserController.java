@@ -40,4 +40,9 @@ public class UserController {
 	public String welcome() {
 		return "/user/welcome";
 	}
+	
+	@RequestMapping(value="/user/signUpForm",method=RequestMethod.GET)
+	public String signUpForm() {
+		return "/user/signUpForm";
+	}
 }
