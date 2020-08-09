@@ -19,6 +19,7 @@
 		<p>	선택이 완료되었다면 완료 버튼을 눌러주세요	<button type="button" style="width:50px;height:30px;" onclick="xydbclose()">완료!!</button></p>
 		</div>
 		<img id="loading" src="/a/resources/image/loading.svg" />
+		<a href="/a/mylogout">로그아웃</a>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41be22a5170d5fc6115853c77dc3d45e"></script>
 	<script src="/a/resources/js/synergymap.js"></script>
 	<script src="/a/resources/js/kakaomap.js"></script>

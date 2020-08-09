@@ -30,13 +30,17 @@ public class HomeController {
 	@GetMapping("/join") public String signup() { return "all/join"; }
 	@GetMapping("/accessError") public String accessDenied() { return "all/accessDenied"; }
 	
-	@GetMapping("/all/customLogin") public void loginInput(String error, String logout, Model model) {
+	@GetMapping("/mylogin") public void loginInput(String error, String logout, Model model) {
 		logger.info("error: " + error);
 		logger.info("logout: " + logout);
 		
 		if(error != null) model.addAttribute("error", "Login Error Occured! Check Your Account");
 		if(logout != null) model.addAttribute("logout", "Logout!");
 	}
+	
+	@GetMapping("/mylogout")
+	public void logoutGET() {logger.info("custom logout");}
+	
 
 	@PostMapping(path="/insertMatch", produces="application/json;charset=UTF-8")
 	public @ResponseBody String insertMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {

@@ -17,8 +17,9 @@
 	<!-- 시큐리티 기본 로그인 폼 -->
 	<!--<security:form-login/>-->
 	<!-- 커스텀 로그인 폼 : 반드시 GET 방식이어야 한다-->
-	<security:form-login login-page="/all/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
-	
+	<!--  <security:form-login />-->
+	<security:form-login login-page="/mylogin" authentication-success-handler-ref="customLoginSuccess"/>
+	<security:logout logout-url="/mylogout" invalidate-session="true" />
 	<!-- 로그인은 되어있으나 없는 권한이 요구되었을 때 이동할 페이지를 관리해주는 핸들러-->
 	<!-- 인터페이스를 구현하는 방법이 더 권장되는 방식이다 -->
 	<!-- AccessDeniedHandler 인터페이스를 구현한 클래스를 작성한 뒤 ref 값으로 주면 된다 -->

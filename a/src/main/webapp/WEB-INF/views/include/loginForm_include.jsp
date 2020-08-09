@@ -7,7 +7,7 @@
 <section class="login-form">
 	<label for="sideicon" id="back"></label>
 	<h1>Let's Synergy</h1>
-	<form method="post" action="/login">
+	<form method="post" action="/a/login">
 		<div class="info-area">
 			<input type="text" name="username" id="id" autocomplete="off" required />
 			<label for="id">EMAIL</label>
