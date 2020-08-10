@@ -7,5 +7,6 @@
 	<typeAliases>
 		<typeAlias type="user.UserDTO" alias="userDTO" />
 		<typeAlias type="user.MatchDTO" alias="matchDTO" />
+		<typeAlias type="user.CBoardDTO" alias="cboardDTO" />
 	</typeAliases>
 </configuration>

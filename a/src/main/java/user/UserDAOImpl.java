@@ -63,6 +63,11 @@ public class UserDAOImpl implements UserDAO {
 	public int deleteMatched(List<MatchDTO> list) {
 		return sqlSession.delete("userSQL.deleteMatched", list);
 	}
+
+	@Override
+	public int crawlBoard(List<CBoardDTO> list) {
+		return sqlSession.insert("userSQL.crawlInsert, list");
+	}
 	
 	
 

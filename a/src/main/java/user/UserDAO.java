@@ -11,4 +11,5 @@ public interface UserDAO {
 	public abstract int insertMatch(MatchDTO matchDTO);
 	public abstract List<MatchDTO> selectAllFromMatch();
 	public abstract int deleteMatched(List<MatchDTO> list);
+	public abstract int crawlBoard(List<CBoardDTO> list);
 }

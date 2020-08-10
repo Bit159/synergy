@@ -6,20 +6,21 @@
 <mapper namespace="userSQL">
 
 	<select id="selectAllFromUsertable" resultType="userDTO">
-		SELECT * FROM
-		db.usertable
+		SELECT * FROM db.usertable
 	</select>
-
 
 	<select id="selectAllFromMatch" resultType="matchDTO">
-		SELECT * FROM
-		db.match
+		SELECT * FROM db.match
 	</select>
 
-
 	<insert id="insertMatch" parameterType="matchDTO">
-		INSERT INTO db.match
-		VALUES(#{email}, #{x}, #{y}, #{range})
+		INSERT INTO db.match VALUES(#{email}, #{x}, #{y}, #{range})
+	</insert>
+	<insert id="crawlInsert" parameterType="java.util.list">
+		INSERT INTO db.cboard(`title`, `nickname`, `boarddate`)
+		<foreach collection="list" item="item" separator="OR">
+		 	VALUES(#{title}, #{nickname}, now())
+		 </foreach>
 	</insert>
 
 	<delete id="deleteMatched" parameterType="java.util.List">
