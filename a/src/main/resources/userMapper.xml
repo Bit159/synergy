@@ -8,7 +8,8 @@
 	<select id="selectAllFromUsertable" resultType="userDTO">
 		SELECT * FROM db.usertable
 	</select>
-
+	
+	<!-- 지도용 -->
 	<select id="selectAllFromMatch" resultType="matchDTO">
 		SELECT * FROM db.match
 	</select>
@@ -16,21 +17,45 @@
 	<insert id="insertMatch" parameterType="matchDTO">
 		INSERT INTO db.match VALUES(#{email}, #{x}, #{y}, #{range})
 	</insert>
-	<insert id="crawlInsert" parameterType="java.util.list">
-		INSERT INTO db.cboard(`title`, `nickname`, `boarddate`)
-		<foreach collection="list" item="item" separator="OR">
-		 	VALUES(#{title}, #{nickname}, now())
-		 </foreach>
-	</insert>
-
+	
 	<delete id="deleteMatched" parameterType="java.util.List">
 		DELETE FROM db.match
 		<where>
 			<foreach collection="list" item="item" separator="OR">
-				(`email`=#{item.email} AND `x`=#{item.x} AND `y`=#{item.y} AND `range`=#{item.range})
+				(`email`=#{item.email} AND `x`=#{item.x} AND `y`=#{item.y} AND
+				`range`=#{item.range})
 			</foreach>
 		</where>
 	</delete>
+	<!-- 지도용 -->
+	
+	<!-- 크롤링용 : jdbc 커넥션부분에 allowMultiQueries=true 필요할지도-->
+	<insert id="crawlInsert" parameterType="java.util.List">
+		INSERT INTO db.cboard(`bno`, `title`, `nickname`, `boarddate`) VALUES
+		<foreach collection="list" item="item" separator=",">
+			 (#{item.bno}, #{item.title}, #{item.nickname}, #{item.boarddate})
+		</foreach>
+	</insert>
+	
+	<select id="getEmptyContentBno" resultType="String">
+		SELECT `bno` FROM db.cboard WHERE `content` IS NULL;
+	</select>
+	
+	<insert id="insertContents" parameterType="java.util.List">
+		UPDATE db.cboard set `content`= case
+		<foreach collection="list" item="item" separator="">
+			when `bno`=#{item.bno} then #{item.content}
+		</foreach>
+			end where `bno` in 
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item.bno}
+		</foreach>
+		
+	</insert>
+	
+	<!-- 크롤링용 -->
+
+
 
 	<select id="selectOne" parameterType="java.lang.String"
 		resultType="userDTO">

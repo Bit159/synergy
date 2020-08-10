@@ -65,8 +65,18 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int crawlBoard(List<CBoardDTO> list) {
-		return sqlSession.insert("userSQL.crawlInsert, list");
+	public int crawlInsert(List<CBoardDTO> list) {
+		return sqlSession.insert("userSQL.crawlInsert", list);
+	}
+
+	@Override
+	public List<String> getEmptyContentBno() {
+		return sqlSession.selectList("userSQL.getEmptyContentBno");
+	}
+
+	@Override
+	public int insertContents(List<CBoardDTO> list) {
+		return sqlSession.insert("userSQL.insertContents", list);
 	}
 	
 	
