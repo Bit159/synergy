@@ -5,11 +5,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-signin-scope" content="profile email" />
+	<meta name="google-site-verification" content="fb6rIsh8WzJKvF5SCARFAzqdWF95ZEKdhPfXX2lLTzw" />
+	<meta name="google-signin-client_id" content="752749290235-0lrjurm4fdk31il80d87i99knklc9650.apps.googleusercontent.com" />
     <title>Let's Synergy!</title>
     <link rel="shortcut icon" href="../resources/image/logo.png" />
     <link rel="stylesheet" href="../resources/css/index.css" />
     <script defer type="text/javascript" src="../resources/js/index.js"></script>
-  </head>
+	<script defer src="https://apis.google.com/js/platform.js"></script>
+	<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+      </head>
   <body>
     <div class="nav">
       <nav>
@@ -112,5 +117,36 @@
     </div>
 
       <input type="button" value="맨위로" id="topButton">
+      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log("Full Name: " + profile.getName());
+        console.log("Given Name: " + profile.getGivenName());
+        console.log("Family Name: " + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+        
+        if(profile.getEmail() != ''){
+        	return;
+        }
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+        
+        $.ajax({
+        	alert('ajax');
+        	type : 'post',
+        	url  : '/synergy/all/checkMember',
+        	data : 'username=' + profile.getEmail(),
+			success : function(){
+				
+			}        	
+        });
+      }
+    </script>
   </body>
 </html>

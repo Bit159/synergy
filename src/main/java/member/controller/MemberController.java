@@ -2,6 +2,8 @@ package member.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,12 +18,15 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import member.bean.MemberDTO;
 import member.service.MemberService;
 
 @Controller
@@ -34,7 +39,7 @@ public class MemberController{
 	private OAuth2Parameters googleOAuth2Parameter;
 	
 	@GetMapping("index")
-	public String index() {
+	public String index(HttpSession session) {
 		return "/all/index";
 	}
 
@@ -98,7 +103,6 @@ public class MemberController{
 		 * System.out.println("KEY : " + key); // Key2 , Key1, Key5, Key4, Key3 }
 		 */
 		
-		System.out.println(map.get("birthYear"));
 		memberService.join(map);
 		
 		return "redirect:/all/loginForm";
@@ -129,7 +133,23 @@ public class MemberController{
 	//================================구글 로그인 콜백메소드
 	@RequestMapping(value="/googleLogin", method= {RequestMethod.GET, RequestMethod.POST})
 	public String googleCallBack(@RequestParam String code) {
-		return "redirect:/all/googleSuccess";
+		return "redirect:/index";
+	}
+	
+	@RequestMapping(value="/all/checkMember")
+	public String checkMember(@RequestParam String username) {
+		MemberDTO memberDTO = memberService.checkMember(username);
+		
+		if(memberDTO == null) {
+			
+		}
+		
+		return "";
+	}
+	
+	@GetMapping("/member/chatting")
+	public String chatting() {
+		return "/member/chatting";
 	}
 
 

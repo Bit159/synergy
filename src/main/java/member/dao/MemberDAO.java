@@ -10,4 +10,6 @@ public interface MemberDAO {
 
 	public void join(Map<String, String> map);
 
+	public MemberDTO checkMember(String username);
+
 }

@@ -5,9 +5,7 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:websocket="http://www.springframework.org/schema/websocket"
-	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
@@ -47,13 +45,6 @@
 		<beans:property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
 		<beans:property name="redirectUri" value="http://localhost:8080/synergy/googleLogin"/>
 	</beans:bean>
-	
-	<websocket:handlers>
-		<websocket:mapping handler="chatHandler" path="/chat"/>
-	</websocket:handlers>
-	
-	<beans:bean id="chatHandler" class="member.controller.ChatHandler"></beans:bean>
-	
 	
 	<context:component-scan base-package="member.controller"/>
 </beans:beans>

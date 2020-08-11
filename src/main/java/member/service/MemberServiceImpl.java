@@ -28,4 +28,9 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.join(map);
 		
 	}
+
+	@Override
+	public MemberDTO checkMember(String username) {
+		return memberDAO.checkMember(username);
+	}
 }

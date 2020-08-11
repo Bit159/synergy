@@ -17,7 +17,6 @@
 		<security:intercept-url pattern="/member/*" access="hasRole('ROLE_MEMBER')"/> <!-- ROLE_* -->
 		<security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
 		
-
 		<!-- 
 		intercept-url 의 access 값  (SqEL 문법)
 		1. permitAll : 모든 접근 허용
@@ -36,7 +35,7 @@
 		12. hasPermission(Object targetId, String targetType, Object permission)
 		-->
 	
-		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess" />
+		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess"/>
 		
 		<!-- 
 		1. login-page : login form 페이지 URL
@@ -51,6 +50,7 @@
 		-->
 		
 		<security:logout logout-success-url="/all/loginForm" invalidate-session="true" delete-cookies="remember-me,JSESSIONID" />
+		
 		<!-- 
 		logout 요소
 		1. logout-url : 로그아웃 요청할 경로. 기본값은 /logout. 사용자가 원하는 경로 지정해서 로그아웃 페이지로 이동해 처리 할 수 있음. 기본적으로 post로 요청할 수 있고 csrf가 적용되어 있음.
@@ -60,9 +60,19 @@
 		5. delete-cookies : 로그아웃시 제거할 쿠키 이름을 지정.
 		-->
 		
-		<security:session-management>
+		<security:session-management invalid-session-url="/all/loginForm" session-fixation-protection="changeSessionId">
 			<security:concurrency-control max-sessions="1" expired-url="/all/loginForm"/>
-		</security:session-management> 
+		</security:session-management>
+		
+		<!-- 
+		session-management : 세션관리.
+			invalid-session-url : 중복 로그인 발생시 이동하는 url
+			session-fixation-protection : 세션 고정공격 방어
+				1. none : 세션 고정 공격에 대응하지 않음.
+				2. newSession : 세션을 새로 만들고 기존의 데이터는 보존하지 않음.
+				3. changeSessionId : 세션 id를 변경하고 세션 내용은 보존. 3.1 이상부터
+				4. migrateSession : 3.0 이하
+		 -->
 		 
 		<!-- <security:csrf disabled="true"/>  -->
 		
