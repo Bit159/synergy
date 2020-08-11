@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import user.CBoardDTO;
+import user.Email;
 import user.UserDAO;
 
 
@@ -25,11 +26,15 @@ public class Crawler {
 	private UserDAO userDAO;
 	@Autowired
 	private CBoardDTO cboardDTO;
-	private static final int HOUR = 36000;
+	private static final int HOUR = 1000*3600;
+	@Autowired
+	private Email email;
+
 	
 	@Async
-	@Scheduled(fixedDelay=HOUR*3)
+	@Scheduled(fixedDelay=HOUR)
     public void getList() {
+		
         /*
             Document 클래스 : 연결해서 얻어온 HTML 전체 문서
             Element 클래스  : Documnet의 HTML 요소
@@ -48,23 +53,25 @@ public class Crawler {
         Elements titles = doc.select(selector); // -- 2. doc에서 selector의 내용을 가져와 Elemntes 클래스에 담는다.
         
         List<CBoardDTO> list = new ArrayList<CBoardDTO>();
+        int standard = userDAO.getGreatestBno();
         
         for(Element element: titles) {
+        	
         	cboardDTO = new CBoardDTO();
+        	
         	String fullSource = element.text();
-            System.out.println(fullSource);
         	//#754380 정기모임/스터디 자연어 텍스트 nlp 딥러닝 자연어 처리 스터디 모집 0 0 460 오키동 10 2020-08-05 11:20:32
-            
+        	
             int bno = Integer.parseInt(element.getElementsByClass("list-group-item-text article-id").text().substring(1));
-            System.out.println(bno);
-            //#754380
+            //#754380 -> substring -> 754380
+            
+            // db에 있는 글 번호중 가장 큰 값 보다 작을 경우 skip한다.
+            if(bno <= standard) continue;            
             
             String title = element.getElementsByClass("list-group-item-heading list-group-item-evaluate").text();
-            System.out.println(title);
             //[온라인] 알고리즘 스터디 인원 추가합니다
             
             String nickname = element.getElementsByClass("nickname").text();
-            System.out.println(nickname);
             //오키동
             
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -72,14 +79,10 @@ public class Crawler {
             Date date = new Date();
             try {
 				date = sdf.parse(_date);
+	          //2020-08-05 10:12:56
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-            System.out.println(date);
-            //2020-08-05 10:12:56
-            
-            System.out.println();
-            System.out.println();
 
             cboardDTO.setBno(bno);
             cboardDTO.setTitle(title);
@@ -88,18 +91,17 @@ public class Crawler {
             list.add(cboardDTO);
         }
         
-        
-        for(CBoardDTO dto : list)System.out.println(dto.toString());
-        
+        if(list.size()==0) return;
         try{userDAO.crawlInsert(list);
         }catch(Exception e) {
+        	email.send("jpcnani@naver.com", "글 목록 db 입력 중 예외가 발생하였습니다!");
         }
-        
+        email.send("jpcnani@naver.com", "목록 크롤링 완료!");
         System.out.println("--------------------------");
     }
 	
 	@Async
-	@Scheduled(fixedDelay=HOUR*1)
+	@Scheduled(fixedDelay=HOUR)
     public void getContent() {
 		List<String> list = userDAO.getEmptyContentBno();
 		if(list.size() == 0) return;
@@ -122,6 +124,7 @@ public class Crawler {
 		}
 
 		userDAO.insertContents(insertList);
+		email.send("jpcnani@naver.com", "글내용 크롤링 성공!");
 	}
 
 }

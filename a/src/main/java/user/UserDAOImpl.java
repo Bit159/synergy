@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
 
-@Repository("userDAO")
+@Repository
 @Transactional
 @Setter
 public class UserDAOImpl implements UserDAO {
@@ -77,6 +77,11 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public int insertContents(List<CBoardDTO> list) {
 		return sqlSession.insert("userSQL.insertContents", list);
+	}
+
+	@Override
+	public int getGreatestBno() {
+		return sqlSession.selectOne("userSQL.getGreatestBno");
 	}
 	
 	

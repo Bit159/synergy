@@ -18,4 +18,5 @@ public interface UserDAO {
 	public abstract int crawlInsert(List<CBoardDTO> list);
 	public abstract List<String> getEmptyContentBno();
 	public abstract int insertContents(List<CBoardDTO> list);
+	public abstract int getGreatestBno();
 }

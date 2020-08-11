@@ -50,9 +50,11 @@
 		<foreach collection="list" item="item" separator="," open="(" close=")">
 			#{item.bno}
 		</foreach>
-		
 	</insert>
 	
+	<select id="getGreatestBno" resultType="java.lang.Integer">
+		SELECT MAX(`bno`) FROM db.cboard
+	</select>	
 	<!-- 크롤링용 -->
 
 
