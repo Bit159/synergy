@@ -7,7 +7,7 @@
 <title>회원가입</title>
 <link rel="stylesheet" href="../resources/css/join.css">
 <script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script defer type="text/javascript" scr="../resources/js/join.js"></script>
+<script defer type="text/javascript" src="../resources/js/join.js"></script>
 </head>
 <body>
 <div class="nav">
@@ -34,22 +34,22 @@
 	<form action="/synergy/join" method="post">
 		<div class="join-area">
 			<input type="text" name="username" id="username" autocomplete="off" required>
-			<label for="email">E-MAIL</label>
+			<label for="username">E-MAIL</label>
 		</div>
 		
 		<div class="join-area">
 			<input type="text" name="nickname" id="nickname" autocomplete="off" required>
-			<label for="id">NICKNAME</label>
+			<label for="nickname">NICKNAME</label>
 		</div>
 		
 		<div class="join-area">
 			<input type="password" name="password" id="password" autocomplete="off" required>
-			<label for="pwd">PASSWORD</label>
+			<label for="password">PASSWORD</label>
 		</div>
 		
 		<div class="join-area">
 			<input type="password" name="repwd" id="repwd" autocomplete="off" required>
-			<label for="REpwd">RE-PASSWORD</label>
+			<label for="repwd">RE-PASSWORD</label>
 		</div>
 	
 		<div class="join-area">

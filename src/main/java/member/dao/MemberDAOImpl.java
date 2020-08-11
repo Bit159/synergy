@@ -25,4 +25,9 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.insert("memberSQL.join", map);
 		
 	}
+
+	@Override
+	public MemberDTO checkMember(String username) {
+		return sqlSession.selectOne("memberSQL.checkMember", username);
+	}
 }

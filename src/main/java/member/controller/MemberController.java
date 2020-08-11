@@ -2,36 +2,52 @@ package member.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.google.security.GoogleAuthenticationService;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import member.bean.MemberDTO;
 import member.service.MemberService;
 
 @Controller
-public class MemberController {
+public class MemberController{
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameter;
 	
 	@GetMapping("index")
-	public String index() {
+	public String index(HttpSession session) {
 		return "/all/index";
 	}
 
 	@GetMapping("/all/loginForm")
 	public String loginForm(Model model) {
-		System.out.println("loginForm");
-		/*OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-		String url = oauthOperations.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-		
-		System.out.println("구글 : " + url);
-		
-		model.addAttribute("google_url", url);*/
+		OAuth2Operations oauth2Operations = googleConnectionFactory.getOAuthOperations();
+		String url = oauth2Operations.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameter);
+		model.addAttribute("google_url", url);
 		
 		return "/all/loginForm";
 	}
@@ -87,7 +103,6 @@ public class MemberController {
 		 * System.out.println("KEY : " + key); // Key2 , Key1, Key5, Key4, Key3 }
 		 */
 		
-		System.out.println(map.get("birthYear"));
 		memberService.join(map);
 		
 		return "redirect:/all/loginForm";
@@ -109,13 +124,32 @@ public class MemberController {
 		
 	}*/
 	
+	@GetMapping("/all/googleSuccess")
+	public String googleSuccess() {
+		return "/all/googleSuccess";
+	}
+	
 	
 	//================================구글 로그인 콜백메소드
-	@RequestMapping(value="/oauth2callback", method= {RequestMethod.GET, RequestMethod.POST})
-	public String googleCallBack(Model model, @RequestParam String code) {
-		System.out.println("googleCallBack Method");
+	@RequestMapping(value="/googleLogin", method= {RequestMethod.GET, RequestMethod.POST})
+	public String googleCallBack(@RequestParam String code) {
+		return "redirect:/index";
+	}
+	
+	@RequestMapping(value="/all/checkMember")
+	public String checkMember(@RequestParam String username) {
+		MemberDTO memberDTO = memberService.checkMember(username);
 		
-		return "googleSuccess";
+		if(memberDTO == null) {
+			
+		}
+		
+		return "";
+	}
+	
+	@GetMapping("/member/chatting")
+	public String chatting() {
+		return "/member/chatting";
 	}
 
 

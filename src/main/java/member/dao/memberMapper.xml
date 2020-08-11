@@ -11,6 +11,10 @@
 	<insert id="join" parameterType="java.util.Map">
 		insert into membertable(username, nickname, password, birthyear ) values(#{username}, #{nickname}, #{password}, #{birthYear})
 	</insert>
+	
+	<select id="checkMember" parameterType="String">
+		select * from membertable where username=#{username}
+	</select>
  </mapper>
  
  <!-- insert into usertable(id, pw, nickname, email, birthyear) values(#{id}, #{pw}, #{nickname}, #{email}, #{birthYear}) -->

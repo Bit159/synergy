@@ -4,6 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="google-signin-scope" content="profile email" />
+<meta name="google-site-verification" content="fb6rIsh8WzJKvF5SCARFAzqdWF95ZEKdhPfXX2lLTzw"/>
+<meta name="google-signin-client_id" content="752749290235-0lrjurm4fdk31il80d87i99knklc9650.apps.googleusercontent.com"/>
+
 <title>로그인</title>
 <link rel="stylesheet" href="../resources/css/login.css">
 <script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -45,12 +49,12 @@
 		<form id="loginForm" name="loginForm" method="post" action="/synergy/login" >
 			<div class="info-area">
 				<input type="text" name="username" id="username" autocomplete="off" required>
-				<label for="id">EMAIL</label>
+				<label for="username">EMAIL</label>
 			</div>
 
 			<div class="info-area">
 				<input type="password" name="password" id="password" autocomplete="off" required>
-				<label for="pw">PASSWORD</label>
+				<label for="password">PASSWORD</label>
 			</div>
 			<input type="checkbox" name="remember-me">자동로그인
 			<div class="btn-area">

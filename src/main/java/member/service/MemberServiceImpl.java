@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	@Autowired
-	private BCryptPasswordEncoder encoder;
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public MemberDTO login(Map<String, String> map) {
@@ -23,9 +23,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public void join(Map<String, String> map) {
-		String password = encoder.encode(map.get("password"));
+		String password = passwordEncoder.encode(map.get("password"));
 		map.replace("password", password);
 		memberDAO.join(map);
 		
+	}
+
+	@Override
+	public MemberDTO checkMember(String username) {
+		return memberDAO.checkMember(username);
 	}
 }
