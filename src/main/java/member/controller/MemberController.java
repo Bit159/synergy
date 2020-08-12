@@ -4,27 +4,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
-import org.springframework.social.google.security.GoogleAuthenticationService;
-import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import member.bean.MemberDTO;
 import member.service.MemberService;
@@ -39,7 +34,7 @@ public class MemberController{
 	private OAuth2Parameters googleOAuth2Parameter;
 	
 	@GetMapping("index")
-	public String index(HttpSession session) {
+	public String index() {
 		return "/all/index";
 	}
 
@@ -124,27 +119,45 @@ public class MemberController{
 		
 	}*/
 	
-	@GetMapping("/all/googleSuccess")
-	public String googleSuccess() {
-		return "/all/googleSuccess";
-	}
-	
-	
 	//================================구글 로그인 콜백메소드
 	@RequestMapping(value="/googleLogin", method= {RequestMethod.GET, RequestMethod.POST})
 	public String googleCallBack(@RequestParam String code) {
+		
 		return "redirect:/index";
 	}
 	
-	@RequestMapping(value="/all/checkMember")
-	public String checkMember(@RequestParam String username) {
+	@PostMapping("/all/checkMember")
+	@ResponseBody
+	public String checkMember(@RequestParam String username, RedirectAttributes redirectAtt, HttpSession session) {
 		MemberDTO memberDTO = memberService.checkMember(username);
+		redirectAtt.addAttribute("username", username);
 		
-		if(memberDTO == null) {
+		if(memberDTO != null) {
+			return "ok";
 			
+		}else {
+			return "none";
 		}
 		
-		return "";
+	}
+	
+	@GetMapping("/all/addInfoForm")
+	public String addInfoForm(@RequestParam String username, Model model) {	
+		model.addAttribute("username", username);
+		return "/all/addInfoForm";
+	}
+	
+	@PostMapping("all/addInfo")
+	public String addInfo(@ModelAttribute MemberDTO memberDTO) {
+		Map<String, String> map = new HashedMap<String, String>();
+		map.put("username", memberDTO.getUsername());
+		map.put("password", memberDTO.getPassword());
+		map.put("nickname", memberDTO.getNickname());
+		map.put("birthYear", memberDTO.getBirthYear());
+		
+		memberService.join(map);
+		
+		return "/all/index";
 	}
 	
 	@GetMapping("/member/chatting")

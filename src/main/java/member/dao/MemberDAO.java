@@ -12,4 +12,6 @@ public interface MemberDAO {
 
 	public MemberDTO checkMember(String username);
 
+	public void addInfo(MemberDTO memberDTO);
+
 }

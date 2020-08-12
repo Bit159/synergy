@@ -12,7 +12,6 @@
         <input type="text" id="messageinput">
     </div>
     <div>
-        <button type="button" onclick="openSocket();">Open</button>
         <button type="button" onclick="send();">Send</button>
         <button type="button" onclick="closeSocket();">Close</button>
     </div>
@@ -22,7 +21,7 @@
 let ws;
 let messages = document.getElementById("messages");
 
-function openSocket(){
+window.onload=function openSocket(){
     if(ws!==undefined && ws.readyState!==ws.CLOSED){
         writeResponse("WebSocket is already opened.");
         return;
@@ -35,23 +34,27 @@ function openSocket(){
         
         writeResponse(event.data);
     };
+    
     ws.onmessage=function(event){
         writeResponse(event.data);
     };
+    
     ws.onclose=function(event){
         writeResponse("Connection closed");
     }
 }
 
 function send(){
-    let text=document.getElementById("messageinput").value+"," + document.getElementById("sender").value;
+    let text = document.getElementById("messageinput").value + "," + document.getElementById("sender").value;
     ws.send(text);
-    text="";
+    text = "";
+    document.getElementById("messageinput").value="";
 }
 
 function closeSocket(){
 	ws.close();
 }
+
 function writeResponse(text){
     messages.innerHTML+="<br/>"+text;
 }

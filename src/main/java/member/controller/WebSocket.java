@@ -29,7 +29,7 @@ public class WebSocket {
 	@OnOpen
 	public void onOpen(Session session) {
 		logger.info("Open Session Id : " + session.getId());
-		System.out.println(session.getId());
+		System.out.println("Open Session Id : " + session.getId());
 		try {
 			final Basic basic = session.getBasicRemote();
 			basic.sendText("connection establish");
@@ -46,7 +46,7 @@ public class WebSocket {
 			if(!self.getId().equals(session.getId())) {
 				try {
 					session.getBasicRemote().sendText(sender + " : " + message);
-					System.out.println(sender);
+					System.out.println(sender + " : " + message);
 					
 				} catch (IOException e) {
 					System.out.println(e.getMessage());
@@ -60,9 +60,10 @@ public class WebSocket {
 	public void onMessage(String message, Session session) {
 		String sender = message.split(",")[1]; 
 		message = message.split(",")[0]; 
-		logger.info("Message From "+sender + ": "+message); 
+		logger.info("Message From " + sender + " : " + message); 
+		System.out.println("Message From " + sender + " : "+ message);
 		try { 
-			final Basic basic=session.getBasicRemote(); basic.sendText("<나> : "+message); 
+			final Basic basic = session.getBasicRemote(); basic.sendText("<나> : " + message); 
 			
 		}catch (Exception e) { 
 			System.out.println(e.getMessage()); 
@@ -75,6 +76,8 @@ public class WebSocket {
 	@OnClose
 	public void onClose(Session session) {
 		logger.info("Session " + session.getId() + " has ended");
+		System.out.println("Session " + session.getId() + " has ended");
+		
 		sessionList.remove(session);
 	}
 	
@@ -89,8 +92,7 @@ public class WebSocket {
 
 	@onClose 는 클라이언트와 웹소켓과의 연결이 끊기면 실행되는 메소드입니다.
 
-	sendAllSessionToMessage()는 어떤 누군가에게 메시지가 왔다면 그 메시지를 보낸 자신을 제외한 연결된 세션(클라이언트)에게 메시지를 보내는
-	메소드입니다.
+	sendAllSessionToMessage()는 어떤 누군가에게 메시지가 왔다면 그 메시지를 보낸 자신을 제외한 연결된 세션(클라이언트)에게 메시지를 보내는 메소드입니다.
 	*/
 
 }

@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="../resources/css/login.css">
 <script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script defer type="text/javascript" src="../resources/js/login.js"></script>
+<script defer src="https://apis.google.com/js/platform.js"></script>
 </head>
 <body>
 	<nav class="navbar">
@@ -67,6 +68,58 @@
 		
 		<div class="thirdParty" align="center" style="margin-top:30px;">
 			<a href="${google_url}"><img src="../resources/image/google.png"></a><br>
+			<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+		<script>
+		let csrfHeaderName = "${_csrf.headerName}";
+		let csrfTokenValue = "${_csrf.token}";
+		
+		function onSignIn(googleUser) {
+		    // Useful data for your client-side scripts:
+			var profile = googleUser.getBasicProfile();
+		    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+		    console.log("Full Name: " + profile.getName());
+		    console.log("Given Name: " + profile.getGivenName());
+		    console.log("Family Name: " + profile.getFamilyName());
+		    console.log("Image URL: " + profile.getImageUrl());
+		    console.log("Email: " + profile.getEmail());
+		    
+	
+		    $.ajax({
+		    	type : 'post',
+		    	url  : '/synergy/all/checkMember',
+		    	beforeSend: function(xhr){
+		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		    		
+		    	},
+		    	data : 'username=' + profile.getEmail(),
+		    	dataType: 'text',
+		    	success : function(data){
+		    		if(data == 'ok'){
+		    			$('#username').val(profile.getEmail());
+		    			$('#password').val('bitcamp159');
+		    			document.loginForm.submit();
+		    			
+		    		}else{
+		    			alert("없음");
+		    			location="/synergy/all/addInfoForm?username=" + profile.getEmail();
+		    			
+		    		}
+		    	}
+		    	
+		    });
+		    
+		    	
+		    
+		    if(profile.getEmail() != ''){
+		    	return;
+		    }
+		
+		    // The ID token you need to pass to your backend:
+		    var id_token = googleUser.getAuthResponse().id_token;
+		    console.log("ID Token: " + id_token);
+		    
+		  }
+		</script>
 			<img src="../resources/image/kakao_login_medium_narrow.png"><br>
 		</div>
 
@@ -75,5 +128,14 @@
 			<a href="">아이디/비밀번호 찾기</a>
 		</div>
 	</section>
+	<a href="#" onclick="signOut();">Sign out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
 </body>
 </html>

@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-signin-scope" content="profile email" />
-	<meta name="google-site-verification" content="fb6rIsh8WzJKvF5SCARFAzqdWF95ZEKdhPfXX2lLTzw" />
-	<meta name="google-signin-client_id" content="752749290235-0lrjurm4fdk31il80d87i99knklc9650.apps.googleusercontent.com" />
     <title>Let's Synergy!</title>
     <link rel="shortcut icon" href="../resources/image/logo.png" />
     <link rel="stylesheet" href="../resources/css/index.css" />
@@ -26,9 +25,13 @@
           <span>프로젝트소개</span>
           <span>이용 방법</span>
           <span>자주 묻는 질문</span>
-          <span>로그인</span>
-          <span>회원가입</span>
-          <span>로그아웃</span>
+          <sec:authorize access="isAnonymous()">
+		      <span>로그인</span>
+		      <span>회원가입</span>
+          </sec:authorize>
+          <sec:authorize access="isAuthenticated()">
+          	   <span>로그아웃</span>
+          </sec:authorize>
         </div>
         <div id="menuButtonsM">
           <a href="javascript:mobileMenu()">
@@ -39,11 +42,21 @@
         </div>
       </nav>
     </div>
+
     <div class="firstBanner">
       <div class="container" id="firstContent">
         <section class="banner1">
-			<input type="button" value="LOGIN" class="buttons" id="loginButton" onclick="location='/synergy/all/loginForm'">
-			<input type="button" value="JOINUS"class="buttons" onclick="location='/synergy/all/joinForm'">
+        	<sec:authorize access="isAnonymous()">
+				<input type="button" value="LOGIN" class="buttons" id="loginButton" onclick="location='/synergy/all/loginForm'">
+				<input type="button" value="JOINUS"class="buttons" onclick="location='/synergy/all/joinForm'">
+			</sec:authorize>
+			
+			<%-- <sec:authorize access="isAuthenticated()"> --%>
+				<form action="/synergy/logout" method="post">
+					<input type="submit" value="LOGOUT" class="buttons" id="logoutButton">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+				</form>
+			<%-- </sec:authorize> --%>
 
         </section>
       </div>
@@ -111,42 +124,87 @@
         <li>프로젝트소개</li>
         <li>이용 방법</li>
         <li>자주 묻는 질문</li>
-        <li>로그인</li>
-        <li>회원가입</li>
+        <sec:authorize access="isAnonymous()">
+	        <li>로그인</li>
+	        <li>회원가입</li>	
+        </sec:authorize>
       </ul>
     </div>
 
-      <input type="button" value="맨위로" id="topButton">
-      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log("Full Name: " + profile.getName());
-        console.log("Given Name: " + profile.getGivenName());
-        console.log("Family Name: " + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-        
-        if(profile.getEmail() != ''){
-        	return;
-        }
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-        
-        $.ajax({
-        	alert('ajax');
-        	type : 'post',
-        	url  : '/synergy/all/checkMember',
-        	data : 'username=' + profile.getEmail(),
-			success : function(){
-				
-			}        	
-        });
-      }
-    </script>
-  </body>
+	<input type="button" value="맨위로" id="topButton">
+<!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+		<script>
+		let csrfHeaderName = "${_csrf.headerName}";
+		let csrfTokenValue = "${_csrf.token}";
+		
+		function onSignIn(googleUser) {
+		    // Useful data for your client-side scripts:
+			var profile = googleUser.getBasicProfile();
+		    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+		    console.log("Full Name: " + profile.getName());
+		    console.log("Given Name: " + profile.getGivenName());
+		    console.log("Family Name: " + profile.getFamilyName());
+		    console.log("Image URL: " + profile.getImageUrl());
+		    console.log("Email: " + profile.getEmail());
+		    
+	
+		    $.ajax({
+		    	type : 'post',
+		    	url  : '/synergy/all/checkMember',
+		    	beforeSend: function(xhr){
+		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		    		
+		    	},
+		    	data : 'username=' + profile.getEmail(),
+		    	dataType: 'text',
+		    	success : function(data){
+		    		if(data == 'ok'){
+		    			$.ajax({
+		    				type : 'post',
+		    				beforeSend: function(xhr){
+		    		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		    		    		
+		    		    	},
+		    				data : {
+		    					'username' : profile.getEmail(),
+		    					'password' : 'bitcamp159'
+		    					
+		    				},		
+		    				url  : '/synergy/login',
+		    				success : function(){
+		    					alert('로그인 성공');
+		    				}
+		    			});
+		    			
+		    		}else{
+		    			alert("없음");
+		    			location="/synergy/all/addInfoForm?username=" + profile.getEmail();
+		    			
+		    		}
+		    	}
+		    	
+		    });
+		    
+		    	
+		    
+		    if(profile.getEmail() != ''){
+		    	return;
+		    }
+		
+		    // The ID token you need to pass to your backend:
+		    var id_token = googleUser.getAuthResponse().id_token;
+		    console.log("ID Token: " + id_token);
+		    
+		  }
+		</script>  -->	
+			<a href="#" onclick="signOut();">Sign out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
+</body>
 </html>

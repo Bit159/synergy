@@ -30,4 +30,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO checkMember(String username) {
 		return sqlSession.selectOne("memberSQL.checkMember", username);
 	}
+
+	@Override
+	public void addInfo(MemberDTO memberDTO) {
+		sqlSession.insert("memberSQL.addInfo", memberDTO);
+	}
 }

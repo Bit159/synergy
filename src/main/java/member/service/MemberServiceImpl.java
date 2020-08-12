@@ -33,4 +33,12 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO checkMember(String username) {
 		return memberDAO.checkMember(username);
 	}
+
+	@Override
+	public void addInfo(MemberDTO memberDTO) {
+		String password = passwordEncoder.encode(memberDTO.getPassword());
+		memberDTO.setPassword(passwordEncoder.encode(password));
+		System.out.println(passwordEncoder.matches("bitcamp159", password));
+		memberDAO.addInfo(memberDTO);
+	}
 }

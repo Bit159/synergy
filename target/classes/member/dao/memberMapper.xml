@@ -12,9 +12,14 @@
 		insert into membertable(username, nickname, password, birthyear ) values(#{username}, #{nickname}, #{password}, #{birthYear})
 	</insert>
 	
-	<select id="checkMember" parameterType="String">
+	<insert id="addInfo" parameterType="memberDTO">
+		insert into membertable(username, nickname, password, birthyear) values(#{username}, #{nickname},#{password} ,#{birthYear})
+	</insert>
+	
+	<select id="checkMember" parameterType="String" resultType="memberDTO">
 		select * from membertable where username=#{username}
 	</select>
+
  </mapper>
  
  <!-- insert into usertable(id, pw, nickname, email, birthyear) values(#{id}, #{pw}, #{nickname}, #{email}, #{birthYear}) -->
