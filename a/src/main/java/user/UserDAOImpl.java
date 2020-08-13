@@ -66,6 +66,11 @@ public class UserDAOImpl implements UserDAO {
 	public int deleteMatched(List<MatchDTO> list) {
 		return sqlSession.delete("userSQL.deleteMatched", list);
 	}
+
+	@Override
+	public int deleteMatch(MatchDTO matchDTO) {
+		return sqlSession.delete("userSQL.deleteMatch", matchDTO);
+	}
 	// End of FOR MAP
 	
 	
@@ -89,6 +94,7 @@ public class UserDAOImpl implements UserDAO {
 	public int getGreatestBno() {
 		return sqlSession.selectOne("userSQL.getGreatestBno");
 	}
+
 	// End of FOR CRAWL
 	
 

@@ -67,4 +67,24 @@ public class HomeController {
 		return rjson;
 	}
 	
+	
+	@PostMapping(path="/delete_match", produces="application/json;charset=UTF-8")
+	public @ResponseBody JSONObject deleteMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
+		matchDTO.setEmail("jpcnani@naver.com");
+		matchDTO.setX(json.getDouble("x"));
+		matchDTO.setY(json.getDouble("y"));
+		matchDTO.setRange(json.getDouble("range"));
+		matchDTO.setTime(json.getString("time"));
+		matchDTO.setTopic(json.getString("topic"));
+		matchDTO.setCareer(json.getInt("career"));
+		matchDTO.setPeople(json.getInt("people"));
+		System.out.println(json.getString("time"));
+		int result = userDAO.deleteMatch(matchDTO);
+		JSONObject rjson = (result==1) ? json : null;
+		
+		return rjson;
+	}
+	
+	
+	
 }

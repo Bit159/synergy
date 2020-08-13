@@ -27,6 +27,8 @@ function openMapOnLocationSelect() {
   );
 }
 
+
+//등록하기 버튼 눌렀을 때 실행될 메소드
 function nullValidator() {
   msg.style.transition = "all 0s";
   msg.style.opacity = "0";
@@ -133,29 +135,20 @@ function nullValidator() {
 									div5.appendChild(document.createTextNode(json.people));
 									
 									//<div><button class="deleteButtons_in_insert_match" type="button">삭제</button></div>
+									let deldiv = document.createElement('div');
 									let del = document.createElement('button');
 									del.className="deleteButtons_in_insert_match";
 									del.type="button";
 									del.appendChild(document.createTextNode('삭제'));
+									deldiv.append(del);
 									
 									let li = document.createElement('li');
-									li.append(x, y, range, div1, div2, div3, div4, div5, del);
-									document.querySelector('ul').append(li);								}
+									li.append(x, y, range, div1, div2, div3, div4, div5, deldiv);
+									document.querySelector('ul').append(li);								
+								}
 						)
 	);
-	
-	/*
-	
-	let myLocation = document.getElementById("myLocation");
-let time = document.getElementById("time");
-let topic = document.getElementById("topic");
-let career = document.getElementById("career");
-let people = document.getElementById("people");
-let msg = document.getElementById("msg");
-let x = document.getElementById("x");
-let y = document.getElementById("y");
 
-*/
 	myLocation.value="";
 	time.value="";
 	topic.value="";
@@ -163,8 +156,70 @@ let y = document.getElementById("y");
 	people.value="";
 	document.getElementById('submitButton').disabled=false;
 }
+//등록하기 버튼 눌렀을 때 실행될 메소드
 
 
+//모든 삭제 버튼에 이벤트 리스너 추가
+let delete_Button_Array = document.getElementsByClassName('deleteButtons_in_insert_match');
+for(let i=0; i<delete_Button_Array.length; i++) {
+	delete_Button_Array[i].addEventListener('click',
+		function(){
+			let ob = new Object();
+			ob.x = this.parentElement.parentElement.children[0].value;
+			ob.y = this.parentElement.parentElement.children[1].value;
+			ob.range = this.parentElement.parentElement.children[2].value;
+			ob.time = this.parentElement.parentElement.children[4].innerText;
+			ob.topic = this.parentElement.parentElement.children[5].innerText;
+			ob.career = this.parentElement.parentElement.children[6].innerText;
+			ob.people = this.parentElement.parentElement.children[7].innerText;
+			console.log(ob.time);
+			let url = "/a/delete_match";
+			let options = {
+				method: "POST",
+				headers: {
+					"X-CSRF-TOKEN": document.getElementById('csrf').content,
+					Accept: "application/json",
+					"Content-Type": "application/json; charset=utf-8",
+				},
+				body: JSON.stringify(ob),
+			};
+			
+			fetch(url, options).then((res) =>
+				res.json().then((json)=>{
+					console.log(json);
+				}));
+		}
+	);
+}
+function clickgo() {
+	console.log("메롱");
+}
 
+//버튼 1개에 삭제 기능 넣는 메소드
+function injectDeleteFunction(i, tt) {
+	let ob = new Object();
+	ob.x = this.parentElement.previousElementSibling;
+	ob.y = this.parentElement.parentElement.children[1];
+	ob.range = this.parentElement.parentElement.children[2];
+	ob.time = this.parentElement.parentElement.children[4];
+	ob.topic = this.parentElement.parentElement.children[5];
+	ob.career = this.parentElement.parentElement.children[6];
+	ob.people = this.parentElement.parentElement.children[7];
+	
+	let url = "/a/delete_match";
+	let options = {
+		method: "POST",
+		headers: {
+			"X-CSRF-TOKEN": document.getElementById('csrf').content,
+			Accept: "application/json",
+			"Content-Type": "application/json; charset=utf-8",
+		},
+		body: JSON.stringify(ob),
+	};
+	
+	fetch(url, options).then((res) =>
+		res.json().then((json)=>{
+			console.log(json);
+		}));
 
-
+}

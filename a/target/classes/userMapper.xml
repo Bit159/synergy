@@ -24,6 +24,10 @@
 		</where>
 	</delete>
 	
+	<delete id="deleteMatch" parameterType="matchDTO">
+		DELETE FROM db.match WHERE `email`=#{email} and `x`=#{x} and `y`=#{y} and `range`=#{range} and `time`=#{time} and `topic`=#{topic} and `career`=#{career} and `people`=#{people}
+	</delete>
+	
 	<!-- End of FOR MAP -->
 	
 	<!-- FOR CRAWL -->

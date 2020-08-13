@@ -13,6 +13,7 @@ public interface UserDAO {
 	public abstract int insertMatch(MatchDTO matchDTO);
 	public abstract List<MatchDTO> getListFromMatch();
 	public abstract int deleteMatched(List<MatchDTO> list);
+	public abstract int deleteMatch(MatchDTO matchDTO);
 	
 	//크롤링용
 	public abstract int crawlInsert(List<CBoardDTO> list);
