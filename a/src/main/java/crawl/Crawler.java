@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -55,8 +53,12 @@ public class Crawler {
 		Elements titles = doc.select(selector); // -- 2. doc에서 selector의 내용을 가져와 Elemntes 클래스에 담는다.
 
 		List<CBoardDTO> list = new ArrayList<CBoardDTO>();
-		int standard = userDAO.getGreatestBno();
-
+		int standard;
+		try {
+			standard = userDAO.getGreatestBno();
+		}catch(NullPointerException e) {
+			standard = 0;
+		}
 		for (Element element : titles) {
 
 			cboardDTO = new CBoardDTO();
@@ -95,16 +97,19 @@ public class Crawler {
 			cboardDTO.setBoarddate(date);
 			list.add(cboardDTO);
 		}
-
+		
 		if (list.size() == 0)
 			return;
+		int result = 0;
 		try {
-			userDAO.crawlInsert(list);
+			result = userDAO.crawlInsert(list);
 		} catch (Exception e) {
-			email.send("jpcnani@naver.com", "글 목록 db 입력 중 예외가 발생하였습니다!");
+			email.send("jpcnani@naver.com", "글 목록 Insert 중 에러 발생!", "글 목록 db 입력 중 예외가 발생하였습니다!\r\n\r\n"+e.getMessage()+"\r\n\r\n"+e.getLocalizedMessage());
+			return;
 		}
-		email.send("jpcnani@naver.com", "목록 크롤링 완료!");
-		System.out.println("--------------------------");
+		if(result != 0) {
+			email.send("jpcnani@naver.com", "글 목록 크롤링 완료!", result+"개의 글을 정상적으로 등록하였습니다. ");
+		}
 	}
 
 }

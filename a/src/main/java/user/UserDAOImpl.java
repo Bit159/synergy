@@ -96,6 +96,13 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	// End of FOR CRAWL
+
+	// FOR CRAWAL BOARD
+	@Override
+	public List<CBoardDTO> getBoardList() {
+		return sqlSession.selectList("userSQL.getBoardList");
+	}
 	
+	// END OF  CRAWAL BOARD
 
 }

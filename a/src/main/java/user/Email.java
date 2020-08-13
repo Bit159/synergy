@@ -74,12 +74,12 @@ public class Email {
 	}
 
 	// 단일 메일 발송 메소드
-	public void send(String email, String msg) {
+	public void send(String email, String title, String msg) {
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(userName)); // 발신자 설정
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email)); // 수신자 설정
-			message.setSubject("매치가 완료되었습니다!"); // 메일 제목을 입력
+			message.setSubject(title); // 메일 제목을 입력
 			message.setText(msg); // 메일 내용을 입력
 			Transport.send(message); // 전송
 		} catch (AddressException e) {

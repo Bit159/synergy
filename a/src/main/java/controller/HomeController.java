@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.sf.json.JSONObject;
+import user.CBoardDTO;
 import user.MatchDTO;
 import user.UserDAO;
 
@@ -28,7 +29,14 @@ public class HomeController {
 	@GetMapping("/")	public String home(Locale locale, Model model) { return "all//index"; }
 	@GetMapping("/info") public String info() { return "all/info"; }
 	@GetMapping("/map") public String map() { return "member/map";	}
-	@GetMapping("/board") public String board() { return "member/board"; }
+	@GetMapping("/board") public ModelAndView board() { 
+		ModelAndView mav = new ModelAndView();
+		List<CBoardDTO> list = userDAO.getBoardList();
+		System.out.println(list.get(0).getContent());
+		mav.addObject("list", list);
+		mav.setViewName("all/boardList");
+		return mav; 
+	}
 	@GetMapping("/join") public String signup() { return "all/join"; }
 	@GetMapping("/accessError") public String accessDenied() { return "all/accessDenied"; }
 	@GetMapping("/insert_match") public ModelAndView insert_match() {

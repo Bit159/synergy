@@ -24,14 +24,10 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<annotation-driven />
+	<task:annotation-driven />
 	<context:annotation-config></context:annotation-config>
 
 	<beans:bean class="conf.Config" />
 	<resources mapping="/resources/**"	location="/resources/" />
-	
-	<beans:bean class="crawl.Crawler" />
-	<task:annotation-driven />
-
-
 
 </beans:beans>

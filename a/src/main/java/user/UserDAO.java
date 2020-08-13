@@ -20,4 +20,7 @@ public interface UserDAO {
 	public abstract List<String> getEmptyContentBno();
 	public abstract int insertContents(List<CBoardDTO> list);
 	public abstract int getGreatestBno();
+	
+	//크롤게시판용
+	public abstract List<CBoardDTO> getBoardList();
 }

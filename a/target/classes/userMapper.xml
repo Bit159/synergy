@@ -32,18 +32,18 @@
 	
 	<!-- FOR CRAWL -->
 	<insert id="crawlInsert" parameterType="java.util.List">
-		INSERT INTO db.cboard(`bno`, `title`, `nickname`, `boarddate`) VALUES
+		INSERT INTO cboard(`bno`, `title`, `nickname`, `boarddate`) VALUES
 		<foreach collection="list" item="item" separator=",">
 			 (#{item.bno}, #{item.title}, #{item.nickname}, #{item.boarddate})
 		</foreach>
 	</insert>
 	
 	<select id="getEmptyContentBno" resultType="String">
-		SELECT `bno` FROM db.cboard WHERE `content` IS NULL;
+		SELECT `bno` FROM cboard WHERE `content` IS NULL;
 	</select>
 	
 	<insert id="insertContents" parameterType="java.util.List">
-		UPDATE db.cboard set `content`= case
+		UPDATE cboard set `content`= case
 		<foreach collection="list" item="item" separator="">
 			when `bno`=#{item.bno} then #{item.content}
 		</foreach>
@@ -54,10 +54,18 @@
 	</insert>
 	
 	<select id="getGreatestBno" resultType="java.lang.Integer">
-		SELECT MAX(`bno`) FROM db.cboard
+		SELECT MAX(`bno`) FROM cboard
 	</select>	
+	
 	<!-- End of FOR CRAWL -->
 
+
+	<!-- FOR BOARD -->
+		<select id="getBoardList" resultType="user.CBoardDTO">
+			SELECT * FROM cboard order by bno desc limit 20
+		</select>
+	<!-- END OF BOARD -->
+	
 	<!-- FOR USER -->
 	<select id="selectAllFromUsertable" resultType="userDTO">
 		SELECT * FROM db.usertable

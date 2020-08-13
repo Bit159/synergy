@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="/a/resources/css/insert_match.css" />
     <meta id="csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
     <meta id="csrf" name="_csrf" content="${_csrf.token}" />
+    <%@ include file="../include/head_include.jsp" %>
   </head>
   <body>
+  <%@ include file="../include/nav_include.jsp" %> 
     <form>
       <div id="wrap">
         <div id="selections">

@@ -51,12 +51,20 @@ public class AOP_Config {
 			CBoardDTO cboardDTO = new CBoardDTO();
 			cboardDTO.setBno(Integer.parseInt(list.get(i)));
 			cboardDTO.setContent(doc.select(selector).text());
-
 			insertList.add(cboardDTO);
 		}
 
-		userDAO.insertContents(insertList);
-		email.send("jpcnani@naver.com", "글내용 크롤링 성공!");
+		int result = 0;
+		try {
+			result = userDAO.insertContents(insertList);
+		}catch (Exception e) {
+			email.send("jpcnani@naver.com", "글 내용 INSERT 입력중 에러 발생!", "글 내용을 등록중 에러가 발생하였습니다."+e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+		if(result != 0) {
+			email.send("jpcnani@naver.com", result+"개 글 내용 INSERT 성공!", result+"개의 글 내용을 정상적으로 등록하였습니다.");
+		}
 	}
 	
 	@Async
