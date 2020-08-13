@@ -6,28 +6,54 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import user.UserDAO;
+
 @Controller
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private UserDAO userDAO;
+	@Autowired
+	private BoardDAO boardDAO;
 	
-	@RequestMapping(value = "/board/boardList", method = RequestMethod.GET)
-	public String boardList(@RequestParam(required = false, defaultValue = "1") String pg) {
-		return "/board/boardList";
+	@GetMapping("/board/boardList")
+	public ModelAndView boardList() {
+		List<CBoardDTO> list = boardService.getCBoardList();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);		
+		mav.setViewName("/board/boardList");
+		return mav;
 	}
 	
-	@RequestMapping(value = "/board/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/board/boardList1", method = RequestMethod.GET)
+	public ModelAndView boardList1() {
+		
+		/*
+		 * List<CBoardDTO> list = userDAO.getCBoardList();
+		 * System.out.println(list.get(0).getContent());
+		 */
+		List<CBoardDTO> list = boardDAO.getCBoardList();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);		
+		mav.setViewName("/board/boardList1");
+		return mav;
+	}
+	
+	@GetMapping("/board/home")
 	public String home() {
 		return "/board/home";
 	}
 	
-	@RequestMapping(value = "/board/getBoardList", method = RequestMethod.POST)
+	@PostMapping(path="/board/getBoardList")
 	@ResponseBody
 	public ModelAndView getBoardList(@RequestParam String pg, HttpSession session) {
 		String memId = (String) session.getAttribute("memId");

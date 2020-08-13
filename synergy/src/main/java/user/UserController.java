@@ -45,4 +45,6 @@ public class UserController {
 	public String signUpForm() {
 		return "/user/signUpForm";
 	}
+	
+	
 }

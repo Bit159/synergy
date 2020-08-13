@@ -5,6 +5,13 @@
 
 <mapper namespace="userSQL">
 
+
+	<!-- 크롤링 보드 체크용 -->
+	<select id="getCBoardList" resultType="board.CBoardDTO">
+		SELECT * FROM db.cboard order by bno desc limit 20
+	</select>
+	<!-- 크롤링 보드 체크용 -->
+	
 	<select id="selectOne" parameterType="java.lang.String"	resultType="userDTO">
 		SELECT * FROM db.usertable WHERE id=#{id}
 	</select>

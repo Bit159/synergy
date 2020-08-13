@@ -56,6 +56,7 @@ public class Config {
       sqlSessionFactory.setDataSource(dataSource());
       sqlSessionFactory.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
       sqlSessionFactory.setMapperLocations(new ClassPathResource("userMapper.xml"));
+      sqlSessionFactory.setMapperLocations(new ClassPathResource("boardMapper.xml"));
       return sqlSessionFactory;
    }
    

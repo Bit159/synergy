@@ -23,7 +23,7 @@
                     <li class="list_group_item">
                         <div class="bno">글번호</div>
                         <div class="topic">말머리</div>
-                        <div class="title" id="titleHeader">제목</div>                        
+                        <div class="title">제목</div>                        
                         <div class="nickname">작성자</div>
                         <div class="boarddate">작성시간</div>
                         <div class="hit">조회수</div>

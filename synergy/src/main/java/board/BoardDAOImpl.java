@@ -29,4 +29,14 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectOne("boardSQL.getBoardTotalA");
 	}
 
+	@Override
+	public List<CBoardDTO> getBoardList1() {
+		return sqlSession.selectList("boardSQL.getBoardList1");
+	}
+
+	@Override
+	public List<CBoardDTO> getCBoardList() {
+		return sqlSession.selectList("boardSQL.getCBoardList");
+	}
+
 }

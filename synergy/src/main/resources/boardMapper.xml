@@ -6,18 +6,28 @@
   <mapper namespace="boardSQL">
   	
   	<!-- 목록 -->
-	<select id="getBoardList" parameterType="java.util.Map" resultType="board">
+	<select id="getBoardList" parameterType="java.util.Map" resultType="boardDTO">
 		<![CDATA[
 		select * from
 		(select rownum rn, tt.* from
-		(select * from db.board order by seq desc)tt
+		(select * from db.cboard order by bno desc)tt
 		)where rn>=#{startNum} and rn<=#{endNum} 
 		]]>
 	</select>
 	
+	<select id="getBoardList1" resultType="board.CBoardDTO">
+		select * from db.cboard 
+	</select>
+		
 	<!-- 총글수 -->
 	<select id="getBoardTotalA" resultType="int">
-		select count(*) from board
+		select count(*) from db.cboard
 	</select>
+	
+	<!-- 크롤링 보드 체크용 -->
+	<select id="getCBoardList" resultType="board.CBoardDTO">
+		SELECT * FROM db.cboard order by bno desc limit 20
+	</select>
+	<!-- 크롤링 보드 체크용 -->
   	
   </mapper>

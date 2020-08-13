@@ -10,9 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+import board.BoardService;
+import board.CBoardDTO;
 import user.UserDAO;
 import user.UserDTO;
 
@@ -39,10 +43,30 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		
+		/*
 		List<UserDTO> list = userDAO.selectAll();
 		for(UserDTO dto: list) System.out.println(dto.toString());
-		 
+		List<CBoardDTO> list2 = userDAO.getCBoardList();
+		for(CBoardDTO d : list2) System.out.println(d.toString());
+		*/
+		
 		return "home";
 	}
+	
+	/* 게시판 크롤링 관련 */
+	/*
+	@Autowired
+	private BoardService boardService;
+	
+	@RequestMapping("/board/cboardList")
+	public ModelAndView cboardList() {
+		List<CBoardDTO> list = boardService.getCBoardList();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("/board/cboardList");
+		return mav;
+	}
+	*/
 	
 }

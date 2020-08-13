@@ -2,6 +2,8 @@ package user;
 
 import java.util.List;
 
+import board.CBoardDTO;
+
 public interface UserDAO {
 	public abstract int insert(UserDTO userDTO);
 
@@ -14,5 +16,7 @@ public interface UserDAO {
 	public abstract UserDTO selectOne(String id);
 
 	public abstract UserDTO login(String id, String pwd);
+	
+	public abstract List<CBoardDTO> getCBoardList();
 
 }

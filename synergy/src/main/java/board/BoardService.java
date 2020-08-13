@@ -8,4 +8,8 @@ public interface BoardService {
 
 	public BoardPaging boardPaging(String pg);
 
+	public List<CBoardDTO> getBoardList1();
+
+	public List<CBoardDTO> getCBoardList();
+
 }

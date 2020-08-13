@@ -6,5 +6,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="user.UserDTO" alias="userDTO" />
+		<typeAlias type="board.BoardDTO" alias="boardDTO"/>
+		<typeAlias type="board.CBoardDTO" alias="cBoardDTO"/>
 	</typeAliases>
 </configuration>

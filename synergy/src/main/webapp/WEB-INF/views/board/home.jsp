@@ -33,15 +33,15 @@
 						<li class="menu1" style="white-space: nowrap;">
 							<a href="#">스터디 모집</a>
 						</li>
+						<li class="menu4" style="white-space: nowrap;">
+							<a href="/synergy/board/boardList11" >게시판</a>
+						</li>
 						<li class="menu2" style="white-space: nowrap;">
 							<a href="#">메뉴</a>
 						</li>
 						<li class="menu3" style="white-space: nowrap;">
 							<a href="#" >문의</a>
-						</li>
-						<li class="menu4" style="white-space: nowrap;">
-							<a href="/synergy/board/boardList" >게시판</a>
-						</li>
+						</li>						
 					</ul>
 				</nav>
 			</header>

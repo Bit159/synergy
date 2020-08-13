@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import board.CBoardDTO;
 import lombok.Setter;
 
 @Repository("userDAO")
@@ -59,6 +60,11 @@ public class UserDAOImpl implements UserDAO {
 		map.put("pwd", pwd);
 		UserDTO userDTO = sqlSession.selectOne("userSQL.login",map);
 		return userDTO;
+	}
+
+	@Override
+	public List<CBoardDTO> getCBoardList() {
+		return sqlSession.selectList("userSQL.getCBoardList");
 	}
 
    
