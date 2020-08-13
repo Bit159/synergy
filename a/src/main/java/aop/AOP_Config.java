@@ -1,14 +1,19 @@
 package aop;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import user.CBoardDTO;
 import user.Email;
 import user.MatchDTO;
 import user.UserDAO;
@@ -21,12 +26,44 @@ public class AOP_Config {
 	private UserDAO userDAO;
 	@Autowired
 	private Email email;
+	
+	@Async
+	@After("execution(public * crawl.Crawler.getList(..))")
+	public void getContent() {
+		System.out.println("애프터 적용!");
+		List<String> list = userDAO.getEmptyContentBno();
+		if (list.size() == 0)
+			return;
 
+		List<CBoardDTO> insertList = new ArrayList<CBoardDTO>();
+
+		for (int i = 0; i < list.size(); i++) {
+			String url = "https://okky.kr/article/" + list.get(i);
+			String selector = "article.content-text";
+
+			Document doc = null;
+			try {
+				doc = Jsoup.connect(url).get();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+
+			CBoardDTO cboardDTO = new CBoardDTO();
+			cboardDTO.setBno(Integer.parseInt(list.get(i)));
+			cboardDTO.setContent(doc.select(selector).text());
+
+			insertList.add(cboardDTO);
+		}
+
+		userDAO.insertContents(insertList);
+		email.send("jpcnani@naver.com", "글내용 크롤링 성공!");
+	}
+	
 	@Async
 	@AfterReturning("execution(public * controller.HomeController.insertMatch(..))")
 	public void after() {
 		System.out.println("afterreturning 어드바이스 삽입!");
-		List<MatchDTO> list = userDAO.selectAllFromMatch();
+		List<MatchDTO> list = userDAO.getListFromMatch();
 		List<MatchDTO> matchedList = null;
 		boolean matched = false;
 		
@@ -42,11 +79,9 @@ public class AOP_Config {
 
 				if (sumOfTwoRanges >= distance) {
 					matchedList.add(list.get(j));
-					System.out.println("distance 보다 range가 큽니다!! 현재 매치인원수 : " +matchedList.size());
-				} // when sum of ranges is bigger than distance
+				} 
 				
 				if(matchedList.size() >= 5) {
-					System.out.println("5인이 모여서 브레이크합니다");
 					matched = true;
 					break;
 				}
@@ -54,16 +89,12 @@ public class AOP_Config {
 			} // inner for
 
 			if(matched) {
-				System.out.println("삐뽀 삐뽀 매치 발생!");
 				List<String> targetList = new ArrayList<String>();
 				for (MatchDTO dto : matchedList) targetList.add(dto.getEmail());
 				email.sendToList(targetList);
 				int result = userDAO.deleteMatched(matchedList);
-				System.out.println("메일 발송 완료. 삭제한 rows : " + result);
 				return;
 			}
-			
-			
 
 		} // outer for
 	}// after method

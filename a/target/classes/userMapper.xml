@@ -4,18 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="userSQL">
-
-	<select id="selectAllFromUsertable" resultType="userDTO">
-		SELECT * FROM db.usertable
-	</select>
 	
-	<!-- 지도용 -->
-	<select id="selectAllFromMatch" resultType="matchDTO">
-		SELECT * FROM db.match
+	<!-- FOR MAP -->
+	<select id="getListFromMatch" resultType="matchDTO">
+		SELECT * FROM db.match ORDER BY CREATED ASC
 	</select>
 
 	<insert id="insertMatch" parameterType="matchDTO">
-		INSERT INTO db.match VALUES(#{email}, #{x}, #{y}, #{range})
+		INSERT INTO db.match VALUES(#{email}, #{x}, #{y}, #{range}, #{time}, #{topic}, #{career}, #{people}, now(), now())
 	</insert>
 	
 	<delete id="deleteMatched" parameterType="java.util.List">
@@ -27,9 +23,10 @@
 			</foreach>
 		</where>
 	</delete>
-	<!-- 지도용 -->
 	
-	<!-- 크롤링용 : jdbc 커넥션부분에 allowMultiQueries=true 필요할지도-->
+	<!-- End of FOR MAP -->
+	
+	<!-- FOR CRAWL -->
 	<insert id="crawlInsert" parameterType="java.util.List">
 		INSERT INTO db.cboard(`bno`, `title`, `nickname`, `boarddate`) VALUES
 		<foreach collection="list" item="item" separator=",">
@@ -55,9 +52,12 @@
 	<select id="getGreatestBno" resultType="java.lang.Integer">
 		SELECT MAX(`bno`) FROM db.cboard
 	</select>	
-	<!-- 크롤링용 -->
+	<!-- End of FOR CRAWL -->
 
-
+	<!-- FOR USER -->
+	<select id="selectAllFromUsertable" resultType="userDTO">
+		SELECT * FROM db.usertable
+	</select>
 
 	<select id="selectOne" parameterType="java.lang.String"
 		resultType="userDTO">
@@ -70,8 +70,6 @@
 		#{nickname}, #{email}, #{birthyear})
 	</insert>
 
-
-
 	<update id="update" parameterType="userDTO">
 		update db.usertable set
 		`id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname},
@@ -82,7 +80,6 @@
 		DELETE FROM db.usertable WHERE
 		`email`=#{email}
 	</delete>
-
 
 	<select id="searchUserList" parameterType="java.util.Map"
 		resultType="userDTO">
@@ -95,6 +92,7 @@
 			id like '%'||#{value}||'%'
 		</if>
 	</select>
+	<!-- End of FOR USER -->
 
 </mapper>
 

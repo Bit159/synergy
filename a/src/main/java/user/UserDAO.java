@@ -11,7 +11,7 @@ public interface UserDAO {
 
 	//지도용
 	public abstract int insertMatch(MatchDTO matchDTO);
-	public abstract List<MatchDTO> selectAllFromMatch();
+	public abstract List<MatchDTO> getListFromMatch();
 	public abstract int deleteMatched(List<MatchDTO> list);
 	
 	//크롤링용

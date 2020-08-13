@@ -19,6 +19,7 @@ public class UserDAOImpl implements UserDAO {
 	@Autowired
 	private UserDTO dto;
 	
+	// FOR USER
 	@Override
 	public int insert(UserDTO userDTO) {
 		return sqlSession.insert("userSQL.insert", userDTO);
@@ -48,22 +49,27 @@ public class UserDAOImpl implements UserDAO {
 	public List<UserDTO> selectAllFromUsertable() {
 		return sqlSession.selectList("userSQL.selectAllFromUsertable");
 	}
-
+	// End of FOR USER
+	
+	// FOR MAP
 	@Override
 	public int insertMatch(MatchDTO matchDTO) {
 		return sqlSession.insert("userSQL.insertMatch", matchDTO);
 	}
 
 	@Override
-	public List<MatchDTO> selectAllFromMatch() {
-		return sqlSession.selectList("userSQL.selectAllFromMatch");
+	public List<MatchDTO> getListFromMatch() {
+		return sqlSession.selectList("userSQL.getListFromMatch");
 	}
 
 	@Override
 	public int deleteMatched(List<MatchDTO> list) {
 		return sqlSession.delete("userSQL.deleteMatched", list);
 	}
-
+	// End of FOR MAP
+	
+	
+	// FOR CRAWL
 	@Override
 	public int crawlInsert(List<CBoardDTO> list) {
 		return sqlSession.insert("userSQL.crawlInsert", list);
@@ -83,7 +89,7 @@ public class UserDAOImpl implements UserDAO {
 	public int getGreatestBno() {
 		return sqlSession.selectOne("userSQL.getGreatestBno");
 	}
-	
+	// End of FOR CRAWL
 	
 
 }
