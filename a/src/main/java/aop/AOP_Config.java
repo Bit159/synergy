@@ -47,10 +47,18 @@ public class AOP_Config {
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
-
+			
 			CBoardDTO cboardDTO = new CBoardDTO();
 			cboardDTO.setBno(Integer.parseInt(list.get(i)));
-			cboardDTO.setContent(doc.select(selector).text());
+			
+			
+			//.text() 에서 .outerHtml로 변경하여 태그를 유지한다.
+			cboardDTO.setContent(doc.select(selector).outerHtml());
+			
+			
+			
+			System.out.println(cboardDTO.getContent());
+			
 			insertList.add(cboardDTO);
 		}
 
