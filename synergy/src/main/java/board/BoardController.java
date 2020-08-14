@@ -1,5 +1,6 @@
 package board;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,9 +30,24 @@ public class BoardController {
 	@GetMapping("/board/boardList")
 	public ModelAndView boardList() {
 		List<CBoardDTO> list = boardService.getCBoardList();
+		System.out.println(list.get(0).getContent());
+		Date now = new Date();
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);		
+		mav.addObject("list", list);
+		mav.addObject("now", now);
 		mav.setViewName("/board/boardList");
+		return mav;
+	}
+	
+	@GetMapping("/board/{bno}")
+	public ModelAndView boardView(@PathVariable("bno") int bno) {
+		CBoardDTO cBoardDTO = boardService.getBoard(bno);
+		List<CBoardDTO> list = boardService.getCBoardList();
+		System.out.println(cBoardDTO.getTitle());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("cBoardDTO", cBoardDTO);
+		mav.addObject("list", list);
+		mav.setViewName("/board/boardView");
 		return mav;
 	}
 	
@@ -42,6 +59,7 @@ public class BoardController {
 		 * System.out.println(list.get(0).getContent());
 		 */
 		List<CBoardDTO> list = boardDAO.getCBoardList();
+		System.out.println(list.get(0).getContent());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);		
 		mav.setViewName("/board/boardList1");
@@ -68,6 +86,11 @@ public class BoardController {
 		mav.addObject("list", list);
 		mav.addObject("memId", memId);
 		mav.setViewName("jsonView");
+		return mav;
+	}
+	@GetMapping("/board/boardView")
+	public ModelAndView boardView() {
+		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
 }

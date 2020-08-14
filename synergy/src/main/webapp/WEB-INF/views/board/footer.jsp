@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../resources/css/welcome.css">
 </head>
 <body>
 	<div id="footer_wrapper">

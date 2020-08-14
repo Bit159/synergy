@@ -33,7 +33,7 @@
 	                    <a href="#">스터디 모집</a>
 	                </li>
 	                <li class="menu1" style="white-space: nowrap;">
-	                    <a href="boardList11.html">게시판</a>
+	                    <a href="boardList">게시판</a>
 	                </li>
 	                <li class="menu2" style="white-space: nowrap;">
 	                    <a href="#">메뉴</a>

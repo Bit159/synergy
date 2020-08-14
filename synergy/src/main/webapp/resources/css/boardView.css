@@ -1,1 +1,90 @@
 @charset "UTF-8";
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+div[class="bodywrapper"]{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    width: 1280px;
+    height: 1000px;
+    
+}
+div[class="boardwrapper"]{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 1200px;
+    height: 800px;
+    margin-top: 70px;
+    
+}
+h1{
+    margin-bottom: 50px;
+}
+div[class="boardcontainer"]{
+    display: flex;
+    flex-direction: column;    
+    border-left: 3px solid #32be78;
+    
+    
+}
+div[class="board_header"]{
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    
+}
+div[class="header_upside"]{
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    
+}
+div[class="header_downside"]{
+    display: flex;    
+    height: 40%;
+    
+    justify-content: space-between;
+}
+div[class="downside_left"]{
+    display: flex;
+    
+}
+div[class="downside_right"]{
+    display: flex;
+    
+    
+}
+div[class="board_body"]{
+    height: 300px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+}
+div[class="board_footer"]{
+    height: 300px;
+    border: 1px solid #ddd;
+}
+
+div[class="view_bno"]{
+    
+}
+div[class="view_title"]{
+	font-size: 110%;
+}
+div[class="view_nickname"]{
+    
+}
+div[class="view_boarddate"]{
+   
+}
+div[class="view_replys"]{
+	width: 100px;   
+}
+div[class="view_hit"]{
+    width: 100px;
+}

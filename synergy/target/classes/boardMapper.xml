@@ -30,4 +30,8 @@
 	</select>
 	<!-- 크롤링 보드 체크용 -->
   	
+  	<select id="getBoard" parameterType="int" resultType="board.CBoardDTO">
+  		SELECT * from db.cboard where bno=#{bno}
+  	</select>
+  	
   </mapper>

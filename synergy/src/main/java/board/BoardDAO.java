@@ -13,6 +13,8 @@ public interface BoardDAO {
 	public List<CBoardDTO> getBoardList1();
 
 	public List<CBoardDTO> getCBoardList();
+
+	public CBoardDTO getBoard(int bno);
 	
 	
 }
