@@ -113,7 +113,6 @@ function nullValidator() {
 	};
 	fetch(url, options).then((res) =>
 		res.json().then((json)=>{
-									console.log(json)
 									let x = document.createElement('input');
 									let y = document.createElement('input');
 									let range = document.createElement('input');
@@ -139,12 +138,42 @@ function nullValidator() {
 									let del = document.createElement('button');
 									del.className="deleteButtons_in_insert_match";
 									del.type="button";
+									del.addEventListener('click', function(){
+										let ob = new Object();
+										ob.x = this.parentElement.parentElement.children[0].value;
+										ob.y = this.parentElement.parentElement.children[1].value;
+										ob.range = this.parentElement.parentElement.children[2].value;
+										ob.time = this.parentElement.parentElement.children[4].innerText;
+										ob.topic = this.parentElement.parentElement.children[5].innerText;
+										ob.career = this.parentElement.parentElement.children[6].innerText;
+										ob.people = this.parentElement.parentElement.children[7].innerText;
+										let url = "/a/delete_match";
+										let options = {
+											method: "POST",
+											headers: {
+												"X-CSRF-TOKEN": document.getElementById('csrf').content,
+												Accept: "application/json",
+												"Content-Type": "application/json; charset=utf-8",
+											},
+											body: JSON.stringify(ob),
+										};
+										
+										fetch(url, options).then((res) =>
+											res.json().then((json)=>{
+												if(confirm("삭제하시겠습니까?")) {
+													this.parentElement.parentElement.remove();
+													alert('삭제되었습니다');
+												} 
+													
+											}));
+									});
 									del.appendChild(document.createTextNode('삭제'));
 									deldiv.append(del);
 									
 									let li = document.createElement('li');
 									li.append(x, y, range, div1, div2, div3, div4, div5, deldiv);
-									document.querySelector('ul').append(li);								
+									document.querySelector('ul').append(li);
+									alert('등록 완료!');								
 								}
 						)
 	);
@@ -172,7 +201,6 @@ for(let i=0; i<delete_Button_Array.length; i++) {
 			ob.topic = this.parentElement.parentElement.children[5].innerText;
 			ob.career = this.parentElement.parentElement.children[6].innerText;
 			ob.people = this.parentElement.parentElement.children[7].innerText;
-			console.log(ob.time);
 			let url = "/a/delete_match";
 			let options = {
 				method: "POST",
@@ -186,17 +214,19 @@ for(let i=0; i<delete_Button_Array.length; i++) {
 			
 			fetch(url, options).then((res) =>
 				res.json().then((json)=>{
-					console.log(json);
+					if(confirm("삭제하시겠습니까?")) {
+						this.parentElement.parentElement.remove();
+						alert('삭제되었습니다');
+					} 
+						
 				}));
 		}
 	);
 }
-function clickgo() {
-	console.log("메롱");
-}
+
 
 //버튼 1개에 삭제 기능 넣는 메소드
-function injectDeleteFunction(i, tt) {
+function injectDeleteFunction() {
 	let ob = new Object();
 	ob.x = this.parentElement.previousElementSibling;
 	ob.y = this.parentElement.parentElement.children[1];
@@ -219,7 +249,6 @@ function injectDeleteFunction(i, tt) {
 	
 	fetch(url, options).then((res) =>
 		res.json().then((json)=>{
-			console.log(json);
 		}));
 
 }
