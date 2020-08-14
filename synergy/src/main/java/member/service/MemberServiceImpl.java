@@ -1,5 +1,6 @@
 package member.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class MemberServiceImpl implements MemberService {
 			map.put("authority", "ROLE_ADMIN");
 		}else map.put("authority","ROLE_MEMBER");
 		memberDAO.join(map);
+	}
+	@Override
+	public List<String> autocomplete() {
+		return memberDAO.autocomplete();
 	}
 
 }

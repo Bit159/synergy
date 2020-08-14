@@ -29,4 +29,7 @@
 	<context:component-scan base-package="member.service"/>
 	<context:component-scan base-package="member.dao"/>
 	<context:component-scan base-package="member.bean"/>	
+	<context:component-scan base-package="cardBoard.bean"/>	
+	<context:component-scan base-package="cardBoard.service"/>	
+	<context:component-scan base-package="cardBoard.dao"/>	
 </beans>

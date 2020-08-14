@@ -63,9 +63,20 @@
 		4. invalidate-session : 로그 아웃시 세션정보 제거 여부. 기본값은 true
 		5. delete-cookies : 로그아웃시 제거할 쿠키 이름을 지정.
 		-->	 
-		<security:session-management>
+		<security:session-management invalid-session-url="/all/loginForm" session-fixation-protection="changeSessionId">
 			<security:concurrency-control max-sessions="1" expired-url="/all/loginForm"/>
-		</security:session-management> 	 
+		</security:session-management>
+		
+		<!-- 
+		session-management : 세션관리.
+			invalid-session-url : 중복 로그인 발생시 이동하는 url
+			session-fixation-protection : 세션 고정공격 방어
+				1. none : 세션 고정 공격에 대응하지 않음.
+				2. newSession : 세션을 새로 만들고 기존의 데이터는 보존하지 않음.
+				3. changeSessionId : 세션 id를 변경하고 세션 내용은 보존. 3.1 이상부터
+				4. migrateSession : 3.0 이하
+		 --> 
+		 
 		<!-- <security:csrf disabled="true"/>  -->
 		<!-- 
 		* csrf(Cross-Site Request Forgery) 토큰 
@@ -94,8 +105,10 @@
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:jdbc-user-service data-source-ref="dataSource"/>
+			<security:jdbc-user-service data-source-ref="dataSource" 
+										users-by-username-query="select username, password, enabled from membertable where username=?"
+										authorities-by-username-query="select username, auth as authority from membertable where username=?" />
 			<security:password-encoder ref="bcryptPasswordEncoder" />
 		</security:authentication-provider>
-	</security:authentication-manager>
+	</security:authentication-manager>	
 </beans>

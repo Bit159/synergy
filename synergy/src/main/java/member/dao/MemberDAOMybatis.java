@@ -1,5 +1,6 @@
 package member.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -25,5 +26,10 @@ public class MemberDAOMybatis implements MemberDAO {
 	@Override
 	public void join(Map<String, String> map) {
 		sqlSession.insert("memberSQL.join",map);
+	}
+
+	@Override
+	public List<String> autocomplete() {
+		return sqlSession.selectList("memberSQL.autocomplete");
 	}
 }

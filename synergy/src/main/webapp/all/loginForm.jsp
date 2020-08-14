@@ -45,7 +45,7 @@
 				<span></span>
 			</label>
 		<h1>Let's Synergy</h1>
-		<form id="loginForm" method="post" action="/synergy/all/login">
+		<form id="loginForm" method="post" action="/synergy-kh/all/login">
 			<div class="info-area">
 				<input type="text" name="login_id" id="login_id" autocomplete="off" required>
 				<label for="login_id">EMAIL</label>
@@ -67,7 +67,7 @@
 		</div>
 
 		<div class="caption">
-			<a href="/synergy/all/joinForm">회원가입</a>&emsp;
+			<a href="/synergy-kh/all/joinForm">회원가입</a>&emsp;
 			<a href="">아이디/비밀번호 찾기</a>
 		</div>
 	</section>

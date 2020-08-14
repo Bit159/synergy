@@ -7,7 +7,10 @@
 <!-- 	</select> -->
 	
 	<insert id="join" parameterType="map">
-		insert into db.users values (#{username},#{password},1); 
+		insert into db.membertable values (#{username},#{password},1);
 		insert into db.authorities values (#{username},#{authority});
 	</insert>
+	<select id="autocomplete" resultType="String">
+		select * from db.addr
+	</select>
 </mapper>

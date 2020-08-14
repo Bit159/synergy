@@ -21,12 +21,12 @@ public class LoginSuccessHandler  implements AuthenticationSuccessHandler{
 			roleNames.add(authority.getAuthority());
 		});
 		if(roleNames.contains("ROLE_ADMIN")) { 
-			response.sendRedirect("/synergy/admin/adminPage"); 
+			response.sendRedirect("/synergy-kh/admin/adminPage"); 
 			return; 
 		} 
 		
 		if(roleNames.contains("ROLE_MEMBER")) { 
-			response.sendRedirect("/synergy/member/welcome");
+			response.sendRedirect("/synergy-kh/member/createGroup");
 			return;
 		} 
 		response.sendRedirect("/"); 

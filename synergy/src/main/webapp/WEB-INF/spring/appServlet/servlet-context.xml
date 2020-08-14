@@ -20,4 +20,12 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<context:component-scan base-package="member.controller"/>
+	<!--json  -->
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean>
+	
+	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>
+	</bean>
 </beans>
