@@ -8,7 +8,7 @@ pageEncoding="UTF-8"%>
      <!-- PC ver. 메뉴 -->
      <div id="menuButtons">
        <span></span><span></span><span></span>
-       <a href="/a/info"><span>프로젝트소개</span></a>
+       <a href="/a/admin_map"><span>전체 지도</span></a>
        <a href="/a/insert_match"><span>지도를 내놓거라</span></a>
        <a href="/a/board"><span>모집게시판</span></a>
        <a href="/a/mylogin"><span>로그인</span></a>

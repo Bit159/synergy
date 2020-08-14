@@ -1,7 +1,9 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import user.CBoardDTO;
 import user.MatchDTO;
@@ -93,6 +96,27 @@ public class HomeController {
 		return rjson;
 	}
 	
+	
+	// admin map
+	@GetMapping("/admin_map")
+	public String admin_map() {return "/all/admin_map";	}
+	
+	@PostMapping(path="/admin_map_getList", produces="application/json;charset=UTF-8")
+	public @ResponseBody JSONArray admin_map_getList() {
+//		Map<String, Double> map = new HashMap<String, Double>();
+//		List<MatchDTO> list = userDAO.getListFromMatch();
+//		
+//		for(int i = 0; i < list.size(); i++) {
+//			map.put("x", list.get(i).getX());
+//			map.put("y", list.get(i).getY());
+//			map.put("range", list.get(i).getRange());
+//		}
+		JSONArray json= new JSONArray();
+		json.addAll(userDAO.getListFromMatch());
+		
+		return json;
+	}
+	//-----------
 	
 	
 }

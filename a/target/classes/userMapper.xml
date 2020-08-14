@@ -7,7 +7,7 @@
 	
 	<!-- FOR MAP -->
 	<select id="getListFromMatch" resultType="matchDTO">
-		SELECT * FROM db.match ORDER BY CREATED ASC
+		SELECT * FROM `db`.`match` ORDER BY `CREATED` ASC
 	</select>
 
 	<insert id="insertMatch" parameterType="matchDTO">

@@ -12,7 +12,7 @@
 <!-- 여기서 사용되는 pattern 값은 Controller에서 매핑되는 path값과 같다는 것에 유의하자 -->
 <!-- 전체를 막고 일부를 permitAll 주던가, 아니면 전체를 막는 설정을 안하면 전체 열리니까 막을 것만 hasRole을 사용하던가. -->
 <security:http auto-config="true" use-expressions="true">
-	<security:intercept-url pattern="/map" access="hasRole('ROLE_ADMIN')" />
+	<security:intercept-url pattern="/admin_map" access="hasRole('ROLE_ADMIN')" />
 	<security:intercept-url pattern="/board" access="hasRole('ROLE_MEMBER')" />
 	<!-- 시큐리티 기본 로그인 폼 -->
 	<!--<security:form-login/>-->

@@ -18,13 +18,13 @@
 	    <header id="header" class="container">
 	        <!-- 로고 -->
 	        <div id="logo">
-	            <a href="/"><img alt="" style="width:155px;height:55px;" src="/a/resources/image/logo.png" /></a>
+	            <a href="/a"><img alt="" style="width:155px;height:55px;" src="/a/resources/image/logo.png" /></a>
 	        </div>
 	        <!-- nav -->
 	        <nav id="nav">
 	            <ul>
 	                <li class="welcome" style="white-space: nowrap;">
-	                    <a href="/">Welcome</a>
+	                    <a href="/a/admin_map">전체 지도</a>
 	                </li>
 	                <li class="matching" style="white-space: nowrap;">
 	                    <a href="/a/insert_match">스터디 매칭</a>
