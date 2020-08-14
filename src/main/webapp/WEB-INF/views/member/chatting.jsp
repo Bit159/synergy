@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +9,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <div>
-        <input type="text" id="sender" value="뱅주" style="display: none;">
-        <input type="text" id="messageinput">
-    </div>
-    <div>
-        <button type="button" onclick="send();">Send</button>
-        <button type="button" onclick="closeSocket();">Close</button>
-    </div>
- <div id="messages"></div>
+<sec:authentication property="principal"/>
+<div>
+    <input type="text" id="sender" value="뱅주" style="display: none;">
+    <input type="hidden" id="sender">
+    <input type="text" id="messageinput">
+</div>
+<div>
+    <button type="button" onclick="send();">Send</button>
+    <button type="button" onclick="closeSocket();">Close</button>
+   </div>
+<div id="messages"></div>
 </body>
 <script type="text/javascript">
 let ws;

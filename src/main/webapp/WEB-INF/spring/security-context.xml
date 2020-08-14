@@ -35,7 +35,7 @@
 		12. hasPermission(Object targetId, String targetType, Object permission)
 		-->
 	
-		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess" />
+		<security:form-login login-page="/all/loginForm" authentication-success-handler-ref="loginSuccess"  />
 		
 		<!-- 
 		1. login-page : login form 페이지 URL

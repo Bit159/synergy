@@ -4,21 +4,21 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Let's Synergy!</title>
-    <link rel="shortcut icon" href="../resources/image/logo.png" />
-    <link rel="stylesheet" href="../resources/css/index.css" />
-    <script defer type="text/javascript" src="../resources/js/index.js"></script>
-	<script defer src="https://apis.google.com/js/platform.js"></script>
-	<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-      </head>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Let's Synergy!</title>
+<link rel="shortcut icon" href="http://localhost:8080/synergy/resources/image/logo.png" />
+<link rel="stylesheet" href="http://localhost:8080/synergy/resources/css/index.css">
+<script defer type="text/javascript" src="http://localhost:8080/synergy/resources/js/index.js"></script>
+<script defer src="https://apis.google.com/js/platform.js"></script>
+<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
   <body>
     <div class="nav">
       <nav>
         <div id="logoDiv">
-          <a href="/synergy/index"><img src="../resources/image/logo.png" /></a>
+          <a href="/synergy/index"><img src="http://localhost:8080/synergy/resources/image/logo.png" /></a>
         </div>
         <div id="menuButtons">
           <span></span>
@@ -128,83 +128,27 @@
 	        <li>로그인</li>
 	        <li>회원가입</li>	
         </sec:authorize>
+        
       </ul>
+      	<a href="#" onclick="signOut();">Sign out</a>
+		<script>
+		  function signOut() {
+		    var auth2 = gapi.auth2.getAuthInstance();
+		    auth2.signOut().then(function () {
+		      console.log('User signed out.');
+		    });
+		    auth2.disconnect();
+		  }
+		</script>
     </div>
 
 	<input type="button" value="맨위로" id="topButton">
-<!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-		<script>
-		let csrfHeaderName = "${_csrf.headerName}";
-		let csrfTokenValue = "${_csrf.token}";
-		
-		function onSignIn(googleUser) {
-		    // Useful data for your client-side scripts:
-			var profile = googleUser.getBasicProfile();
-		    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-		    console.log("Full Name: " + profile.getName());
-		    console.log("Given Name: " + profile.getGivenName());
-		    console.log("Family Name: " + profile.getFamilyName());
-		    console.log("Image URL: " + profile.getImageUrl());
-		    console.log("Email: " + profile.getEmail());
-		    
-	
-		    $.ajax({
-		    	type : 'post',
-		    	url  : '/synergy/all/checkMember',
-		    	beforeSend: function(xhr){
-		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		    		
-		    	},
-		    	data : 'username=' + profile.getEmail(),
-		    	dataType: 'text',
-		    	success : function(data){
-		    		if(data == 'ok'){
-		    			$.ajax({
-		    				type : 'post',
-		    				beforeSend: function(xhr){
-		    		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		    		    		
-		    		    	},
-		    				data : {
-		    					'username' : profile.getEmail(),
-		    					'password' : 'bitcamp159'
-		    					
-		    				},		
-		    				url  : '/synergy/login',
-		    				success : function(){
-		    					alert('로그인 성공');
-		    				}
-		    			});
-		    			
-		    		}else{
-		    			alert("없음");
-		    			location="/synergy/all/addInfoForm?username=" + profile.getEmail();
-		    			
-		    		}
-		    	}
-		    	
-		    });
-		    
-		    	
-		    
-		    if(profile.getEmail() != ''){
-		    	return;
-		    }
-		
-		    // The ID token you need to pass to your backend:
-		    var id_token = googleUser.getAuthResponse().id_token;
-		    console.log("ID Token: " + id_token);
-		    
-		  }
-		</script>  -->	
-			<a href="#" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
+	<img id="chatting_floating" src="http://localhost:8080/synergy/resources/image/chatting_floating.png" width="100" height="100" 
+	style="position:fixed;
+		   top: 128px;
+		   rught : 50%;
+		   margin-right: -683px;
+		   z-index : 99;">
+
 </body>
 </html>

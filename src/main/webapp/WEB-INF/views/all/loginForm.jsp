@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,11 +51,13 @@
 		<form id="loginForm" name="loginForm" method="post" action="/synergy/login" >
 			<div class="info-area">
 				<input type="text" name="username" id="username" autocomplete="off" required>
+				<input type="hidden" name="email" id="email">
 				<label for="username">EMAIL</label>
 			</div>
 
 			<div class="info-area">
 				<input type="password" name="password" id="password" autocomplete="off" required>
+				<input type="hidden" name="redirect" id="redirect" value="${password }">
 				<label for="password">PASSWORD</label>
 			</div>
 			<input type="checkbox" name="remember-me">자동로그인
@@ -64,6 +67,7 @@
 			</div>
 			
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+	
 		</form>
 		
 		<div class="thirdParty" align="center" style="margin-top:30px;">
@@ -82,7 +86,13 @@
 		    console.log("Family Name: " + profile.getFamilyName());
 		    console.log("Image URL: " + profile.getImageUrl());
 		    console.log("Email: " + profile.getEmail());
+			
+		    let username = profile.getEmail();
+		    let password = $('#redirect').val();
 		    
+		    if(username == ''){
+		    	return;
+		    }
 	
 		    $.ajax({
 		    	type : 'post',
@@ -91,34 +101,36 @@
 		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		    		
 		    	},
-		    	data : 'username=' + profile.getEmail(),
+		    	data : 'username=' + username,
 		    	dataType: 'text',
 		    	success : function(data){
 		    		if(data == 'ok'){
-		    			$('#username').val(profile.getEmail());
-		    			$('#password').val('bitcamp159');
+		    			$('#username').val(username);
+		    			$('#password').val(password);
 		    			document.loginForm.submit();
 		    			
 		    		}else{
 		    			alert("없음");
-		    			location="/synergy/all/addInfoForm?username=" + profile.getEmail();
+		    		    page_move(username);
 		    			
 		    		}
 		    	}
 		    	
 		    });
-		    
-		    	
-		    
-		    if(profile.getEmail() != ''){
-		    	return;
-		    }
-		
+	
 		    // The ID token you need to pass to your backend:
 		    var id_token = googleUser.getAuthResponse().id_token;
 		    console.log("ID Token: " + id_token);
 		    
 		  }
+		
+		function page_move(username){
+			let form = document.loginForm;
+			form.email.value = username;
+			form.action="/synergy/all/addInfoForm";
+			form.method="post";
+			form.submit();
+		}
 		</script>
 			<img src="../resources/image/kakao_login_medium_narrow.png"><br>
 		</div>
@@ -128,14 +140,6 @@
 			<a href="">아이디/비밀번호 찾기</a>
 		</div>
 	</section>
-	<a href="#" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
+
 </body>
 </html>

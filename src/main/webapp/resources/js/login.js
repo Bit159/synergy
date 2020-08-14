@@ -13,7 +13,3 @@ function checkLogin(){
 	}
 	
 }
-
-function socialLogin(){
-	
-}

@@ -50,7 +50,6 @@
 		<button>JOIN!</button>
 		<button type="button" name="back" id="back" onclick="javascript='history.go(-1)'">BACK</button>
 	</div>
-	<input type="hidden" name="password" id="password" value="bitcamp159">
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
 </body>

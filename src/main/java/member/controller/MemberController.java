@@ -6,12 +6,17 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +48,7 @@ public class MemberController{
 		OAuth2Operations oauth2Operations = googleConnectionFactory.getOAuthOperations();
 		String url = oauth2Operations.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameter);
 		model.addAttribute("google_url", url);
-		
+
 		return "/all/loginForm";
 	}
 
@@ -52,10 +57,6 @@ public class MemberController{
 		return "/all/joinForm";
 	}
 	
-	@GetMapping("/all/joinus")
-	public String joinus() {
-		return "/all/joinus";
-	}
 
 	@GetMapping("/member/myPage")
 	public String myPage() {
@@ -121,17 +122,18 @@ public class MemberController{
 	
 	//================================구글 로그인 콜백메소드
 	@RequestMapping(value="/googleLogin", method= {RequestMethod.GET, RequestMethod.POST})
-	public String googleCallBack(@RequestParam String code) {
-		
-		return "redirect:/index";
+	public String googleCallBack(@RequestParam String code, RedirectAttributes attr) {
+		//여기서 이메일 값을 받아올 수 없어서 따로 처리를 한다.
+		attr.addAttribute("password", "bitcamp159");
+
+		return "redirect:/all/loginForm";
 	}
 	
 	@PostMapping("/all/checkMember")
 	@ResponseBody
-	public String checkMember(@RequestParam String username, RedirectAttributes redirectAtt, HttpSession session) {
+	public String checkMember(@RequestParam String username) {
 		MemberDTO memberDTO = memberService.checkMember(username);
-		redirectAtt.addAttribute("username", username);
-		
+		System.out.println(username);
 		if(memberDTO != null) {
 			return "ok";
 			
@@ -141,22 +143,17 @@ public class MemberController{
 		
 	}
 	
-	@GetMapping("/all/addInfoForm")
-	public String addInfoForm(@RequestParam String username, Model model) {	
-		model.addAttribute("username", username);
+	@PostMapping("/all/addInfoForm")
+	public String addInfoForm(@RequestParam String email, Model model) {	
+		System.out.println("username : " + email);
+		model.addAttribute("username", email);
 		return "/all/addInfoForm";
 	}
 	
 	@PostMapping("all/addInfo")
-	public String addInfo(@ModelAttribute MemberDTO memberDTO) {
-		Map<String, String> map = new HashedMap<String, String>();
-		map.put("username", memberDTO.getUsername());
-		map.put("password", memberDTO.getPassword());
-		map.put("nickname", memberDTO.getNickname());
-		map.put("birthYear", memberDTO.getBirthYear());
-		
+	public String addInfo(@RequestParam Map<String, String> map) {
+		map.put("password", "bitcamp159");
 		memberService.join(map);
-		
 		return "/all/index";
 	}
 	
@@ -164,6 +161,5 @@ public class MemberController{
 	public String chatting() {
 		return "/member/chatting";
 	}
-
 
 }

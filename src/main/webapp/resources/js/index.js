@@ -2,9 +2,9 @@ document.getElementById("topButton").addEventListener("click", () => {
   scrollTo(0, 0);
 });
 
-document.getElementById("loginButton").addEventListener("click", () => {
+/*document.getElementById("loginButton").addEventListener("click", () => {
   location.href = "login.html";
-});
+});*/
 
 window.onscroll = () => {
   let target = document.querySelector(".nav");

@@ -38,7 +38,7 @@
 		</div>
 		
 		<div class="join-area">
-			<input type="text" name="nickname" id="nickname" autocomplete="off" required>
+			<input type="text" name="nickname" id="nickname" autocomplete="off" required onblur="checkUsername()">
 			<label for="nickname">NICKNAME</label>
 		</div>
 		
@@ -65,4 +65,23 @@
 	</form>
 </section>
 </body>
+<!-- <script type="text/javascript">
+let username = $('#username');
+let password = $('#password');
+
+username.focusout(function(){
+	$.ajax(){
+		type : 'post',
+		beforeSend: function(xhr){
+    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+    		
+    	},
+		url  : '/all/checkMember',
+		data : '',
+		success : function(){
+			
+		}
+	}
+});
+</script> -->
 </html>

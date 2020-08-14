@@ -40,5 +40,5 @@ public class MemberServiceImpl implements MemberService {
 		memberDTO.setPassword(passwordEncoder.encode(password));
 		System.out.println(passwordEncoder.matches("bitcamp159", password));
 		memberDAO.addInfo(memberDTO);
-	}
+	} //dto 방식으로 하면 로그인이 안됨. 이유는 모르겠음
 }
