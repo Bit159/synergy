@@ -29,7 +29,7 @@ div[class="boardcontainer"]{
     display: flex;
     flex-direction: column;    
     border-left: 3px solid #32be78;
-    
+    font-size: 20px;
     
     
 }
@@ -39,7 +39,7 @@ div[class="board_header"]{
     height: 100px;
     border: 1px solid #ddd;
     border-bottom: none;
-    padding: 5px;
+    padding: 10px;
     
 }
 div[class="header_upside"]{
@@ -52,42 +52,43 @@ div[class="header_upside"]{
 div[class="header_downside"]{
     display: flex;    
     height: 40%;
-    
+    margin-top: 7px;
     justify-content: space-between;
-    
 }
 div[class="downside_left"]{
     display: flex;
-    
 }
 div[class="downside_right"]{
     display: flex;
-    
-    
 }
 div[class="board_body"]{
     min-height: 300px;
     border: 1px solid #ddd;
     border-bottom: none;
-    padding: 5px;
+    padding: 10px;
+    font-size: 20px;
 }
+
 div[class="board_footer"]{
-    height: 300px;
+    min-height: 300px;
     border: 1px solid #ddd;
-    padding: 5px;
+    padding: 10px;
 }
 
 div[class="view_bno"]{
     
 }
 div[class="view_title"]{
-	font-size: 120%;
+	font-size: 110%;
 }
 div[class="view_nickname"]{
-    
+    margin-right: 5px;
+    line-height: 31px;
 }
+
 div[class="view_boarddate"]{
-   
+   margin-right: 5px;
+   line-height: 31px;
 }
 div[class="view_replys"]{
 	width: 100px;   
@@ -99,13 +100,14 @@ div[class="view_hit"]{
 div[class="replywrapper"]{
     width: 100%;
 }
+
 div[class="reply_header"]{
     width: 100px;
 }
 button[class="origin"]{
-	width: 100px;
-	height: 50px;
-	
+	width: 70px;
+	height: 30px;
+	margin-left: 10px;
 }
 
 li[class="replywrapper"]{
@@ -122,13 +124,56 @@ li[class="reply_group_item"]{
 div[class="reply_nickname"]{
     width: 10%;
     border: 1px solid;
+    text-align: center;
+    line-height: 40px;
 }
 div[class="reply"]{
     width: 80%;
     border: 1px solid;
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-button[class="reply_button"]{
+div[class="reply_button"]{
 	width: 10%;
-	height: 40px;
+	border: 1px solid;
+	line-height: 40px;
+	padding-left: 10px;
+}
+
+div[class="reply_writer_wrapper"]{
+	width: 100%;
+	min-height: 100px;
+	border: 1px solid #ddd;
+}
+div[class="reply_writer"]{
+    margin-top: 0px;
+    padding-top: 10px;
+}
+label[class="reply_writer_label"]{
+	padding-bottom: 10px;
+	padding-left: 20px;
+	font-weight: bold;
+}
+div[class="reply_writer_div"]{
+	display: flex;
+	 justify-content: space-between;
+	 padding: 10px;
+}
+textarea[id="reply_writer_text"]{
+	width: 1000px;
+	height: 50px;
+	padding: 4px 8px;
+	border: 1px solid #ddd;
+	margin-bottom: 10px;
+}
+button[id="reply_writer_btn"]{
+    width: 120px;
+    height: 50px;
+	border: 1px solid #ddd;
+	background-color: #ddd;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 50px;
 }

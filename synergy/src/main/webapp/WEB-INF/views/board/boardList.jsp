@@ -37,7 +37,7 @@
 	                        <div class="nickname"><c:out value="${dto.nickname}" /></div>
 	                        <div class="boarddate">
 	                        	<fmt:formatDate var="nowdate" pattern="yyyy-MM-dd" value="${now }"/>
-	                        	<fmt:formatDate var="boarddate" pattern="yyyy-MM-dd" value="${dto.boarddate }"/><br>
+	                        	<fmt:formatDate var="boarddate" pattern="yyyy-MM-dd" value="${dto.boarddate }"/>
 	                        	<fmt:formatDate var="boardtime" pattern="HH:mm:ss" value="${dto.boarddate }"/>
 	                        	<c:choose>
 	                        		<c:when test="${nowdate eq boarddate }">${boardtime }</c:when>

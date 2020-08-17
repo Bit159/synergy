@@ -33,7 +33,6 @@ public class BoardController {
 		System.out.println(list.get(0).getContent());
 		Date now = new Date();
 		
-		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
 		mav.addObject("now", now);
@@ -47,10 +46,15 @@ public class BoardController {
 		List<CBoardDTO> list = boardService.getCBoardList();
 		System.out.println(cBoardDTO.getTitle());
 		List<CBoardReplyDTO> replyList = boardService.getCBoardReplyList(bno);
-		
+		System.out.println(replyList);
+		for(CBoardReplyDTO dto : replyList) {
+			System.out.println(dto.getNickname());
+		}
+		Date now = new Date();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("cBoardDTO", cBoardDTO);
 		mav.addObject("list", list);
+		mav.addObject("now", now);
 		mav.addObject("replyList", replyList);
 		mav.setViewName("/board/boardView");
 		return mav;
