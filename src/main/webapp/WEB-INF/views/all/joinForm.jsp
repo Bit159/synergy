@@ -10,10 +10,11 @@
 <script defer type="text/javascript" src="../resources/js/join.js"></script>
 </head>
 <body>
+<jsp:include page="../template/header.jsp"/>
 <div class="nav">
 	<nav>
 		<div id="logoDiv">
-		<a href="/synergy/index"><img src="../resources/image/testLogo.png" /></a>
+		<a href="/synergy/index"><img src="../resources/image/logo.png" /></a>
 		</div>
 		<div id="menuButtons">
 			<span>프로젝트소개</span>
@@ -64,6 +65,7 @@
 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 	</form>
 </section>
+<jsp:include page="../template/footer.jsp"/>
 </body>
 <!-- <script type="text/javascript">
 let username = $('#username');

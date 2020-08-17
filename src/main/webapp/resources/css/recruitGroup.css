@@ -1,0 +1,33 @@
+html, body, div,h1,a,p {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+body {
+    font-size: 13pt;
+}
+.register-header {
+    margin: 10px 0 10px 0;
+}
+#container {
+    width:1280px;
+    border:solid 1px blue;
+    margin: 0 auto;
+}
+.register {
+    width:80%;
+    margin:0 auto;
+}
+textarea {
+    width: 500px;
+    height: 200px;
+}
+td#BtnRow {
+    text-align: center;
+}
+input#title {
+    width:98%;
+}
+

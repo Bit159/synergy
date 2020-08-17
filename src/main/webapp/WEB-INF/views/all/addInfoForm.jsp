@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../resources/css/addInfoForm.css">
 </head>
 <body>
+<jsp:include page="../template/header.jsp"/>
 <div class="nav">
     <nav>
         <div id="logoDiv">
@@ -52,5 +53,6 @@
 	</div>
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 </form>
+<jsp:include page="../template/footer.jsp"/>
 </body>
 </html>

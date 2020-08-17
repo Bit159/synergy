@@ -4,46 +4,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="google-signin-scope" content="profile email" />
-<meta name="google-site-verification" content="fb6rIsh8WzJKvF5SCARFAzqdWF95ZEKdhPfXX2lLTzw"/>
-<meta name="google-signin-client_id" content="752749290235-0lrjurm4fdk31il80d87i99knklc9650.apps.googleusercontent.com"/>
-
-<title>로그인</title>
-<link rel="stylesheet" href="../resources/css/login.css">
-<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script defer type="text/javascript" src="../resources/js/login.js"></script>
-<script defer src="https://apis.google.com/js/platform.js"></script>
+	<meta charset="UTF-8">
+	<meta name="google-signin-scope" content="profile email" />
+	<meta name="google-site-verification" content="fb6rIsh8WzJKvF5SCARFAzqdWF95ZEKdhPfXX2lLTzw"/>
+	<meta name="google-signin-client_id" content="752749290235-0lrjurm4fdk31il80d87i99knklc9650.apps.googleusercontent.com"/>
+	
+	<title>로그인</title>
+	<link rel="stylesheet" href="../resources/css/login.css">
+	<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script defer type="text/javascript" src="../resources/js/login.js"></script>
+	<script defer src="https://apis.google.com/js/platform.js"></script>
 </head>
 <body>
-	<nav class="navbar">
-		<div class="logoDiv">
-			<a href="/synergy/index"><img id="logoImg" src="../resources/image/logo.png" /></a>
-		</div>
-		<div class="menuButtons">
-			<span><a href="#">프로젝트소개</a></span>
-			<span><a href="#">이용 방법</a></span>
-			<span><a href="#">자주 묻는 질문</a></span>
-			<span><a href="#">로그인</a></span>
-			<span><a href="#">회원가입</a></span>
-		</div>
-			<input type="checkbox" id="sideicon">
-			<label for="sideicon">
-				<span></span>
-				<span></span>
-				<span></span>
-			</label>
-			<div class="sidebar">
-					<ul>
-						<li><a>프로젝트소개</a></li>
-						<li><a>이용방법</a></li>
-						<li><a>자주 묻는 질문</a></li>
-						<li><a>로그인</a></li>
-						<li><a>회원가입</a></li>
-					</ul>
-					<label for="sideicon"></label>
-			</div>
-	</nav>
+	<jsp:include page="../template/header.jsp" />
 	<section class="login-form">
 		<label for="sideicon" id="back"></label>
 		<h1>Let's Synergy</h1>
@@ -60,7 +33,7 @@
 				<input type="hidden" name="redirect" id="redirect" value="${password }">
 				<label for="password">PASSWORD</label>
 			</div>
-			<input type="checkbox" name="remember-me">자동로그인
+			<div><input type="checkbox" name="remember-me" style="padding-bottom: 5pt">자동로그인</div>
 			<div class="btn-area">
 				<button type="button" id="loginBtn" onclick="checkLogin()">LOGIN</button>
 				<button type="button" onclick="location='/synergy/index'">BACK</button>
@@ -140,6 +113,6 @@
 			<a href="">아이디/비밀번호 찾기</a>
 		</div>
 	</section>
-
+	<jsp:include page="../template/footer.jsp"></jsp:include>
 </body>
 </html>

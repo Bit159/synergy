@@ -1,5 +1,6 @@
 package member.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,7 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.join(map);
 		
 	}
-
-	@Override
-	public MemberDTO checkMember(String username) {
-		return memberDAO.checkMember(username);
-	}
-
+	
 	@Override
 	public void addInfo(MemberDTO memberDTO) {
 		String password = passwordEncoder.encode(memberDTO.getPassword());
@@ -41,4 +37,55 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println(passwordEncoder.matches("bitcamp159", password));
 		memberDAO.addInfo(memberDTO);
 	} //dto 방식으로 하면 로그인이 안됨. 이유는 모르겠음
+
+
+	@Override
+	public MemberDTO checkMember(String username) {
+		return memberDAO.checkMember(username);
+	}
+
+
+	@Override
+	public MemberDTO getMyPage(Map<String, String> map) {
+		return memberDAO.getMyPage(map);
+	}
+	
+	@Override
+	public void withdrawal(String username) {
+		
+		memberDAO.withdrawal(username);
+		
+	}
+
+	@Override
+	public List<MemberDTO> getMember() {
+		
+		return memberDAO.getMember();
+	}
+
+	@Override
+	public void memberDelete(String username) {
+		memberDAO.memberDelete(username);
+		
+	}
+
+	@Override
+	public List<String> autocomplete() {
+		return memberDAO.autocomplete();
+	}
+
+	@Override
+	public void nicknameRevice(Map<String, String> map) {
+		memberDAO.nicknameRevise(map);
+	}
+
+	@Override
+	public void revise(Map<String, String> map) {
+		String password = passwordEncoder.encode(map.get("password"));
+		map.replace("password", password);
+		
+		memberDAO.revise(map);
+	}
+	
+	
 }

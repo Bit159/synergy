@@ -1,0 +1,55 @@
+html, body, div,h1,a,p {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+#container {
+    width:1280px;
+    height:100%;
+    margin:0 auto;
+    border:solid 1px black;
+}
+#regist {
+    position: fixed;
+    top:20px;
+    right:20px;
+}
+a {
+ text-decoration: none;
+}
+.card {
+    height: 200px;
+    width: 350px;
+    border-radius: 15px;
+    background: seashell;
+    position: relative;
+    display: inline-block;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+    margin:30px 0 0 30px;
+    text-decoration: none;
+}
+h1 {
+    font-size: 16pt;
+    font: bold;
+}
+.card-header {
+    border-bottom: solid 1px black;
+}
+.card-header-content {
+    padding:10px;
+    display: flex;
+    right: 100px;
+}
+.card-header-content div {
+    padding-left:5px;
+}
+.card-body {
+}
+.card-body-content {
+    padding: 10px;
+}
+.card-body-content h1 {
+    margin-bottom: 10px;
+}

@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>구글 로그인 성공!</h1>
+
 </body>
-<script type="text/javascript">
-console.log(${result});
-</script>
 </html>

@@ -4,6 +4,9 @@
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
  <configuration>
  	<typeAliases>
- 		<typeAlias type="member.bean.MemberDTO" alias="memberDTO"/>
+ 		<typeAlias type="member.bean.MemberDTO" alias="member"/>
+		<typeAlias type="cardBoard.bean.CardBoardDTO" alias="card"/>
+		<typeAlias type="board.bean.BoardDTO" alias="board"/>
+		<typeAlias type="board.bean.CBoardDTO" alias="cBoard"/>
  	</typeAliases>
  </configuration>
