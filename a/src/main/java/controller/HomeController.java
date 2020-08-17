@@ -92,7 +92,6 @@ public class HomeController {
 		System.out.println(json.getString("time"));
 		int result = userDAO.deleteMatch(matchDTO);
 		JSONObject rjson = (result==1) ? json : null;
-		
 		return rjson;
 	}
 	
@@ -101,19 +100,12 @@ public class HomeController {
 	@GetMapping("/admin_map")
 	public String admin_map() {return "/all/admin_map";	}
 	
+	
+	
 	@PostMapping(path="/admin_map_getList", produces="application/json;charset=UTF-8")
 	public @ResponseBody JSONArray admin_map_getList() {
-//		Map<String, Double> map = new HashMap<String, Double>();
-//		List<MatchDTO> list = userDAO.getListFromMatch();
-//		
-//		for(int i = 0; i < list.size(); i++) {
-//			map.put("x", list.get(i).getX());
-//			map.put("y", list.get(i).getY());
-//			map.put("range", list.get(i).getRange());
-//		}
 		JSONArray json= new JSONArray();
 		json.addAll(userDAO.getListFromMatch());
-		
 		return json;
 	}
 	//-----------
