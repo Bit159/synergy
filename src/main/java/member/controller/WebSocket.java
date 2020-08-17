@@ -7,13 +7,17 @@ import java.util.List;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
-import javax.websocket.Session;
 import javax.websocket.RemoteEndpoint.Basic;
+import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import member.service.MemberService;
+import member.service.MemberServiceImpl;
 
 
 @Controller
@@ -21,6 +25,8 @@ import org.springframework.stereotype.Controller;
 public class WebSocket {
 	private static final List<Session> sessionList = new ArrayList<Session>();
 	private static final Logger logger = LoggerFactory.getLogger(WebSocket.class);
+	
+	//ServerEndPoint에서는 autowired를 못해준다. 가장 처음 빈을 만들기 때문에.
 	
 	public WebSocket() {
 		System.out.println("웹 소켓 객체 생성");
@@ -63,13 +69,14 @@ public class WebSocket {
 		logger.info("Message From " + sender + " : " + message); 
 		System.out.println("Message From " + sender + " : "+ message);
 		try { 
-			final Basic basic = session.getBasicRemote(); basic.sendText("<나> : " + message); 
+			final Basic basic = session.getBasicRemote(); 
+			basic.sendText("<나> : " + message); 
 			
 		}catch (Exception e) { 
 			System.out.println(e.getMessage()); 
 			
 		} 
-		
+		System.out.println(sender + " : " + message);
 		sendAllSessionToMessage(session, sender, message);
 	}
 	

@@ -3,6 +3,7 @@ package member.dao;
 import java.util.List;
 import java.util.Map;
 
+import member.bean.ChattingDTO;
 import member.bean.MemberDTO;
 
 public interface MemberDAO {
@@ -28,5 +29,11 @@ public interface MemberDAO {
 	public void nicknameRevise(Map<String, String> map);
 
 	public void revise(Map<String, String> map);
+
+	public void sendMessage(Map<String, String> map);
+
+	public List<ChattingDTO> getChatting();
+
+	public void createChat();
 
 }

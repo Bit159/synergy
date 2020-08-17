@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import member.bean.ChattingDTO;
 import member.bean.MemberDTO;
 import member.service.MemberService;
 
@@ -42,7 +43,7 @@ public class MemberController{
 	@Autowired
 	private OAuth2Parameters googleOAuth2Parameter;
 	
-	//============================== 메인페이지
+	//============================================ 메인페이지
 	
 	@GetMapping("index")
 	public String index() {
@@ -60,7 +61,7 @@ public class MemberController{
 	}
 	
 	
-	//============================== 로그인
+	//=========================================== 로그인
 	
 	@GetMapping("/all/loginForm")
 	public String loginForm(Model model) {
@@ -71,7 +72,7 @@ public class MemberController{
 		return "/all/loginForm";
 	}
 
-	//================================구글 로그인 콜백메소드
+	//==========================================구글 로그인 콜백메소드
 	@RequestMapping(value="/googleLogin", method= {RequestMethod.GET, RequestMethod.POST})
 	public String googleCallBack(@RequestParam String code, RedirectAttributes attr) {
 		//여기서 이메일 값을 받아올 수 없어서 따로 처리를 한다.
@@ -80,7 +81,7 @@ public class MemberController{
 		return "redirect:/all/loginForm";
 
 	}
-	//============================== 회원가입
+	//=========================================== 회원가입
 	
 	@GetMapping("/all/joinForm")
 	public String joinForm() {
@@ -134,7 +135,7 @@ public class MemberController{
 		
 	}
 	
-	//================================ 마이페이지
+	//====================================== 마이페이지
 	
 	@ResponseBody
 	@RequestMapping(value="/member/myPage",method=RequestMethod.POST)
@@ -192,7 +193,7 @@ public class MemberController{
 		
 	}
 
-	//============================== 게시판
+	//================================== 게시판
 	
 	@GetMapping(value="/member/cardBoard")
 	 public String card() {
@@ -209,7 +210,7 @@ public class MemberController{
 		 return "/member/createGroup";
 	 }
 	
-	//============================== 채팅
+	//==================================== 채팅
 	
 	@GetMapping("/member/chatting")
 	public String chatting() {
@@ -255,6 +256,41 @@ public class MemberController{
 			
 			
 			return "redirect:/all/adminBoard";
+	  }
+	  
+	  //====================================== 채팅방
+	  
+	  @GetMapping("/member/chattingList")
+	  public String chattingList() {
+		  return "/member/chattingList";
+	  }
+	  
+	  @GetMapping("/member/getChatting")
+	  @ResponseBody
+	  public ModelAndView getChatting() {
+		  ModelAndView mav = new ModelAndView();
+		  List<ChattingDTO> list = memberService.getChatting();
+		  mav.addObject("list", list);
+		  mav.setViewName("jsonView");
+		  
+		  return mav;
+		  
+	  }
+	  
+	  @PostMapping("/member/sendMessage")
+	  @ResponseBody
+	  public void sendMessage(@RequestParam String text) {
+			String sender = text.split(",")[1]; 
+			String message = text.split(",")[0];
+			
+			memberService.sendMessage(sender, message);
+			
+	  }
+	  
+	  @GetMapping("/member/createChat")
+	  @ResponseBody
+	  public void createChat() {
+		  memberService.createChat();
 	  }
 	
 	 

@@ -3,10 +3,12 @@ package member.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import member.bean.ChattingDTO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
@@ -85,6 +87,24 @@ public class MemberServiceImpl implements MemberService {
 		map.replace("password", password);
 		
 		memberDAO.revise(map);
+	}
+
+	@Override
+	public void sendMessage(String sender, String message) {
+		Map<String,String> map = new HashedMap<String, String>();
+		map.put("sender", sender);
+		map.put("message", message);
+		memberDAO.sendMessage(map);
+	}
+
+	@Override
+	public List<ChattingDTO> getChatting() {
+		return memberDAO.getChatting();
+	}
+
+	@Override
+	public void createChat() {
+		memberDAO.createChat();
 	}
 	
 	

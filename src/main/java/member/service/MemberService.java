@@ -3,6 +3,7 @@ package member.service;
 import java.util.List;
 import java.util.Map;
 
+import member.bean.ChattingDTO;
 import member.bean.MemberDTO;
 
 public interface MemberService {
@@ -28,5 +29,11 @@ public interface MemberService {
 	public void nicknameRevice(Map<String, String> map);
 
 	public void revise(Map<String, String> map);
+
+	public void sendMessage(String sender, String message);
+
+	public List<ChattingDTO> getChatting();
+
+	public void createChat();
 
 }

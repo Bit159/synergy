@@ -9,21 +9,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-<sec:authentication property="principal"/>
-<div>
-    <input type="text" id="sender" value="뱅주" style="display: none;">
-    <input type="hidden" id="sender">
+<sec:authentication property="principal.username" var="username"/>
+<div id="messages" align="left"></div>
+<div align="center">
+    <input type="hidden" id="sender" value="${username }">
     <input type="text" id="messageinput">
-</div>
-<div>
     <button type="button" onclick="send();">Send</button>
     <button type="button" onclick="closeSocket();">Close</button>
-   </div>
-<div id="messages"></div>
+</div>
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 let ws;
 let messages = document.getElementById("messages");
+let csrfHeaderName = "${_csrf.headerName}";
+let csrfTokenValue = "${_csrf.token}";
 
 window.onload=function openSocket(){
     if(ws!==undefined && ws.readyState!==ws.CLOSED){
@@ -50,7 +50,18 @@ window.onload=function openSocket(){
 
 function send(){
     let text = document.getElementById("messageinput").value + "," + document.getElementById("sender").value;
-    ws.send(text);
+    ws.send(text); 
+    $.ajax({
+    	type : 'post',
+    	url  : '/synergy/member/sendMessage',
+		beforeSend: function(xhr){
+    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+    		
+    	},
+    	data : 'text=' + text,
+    	success : function(){
+    	}
+    });
     text = "";
     document.getElementById("messageinput").value="";
 }
@@ -62,5 +73,21 @@ function closeSocket(){
 function writeResponse(text){
     messages.innerHTML+="<br/>"+text;
 }
+
+//==========================================================db 가져오기
+$(document).ready(function(){
+	$.ajax({
+		type : 'get',
+		url  : '/synergy/member/getChatting',
+		dataType : 'json',
+		success : function(data){
+			$.each(data.list, function(index, items){
+				 messages.innerHTML+="<br/>"+ items.username + " : " + items.chat;
+			});
+		}
+		
+	});
+	
+});
 </script>
 </html>

@@ -3,11 +3,13 @@ package member.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import member.bean.ChattingDTO;
 import member.bean.MemberDTO;
 
 @Transactional
@@ -15,6 +17,7 @@ import member.bean.MemberDTO;
 public class MemberDAOImpl implements MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
+	private int chatNum = 1;
 
 	@Override
 	public MemberDTO login(Map<String, String> map) {
@@ -71,5 +74,29 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void revise(Map<String, String> map) {
 		sqlSession.update("memberSQL.revise", map);
+	}
+
+	@Override
+	public void sendMessage(Map<String, String> map) {
+		sqlSession.insert("memberSQL.sendMessage", map);
+	}
+
+	@Override
+	public List<ChattingDTO> getChatting() {
+		return sqlSession.selectList("memberSQL.getChatting");
+	}
+
+	@Override
+	public void createChat() {
+		Map<String, String> map = new HashedMap<String, String>();
+		String create_table = "create table chattingRoom" + chatNum
+							+ "(username varchar(100),"
+							+ "chat varchar(500),"
+							+ "chat_date date)";
+		
+		map.put("create_table", create_table);
+		System.out.println(create_table);
+		sqlSession.selectOne("memberSQL.createChat", map);
+		chatNum++;
 	}
 }

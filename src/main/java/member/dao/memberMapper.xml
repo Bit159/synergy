@@ -57,7 +57,21 @@
   	<update id="nicknameRevise" parameterType="java.util.Map">
   		update membertable set nickname=#{nickname} where username=#{username}
   	</update>
-	
+  	
+  	<!-- 채팅 저장 -->
+  	<insert id="sendMessage" parameterType="java.util.Map">
+  		insert into chattingRoom values(#{sender}, #{message}, now())
+  	</insert>
+  	
+  	<select id="getChatting" resultType="chatting">
+  		select * from chattingRoom
+  	</select>
+  	
+  	<!-- 채팅방 생성 -->
+  	
+  	<select id="createChat" parameterType="java.util.Map">
+  		${create_table}
+  	</select>
+  	
 </mapper>
  
- <!-- insert into usertable(id, pw, nickname, email, birthyear) values(#{id}, #{pw}, #{nickname}, #{email}, #{birthYear}) -->
