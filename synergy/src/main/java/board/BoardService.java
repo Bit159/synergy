@@ -12,6 +12,8 @@ public interface BoardService {
 
 	public List<CBoardDTO> getCBoardList();
 
-	public CBoardDTO getBoard(int bno);
+	public CBoardDTO getCBoard(int bno);
+
+	public List<CBoardReplyDTO> getCBoardReplyList(int bno);
 
 }

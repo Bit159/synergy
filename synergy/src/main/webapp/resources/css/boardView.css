@@ -9,7 +9,7 @@ div[class="bodywrapper"]{
     justify-content: center;
     margin: 0 auto;
     width: 1280px;
-    height: 1000px;
+    min-height: 1000px;
     
 }
 div[class="boardwrapper"]{
@@ -17,9 +17,10 @@ div[class="boardwrapper"]{
     flex-direction: column;
     margin: 0 auto;
     width: 1200px;
-    height: 800px;
+    min-height: 800px;
     margin-top: 70px;
-    
+    position : relative;
+    left: 15px;
 }
 h1{
     margin-bottom: 50px;
@@ -30,6 +31,7 @@ div[class="boardcontainer"]{
     border-left: 3px solid #32be78;
     
     
+    
 }
 div[class="board_header"]{
     display: flex;
@@ -37,6 +39,7 @@ div[class="board_header"]{
     height: 100px;
     border: 1px solid #ddd;
     border-bottom: none;
+    padding: 5px;
     
 }
 div[class="header_upside"]{
@@ -44,12 +47,14 @@ div[class="header_upside"]{
     flex-direction: column;
     height: 60%;
     
+    
 }
 div[class="header_downside"]{
     display: flex;    
     height: 40%;
     
     justify-content: space-between;
+    
 }
 div[class="downside_left"]{
     display: flex;
@@ -61,20 +66,22 @@ div[class="downside_right"]{
     
 }
 div[class="board_body"]{
-    height: 300px;
+    min-height: 300px;
     border: 1px solid #ddd;
     border-bottom: none;
+    padding: 5px;
 }
 div[class="board_footer"]{
     height: 300px;
     border: 1px solid #ddd;
+    padding: 5px;
 }
 
 div[class="view_bno"]{
     
 }
 div[class="view_title"]{
-	font-size: 110%;
+	font-size: 120%;
 }
 div[class="view_nickname"]{
     
@@ -87,4 +94,41 @@ div[class="view_replys"]{
 }
 div[class="view_hit"]{
     width: 100px;
+}
+
+div[class="replywrapper"]{
+    width: 100%;
+}
+div[class="reply_header"]{
+    width: 100px;
+}
+button[class="origin"]{
+	width: 100px;
+	height: 50px;
+	
+}
+
+li[class="replywrapper"]{
+	
+}
+div[class="reply_header"]{
+	margin-bottom: 20px;
+}
+li[class="reply_group_item"]{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+div[class="reply_nickname"]{
+    width: 10%;
+    border: 1px solid;
+}
+div[class="reply"]{
+    width: 80%;
+    border: 1px solid;
+}
+
+button[class="reply_button"]{
+	width: 10%;
+	height: 40px;
 }

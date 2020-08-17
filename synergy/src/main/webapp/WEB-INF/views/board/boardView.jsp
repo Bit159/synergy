@@ -27,7 +27,7 @@
                     <div class="header_downside">
                         <div class="downside_left">                                                   
                             <div class="view_nickname">${cBoardDTO.nickname }&emsp;</div>
-                            <div class="view_boarddate"><fmt:formatDate pattern="yyyy-MM-dd" value="${cBoardDTO.boarddate }"/></div>
+                            <div class="view_boarddate"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${cBoardDTO.boarddate }"/></div>
                         </div>
                         <div class="downside_right">
                             <div class="view_replys">댓글수 : ${cBoardDTO.replys }</div>
@@ -39,9 +39,35 @@
                     <div class="content">${cBoardDTO.content }</div>
                 </div>
                 <div class="board_footer">
-                    <div class="reply">댓글</div>
+                    <div class="replywrapper">
+                        <div class="reply_header">댓글</div>
+	                        <ul class="reply_group">
+	                            <li class="reply_group_item">
+	                                <div class="reply_nickname">작성자</div>
+	                                <div class="reply">댓글</div>
+	                                <button type="button" class="reply_button">버튼</button>
+	                            </li>
+	                            
+	                            <li class="reply_group_item">
+	                                <div class="reply_nickname">작성자</div>
+	                                <div class="reply">댓글</div>
+	                                <button type="button" class="reply_button">버튼</button>
+	                            </li>
+	                            
+	                            <c:forEach var="replydto" items="replyList">
+	                            	<c:out value="${replydto != null }">
+	                            		<li class="reply_group_item">
+		                                <div class="reply_nickname"><c:out value="${replydto.nickname }"/></div>
+		                                <div class="reply"><c:out value="${replydto.reply }"/></div>
+		                                <button type="button" class="reply_button">버튼</button>
+		                            </li>
+	                            	</c:out>	                            	
+	                            </c:forEach>
+	                        </ul>
+                    </div>                    
                 </div>
             </div>
+	    <button type="button" class="origin" onclick="location.href='https://okky.kr/article/${cBoardDTO.bno }'">출처</button>
         </div>
     </div>
     

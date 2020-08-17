@@ -40,8 +40,13 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public CBoardDTO getBoard(int bno) {
-		return sqlSession.selectOne("boardSQL.getBoard", bno);
+	public CBoardDTO getCBoard(int bno) {
+		return sqlSession.selectOne("boardSQL.getCBoard", bno);
+	}
+
+	@Override
+	public List<CBoardReplyDTO> getCBoardReplyList(int bno) {
+		return sqlSession.selectList("boardSQL.getCBoardReplyList", bno);
 	}
 
 }

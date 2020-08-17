@@ -33,7 +33,15 @@
 	                        <div class="topic"><c:out value="${dto.topic}" /></div>
 	                        <div class="title"><a id="titleA" href="/synergy/board/${dto.bno }"><c:out value="${dto.title}" /></a></div>                        
 	                        <div class="nickname"><c:out value="${dto.nickname}" /></div>
-	                        <div class="boarddate"><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.boarddate }"/></div>	                        
+	                        <div class="boarddate">
+	                        	<fmt:formatDate var="nowdate" pattern="yyyy-MM-dd" value="${now }"/>
+	                        	<fmt:formatDate var="boarddate" pattern="yyyy-MM-dd" value="${dto.boarddate }"/><br>
+	                        	<fmt:formatDate var="boardtime" pattern="HH:mm:ss" value="${dto.boarddate }"/>
+	                        	<c:choose>
+	                        		<c:when test="${nowdate eq boarddate }">${boardtime }</c:when>
+	                        		<c:otherwise>${boarddate }</c:otherwise>
+	                        	</c:choose>
+	                        </div>	                        
 	                        <div class="hit"><c:out value="${dto.hit}" /></div>
                     	</li>
                     </c:forEach>

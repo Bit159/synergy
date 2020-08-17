@@ -32,6 +32,8 @@ public class BoardController {
 		List<CBoardDTO> list = boardService.getCBoardList();
 		System.out.println(list.get(0).getContent());
 		Date now = new Date();
+		
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
 		mav.addObject("now", now);
@@ -41,27 +43,28 @@ public class BoardController {
 	
 	@GetMapping("/board/{bno}")
 	public ModelAndView boardView(@PathVariable("bno") int bno) {
-		CBoardDTO cBoardDTO = boardService.getBoard(bno);
+		CBoardDTO cBoardDTO = boardService.getCBoard(bno);
 		List<CBoardDTO> list = boardService.getCBoardList();
 		System.out.println(cBoardDTO.getTitle());
+		List<CBoardReplyDTO> replyList = boardService.getCBoardReplyList(bno);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("cBoardDTO", cBoardDTO);
 		mav.addObject("list", list);
+		mav.addObject("replyList", replyList);
 		mav.setViewName("/board/boardView");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/board/boardList1", method = RequestMethod.GET)
 	public ModelAndView boardList1() {
-		
-		/*
-		 * List<CBoardDTO> list = userDAO.getCBoardList();
-		 * System.out.println(list.get(0).getContent());
-		 */
 		List<CBoardDTO> list = boardDAO.getCBoardList();
 		System.out.println(list.get(0).getContent());
+		Date now = new Date();
+		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);		
+		mav.addObject("list", list);
+		mav.addObject("now", now);
 		mav.setViewName("/board/boardList1");
 		return mav;
 	}

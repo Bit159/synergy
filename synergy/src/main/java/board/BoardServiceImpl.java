@@ -1,5 +1,7 @@
 package board;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,12 +55,19 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<CBoardDTO> getCBoardList() {
-		return boardDAO.getCBoardList();
+		List<CBoardDTO> list = boardDAO.getCBoardList();
+		
+		return list;
 	}
 
 	@Override
-	public CBoardDTO getBoard(int bno) {
-		return boardDAO.getBoard(bno);
+	public CBoardDTO getCBoard(int bno) {
+		return boardDAO.getCBoard(bno);
+	}
+
+	@Override
+	public List<CBoardReplyDTO> getCBoardReplyList(int bno) {
+		return boardDAO.getCBoardReplyList(bno);
 	}
 
 }

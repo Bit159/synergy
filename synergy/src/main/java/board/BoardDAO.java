@@ -14,7 +14,9 @@ public interface BoardDAO {
 
 	public List<CBoardDTO> getCBoardList();
 
-	public CBoardDTO getBoard(int bno);
+	public CBoardDTO getCBoard(int bno);
+
+	public List<CBoardReplyDTO> getCBoardReplyList(int bno);
 	
 	
 }

@@ -30,8 +30,16 @@
 	</select>
 	<!-- 크롤링 보드 체크용 -->
   	
-  	<select id="getBoard" parameterType="int" resultType="board.CBoardDTO">
+  	<!-- 크롤링 보드 게시글 정보 -->
+  	<select id="getCBoard" parameterType="int" resultType="board.CBoardDTO">
   		SELECT * from db.cboard where bno=#{bno}
   	</select>
+  	<!-- 크롤링 보드 게시글 정보 -->
+  	
+  	<!-- 크롤링 보드 댓글  -->
+  	<select id="getCBoardReplyList" parameterType="int" resultType="board.CBoardReplyDTO">
+  		select * from db.reply where bno=#{bno}
+  	</select>
+  	<!-- 크롤링 보드 댓글  -->
   	
   </mapper>
