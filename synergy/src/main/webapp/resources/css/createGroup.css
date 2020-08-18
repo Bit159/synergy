@@ -18,7 +18,7 @@ body{
 	margin: 0 30% 0 30% ;
 	border-radius: 10px;
 }
-.registForm-title,.registForm-category,.registForm-location,
+.registForm-title,.registForm-topic,.registForm-location,
 .registForm-people{
 	display:flex;
 	padding:20px;
@@ -38,6 +38,7 @@ body{
 .hidden {
 	display:none;
 }
+/*
 #box_modal {
 	display: none;
 	position: absolute;
@@ -58,6 +59,7 @@ body{
 	border: solid 1px black;
 	overflow: hidden;
 }
+*/
 .modal-cancle {
 	float: right;
 	margin-bottom: 10px;
@@ -113,7 +115,7 @@ textarea{
 	border: solid 1px darkgray;
 }
 .buttons {
-	padding:30px 10px 30px 10px;
+	padding:0 10px 30px 10px;
 	text-align: center;
 }
 .buttons a {

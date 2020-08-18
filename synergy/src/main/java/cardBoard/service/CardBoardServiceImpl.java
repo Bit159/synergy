@@ -1,5 +1,6 @@
 package cardBoard.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,13 @@ public class CardBoardServiceImpl implements CardBoardService {
 	public void regist(CardBoardDTO groupDTO) {
 		 cardBoardDAO.regist(groupDTO);
 	}
+	@Override
+	public List<CardBoardDTO> getCardBoardList() {
+		return cardBoardDAO.getCardBoardList();
+	}
+	@Override
+	public List<String> getLocationList(String location) {
+		return cardBoardDAO.getLocationList(location);
+	}
 	
-
-
 }

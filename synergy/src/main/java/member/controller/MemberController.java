@@ -1,10 +1,8 @@
 package member.controller;
 
-import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cardBoard.bean.CardBoardDTO;
 import cardBoard.service.CardBoardService;
-import member.bean.MemberDTO;
 import member.service.MemberService;
+import net.sf.json.JSONArray;
 
 @Controller
 public class MemberController {
@@ -67,7 +65,6 @@ public class MemberController {
 	 public void join(@RequestParam Map<String, String> map) {
 		 memberService.join(map);
 	 }
-	 
 	 @GetMapping(value="/admin/adminPage")
 	 public String adminPage() {
 		 return "/admin/adminPage";
@@ -75,14 +72,6 @@ public class MemberController {
 	 @GetMapping(value="/all/welcome")
 	 public String welcome() {
 		 return "/all/welcome";
-	 }
-	 @GetMapping(value="/member/cardBoard")
-	 public String card() {
-		 return "/member/cardBoard";
-	 }
-	 @GetMapping(value="/member/recruitGroup")
-	 public String recruitRegist() {
-		 return "/member/recruitGroup";
 	 }
 	 @GetMapping(value="/member/createGroup")
 	 public String createGroup() {
@@ -92,13 +81,15 @@ public class MemberController {
 	 public String regist(@ModelAttribute CardBoardDTO groupDTO) {
 		 Map<String, Object> map = new HashedMap<String, Object>();
 		 map.put("title", groupDTO.getTitle());
+		 System.out.println(groupDTO.getTitle());
 		 System.out.println(groupDTO.getTopic());
 		 System.out.println(groupDTO.getLocation());
 		 System.out.println(groupDTO.getPeople());
 		 System.out.println(groupDTO.getContent());
 		 cardBoardService.regist(groupDTO);
-		 return "/member/card";
+		 return "redirect:/member/cardBoard";
 	 }
+//	 지역 자동완성
 	 @GetMapping(value="/member/autocomplete")
 	 @ResponseBody
 	 public ModelAndView autocomplete() {
@@ -113,4 +104,46 @@ public class MemberController {
 		 mav.setViewName("jsonView");
 		 return mav;
 	 }
+	 @GetMapping(value="/member/cardBoard")
+	 public ModelAndView cardBoardList() {
+		 System.out.println();
+		 List<CardBoardDTO> list = cardBoardService.getCardBoardList();
+//		 List<String> locationList = cardBoardService.getLocationList();
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("list",list);
+//		 mav.addObject("locationList",locationList);
+		 mav.setViewName("/member/cardBoard");
+		 return mav;
+	 }
+	 @GetMapping(path="/member/getLocation",produces="application/json;charset=UTF-8")
+	 @ResponseBody
+	 public JSONArray getLocation() {
+//		 List<String> list = memberService.autocomplete();
+		 List<List<String>> list = new ArrayList<List<String>>();
+		 List<String> _list = new ArrayList<String>();
+		 _list.add("서울");
+		 _list.add("경기");
+		 _list.add("인천");
+		 _list.add("부산");
+		 _list.add("대구");
+		 _list.add("광주");
+		 _list.add("대전");
+		 _list.add("울산");
+		 _list.add("세종");
+		 _list.add("강원");
+		 _list.add("경남");
+		 _list.add("경북");
+		 _list.add("전남");
+		 _list.add("전북");
+		 _list.add("충남");
+		 _list.add("충북");
+		 _list.add("제주");
+		 for(int i = 0; i < _list.size(); i++) {
+		  list.add(cardBoardService.getLocationList(_list.get(i)));
+		 }
+		 JSONArray json = new JSONArray();
+		 json.addAll(list);
+		 return json;
+	 }
+	 
 }

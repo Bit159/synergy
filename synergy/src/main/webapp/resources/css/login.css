@@ -1,30 +1,13 @@
 @charset "UTF-8";
 * {margin : 0; padding: 0; box-sizing: border-box;}
 body {
-	display: flex;
-	justify-content: center;
 	height: 100vh;
 	background: white;
 	background-size: cover;
 }
 body::before{
-	content: "";
 	position: absolute; z-index: 0;
 	top: 0; right: 0; bottom: 0; left: 0;
-}
-.navbar {
-    width: 80%;
-    height: 100px;
-    align-content: center;
-    position: absolute;
-    display: flexbox;
-	transition: all 0.3s;
-  }
-nav {
-    width: 1024px;
-    display: flex;
-	align-items: center;
-	z-index: 1;
 }
 .menuButtons {
 	float:center;
@@ -44,22 +27,27 @@ span a:hover {
 	text-decoration: underline;
 	transition: all .45s;
 }
-
 .login-form {
 	position: relative;
 	z-index: 0;
-	margin-top: 130px;
+	width:1280px;
+	margin: 0 auto ;
+	text-align: center;
+}
+#loginFormDiv {
+	width: 50%;
+	display: inline-block;
 }
 
 .login-form h1{
 	font-size: 32px; 
 	color: rgb(50, 190, 120);
 	text-align: center;	
-	margin-bottom: 60px;
+	margin-top: 20px;
 }
-
 .info-area { 
-	width: 400px; 
+	display: inline-block;
+	width: 50%; 
 	position: relative;
 	margin-top: 20px;
 }
@@ -73,27 +61,38 @@ span a:hover {
 	padding: 20px 10px 10px;
 	background-color: transparent;
 	border: none;
-	border-bottom:  1px solid #999;
+	border-bottom: 1px solid #999;
 	font-size: 18px; color: #999;
 	outline: none;
 }
-
 .info-area label {
 	position: absolute; left: 10px; top: 15px;
 	font-size: 18px; color: grey;
 	transition: all .35s ease;
 }
-
 .info-area input:focus + label,
 .info-area input:valid + label{
 	top:-2px;
 	font-size: 13px; color:#999;
 }
-
+#autoLogin {
+	width:50%;
+	margin:0 auto;
+	padding-right: 35%;
+}
+#remember-me {
+	
+}
+#remember-me ~ label {
+	font-size: 10pt;
+}
 /* ================= 버튼 영역 =================*/
 
 .btn-area {
-	margin-top: 30px;
+	display:inline-block;
+	margin-top:30px;
+	width:50%;
+	text-align: center;
 }
 .btn-area button{
 	width: 49%; height: 50px;

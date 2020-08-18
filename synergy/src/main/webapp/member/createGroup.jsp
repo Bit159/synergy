@@ -24,14 +24,13 @@
                     <h1>한 줄 소개<span>*</span></h1>
                     <input type="text" name="title" id="title" placeholder="소개를 입력해주세요">
                 </div>
-                <div class="registForm-category">
+                <div class="registForm-topic">
                     <h1>주제 선택<span>*</span></h1>
-                    <button type="button">설정</button>
-                    <input type="hidden" id="topic" name="topic" value="java">
-                    <div id="AddCategory"></div>
+                    <input type="text" id="topic" name="topic">
+                    <div id="AddTopic"></div>
                 </div>
                 <div class="registForm-location">
-                    <h1>지역 선택<span>*</span></h1>
+                    <h1>지역 검색<span>*</span></h1>
                     <input type="text" name="location" id="location">
                 </div>
                 <div class="registForm-people">
@@ -83,6 +82,10 @@
 			}
 		});
 	});
+	let topics=["자바","자바스크립트","파이썬","리액트","스프링"]
+    $('#topic').autocomplete({
+        source: topics
+      });
 	$('#backBtn').click(function(){
 		var back = confirm('입력하신 정보가 저장되지 않을 수 있습니다');
 		if(back){

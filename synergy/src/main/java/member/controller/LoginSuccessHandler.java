@@ -26,7 +26,7 @@ public class LoginSuccessHandler  implements AuthenticationSuccessHandler{
 		} 
 		
 		if(roleNames.contains("ROLE_MEMBER")) { 
-			response.sendRedirect("/synergy-kh/member/createGroup");
+			response.sendRedirect("/synergy-kh/all/welcome");
 			return;
 		} 
 		response.sendRedirect("/"); 
