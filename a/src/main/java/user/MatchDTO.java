@@ -16,8 +16,12 @@ public class MatchDTO {
 	private Double x;
 	private Double y;
 	private Double range;
-	private String time;
-	private String topic;
+	private String time1;
+	private String time2;
+	private String time3;
+	private String topic1;
+	private String topic2;
+	private String topic3;
 	private int career;
 	private int people;
 	private Date created;
@@ -25,6 +29,6 @@ public class MatchDTO {
 	
 	@Override
 	public String toString() {
-		return email+" "+x+" "+y+" "+range+" "+time+" "+topic+" "+career+" "+people;
+		return email+" "+x+" "+y+" "+range+" "+time1+" "+time2+" "+time3+" "+topic1+" "+topic2+" "+topic3+" "+career+" "+people;
 	}
 }

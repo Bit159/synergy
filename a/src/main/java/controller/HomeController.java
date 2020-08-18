@@ -1,9 +1,7 @@
 package controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import user.CBoardDTO;
 import user.MatchDTO;
@@ -69,10 +67,38 @@ public class HomeController {
 	public void logoutGET() {logger.info("custom logout");}
 
 	@PostMapping(path="/insert_match_done", produces="application/json;charset=UTF-8")
-	public @ResponseBody JSONObject insertMatch(@RequestBody JSONArray json, @Autowired MatchDTO matchDTO) {
-		System.out.println(json);
-		
-		return null;
+	public @ResponseBody JSONObject insertMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
+		matchDTO.setEmail("jpcnani@naver.com");
+		matchDTO.setX(json.getDouble("x"));
+		matchDTO.setY(json.getDouble("y"));
+		matchDTO.setRange(json.getDouble("range"));
+		matchDTO.setTime1(json.getString("time1"));
+		try {
+			matchDTO.setTime2(json.getString("time2"));
+		}catch(JSONException e) {
+			matchDTO.setTime2(null);
+		}
+		try {
+			matchDTO.setTime3(json.getString("time3"));
+		}catch(JSONException e) {
+			matchDTO.setTime3(null);
+		}
+		matchDTO.setTopic1(json.getString("topic1"));
+		try {
+			matchDTO.setTopic2(json.getString("topic2"));
+		}catch(JSONException e) {
+			matchDTO.setTopic2(null);
+		}
+		try {
+			matchDTO.setTopic3(json.getString("topic3"));
+		}catch(JSONException e) {
+			matchDTO.setTopic3(null);
+		}
+		matchDTO.setCareer(json.getInt("career"));
+		matchDTO.setPeople(json.getInt("people"));
+		int result = userDAO.insertMatch(matchDTO);
+		JSONObject return_json = (result == 1) ? json : null;
+		return return_json;
 	}
 	
 	
@@ -82,11 +108,14 @@ public class HomeController {
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
 		matchDTO.setRange(json.getDouble("range"));
-		matchDTO.setTime(json.getString("time"));
-		matchDTO.setTopic(json.getString("topic"));
+		matchDTO.setTime1(json.getString("time1"));
+		matchDTO.setTime2(json.getString("time2"));
+		matchDTO.setTime3(json.getString("time3"));
+		matchDTO.setTopic1(json.getString("topic1"));
+		matchDTO.setTopic2(json.getString("topic2"));
+		matchDTO.setTopic3(json.getString("topic3"));
 		matchDTO.setCareer(json.getInt("career"));
 		matchDTO.setPeople(json.getInt("people"));
-		System.out.println(json.getString("time"));
 		int result = userDAO.deleteMatch(matchDTO);
 		JSONObject rjson = (result==1) ? json : null;
 		return rjson;

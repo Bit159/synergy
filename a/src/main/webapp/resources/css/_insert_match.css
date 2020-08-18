@@ -4,11 +4,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+*:focus{
+	outline:none;
+}
 
 /* body 전체를 감싸는 wrap. width:1280px과 margin: 0 auto를 위해 사용*/
 div[id="wrap"] {
   width: 1280px;
-  height: 800px;
+  height: 650px;
   margin: 0 auto;
 }
 /*모든 옵션들을 한 줄에 담는 div*/
@@ -167,5 +170,82 @@ div[id="msg"] {
 	line-height:80px;
  	text-align:center;
  	color:red; 
- 	margin-bottom:-20px;
 }
+
+/* Wish List*/
+div[id="wish_wrapper"] {
+	width:850px;
+	margin: 0 auto;
+	margin-top:30px;
+	height:500px;
+	
+}
+div[class="wishes"] {
+	height:50px;
+	margin:10px;
+	line-height: 60px;
+	display:flex;
+	justify-content: space-between;
+	vertical-align: auto;
+}
+div[class="wishes"]>input {
+	height:40px;
+}
+
+button[class="deleteButton_in_match"] {
+  width: 40px;
+  height: 30px;
+  position: relative;
+  top: 5px;
+  margin-left: 10px;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  font-size: 10pt;
+  font-weight: 550;
+}
+button[class="deleteButton_in_match"]:focus{
+	outline:none;
+}
+
+input[class="wishElements"] {
+  width: 120px;
+  height: 50px;
+  cursor: pointer;
+  text-align: center;
+  border: 3px solid rgb(185, 180, 180);
+  border-radius: 5px;
+  background-color: transparent;
+  font-size: 11pt;
+  margin: 0 auto;
+  font-weight:550;
+  line-height:50px;
+  display:flex;
+  justify-content: left;
+}
+div[class="wishes"]>input[class="wishElements"]:nth-child(2),
+div[class="wishes"]>input[class="wishElements"]:nth-child(3){
+	width:250px;
+
+}
+div[class="wishes"]>input[class="wishElements"]:nth-child(2){
+	margin-right:-30px;
+}
+span[class="wishSelected"] {
+	display:block;
+  position: relative;
+  color: white;
+  font-weight: 550;
+  border-radius: 5px;
+  font-size: 9pt;
+  padding: 5px;
+  margin-right: 3px;
+  background-color: #32be78;
+  height:25px;
+  line-height:20px;
+  top:8px;
+  left:-180px;
+  overflow:visible;
+}
+
+/* End of Wish List*/

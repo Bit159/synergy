@@ -105,7 +105,7 @@ function create_selected_option(value, sort) {
       time_sw = false;
       return;
     }
-    if (time_array.indexOf(value) !== -1) {
+    if (time_array.indexOf(value.trim()) !== -1) {
       alert("이미 선택된 과목입니다");
       return;
     }
@@ -122,7 +122,7 @@ function create_selected_option(value, sort) {
       close_menu(theme_option_array, theme_option_wrapper);
       return;
     }
-    if (theme_array.indexOf(value) !== -1) {
+    if (theme_array.indexOf(value.trim()) !== -1) {
       alert("이미 선택된 과목입니다");
       return;
     }
@@ -139,7 +139,7 @@ function create_selected_option(value, sort) {
       close_menu(career_option_array, career_option_wrapper);
       return;
     }
-    if (career_array.indexOf(value) !== -1) {
+    if (career_array.indexOf(value.trim()) !== -1) {
       alert("이미 선택된 경력입니다");
       return;
     }
@@ -156,7 +156,7 @@ function create_selected_option(value, sort) {
       close_menu(people_option_array, people_option_wrapper);
       return;
     }
-    if (people_array.indexOf(value) !== -1) {
+    if (people_array.indexOf(value.trim()) !== -1) {
       alert("이미 선택된 인원수입니다");
       return;
     }
@@ -322,13 +322,11 @@ btn.addEventListener('click', ()=>nullValidator());
 function nullValidator() {
   msg.style.transition = "all 0s";
   msg.style.opacity = "0";
-  msg.style.color = "red";
   msg.style.fontWeight = "550";
   msg.innerText = "";
   msg.style.opacity = "1";
   if (myLocation.value === "") {
     msg.innerText = "지역을 선택해주세요";
-    location_selection.focus();
     setTimeout(() => {
       msg.style.transition = "all .5s";
       msg.style.opacity = "0";
@@ -337,7 +335,6 @@ function nullValidator() {
   }
   if (time_array.length === 0) {
     msg.innerText = "시간대를 선택해주세요";
-    time_selection.focus();
     setTimeout(() => {
       msg.style.transition = "all .5s";
       msg.style.opacity = "0";
@@ -346,7 +343,6 @@ function nullValidator() {
   }
   if (theme_array.length === 0) {
     msg.innerText = "주제를 선택해주세요";
-    theme_selection.focus();
     setTimeout(() => {
       msg.style.transition = "all .5s";
       msg.style.opacity = "0";
@@ -355,7 +351,6 @@ function nullValidator() {
   }
   if (career_array.length === 0) {
     msg.innerText = "경력을 선택해주세요";
-    career_selection.focus();
     setTimeout(() => {
       msg.style.transition = "all .5s";
       msg.style.opacity = "0";
@@ -364,7 +359,6 @@ function nullValidator() {
   }
   if (people_array.length === 0) {
     msg.innerText = "희망인원을 선택해주세요";
-    people_selection.focus();
     setTimeout(() => {
       msg.style.transition = "all .5s";
       msg.style.opacity = "0";
@@ -385,10 +379,26 @@ function nullValidator() {
 	ob.x = x.value;
 	ob.y = y.value;
 	ob.range = range.value;
-	ob.time = time_array;
-	ob.topic = theme_array;
-	ob.career = career_array[0];
-	ob.people = people_array[0];
+	ob.time1 = time_array[0];
+	ob.time2 = time_array[1];
+	ob.time3 = time_array[2];
+	ob.topic1 = theme_array[0];
+	ob.topic2 = theme_array[1];
+	ob.topic3 = theme_array[2];
+	switch(career_array[0]){
+		case "무관": ob.career = 0; break;
+		case "0~2년": ob.career = 2; break;
+		case "3~5년": ob.career = 5; break;
+		case "5년 이상": ob.career = 6; break;
+		case "10년 이상": ob.career = 10; break; 
+	}
+	switch(people_array[0]){
+		case "무관": ob.people = 0; break;
+		case "~ 3명": ob.people = 3; break;
+		case "4 ~ 6명": ob.people = 6; break;
+		case "7 ~ 9명": ob.people = 9; break;
+		case "10명 이상": ob.people = 10; break; 
+	}
 	let csrf = document.getElementById('csrf').content;
 	let csrf_header = document.getElementById('csrf_header').content;
 	let url = "/insert_match_done";
@@ -459,7 +469,12 @@ function nullValidator() {
 									});
 									del.appendChild(document.createTextNode('삭제'));
 									deldiv.append(del);
-									
+									document.querySelectorAll('span.selected').forEach((e)=>e.remove());
+									myLocation.value="";
+									if(document.getElementById('theme_option_wrapper').style.visibility === "visible")
+									document.getElementById('theme_selection').click();
+									if(document.getElementById('time_option_wrapper').style.visibility === "visible")
+									document.getElementById('time_selection').click();
 									let li = document.createElement('li');
 									li.append(x, y, range, div1, div2, div3, div4, div5, deldiv);
 									document.querySelector('ul').append(li);
@@ -467,8 +482,22 @@ function nullValidator() {
 								}
 						)
 	);
+      document
+    .getElementById("location_selection")
+    .setAttribute("placeHolder", "지역 ▽");
+      document
+    .getElementById("time_selection")
+    .setAttribute("placeHolder", "시간대 ▽");
+      document
+    .getElementById("theme_selection")
+    .setAttribute("placeHolder", "주제 ▽");
+      document
+    .getElementById("career_selection")
+    .setAttribute("placeHolder", "경력 ▽");
+      document
+    .getElementById("people_selection")
+    .setAttribute("placeHolder", "희망인원 ▽");
 
-	myLocation.value="";
 	time_array = new Array();
 	theme_array = new Array();
 	career_array = new Array();

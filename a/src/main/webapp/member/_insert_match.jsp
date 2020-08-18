@@ -149,6 +149,31 @@
         <button type="button" id="insert_match_button">추가하기</button>
       </div>
       <!-- End of option_boss-->
+      
+	    <!-- Wish List Div-->
+	    <div id="wish_wrapper">
+	    	<div class="wishes">
+	    		<input type="text" class="wishElements" readonly value="지역"/>
+	    		<div>
+	    		<input type="text" class="wishElements" readonly />
+	    			<span class="wishSelected">호호</span>
+	    			<span class="wishSelected">호호호호호호호</span>
+    			</div>
+    			<div>
+	    			<input type="text" class="wishElements" readonly />
+	    		</div>
+	    		<div>
+	    			<input type="text" class="wishElements" readonly />
+	    		</div>
+	    		<div>
+	    			<input type="text" class="wishElements" readonly />
+	    		</div>
+	    		<button type="button" class="deleteButton_in_match">삭제</button>
+	    	</div>
+	    	
+	    </div>
+
+		<!-- End of Wish List Div -->
     </div>
     <!--End of Body Wrapper-->
     <%@ include file="/template/footer.jsp"%>
