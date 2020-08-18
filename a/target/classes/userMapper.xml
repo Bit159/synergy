@@ -11,7 +11,7 @@
 	</select>
 
 	<insert id="insertMatch" parameterType="matchDTO">
-		INSERT INTO db.match VALUES(#{email}, #{x}, #{y}, #{range}, #{time1}, #{time2}, #{time3}, #{topic1}, #{topic2}, #{topic3}, #{career}, #{people}, now(), now())
+		INSERT INTO db.match VALUES(#{username}, #{x}, #{y}, #{range}, #{time1}, #{time2}, #{time3}, #{topic1}, #{topic2}, #{topic3}, #{career}, #{people}, now(), now())
 	</insert>
 	
 	<delete id="deleteMatched" parameterType="java.util.List">

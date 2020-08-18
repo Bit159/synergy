@@ -68,7 +68,7 @@ public class HomeController {
 
 	@PostMapping(path="/insert_match_done", produces="application/json;charset=UTF-8")
 	public @ResponseBody JSONObject insertMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
-		matchDTO.setEmail("jpcnani@naver.com");
+		matchDTO.setUsername("jpcnani@naver.com");
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
 		matchDTO.setRange(json.getDouble("range"));
@@ -104,7 +104,7 @@ public class HomeController {
 	
 	@PostMapping(path="/delete_match", produces="application/json;charset=UTF-8")
 	public @ResponseBody JSONObject deleteMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
-		matchDTO.setEmail("jpcnani@naver.com");
+		matchDTO.setUsername("jpcnani@naver.com");
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
 		matchDTO.setRange(json.getDouble("range"));

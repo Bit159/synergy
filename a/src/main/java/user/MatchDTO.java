@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 public class MatchDTO {
 	
-	private String email;
+	private String username;
 	private Double x;
 	private Double y;
 	private Double range;
@@ -29,6 +29,6 @@ public class MatchDTO {
 	
 	@Override
 	public String toString() {
-		return email+" "+x+" "+y+" "+range+" "+time1+" "+time2+" "+time3+" "+topic1+" "+topic2+" "+topic3+" "+career+" "+people;
+		return username+" "+x+" "+y+" "+range+" "+time1+" "+time2+" "+time3+" "+topic1+" "+topic2+" "+topic3+" "+career+" "+people;
 	}
 }
