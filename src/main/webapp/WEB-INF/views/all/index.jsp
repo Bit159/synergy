@@ -8,9 +8,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Let's Synergy!</title>
-<link rel="shortcut icon" href="http://localhost:8080/synergy/resources/image/logo.png" />
-<link rel="stylesheet" href="http://localhost:8080/synergy/resources/css/index.css">
-<script defer type="text/javascript" src="http://localhost:8080/synergy/resources/js/index.js"></script>
+<link rel="shortcut icon" href="/resources/image/logo.png" />
+<link rel="stylesheet" href="/resources/css/index.css">
+<script defer type="text/javascript" src="/resources/js/index.js"></script>
 <script defer src="https://apis.google.com/js/platform.js"></script>
 <script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
@@ -18,7 +18,7 @@
     <div class="nav">
       <nav>
         <div id="logoDiv">
-          <a href="/synergy/index"><img src="http://localhost:8080/synergy/resources/image/logo.png" /></a>
+          <a href="/index"><img src="/resources/image/logo.png" /></a>
         </div>
         <div id="menuButtons">
           <span></span>
@@ -47,12 +47,12 @@
       <div class="container" id="firstContent">
         <section class="banner1">
         	<sec:authorize access="isAnonymous()">
-				<input type="button" value="LOGIN" class="buttons" id="loginButton" onclick="location='/synergy/all/loginForm'">
-				<input type="button" value="JOINUS"class="buttons" onclick="location='/synergy/all/joinForm'">
+				<input type="button" value="LOGIN" class="buttons" id="loginButton" onclick="location='/all/loginForm'">
+				<input type="button" value="JOINUS"class="buttons" onclick="location='/all/joinForm'">
 			</sec:authorize>
 			
 			<%-- <sec:authorize access="isAuthenticated()"> --%>
-				<form action="/synergy/logout" method="post">
+				<form action="/logout" method="post">
 					<input type="submit" value="LOGOUT" class="buttons" id="logoutButton">
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 				</form>
@@ -143,7 +143,7 @@
     </div>
 
 	<input type="button" value="맨위로" id="topButton">
-	<img id="chatting_floating" src="http://localhost:8080/synergy/resources/image/chatting_floating.png" width="100" height="100" 
+	<img id="chatting_floating" src="/resources/image/chatting_floating.png" width="100" height="100" 
 	style="position:fixed;
 		   top: 128px;
 		   rught : 50%;

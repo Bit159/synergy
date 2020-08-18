@@ -8,11 +8,11 @@
 	<meta charset="UTF-8">
 	<title>시너지</title>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../resources/css/createGroup.css">
+	<link rel="stylesheet" href="/resources/css/createGroup.css">
 </head>
 <body>
 	<jsp:include page="../template/header.jsp"></jsp:include>
-	<form id="registerForm" method="post" action="/synergy/member/regist">
+	<form id="registerForm" method="post" action="/member/regist">
 	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
     <div id="body-wrapper">
         <div id="container" style="white-space: nowrap;">
@@ -68,7 +68,7 @@
 	$(document).ready(function(){
 		$.ajax({
 			type:'get',
-			url:'/synergy/member/autocomplete',
+			url:'/member/autocomplete',
 			data:{},
 			dataType:'json',
 			success:function(data){
@@ -86,7 +86,7 @@
 	$('#backBtn').click(function(){
 		var back = confirm('입력하신 정보가 저장되지 않을 수 있습니다');
 		if(back){
-			location.href='/synergy/member/cardBoard';
+			location.href='/member/cardBoard';
 		}else{
 			return;
 		}

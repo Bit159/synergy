@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import member.bean.ChattingDTO;
+import member.bean.ChattingRoomDTO;
 import member.bean.MemberDTO;
 
 @Transactional
@@ -22,6 +23,7 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberDTO login(Map<String, String> map) {
 		return sqlSession.selectOne("memberSQL.login", map);
+		
 	}
 
 	@Override
@@ -49,41 +51,49 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<String> autocomplete() {
 		return sqlSession.selectList("memberSQL.autocomplete");
+		
 	}
 
 	@Override
 	public void withdrawal(String username) {
 		sqlSession.delete("memberSQL.withrawal");
+		
 	}
 
 	@Override
 	public List<MemberDTO> getMember() {
 		return sqlSession.selectList("memberSQL.getMember");
+		
 	}
 
 	@Override
 	public void memberDelete(String username) {
 		sqlSession.delete("memberSQL.memberDelete", username);
+		
 	}
 
 	@Override
 	public void nicknameRevise(Map<String, String> map) {
 		sqlSession.update("memberSQL.nicknameRevise", map);
+		
 	}
 
 	@Override
 	public void revise(Map<String, String> map) {
 		sqlSession.update("memberSQL.revise", map);
+		
 	}
 
 	@Override
 	public void sendMessage(Map<String, String> map) {
 		sqlSession.insert("memberSQL.sendMessage", map);
+		
 	}
 
 	@Override
 	public List<ChattingDTO> getChatting() {
 		return sqlSession.selectList("memberSQL.getChatting");
+		
 	}
 
 	@Override
@@ -98,5 +108,12 @@ public class MemberDAOImpl implements MemberDAO {
 		System.out.println(create_table);
 		sqlSession.selectOne("memberSQL.createChat", map);
 		chatNum++;
+		
+	}
+
+	@Override
+	public List<ChattingRoomDTO> getChattingRoom(String username) {
+		return sqlSession.selectList("memberSQL.getChattingRoom", username);
+		
 	}
 }

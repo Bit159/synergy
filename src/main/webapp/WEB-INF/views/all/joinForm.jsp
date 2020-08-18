@@ -5,16 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<link rel="stylesheet" href="../resources/css/join.css">
+<link rel="stylesheet" href="/resources/css/join.css">
 <script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script defer type="text/javascript" src="../resources/js/join.js"></script>
+<script defer type="text/javascript" src="/resources/js/join.js"></script>
 </head>
 <body>
 <jsp:include page="../template/header.jsp"/>
 <div class="nav">
 	<nav>
 		<div id="logoDiv">
-		<a href="/synergy/index"><img src="../resources/image/logo.png" /></a>
+		<a href="/index"><img src="/resources/image/logo.png" /></a>
 		</div>
 		<div id="menuButtons">
 			<span>프로젝트소개</span>
@@ -32,7 +32,7 @@
 </div>
 <section class="join-form">
 	<h1>Let's Synergy</h1>
-	<form action="/synergy/join" method="post">
+	<form action="/join" method="post">
 		<div class="join-area">
 			<input type="text" name="username" id="username" autocomplete="off" required>
 			<label for="username">E-MAIL</label>

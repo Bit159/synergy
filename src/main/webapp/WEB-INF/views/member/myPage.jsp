@@ -215,7 +215,7 @@ window.onload=function openSocket(){
         return;
     }
     //웹소켓 객체를 만든다.
-    ws=new WebSocket("ws://localhost:8080/synergy/chat");
+    ws=new WebSocket("ws://localhost:8080/chat");
     
     ws.onopen=function(event){
         if(event.data===undefined) return;

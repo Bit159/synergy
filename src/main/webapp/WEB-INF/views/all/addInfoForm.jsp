@@ -5,14 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>추가 정보 입력</title>
-<link rel="stylesheet" href="../resources/css/addInfoForm.css">
+<link rel="stylesheet" href="/resources/css/addInfoForm.css">
 </head>
 <body>
 <jsp:include page="../template/header.jsp"/>
 <div class="nav">
     <nav>
         <div id="logoDiv">
-            <a href="/synergy/index"><img src="../resources/image/logo.png" /></a>
+            <a href="/index"><img src="/resources/image/logo.png" /></a>
         </div>
         <div id="menuButtons">
             <span>프로젝트소개</span>
@@ -20,7 +20,7 @@
             <span>자주 묻는 질문</span>
             <span>로그인</span>
             <span>회원가입</span>
-            <span><a href="/synergy/member/myPage_Update"><img src="../resources/image/my.png" width="30" height="30"></a></span>
+            <span><a href="/member/myPage_Update"><img src="/resources/image/my.png" width="30" height="30"></a></span>
         </div>
         <div id="menuButtonsM">
             <a href="javascript:mobileMenu()">
@@ -31,7 +31,7 @@
         </div>
     </nav>
 </div>
-<form action="/synergy/all/addInfo" method="post" class="join-form">
+<form action="/all/addInfo" method="post" class="join-form">
 	<div class="join-area">
 		<input type="text" name="username" id="username" autocomplete="off" value="${username}" required readonly>
 		<label for="username">E-MAIL</label>

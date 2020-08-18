@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import member.bean.ChattingDTO;
+import member.bean.ChattingRoomDTO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
@@ -105,6 +106,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void createChat() {
 		memberDAO.createChat();
+	}
+
+	@Override
+	public List<ChattingRoomDTO> getChattingRoom(String username) {
+		return memberDAO.getChattingRoom(username);
 	}
 	
 	

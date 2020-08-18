@@ -7,10 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<link rel="stylesheet" href="../resources/css/welcome.css">
-<link rel="stylesheet" href="../resources/css/boardList1.css">
+<link rel="stylesheet" href="/resources/css/welcome.css">
+<link rel="stylesheet" href="/resources/css/boardList1.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../resources/js/welcome.js" defer></script>
+<script src="/resources/js/welcome.js" defer></script>
 </head>
 <body>
 	<jsp:include page="../template/header.jsp" flush="true"/>
@@ -33,7 +33,7 @@
                     	<li class="list_group_item">
                     		<div class="bno"><c:out value="${dto.bno}" /></div>
 	                        <div class="topic"><c:out value="${dto.topic}" /></div>
-	                        <div class="title"><a id="titleA" href="/synergy/member/boardList/${dto.bno }"><c:out value="${dto.title}" /></a></div>                        
+	                        <div class="title"><a id="titleA" href="/member/boardList/${dto.bno }"><c:out value="${dto.title}" /></a></div>                        
 	                        <div class="nickname"><c:out value="${dto.nickname}" /></div>
 	                        <div class="boarddate"><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.boarddate }"/></div>	                        
 	                        <div class="hit"><c:out value="${dto.hit}" /></div>

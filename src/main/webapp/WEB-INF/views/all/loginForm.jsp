@@ -10,9 +10,9 @@
 	<meta name="google-signin-client_id" content="752749290235-0lrjurm4fdk31il80d87i99knklc9650.apps.googleusercontent.com"/>
 	
 	<title>로그인</title>
-	<link rel="stylesheet" href="../resources/css/login.css">
+	<link rel="stylesheet" href="/resources/css/login.css">
 	<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script defer type="text/javascript" src="../resources/js/login.js"></script>
+	<script defer type="text/javascript" src="/resources/js/login.js"></script>
 	<script defer src="https://apis.google.com/js/platform.js"></script>
 </head>
 <body>
@@ -21,7 +21,7 @@
 		<label for="sideicon" id="back"></label>
 		<h1>Let's Synergy</h1>
 		
-		<form id="loginForm" name="loginForm" method="post" action="/synergy/login" >
+		<form id="loginForm" name="loginForm" method="post" action="/login" >
 			<div class="info-area">
 				<input type="text" name="username" id="username" autocomplete="off" required>
 				<input type="hidden" name="email" id="email">
@@ -36,7 +36,7 @@
 			<div><input type="checkbox" name="remember-me" style="padding-bottom: 5pt">자동로그인</div>
 			<div class="btn-area">
 				<button type="button" id="loginBtn" onclick="checkLogin()">LOGIN</button>
-				<button type="button" onclick="location='/synergy/index'">BACK</button>
+				<button type="button" onclick="location='/all/welcome'">BACK</button>
 			</div>
 			
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
@@ -44,7 +44,7 @@
 		</form>
 		
 		<div class="thirdParty" align="center" style="margin-top:30px;">
-			<a href="${google_url}"><img src="../resources/image/google.png"></a><br>
+			<a href="${google_url}"><img src="/resources/image/google.png"></a><br>
 			<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
 		<script>
 		let csrfHeaderName = "${_csrf.headerName}";
@@ -69,7 +69,7 @@
 	
 		    $.ajax({
 		    	type : 'post',
-		    	url  : '/synergy/all/checkMember',
+		    	url  : '/all/checkMember',
 		    	beforeSend: function(xhr){
 		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		    		
@@ -100,16 +100,16 @@
 		function page_move(username){
 			let form = document.loginForm;
 			form.email.value = username;
-			form.action="/synergy/all/addInfoForm";
+			form.action="/all/addInfoForm";
 			form.method="post";
 			form.submit();
 		}
 		</script>
-			<img src="../resources/image/kakao_login_medium_narrow.png"><br>
+			<img src="/resources/image/kakao_login_medium_narrow.png"><br>
 		</div>
 
 		<div class="caption">
-			<a href="/synergy/all/joinForm">회원가입</a>&emsp;
+			<a href="/all/joinForm">회원가입</a>&emsp;
 			<a href="">아이디/비밀번호 찾기</a>
 		</div>
 	</section>

@@ -7,10 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판1</title>
-<link rel="stylesheet" href="../resources/css/welcome.css">
-<link rel="stylesheet" href="../resources/css/boardList1.css">
+<link rel="stylesheet" href="/resources/css/welcome.css">
+<link rel="stylesheet" href="/resources/css/boardList1.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../resources/js/welcome.js" defer></script>
+<script src="/resources/js/welcome.js" defer></script>
 </head>
 <body>
 	<jsp:include page="../template/header.jsp" flush="true"/>

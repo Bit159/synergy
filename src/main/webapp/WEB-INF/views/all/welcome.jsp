@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../resources/css/welcome.css">
+    <link rel="stylesheet" href="/resources/css/welcome.css">
     <script src="http://code.jquery.com/jquery-latest.min.js" defer></script>
-    <script src="../resources/js/welcome.js" defer></script>
+    <script src="/resources/js/welcome.js" defer></script>
 </head>
 <body>
     <div id=body_wrapper>
@@ -20,7 +20,7 @@
                 <div class=banner_content>
                     <div class="banner_left">
                         <div class="homeImg">
-                        	<img src="../resources/image/home.jpg">
+                        	<img src="/resources/image/home.jpg">
                         </div>
                     </div>
                     <div class="banner_right">
@@ -28,7 +28,7 @@
                         <p style="white-space: nowrap;">쉽고 빠른 스터디 매칭</p>
                         <ul>
                             <li>
-                                <a href="/synergy/all/loginForm" class="loginIcon">Login</a>
+                                <a href="/all/loginForm" class="loginIcon">Login</a>
                             </li>
                         </ul>
                     </div>

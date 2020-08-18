@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import member.bean.ChattingDTO;
+import member.bean.ChattingRoomDTO;
 import member.bean.MemberDTO;
 
 public interface MemberService {
@@ -35,5 +36,7 @@ public interface MemberService {
 	public List<ChattingDTO> getChatting();
 
 	public void createChat();
+
+	public List<ChattingRoomDTO> getChattingRoom(String username);
 
 }

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$.ajax({
 		type : 'post',
-		url : '/synergy/board/getBoardList',
+		url : '/board/getBoardList',
 		data: 'pg='+$('#pg').val(),
 		dataType: 'json',
 		success : function(data){
@@ -41,7 +41,7 @@ $(document).ready(function(){
 				}else{
 					let seq = $(this).attr('class');
 					let pg = data.pg;
-					location.href = '/springProject/board/boardView?seq='+seq+'&pg='+pg;
+					location.href = '/board/boardView?seq='+seq+'&pg='+pg;
 				}
 				
 			});
@@ -62,7 +62,7 @@ $('#boardSearchBtn').click(function(event, str){
 	}else{
 		$.ajax({
 			type : 'get',
-			url : '/synergy/board/getBoardSearch',
+			url : '/board/getBoardSearch',
 			data: {'pg': $('input[name=pg]').val(),
 				   'searchOption': $('#searchOption').val(),
 				   'keyword': $('#keyword').val()},

@@ -22,8 +22,6 @@
 <script type="text/javascript">
 let ws;
 let messages = document.getElementById("messages");
-let csrfHeaderName = "${_csrf.headerName}";
-let csrfTokenValue = "${_csrf.token}";
 
 window.onload=function openSocket(){
     if(ws!==undefined && ws.readyState!==ws.CLOSED){
@@ -31,7 +29,7 @@ window.onload=function openSocket(){
         return;
     }
     //웹소켓 객체를 만든다.
-    ws=new WebSocket("ws://localhost:8080/synergy/chat");
+    ws=new WebSocket("ws://localhost:8080/chat");
     
     ws.onopen=function(event){
         if(event.data===undefined) return;
@@ -53,7 +51,7 @@ function send(){
     ws.send(text); 
     $.ajax({
     	type : 'post',
-    	url  : '/synergy/member/sendMessage',
+    	url  : '/member/sendMessage',
 		beforeSend: function(xhr){
     		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
     		
@@ -78,7 +76,7 @@ function writeResponse(text){
 $(document).ready(function(){
 	$.ajax({
 		type : 'get',
-		url  : '/synergy/member/getChatting',
+		url  : '/member/getChatting',
 		dataType : 'json',
 		success : function(data){
 			$.each(data.list, function(index, items){

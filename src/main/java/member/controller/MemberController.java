@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import member.bean.ChattingDTO;
+import member.bean.ChattingRoomDTO;
 import member.bean.MemberDTO;
 import member.service.MemberService;
 
@@ -210,12 +211,7 @@ public class MemberController{
 		 return "/member/createGroup";
 	 }
 	
-	//==================================== 채팅
-	
-	@GetMapping("/member/chatting")
-	public String chatting() {
-		return "/member/chatting";
-	}
+
 	
 	//==================================== 지역 자동완성
 	
@@ -258,42 +254,59 @@ public class MemberController{
 			return "redirect:/all/adminBoard";
 	  }
 	  
-	  //====================================== 채팅방
+	//====================================== 채팅방
+		
+	@GetMapping("/member/chatting")
+	public String chatting() {
+		return "/member/chatting";
+	}
 	  
-	  @GetMapping("/member/chattingList")
-	  public String chattingList() {
-		  return "/member/chattingList";
-	  }
-	  
-	  @GetMapping("/member/getChatting")
-	  @ResponseBody
-	  public ModelAndView getChatting() {
-		  ModelAndView mav = new ModelAndView();
-		  List<ChattingDTO> list = memberService.getChatting();
-		  mav.addObject("list", list);
-		  mav.setViewName("jsonView");
-		  
-		  return mav;
-		  
-	  }
-	  
-	  @PostMapping("/member/sendMessage")
-	  @ResponseBody
-	  public void sendMessage(@RequestParam String text) {
-			String sender = text.split(",")[1]; 
-			String message = text.split(",")[0];
-			
-			memberService.sendMessage(sender, message);
-			
-	  }
-	  
-	  @GetMapping("/member/createChat")
-	  @ResponseBody
-	  public void createChat() {
-		  memberService.createChat();
-	  }
+	@GetMapping("/member/chattingList")
+	public String chattingList() {
+		return "/member/chattingList";
+	}
 	
-	 
-	 
+	@PostMapping("/member/getChattingRoom")
+	@ResponseBody
+	public ModelAndView getChattingRoom(@RequestParam String username) {
+		System.out.println(username);
+		ModelAndView mav = new ModelAndView();
+		List<ChattingRoomDTO> list = memberService.getChattingRoom(username);
+		for(ChattingRoomDTO dto : list) {
+			System.out.println(dto.getMembers());
+		}
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	  
+	@GetMapping("/member/getChatting")
+	@ResponseBody
+	public ModelAndView getChatting() {
+		ModelAndView mav = new ModelAndView();
+		List<ChattingDTO> list = memberService.getChatting();
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		  
+		return mav;
+		  
+	}
+	  
+	@PostMapping("/member/sendMessage")
+	@ResponseBody
+	public void sendMessage(@RequestParam String text) {
+		String sender = text.split(",")[1]; 
+		String message = text.split(",")[0];
+			
+		memberService.sendMessage(sender, message);
+			
+	}
+	  
+	@GetMapping("/member/createChat")
+	@ResponseBody
+	public void createChat() {
+		memberService.createChat();
+	}
 
 }

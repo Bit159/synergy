@@ -73,5 +73,12 @@
   		${create_table}
   	</select>
   	
+  	<select id="getChattingRoom" parameterType="String" resultType="chattingRoom">
+  		select * from chattingRoomList where members like concat('%',#{username},'%')
+  	</select>
+  	
+	<insert id="joinChattingRoom" parameterType="java.util.Map">
+		insert into ChattingRoomList values(#{chattingRoom},#{members})
+	</insert>  	
 </mapper>
  
