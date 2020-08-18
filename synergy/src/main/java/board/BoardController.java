@@ -100,4 +100,10 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
+	@GetMapping("/board/reply")
+	public ModelAndView reply() {
+		
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
 }

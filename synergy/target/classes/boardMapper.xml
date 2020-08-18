@@ -38,7 +38,7 @@
   	
   	<!-- 크롤링 보드 댓글  -->
   	<select id="getCBoardReplyList" parameterType="int" resultType="board.CBoardReplyDTO">
-  		select * from db.reply where bno=#{bno}
+  		select * from db.reply where bno=#{bno} order by bno desc 
   	</select>
   	<!-- 크롤링 보드 댓글  -->
   	

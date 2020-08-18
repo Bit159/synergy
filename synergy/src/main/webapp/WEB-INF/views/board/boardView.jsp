@@ -10,7 +10,9 @@
 <link rel="stylesheet" href="../resources/css/welcome.css">
 <link rel="stylesheet" href="../resources/css/boardView.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../../resources/js/welcome.js" defer></script>
+<script src="../resources/js/welcome.js" defer></script>
+<script src="../resources/js/boardView.js" defer></script>
+
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="false"/>
