@@ -4,8 +4,8 @@
 <html>
 <head>
 <%@ include file="../include/head_include.jsp"%>
-<script async defer src="/a/resources/js/index.js"></script>
-<title>Synergy1</title>
+<script async defer src="/resources/js/index.js"></script>
+<title>Synergy</title>
 
 <style>
 div[id="firstBanner"] {
@@ -113,7 +113,7 @@ button[id="joinButton"] {
 		}
 	</script>
 	<div id="firstBanner">
-		<img src="/a/resources/image/firstBanner.svg" id="firstBannerImage">
+		<img src="/resources/image/firstBanner.svg" id="firstBannerImage">
 		<span id="slogan">내 생애 첫 스터디는<br>Synergy와 함께!
 		</span>
 		<button type="button" class="indexButton" id="loginButton">로그인</button>
@@ -122,7 +122,7 @@ button[id="joinButton"] {
 
 
 	<div>
-		<img src="/a/resources/image/firstBanner.svg"> <span id="slogan">내
+		<img src="/resources/image/firstBanner.svg"> <span id="slogan">내
 			생애 첫 스터디는<br>Synergy와 함께!
 		</span>
 	</div>

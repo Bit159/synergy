@@ -101,7 +101,7 @@ function nullValidator() {
 	ob.people = document.getElementById('people').value;
 	let csrf = document.getElementById('csrf').content;
 	let csrf_header = document.getElementById('csrf_header').content;
-	let url = "/a/insert_match_done";
+	let url = "/insert_match_done";
 	let options = {
 		method: "POST",
 		headers: {
@@ -147,7 +147,7 @@ function nullValidator() {
 										ob.topic = this.parentElement.parentElement.children[5].innerText;
 										ob.career = this.parentElement.parentElement.children[6].innerText;
 										ob.people = this.parentElement.parentElement.children[7].innerText;
-										let url = "/a/delete_match";
+										let url = "/delete_match";
 										let options = {
 											method: "POST",
 											headers: {
@@ -201,7 +201,7 @@ for(let i=0; i<delete_Button_Array.length; i++) {
 			ob.topic = this.parentElement.parentElement.children[5].innerText;
 			ob.career = this.parentElement.parentElement.children[6].innerText;
 			ob.people = this.parentElement.parentElement.children[7].innerText;
-			let url = "/a/delete_match";
+			let url = "/delete_match";
 			let options = {
 				method: "POST",
 				headers: {
@@ -236,7 +236,7 @@ function injectDeleteFunction() {
 	ob.career = this.parentElement.parentElement.children[6];
 	ob.people = this.parentElement.parentElement.children[7];
 	
-	let url = "/a/delete_match";
+	let url = "/delete_match";
 	let options = {
 		method: "POST",
 		headers: {

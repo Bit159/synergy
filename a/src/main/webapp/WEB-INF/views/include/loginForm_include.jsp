@@ -7,7 +7,7 @@
 <section class="login-form">
 	<label for="sideicon" id="back"></label>
 	<h1>Let's Synergy</h1>
-	<form method="post" action="/a/login">
+	<form method="post" action="/login">
 		<div class="info-area">
 			<input type="text" name="username" id="id" autocomplete="off" required />
 			<label for="id">EMAIL</label>
@@ -24,8 +24,8 @@
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
 	</form>
 	<div class="thirdParty" align="center" style="margin-top: 30px;">
-		<img src="/a/resources/image/google.png" /><br /> <img
-			src="/a/resources/image/kakao_login_medium_narrow.png" /><br />
+		<img src="/resources/image/google.png" /><br /> <img
+			src="/resources/image/kakao_login_medium_narrow.png" /><br />
 	</div>
 
 	<div class="caption">

@@ -5,29 +5,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/a/resources/css/welcome.css">
+<link rel="stylesheet" href="/resources/css/welcome.css">
 </head>
 <body>
 	<div id="loginBar_wrapper">
         <div id="loginBar" class="container">
             <a href="#">회원가입</a>
-            <a href="#">로그인</a>
+            <a href="/mylogin">로그인</a>
         </div>
     </div>
 	<div id=header_wrapper>
 	    <header id="header" class="container">
 	        <!-- 로고 -->
 	        <div id="logo">
-	            <a href="/a"><img alt="" style="width:155px;height:55px;" src="/a/resources/image/logo.png" /></a>
+	            <a href="/"><img alt="" style="width:155px;height:55px;" src="/resources/image/logo.png" /></a>
 	        </div>
 	        <!-- nav -->
 	        <nav id="nav">
 	            <ul>
 	                <li class="welcome" style="white-space: nowrap;">
-	                    <a href="/a/admin_map">전체 지도</a>
+	                    <a href="/admin_map">전체 지도</a>
 	                </li>
 	                <li class="matching" style="white-space: nowrap;">
-	                    <a href="/a/insert_match">스터디 매칭</a>
+	                    <a href="/insert_match">스터디 매칭</a>
 	                </li>
 	                <li class="grpup" style="white-space: nowrap;">
 	                    <a href="#">스터디 모집</a>

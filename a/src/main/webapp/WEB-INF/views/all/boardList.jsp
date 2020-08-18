@@ -8,12 +8,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="/a/resources/js/welcome.js" defer></script>
-<link rel="stylesheet" href="/a/resources/css/welcome.css">
-<link rel="stylesheet" href="/a/resources/css/boardList1.css">
+<script src="/resources/js/welcome.js" defer></script>
+<link rel="stylesheet" href="/resources/css/welcome.css">
+<link rel="stylesheet" href="/resources/css/boardList1.css">
 </head>
 <body>
-	<jsp:include page="header.jsp" flush="true"/>
+	<%@ include file="/template/header.jsp"%>
 	
 	<div class="body_wrapper">
         <div class="body_container">
@@ -43,7 +43,6 @@
             </div>
         </div>
     </div>
-	
-	<jsp:include page="footer.jsp" flush="true"/>
+	<%@ include file="/template/footer.jsp"%>
 </body>
 </html>

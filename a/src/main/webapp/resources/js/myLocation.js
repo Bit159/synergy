@@ -417,7 +417,7 @@ function locationSelected() {
   window.opener.document.getElementById("x").value = x;
   window.opener.document.getElementById("y").value = y;
   window.opener.document.getElementById("range").value = range;
-
+  window.opener.document.getElementById('locationSpan').style.display="initial";
   window.close();
 }
 

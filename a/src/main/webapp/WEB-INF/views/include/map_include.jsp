@@ -17,4 +17,4 @@
 </form>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41be22a5170d5fc6115853c77dc3d45e"></script>
-<script src="/a/resources/map.js" />
+<script src="/resources/map.js" />

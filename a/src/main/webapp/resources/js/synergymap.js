@@ -29,7 +29,7 @@ function xydbclose() {
 	);
 	let loadingImage = document.getElementById('loading');
 	loadingImage.style.display = "initial";
-	let url = "./insertMatch";
+	let url = "/insertMatch";
 	let options = {
 		method: "POST",
 		headers: {

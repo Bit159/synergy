@@ -37,18 +37,18 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		// 담은 리스트에 어드민이 있으면 map으로 보낸다
 		if(roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/a/map");
+			//response.sendRedirect("/admin_map");
 			return;
 		}
 		
 		// 어드민은 없는데 멤버는 있으면 board로 보낸다
 		if(roleNames.contains("ROLE_MEMBER")) {
-			response.sendRedirect("/a/board");
+			//response.sendRedirect("/board");
 			return;
 		}
 		
 		// 어드민도, 멤버도 없으면 /로 보낸다
-		response.sendRedirect("/a/");
+		response.sendRedirect("/");
 		
 	}
 

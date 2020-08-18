@@ -84,7 +84,6 @@ public class Config {
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
 		InternalResourceViewResolver irvr = new InternalResourceViewResolver();
-		irvr.setPrefix("/WEB-INF/views/");
 		irvr.setSuffix(".jsp");
 		irvr.setContentType("text/html;charset=utf-8");
 		return irvr;

@@ -7,14 +7,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Get Matched!</title>
-    <script defer src="/a/resources/js/insert_match.js"></script>
-    <link rel="stylesheet" href="/a/resources/css/insert_match.css" />
+    <script defer src="/resources/js/insert_match.js"></script>
+    <link rel="stylesheet" href="/resources/css/insert_match.css" />
     <meta id="csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
     <meta id="csrf" name="_csrf" content="${_csrf.token}" />
-    <%@ include file="../include/head_include.jsp" %>
+    <link rel="shortcut icon" href="/resources/image/symbol.png">
   </head>
   <body>
-  <%@ include file="../include/nav_include.jsp" %> 
+  <%@ include file="/template/header.jsp"%>
     <form>
       <div id="wrap">
         <div id="selections">
@@ -115,6 +115,7 @@
         	</ul>
         </div>
       </div>
+      <%@ include file="/template/footer.jsp"%>
     </form>
   </body>
 </html>

@@ -5,7 +5,8 @@
   <head>
     <meta charset="utf-8" />
     <title>매칭 지역 설정</title>
-    <link rel="stylesheet" href="/a/resources/css/myLocation.css" />
+    <link rel="stylesheet" href="/resources/css/myLocation.css" />
+    <link rel="shortcut icon" href="/resources/image/symbol.png">
   </head>
   <body>
     <input type="hidden" name="x" id="x" value="33.450701" />
@@ -19,6 +20,6 @@
     <p>설정이 완료되었을 경우 아래 완료 버튼을 눌러주세요</p>
     <button type="button" onclick="locationSelected()">지역설정완료</button>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41be22a5170d5fc6115853c77dc3d45e"></script>
-    <script src="/a/resources/js/myLocation.js"></script>
+    <script src="/resources/js/myLocation.js"></script>
   </body>
 </html>

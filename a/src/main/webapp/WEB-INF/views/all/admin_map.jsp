@@ -9,21 +9,21 @@
 <title>Admin Map</title>
 <meta id="csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
 <meta id="csrf" name="_csrf" content="${_csrf.token}" />
-
-<%@ include file="../include/head_include.jsp"%>
+<link rel="shortcut icon" href="/resources/image/symbol.png">
 </head>
 <body>
-	<%@ include file="../include/nav_include.jsp"%>
+	<%@ include file="/template/header.jsp"%>
 
-	<div id="map" style="width: 80%; height: 900px;"></div>
+	<div id="map" style="width: 1280px; height: 900px; margin: 0 auto; border: 3px solid #32be78;"></div>
+	<%@ include file="/template/footer.jsp"%>
 	<script
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41be22a5170d5fc6115853c77dc3d45e"></script>
-	<script src="/a/resources/js/admin_map.js"></script>
+	<script src="/resources/js/admin_map.js"></script>
 
 	<script>
 		let csrf = document.getElementById('csrf').content;
 		let csrf_header = document.getElementById('csrf_header').content;
-		let url = "/a/admin_map_getList";
+		let url = "/admin_map_getList";
 		let options = {
 			method: "POST",
 			headers: {
