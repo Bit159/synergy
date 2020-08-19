@@ -13,6 +13,7 @@ import lombok.Setter;
 public class MatchDTO {
 	
 	private String username;
+	private int mycareer;
 	private Double x;
 	private Double y;
 	private Double range;
@@ -25,10 +26,15 @@ public class MatchDTO {
 	private int career;
 	private int people;
 	private Date created;
-	private Date updated;
+	//people 규칙
+	//0 : 무관
+	//3 : 3명
+	//4 : 4~6명
+	//7 : 7~9명
+	//10 : 10명 이상
 	
 	@Override
 	public String toString() {
-		return username+" "+x+" "+y+" "+range+" "+time1+" "+time2+" "+time3+" "+topic1+" "+topic2+" "+topic3+" "+career+" "+people;
+		return username+" "+mycareer+" "+x+" "+y+" "+range+" "+time1+" "+time2+" "+time3+" "+topic1+" "+topic2+" "+topic3+" "+career+" "+people + " " + created;
 	}
 }

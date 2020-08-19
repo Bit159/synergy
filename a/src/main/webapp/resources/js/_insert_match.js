@@ -395,8 +395,8 @@ function nullValidator() {
 	switch(people_array[0]){
 		case "무관": ob.people = 0; break;
 		case "~ 3명": ob.people = 3; break;
-		case "4 ~ 6명": ob.people = 6; break;
-		case "7 ~ 9명": ob.people = 9; break;
+		case "4 ~ 6명": ob.people = 4; break;
+		case "7 ~ 9명": ob.people = 7; break;
 		case "10명 이상": ob.people = 10; break; 
 	}
 	let csrf = document.getElementById('csrf').content;

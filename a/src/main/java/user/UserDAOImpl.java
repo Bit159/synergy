@@ -53,6 +53,11 @@ public class UserDAOImpl implements UserDAO {
 	
 	// FOR MAP
 	@Override
+	public int getMycareer(String username) {
+		return sqlSession.selectOne("userSQL.getMycareer", username);
+	}
+	
+	@Override
 	public int insertMatch(MatchDTO matchDTO) {
 		return sqlSession.insert("userSQL.insertMatch", matchDTO);
 	}

@@ -14,6 +14,7 @@ public interface UserDAO {
 	public abstract List<MatchDTO> getListFromMatch();
 	public abstract int deleteMatched(List<MatchDTO> list);
 	public abstract int deleteMatch(MatchDTO matchDTO);
+	public abstract int getMycareer(String username);
 	
 	//크롤링용
 	public abstract int crawlInsert(List<CBoardDTO> list);

@@ -23,12 +23,15 @@ import user.UserDAO;
 
 @Controller
 public class HomeController {
-	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Autowired
 	private UserDAO userDAO;
 	
-	@GetMapping("/")public String home(Locale locale, Model model) { return "/all/welcome"; }
+	@GetMapping("/")public String home(Locale locale, Model model) {
+		List<MatchDTO> list = userDAO.getListFromMatch();
+		System.out.println(list.get(0).toString());
+		return "/all/welcome"; 
+	}
 	@GetMapping("/info") public String info() { return "/WEB-INF/views/all/info"; }
 	@GetMapping("/map") public String map() { return "/WEB-INF/views/member/map";	}
 	@GetMapping("/board") public ModelAndView board() { 
@@ -38,6 +41,7 @@ public class HomeController {
 		mav.addObject("list", list);
 		mav.setViewName("/WEB-INF/views/all/boardList");
 		return mav; 
+		
 	}
 	@GetMapping("/join") public String signup() { return "/WEB-INF/views/all/join"; }
 	@GetMapping("/accessError") public String accessDenied() { return "/WEB-INF/views/all/accessDenied"; }
@@ -66,34 +70,25 @@ public class HomeController {
 	@GetMapping("/mylogout")
 	public void logoutGET() {logger.info("custom logout");}
 
+	//매칭 위시 넣기
 	@PostMapping(path="/insert_match_done", produces="application/json;charset=UTF-8")
-	public @ResponseBody JSONObject insertMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
+	@ResponseBody
+	public JSONObject insertMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
 		matchDTO.setUsername("jpcnani@naver.com");
+		matchDTO.setMycareer(userDAO.getMycareer(matchDTO.getUsername()));
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
 		matchDTO.setRange(json.getDouble("range"));
 		matchDTO.setTime1(json.getString("time1"));
-		try {
-			matchDTO.setTime2(json.getString("time2"));
-		}catch(JSONException e) {
-			matchDTO.setTime2(null);
-		}
-		try {
-			matchDTO.setTime3(json.getString("time3"));
-		}catch(JSONException e) {
-			matchDTO.setTime3(null);
-		}
+		try{matchDTO.setTime2(json.getString("time2"));
+		}catch(JSONException e) {matchDTO.setTime2(null);}
+		try{matchDTO.setTime3(json.getString("time3"));
+		}catch(JSONException e) {matchDTO.setTime3(null);}
 		matchDTO.setTopic1(json.getString("topic1"));
-		try {
-			matchDTO.setTopic2(json.getString("topic2"));
-		}catch(JSONException e) {
-			matchDTO.setTopic2(null);
-		}
-		try {
-			matchDTO.setTopic3(json.getString("topic3"));
-		}catch(JSONException e) {
-			matchDTO.setTopic3(null);
-		}
+		try{matchDTO.setTopic2(json.getString("topic2"));
+		}catch(JSONException e) {matchDTO.setTopic2(null);}
+		try{matchDTO.setTopic3(json.getString("topic3"));
+		}catch(JSONException e) {matchDTO.setTopic3(null);}
 		matchDTO.setCareer(json.getInt("career"));
 		matchDTO.setPeople(json.getInt("people"));
 		int result = userDAO.insertMatch(matchDTO);
@@ -102,18 +97,13 @@ public class HomeController {
 	}
 	
 	
+	//매칭 위시 삭제
 	@PostMapping(path="/delete_match", produces="application/json;charset=UTF-8")
 	public @ResponseBody JSONObject deleteMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
 		matchDTO.setUsername("jpcnani@naver.com");
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
 		matchDTO.setRange(json.getDouble("range"));
-		matchDTO.setTime1(json.getString("time1"));
-		matchDTO.setTime2(json.getString("time2"));
-		matchDTO.setTime3(json.getString("time3"));
-		matchDTO.setTopic1(json.getString("topic1"));
-		matchDTO.setTopic2(json.getString("topic2"));
-		matchDTO.setTopic3(json.getString("topic3"));
 		matchDTO.setCareer(json.getInt("career"));
 		matchDTO.setPeople(json.getInt("people"));
 		int result = userDAO.deleteMatch(matchDTO);

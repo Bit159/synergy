@@ -4,28 +4,31 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="userSQL">
-	
 	<!-- FOR MAP -->
+	<select id="getMycareer" parameterType="java.lang.String" resultType="int">
+		SELECT `mycareer` FROM membertable WHERE username=#{username}
+	</select>
+	
+	<insert id="insertMatch" parameterType="matchDTO">
+		INSERT INTO db.match VALUES(#{username}, #{mycareer}, #{x}, #{y}, #{range}, #{time1}, #{time2}, #{time3}, #{topic1}, #{topic2}, #{topic3}, #{career}, #{people}, now())
+	</insert>
+	
 	<select id="getListFromMatch" resultType="matchDTO">
 		SELECT * FROM `db`.`match` ORDER BY `CREATED` ASC
 	</select>
-
-	<insert id="insertMatch" parameterType="matchDTO">
-		INSERT INTO db.match VALUES(#{username}, #{x}, #{y}, #{range}, #{time1}, #{time2}, #{time3}, #{topic1}, #{topic2}, #{topic3}, #{career}, #{people}, now(), now())
-	</insert>
 	
 	<delete id="deleteMatched" parameterType="java.util.List">
 		DELETE FROM db.match
 		<where>
 			<foreach collection="list" item="item" separator="OR">
-				(`email`=#{item.email} AND `x`=#{item.x} AND `y`=#{item.y} AND
+				(`username`=#{item.username} AND `x`=#{item.x} AND `y`=#{item.y} AND
 				`range`=#{item.range})
 			</foreach>
 		</where>
 	</delete>
 	
 	<delete id="deleteMatch" parameterType="matchDTO">
-		DELETE FROM db.match WHERE `email`=#{email} and `x`=#{x} and `y`=#{y} and `range`=#{range} and `time`=#{time} and `topic`=#{topic} and `career`=#{career} and `people`=#{people}
+		DELETE FROM db.match WHERE `username`=#{username} and `x`=#{x} and `y`=#{y} and `range`=#{range} and `time1`=#{time1} and `time2`=#{time2} and `time3`=#{time3} and `topic1`=#{topic1} and `topic2`=#{topic2} and `topic3`=#{topic3} and `career`=#{career} and `people`=#{people}	
 	</delete>
 	
 	<!-- End of FOR MAP -->
@@ -59,52 +62,11 @@
 	
 	<!-- End of FOR CRAWL -->
 
-
 	<!-- FOR BOARD -->
 		<select id="getBoardList" resultType="user.CBoardDTO">
 			SELECT * FROM cboard order by bno desc limit 20
 		</select>
 	<!-- END OF BOARD -->
-	
-	<!-- FOR USER -->
-	<select id="selectAllFromUsertable" resultType="userDTO">
-		SELECT * FROM db.usertable
-	</select>
-
-	<select id="selectOne" parameterType="java.lang.String"
-		resultType="userDTO">
-		SELECT * FROM db.usertable WHERE id=#{id}
-	</select>
-
-	<insert id="insert" parameterType="userDTO">
-		INSERT INTO db.usertable(`id`,
-		`pw`, `nickname`, `email`, `birthyear`) values(#{id}, #{password},
-		#{nickname}, #{email}, #{birthyear})
-	</insert>
-
-	<update id="update" parameterType="userDTO">
-		update db.usertable set
-		`id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname},
-		`birthyear`=#{birthyear} where `email`=#{email}
-	</update>
-
-	<delete id="delete" parameterType="userDTO">
-		DELETE FROM db.usertable WHERE
-		`email`=#{email}
-	</delete>
-
-	<select id="searchUserList" parameterType="java.util.Map"
-		resultType="userDTO">
-		<!-- select * from usertable where ${key} like '%'||#{value}||'%' -->
-		select * from usertable where
-		<if test="key == 'name'">
-			name like '%'||#{value}||'%'
-		</if>
-		<if test="key == 'id'">
-			id like '%'||#{value}||'%'
-		</if>
-	</select>
-	<!-- End of FOR USER -->
 
 </mapper>
 

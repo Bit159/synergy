@@ -30,7 +30,7 @@ public class AOP_Config {
 	@Async
 	@After("execution(public * crawl.Crawler.getList(..))")
 	public void getContent() {
-		System.out.println("애프터 적용!");
+		System.out.println("글 내용 삽입을 위한 애프터");
 		List<String> list = userDAO.getEmptyContentBno();
 		if (list.size() == 0)
 			return;
@@ -51,14 +51,8 @@ public class AOP_Config {
 			CBoardDTO cboardDTO = new CBoardDTO();
 			cboardDTO.setBno(Integer.parseInt(list.get(i)));
 			
-			
 			//.text() 에서 .outerHtml로 변경하여 태그를 유지한다.
 			cboardDTO.setContent(doc.select(selector).outerHtml());
-			
-			
-			
-			System.out.println(cboardDTO.getContent());
-			
 			insertList.add(cboardDTO);
 		}
 
@@ -78,62 +72,140 @@ public class AOP_Config {
 	@Async
 	@AfterReturning("execution(public * controller.HomeController.insertMatch(..))")
 	public void after() {
+		System.out.println("---------------------------------------------------------");
 		System.out.println("match db 삽입 후 매칭 검증을 위한 after Returning");
 		List<MatchDTO> list = userDAO.getListFromMatch();
-		List<MatchDTO> matchedList = null;
-		boolean matched = false;
 		
-		for (int i = 0; i < list.size() - 4; i++) {
-			System.out.println("현재 리스트 길이입니다 : " + list.size());
-			matchedList = new ArrayList<MatchDTO>();
-			boolean location_pass = false;
-			boolean time_pass = false;
-			boolean topic_pass = false;
-			boolean career_pass = false;
-			boolean people_pass = false;
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println("포문 " + (i+1) + "바퀴째");
+			//1. 지역 검증+인원 검증
+			List<MatchDTO> range_validated_list = rangeValidation(list.get(i), list);
+			if(range_validated_list.size() < list.get(i).getPeople()) continue;
+			System.out.println("지역검증+인원검증 통과");
 			
-			matchedList.add(list.get(i));
+			//2. 경력 검증+인원 검증
+			List<MatchDTO> career_validated_list = careerValidation(list.get(i), range_validated_list);
+			if(career_validated_list.size() < list.get(i).getPeople()) continue;
+			System.out.println("경력검증 통과\r\n\r\n");
 			
-			//outer for문에서 선택된 i번째 요소와 
-			//inner for문에서 선택된 j번째 요소가 매칭이 되는지 체크한 후
-			//매칭이 될 경우( _pass 불리언이 모두 true일때 )
+			//3. 시간대 검증 : 최대 3개의 리스트를 담은 리스트를 반환. 그 중 인원수 검증에 실패한 것은 제거. 
+			List<List<MatchDTO>> time_validated_list_set = timeValidation(list.get(i), career_validated_list);
+			if(time_validated_list_set.size()==0) continue;
+			System.out.println("시간대 검증 통과");
 
-			for (int j = i + 1; j < list.size(); j++) {
-				// 1. 지역 매칭 검증
-				double sumOfTwoRanges = (list.get(i).getRange() + list.get(j).getRange()) / 1000.0;
-				double distance = distanceInKmBetweenEarthCoordinates(list.get(i).getX(), list.get(i).getY(),
-						list.get(j).getX(), list.get(j).getY());
-				if (sumOfTwoRanges >= distance)	location_pass = true;
-				else continue;
-				// 1. 지역 매칭 검증 끝
-				
-				// 2. 커리어 검증 : 무관 - 0 | 0~2년 - 2 | 3~5년 - 5 | 5년이상 - 6 | 10년이상 - 10
-				// 회원가입할때 자신의 연차를 적도록 하고, 해가 바뀔 때마다 모든 테이블컬럼의 값을 1씩 더해주도록 해야겠다.
-				// 매칭리스트에 넣을때 경력은 상대방의 경력이 어느정도 되어야 한다는 설정을 넣는 것으로 정하자.
-				// 기준값인 i가 무관을 넣었을 땐 j값과 상관없이 
-				if(list.get(i).getCareer())
-				
-				
-				
-				//matchedList.add(list.get(j));
-				if(matchedList.size() >= 5) {
-					matched = true;
-					break;
-				}
-
-			} // inner for
-
-			if(matched) {
-				List<String> targetList = new ArrayList<String>();
-				for (MatchDTO dto : matchedList) targetList.add(dto.getEmail());
-				email.sendToList(targetList);
-				int result = userDAO.deleteMatched(matchedList);
-				return;
+			//4. 주제 검증
+			List<MatchDTO> fullValidatedList = topicValidation(list.get(i), time_validated_list_set);
+			if(fullValidatedList == null) {
+				System.out.println("fullValidatedList is null");
+				System.out.println("----------------------------------------------------------\r\n\r\n");
+				continue;
 			}
-
-		} // outer for
+			System.out.println("주제 검증까지 통과");
+			
+			//검증 완료 후 작업
+			System.out.println("매칭 발생~");
+			List<String> mailList = new ArrayList<String>();
+			for (MatchDTO dto : fullValidatedList) {
+				System.out.println(dto.toString());
+				mailList.add(dto.getUsername());
+			}
+			System.out.println("메일발송대상 : "+mailList);
+			//email.send(mailList);
+			
+			//db삭제
+			int result = userDAO.deleteMatched(fullValidatedList);
+			System.out.println(result +"행 삭제 완료");
+			break;
+			//메일 발송
+			//email.sendToList(targetList);
+			//채팅방개설?
+			//알림 발송?
+		} // for
 	}// after method
+	
+	
+	//주제 검증
+	public List<MatchDTO> topicValidation(MatchDTO standardDTO, List<List<MatchDTO>> topic_validation_list_set) {
+		List<MatchDTO> return_list = new ArrayList<MatchDTO>();
+		List<String> standard_topics = new ArrayList<String>();
+		standard_topics.add(standardDTO.getTopic1());
+		if(standardDTO.getTopic2()!=null) standard_topics.add(standardDTO.getTopic2());
+		if(standardDTO.getTopic3()!=null) standard_topics.add(standardDTO.getTopic3());
+		
+		for(int i = 0; i < standard_topics.size(); i++) {
+			List<MatchDTO> list = new ArrayList<MatchDTO>();
+			for (int j = 0; j < topic_validation_list_set.size(); j++) {
+				for (int j2 = 0; j2 < topic_validation_list_set.get(j).size(); j2++) {
+					if(standard_topics.get(i).equals(topic_validation_list_set.get(j).get(j2).getTopic1()))
+						list.add(topic_validation_list_set.get(j).get(j2));
+					if(standard_topics.get(i).equals(topic_validation_list_set.get(j).get(j2).getTopic2()))
+						list.add(topic_validation_list_set.get(j).get(j2));
+					if(standard_topics.get(i).equals(topic_validation_list_set.get(j).get(j2).getTopic3()))
+						list.add(topic_validation_list_set.get(j).get(j2));
+				}
+			}
+			if(list.size() >= standardDTO.getPeople()) return list;
+		}
+		return null;
+	}
 
+	//시간대 검증
+	public List<List<MatchDTO>> timeValidation(MatchDTO standardDTO, List<MatchDTO> time_validation_list){
+		//옵션이 3개라서 매칭결과 리스트도 최대 3개가 나올 수 있기 때문에 리턴할 "리스트를 담는 리스트"를 생성
+		List<List<MatchDTO>> return_list = new ArrayList<List<MatchDTO>>();
+		//기준이 될 dto에서 time옵션 최대 3가지를 null이 아닌 경우 list에 담아서 size를 활용할 수 있게 세팅
+		List<String> standard_times = new ArrayList<String>();
+		standard_times.add(standardDTO.getTime1());
+		if(standardDTO.getTime2() != null) standard_times.add(standardDTO.getTime2());
+		if(standardDTO.getTime3() != null) standard_times.add(standardDTO.getTime3());
+		System.out.println("standard_time1 : " + standardDTO.getTime1());
+		System.out.println("standard_time2 : " + standardDTO.getTime2());
+		System.out.println("standard_time3 : " + standardDTO.getTime3());
+		//기준 옵션의 갯수만큼 반복하며 리스트내에서 같은 옵션이 있는 위시들을 리스트에 담아 "리스트를 담는 리스트"에 담는다.
+		for (int i = 0; i < standard_times.size(); i++) {
+			//같은 옵션이 있는 위시디를 담는 리스트
+			List<MatchDTO> list = new ArrayList<MatchDTO>();
+			for (int j = 0; j < time_validation_list.size(); j++) {
+				System.out.println((j+1) + "번째 요소의 첫번째 시간대" +time_validation_list.get(j).getTime1());
+				System.out.println((j+1) + "번째 요소의 두번째 시간대" +time_validation_list.get(j).getTime2());
+				System.out.println((j+1) + "번째 요소의 세번째 시간대" +time_validation_list.get(j).getTime3());
+				if(standard_times.get(i).equals(time_validation_list.get(j).getTime1()))
+					list.add(time_validation_list.get(j));
+				if(standard_times.get(i).equals(time_validation_list.get(j).getTime2()))
+					list.add(time_validation_list.get(j));
+				if(standard_times.get(i).equals(time_validation_list.get(j).getTime3()))
+					list.add(time_validation_list.get(j));
+			}
+			System.out.println(list);
+			if(list.size() >= standardDTO.getPeople()) return_list.add(list);
+		}
+		return return_list;
+	}
+	
+	//경력 검증 : 비교기준 career보다 mycareer값이 더 큰 위시들을 리스트에 담아서 리턴
+	public List<MatchDTO> careerValidation(MatchDTO standardDTO, List<MatchDTO> career_validation_list){
+		List<MatchDTO> return_list = new ArrayList<MatchDTO>();
+		for (int i = 0; i < career_validation_list.size(); i++) {
+			if(career_validation_list.get(i).getMycareer() >= standardDTO.getCareer())
+				return_list.add(career_validation_list.get(i));
+		}
+		return return_list;
+	}
+
+	//지역 검증 : 비교기준 x,y,range 와 접면이 있는 위시들을 리스트에 담아서 리턴
+	public List<MatchDTO> rangeValidation(MatchDTO standardDTO, List<MatchDTO> sourceList) {
+		List<MatchDTO> return_list = new ArrayList<MatchDTO>();
+		for (int i = 0; i < sourceList.size(); i++) {
+			double sumOfTwoRanges = (standardDTO.getRange() + sourceList.get(i).getRange()) / 1000.0;
+			double distance = distanceInKmBetweenEarthCoordinates(standardDTO.getX(), standardDTO.getY(),
+					sourceList.get(i).getX(), sourceList.get(i).getY());
+			if (sumOfTwoRanges >= distance) return_list.add(sourceList.get(i));
+		}
+		return return_list;
+	}
+
+	
+	
 	public double degreesToRadians(double degrees) {
 		return (degrees * Math.PI) / 180;
 	}
