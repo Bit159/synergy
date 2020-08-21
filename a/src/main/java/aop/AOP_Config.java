@@ -193,6 +193,16 @@ public class AOP_Config {
 	}
 
 	//지역 검증 : 비교기준 x,y,range 와 접면이 있는 위시들을 리스트에 담아서 리턴
+	//기준, 전체리스트, 인덱스, 예비리스트 준비
+	//주어진 인덱스부터 돌면서(처음엔0을 주어서 자기자신이 예비리스트에 담겨지도록 한다) 전체리스트에서 기준과 접면이 있는 녀석을 찾는다.
+	//재귀가 무조건 필요한거같다. 
+	//1번(기준) 으로 돌다가
+	//3번에서 1번과 매칭이 된다 하면.
+	// 1-3 에다가 추가로 되는애들 다 찾고
+	// 찾을때 인원수 조건도 동시에 갖춰서 찾자.
+	// 1 3 조합으로 못찾는다.
+	// 그러면 1 4 부터 다시 시작해서 다시 돌리기..
+	
 	public List<MatchDTO> rangeValidation(MatchDTO standardDTO, List<MatchDTO> sourceList) {
 		List<MatchDTO> return_list = new ArrayList<MatchDTO>();
 		for (int i = 0; i < sourceList.size(); i++) {
