@@ -203,15 +203,26 @@ public class AOP_Config {
 	// 1 3 조합으로 못찾는다.
 	// 그러면 1 4 부터 다시 시작해서 다시 돌리기..
 	
-	public List<MatchDTO> rangeValidation(MatchDTO standardDTO, List<MatchDTO> sourceList) {
-		List<MatchDTO> return_list = new ArrayList<MatchDTO>();
-		for (int i = 0; i < sourceList.size(); i++) {
+	public List<MatchDTO> rangeValidation(MatchDTO standardDTO, List<MatchDTO> sourceList, int index) {
+		//후보리스트 생성
+		List<MatchDTO> candidateList = new ArrayList<>();
+		//후보리스트에 기준값 먼저 넣고.
+		candidateList.add(standardDTO);
+		
+		for (int i = index+1; i < sourceList.size(); i++) {
 			double sumOfTwoRanges = (standardDTO.getRange() + sourceList.get(i).getRange()) / 1000.0;
 			double distance = distanceInKmBetweenEarthCoordinates(standardDTO.getX(), standardDTO.getY(),
 					sourceList.get(i).getX(), sourceList.get(i).getY());
-			if (sumOfTwoRanges >= distance) return_list.add(sourceList.get(i));
+			if (sumOfTwoRanges >= distance) {
+				for (int j = 0; j < candidateList.size(); j++) {
+					sumOfTwoRanges = (standardDTO.getRange() + sourceList.get(i).getRange()) / 1000.0;
+					distance = distanceInKmBetweenEarthCoordinates(standardDTO.getX(), standardDTO.getY(),
+							sourceList.get(i).getX(), sourceList.get(i).getY());
+					
+				}
+			}
 		}
-		return return_list;
+		return null;
 	}
 
 	
