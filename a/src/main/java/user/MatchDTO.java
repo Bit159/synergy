@@ -26,6 +26,7 @@ public class MatchDTO {
 	private int career;
 	private int people;
 	private Date created;
+	private boolean visited;
 	//people 규칙
 	//0 : 무관
 	//3 : 3명
@@ -33,8 +34,8 @@ public class MatchDTO {
 	//7 : 7~9명
 	//10 : 10명 이상
 	
-	@Override
-	public String toString() {
-		return username+" "+mycareer+" "+x+" "+y+" "+range+" "+time1+" "+time2+" "+time3+" "+topic1+" "+topic2+" "+topic3+" "+career+" "+people + " " + created;
-	}
+//	@Override
+//	public String toString() {
+//		return visited + " " +username+" "+mycareer+" "+x+" "+y+" "+range+" "+time1+" "+time2+" "+time3+" "+topic1+" "+topic2+" "+topic3+" "+career+" "+people + " " + created;
+//	}
 }

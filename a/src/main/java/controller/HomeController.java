@@ -28,8 +28,7 @@ public class HomeController {
 	private UserDAO userDAO;
 	
 	@GetMapping("/")public String home(Locale locale, Model model) {
-		List<MatchDTO> list = userDAO.getListFromMatch();
-		System.out.println(list.get(0).toString());
+		System.out.println(userDAO.getListFromMatch());
 		return "/all/welcome"; 
 	}
 	@GetMapping("/info") public String info() { return "/WEB-INF/views/all/info"; }
@@ -37,7 +36,6 @@ public class HomeController {
 	@GetMapping("/board") public ModelAndView board() { 
 		ModelAndView mav = new ModelAndView();
 		List<CBoardDTO> list = userDAO.getBoardList();
-		System.out.println(list.get(0).getContent());
 		mav.addObject("list", list);
 		mav.setViewName("/WEB-INF/views/all/boardList");
 		return mav; 
