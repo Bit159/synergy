@@ -70,4 +70,14 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getCBoardReplyList(bno);
 	}
 
+	@Override
+	public void boardReply(Map<String, Object> map) {
+		boardDAO.boardReply(map);
+	}
+
+	@Override
+	public void hitUpdate(int bno) {
+		boardDAO.hitUpdate(bno);
+	}
+
 }

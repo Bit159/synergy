@@ -1,6 +1,7 @@
 package board;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BoardService {
 
@@ -15,5 +16,9 @@ public interface BoardService {
 	public CBoardDTO getCBoard(int bno);
 
 	public List<CBoardReplyDTO> getCBoardReplyList(int bno);
+
+	public void boardReply(Map<String, Object> map);
+
+	public void hitUpdate(int bno);
 
 }

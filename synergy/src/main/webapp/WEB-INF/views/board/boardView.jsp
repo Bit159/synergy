@@ -9,9 +9,7 @@
 <title>게시판</title>
 <link rel="stylesheet" href="../resources/css/welcome.css">
 <link rel="stylesheet" href="../resources/css/boardView.css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="../resources/js/welcome.js" defer></script>
-<script src="../resources/js/boardView.js" defer></script>
+
 
 </head>
 <body>
@@ -23,7 +21,8 @@
             <div class="boardcontainer">                
                 <div class="board_header">
                     <div class="header_upside">
-                        <div class="view_bno">#${cBoardDTO.bno }</div>
+                        <div class="view_bno">${cBoardDTO.bno }</div>
+                        
                         <div class="view_title">${cBoardDTO.title }</div>
                     </div>
                     <div class="header_downside">
@@ -45,53 +44,24 @@
                     <div class="replywrapper">
                         <div class="reply_header">댓글 ${cBoardDTO.replys }개</div>
 	                        <ul class="reply_group">
-	                            <li class="reply_group_item">
+	                            <!-- <li class="reply_group_item">
 	                                <div class="reply_nickname">작성자</div>
 	                                <div class="reply">댓글</div>
-	                                <div class="reply_button">버튼</div>
-	                            </li>
-	                            
-	                            <li class="reply_group_item">
-	                                <div class="reply_nickname">작성자</div>
-	                                <div class="reply">댓글</div>
-	                                <div class="reply_button">버튼</div>
-	                            </li>
-	                            
-	                            <li class="reply_group_item">
-	                                <div class="reply_nickname">작성자</div>
-	                                <div class="reply">댓글</div>
-	                                <div class="reply_button">버튼</div>
-	                            </li>
-	                            
-	                            <li class="reply_group_item">
-	                                <div class="reply_nickname">작성자</div>
-	                                <div class="reply">댓글</div>
-	                                <div class="reply_button">버튼</div>
-	                            </li>
-	                            
-	                            <li class="reply_group_item">
-	                                <div class="reply_nickname">작성자</div>
-	                                <div class="reply">댓글</div>
-	                                <div class="reply_button">버튼</div>
-	                            </li>
-	                            
-	                            <li class="reply_group_item">
-	                                <div class="reply_nickname">작성자</div>
-	                                <div class="reply">댓글</div>
-	                                <div class="reply_button">버튼</div>
-	                            </li>
-	                            
-	                            <li class="reply_group_item">
-	                                <div class="reply_nickname">작성자</div>
-	                                <div class="reply">댓글</div>
-	                                <div class="reply_button">버튼</div>
-	                            </li>
+	                                <div class="reply_button">
+	                                	<button type="button" class="replyBtn1">수정</button>
+				                        <button type="button" class="replyBtn2">삭제</button>
+	                                </div>
+	                            </li> -->
 	                            <c:forEach var="replydto" items="${replyList }">
 		                            	<c:if test="${not empty replydto }">
 		                            		<li class="reply_group_item">
+		                            			<input type="hidden" class="reply_rno" value="${replydto.rno }">
 				                                <div class="reply_nickname">${replydto.nickname }</div>
 				                                <div class="reply">${replydto.reply }</div>
-				                                <div class="reply_button">버튼</div>
+				                                <div class="reply_button">
+				                                	<button type="button" class="replyBtn1">수정</button>
+				                                	<button type="button" class="replyBtn2">삭제</button>
+				                                </div>
 				                            </li>
 		                            	</c:if>
 	                            </c:forEach>
@@ -116,5 +86,9 @@
     <jsp:include page="boardList1.jsp" flush="false"/>
     
     <jsp:include page="footer.jsp" flush="false"/>
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="../resources/js/welcome.js" defer></script>
+	<script src="../resources/js/boardView.js" defer></script>
 </body>
 </html>

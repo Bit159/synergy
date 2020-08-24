@@ -36,10 +36,26 @@
   	</select>
   	<!-- 크롤링 보드 게시글 정보 -->
   	
-  	<!-- 크롤링 보드 댓글  -->
+  	<!-- 크롤링 보드 댓글  목록 -->
   	<select id="getCBoardReplyList" parameterType="int" resultType="board.CBoardReplyDTO">
   		select * from db.reply where bno=#{bno} order by bno desc 
   	</select>
   	<!-- 크롤링 보드 댓글  -->
+  	
+  	<!-- 크롤링 보드 댓글 생성 -->
+  	<insert id="boardReply" parameterType="java.util.Map">
+  		<!-- begin -->
+  			insert into db.reply (bno, reply, nickname, replydate, updatedate) values(#{bno}, #{reply}, #{nickname}, #{now}, #{now});
+  			
+  			<!-- update db.cboard set reply=reply+1 where bno=#{bno}; -->
+  		<!-- end; -->
+  	</insert>	
+  	<!-- 크롤링 보드 댓글 생성 -->
+  	
+  	<!-- 조회수 증가 -->
+  	<update id="hitUpdate" parameterType="int">
+  		update db.cboard set hit=hit+1 where bno=#{bno}
+  	</update>
+  	<!-- 조회수 증가 -->
   	
   </mapper>

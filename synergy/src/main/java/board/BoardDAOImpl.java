@@ -49,4 +49,14 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectList("boardSQL.getCBoardReplyList", bno);
 	}
 
+	@Override
+	public void boardReply(Map<String, Object> map) {
+		sqlSession.insert("boardSQL.boardReply", map);
+	}
+
+	@Override
+	public void hitUpdate(int bno) {
+		sqlSession.update("boardSQL.hitUpdate", bno);
+	}
+
 }

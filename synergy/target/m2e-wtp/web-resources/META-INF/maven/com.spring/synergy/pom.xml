@@ -182,6 +182,12 @@
 		</dependency>
 		<!-- End of JSON 통신을 위해 Jackson Core, Jackson Databind, Json lib 3가지를 DI -->
 		
+		<dependency> 
+		    <groupId>org.codehaus.jackson</groupId> 
+		    <artifactId>jackson-mapper-asl</artifactId> 
+		    <version>1.6.4</version> 
+		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>

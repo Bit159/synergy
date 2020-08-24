@@ -17,6 +17,10 @@ public interface BoardDAO {
 	public CBoardDTO getCBoard(int bno);
 
 	public List<CBoardReplyDTO> getCBoardReplyList(int bno);
+
+	public void boardReply(Map<String, Object> map);
+
+	public void hitUpdate(int bno);
 	
 	
 }

@@ -1,7 +1,9 @@
 package board;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -47,9 +49,8 @@ public class BoardController {
 		System.out.println(cBoardDTO.getTitle());
 		List<CBoardReplyDTO> replyList = boardService.getCBoardReplyList(bno);
 		System.out.println(replyList);
-		for(CBoardReplyDTO dto : replyList) {
-			System.out.println(dto.getNickname());
-		}
+		boardService.hitUpdate(bno);
+		
 		Date now = new Date();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("cBoardDTO", cBoardDTO);
@@ -100,10 +101,26 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
-	@GetMapping("/board/reply")
-	public ModelAndView reply() {
-		
+	@GetMapping(path="/board/boardReply")
+	public ModelAndView boardReply(@RequestParam String reply, int bno, HttpSession session) {
+		System.out.println("reply:"+reply+" bno:"+bno);
+		/* String nickname = (String) session.getAttribute("nickname"); */
+		String nickname = "nickname";
+		System.out.println("nickname:"+nickname);
+		List<CBoardReplyDTO> replyList = boardService.getCBoardReplyList(bno);
+		System.out.println("replyList:"+replyList);
+		Date now = new Date();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bno",bno);
+		map.put("reply", reply);
+		map.put("nickname", nickname);
+		map.put("now", now);
+		boardService.boardReply(map);
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("replyList", replyList);
+		mav.setViewName("jsonView");
 		return mav;
 	}
+	
+	
 }

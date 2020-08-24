@@ -136,12 +136,20 @@ div[class="reply"]{
 }
 
 div[class="reply_button"]{
+	display: flex;
 	width: 10%;
 	border: 1px solid;
 	line-height: 40px;
-	padding-left: 10px;
+	
+	
 }
-
+button[class="replyBtn1"]{
+	width: 50%;
+	
+}
+button[class="replyBtn2"]{
+	width: 50%;
+}
 div[class="reply_writer_wrapper"]{
 	width: 100%;
 	min-height: 100px;

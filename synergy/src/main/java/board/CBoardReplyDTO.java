@@ -12,4 +12,9 @@ public class CBoardReplyDTO {
 	private String nickname;
 	private Date replydate;
 	private Date updatedate;
+	
+	@Override
+	public String toString() {
+		return rno+" "+bno+" "+reply+" "+nickname;
+	}
 }
