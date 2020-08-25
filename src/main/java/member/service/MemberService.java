@@ -31,12 +31,14 @@ public interface MemberService {
 
 	public void revise(Map<String, String> map);
 
-	public void sendMessage(String sender, String message);
-
-	public List<ChattingDTO> getChatting();
+	public List<ChattingDTO> getChatting(String chattingRoom);
 
 	public void createChat();
 
 	public List<ChattingRoomDTO> getChattingRoom(String username);
+
+	public void sendMessage(String sender, String message, String chattingRoom);
+
+	public void sendMessage(ChattingDTO chattingDTO);
 
 }

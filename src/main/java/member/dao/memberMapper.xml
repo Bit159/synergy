@@ -46,6 +46,8 @@
 		delete from membertable where username=#{username}
 	</delete>
 	
+	<!-- ============================ 마이페이지 ============================ -->
+	
 	<!-- 패스워드 닉네임 변경 -->
 	 
   	<update id="revise" parameterType="java.util.Map">
@@ -58,13 +60,20 @@
   		update membertable set nickname=#{nickname} where username=#{username}
   	</update>
   	
+  	<!-- ============================ 마이페이지 ============================ -->
+  	
+  	<!-- ============================ 채 팅 ============================ -->
+  	
   	<!-- 채팅 저장 -->
-  	<insert id="sendMessage" parameterType="java.util.Map">
-  		insert into chattingRoom values(#{sender}, #{message}, now())
+  	
+  	<insert id="sendMessage" parameterType="chatting">
+  		insert into ${chattingRoom} values(#{username}, #{chat}, now())
   	</insert>
   	
+  	<!-- 채팅 가져오기 -->
+  	
   	<select id="getChatting" resultType="chatting">
-  		select * from chattingRoom
+  		select * from ${chattingRoom}
   	</select>
   	
   	<!-- 채팅방 생성 -->
@@ -73,12 +82,18 @@
   		${create_table}
   	</select>
   	
+  	<!-- 채팅방 리스트 뽑아오기 -->
+  	
   	<select id="getChattingRoom" parameterType="String" resultType="chattingRoom">
   		select * from chattingRoomList where members like concat('%',#{username},'%')
   	</select>
   	
+  	<!-- 채팅방에 들어가기 -->
+  	
 	<insert id="joinChattingRoom" parameterType="java.util.Map">
 		insert into ChattingRoomList values(#{chattingRoom},#{members})
 	</insert>  	
+	
+	<!-- ============================ 채 팅 ============================ -->
 </mapper>
  

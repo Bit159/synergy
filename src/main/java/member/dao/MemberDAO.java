@@ -33,10 +33,12 @@ public interface MemberDAO {
 
 	public void sendMessage(Map<String, String> map);
 
-	public List<ChattingDTO> getChatting();
+	public List<ChattingDTO> getChatting(String chattingRoom);
 
 	public void createChat();
 
 	public List<ChattingRoomDTO> getChattingRoom(String username);
+
+	public void sendMessage(ChattingDTO chattingDTO);
 
 }

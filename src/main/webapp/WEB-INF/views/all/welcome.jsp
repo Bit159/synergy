@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -28,7 +29,15 @@
                         <p style="white-space: nowrap;">쉽고 빠른 스터디 매칭</p>
                         <ul>
                             <li>
-                                <a href="/all/loginForm" class="loginIcon">Login</a>
+                            	<sec:authorize access="isAnonymous()">
+	                                <a href="/all/loginForm" class="loginIcon">Login</a>
+                            	</sec:authorize>
+                            	<sec:authorize access="isAuthenticated()">
+                            		<form action="/logout" method="post" name="logoutForm">
+                            			<a href="javascript:document.logoutForm.submit();" class="loginIcon">Logout</a>
+                            			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+                            		</form>
+                            	</sec:authorize>
                             </li>
                         </ul>
                     </div>

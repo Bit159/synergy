@@ -142,7 +142,6 @@ public class MemberController{
 	@RequestMapping(value="/member/myPage",method=RequestMethod.POST)
 	public ModelAndView myPage(@RequestParam String username){
 		MemberDTO memberDTO = memberService.checkMember(username);
-		//System.out.println(memberDTO.getUsername());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("memberDTO", memberDTO);
 		mav.setViewName("/member/myPage");
@@ -150,46 +149,34 @@ public class MemberController{
 		return mav;
 	}
 	
-	  @RequestMapping(value="/member/revise",method=RequestMethod.POST) 
-	  public String revise(@RequestParam String username, String password, String nickname) {
-		  
-	  System.out.println(username);
-	  System.out.println(password);
-	  System.out.println(nickname);
-	  
-		
-	  
-		 if(password == null || password == ""){ 
-			 System.out.println(username);
-			 System.out.println(password);
-			 System.out.println(nickname);
-			 
-			 Map<String, String> map = new HashMap<String, String>();
-		 	 map.put("username", username);
-		 	 map.put("nickname", nickname);
+	@RequestMapping(value="/member/revise",method=RequestMethod.POST) 
+	public String revise(@RequestParam String username, String password, String nickname) {
+		if(password == null || password == ""){	 
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("username", username);
+			map.put("nickname", nickname);
 		 	 
 		 	 memberService.nicknameRevice(map);
 		 	 
 		 	 return "/member/welcome"; 
 		 	 
-		 }else{
-	  
-			  Map<String, String> map = new HashMap<String, String>();
-			  map.put("username", username);
-			  map.put("password", password);
-			  map.put("nickname", nickname);
+		}else{
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("username", username);
+			map.put("password", password);
+			map.put("nickname", nickname);
 			  
-			  memberService.revise(map);
+			memberService.revise(map);
 			  
-			  return "/member/welcome"; 
-		 }
+			return "/member/welcome"; 
+		}
 	  
-	 
 	}
 	
 	@RequestMapping(value="/member/withdrawal",method=RequestMethod.POST) //회원탈퇴
 	public String withdrawal(@RequestParam String username) {
 		memberService.withdrawal(username);
+		
 		return "redirect:/all/loginForm"; 
 		
 	}
@@ -210,9 +197,7 @@ public class MemberController{
 	 public String createGroup() {
 		 return "/member/createGroup";
 	 }
-	
 
-	
 	//==================================== 지역 자동완성
 	
 	 @GetMapping(value="/member/autocomplete")
@@ -232,34 +217,42 @@ public class MemberController{
 	 
 	 //===================================== 관리자
 	 
-	  @RequestMapping(value="/admin/adminBoard",method=RequestMethod.GET)
-	  public ModelAndView adminBoard() {
-		  List<MemberDTO> list = memberService.getMember();
+	@RequestMapping(value="/admin/adminBoard",method=RequestMethod.GET)
+	public ModelAndView adminBoard() {
+		List<MemberDTO> list = memberService.getMember();
 		  	
-		  ModelAndView mav = new ModelAndView();
-		  mav.addObject("list", list);
-		  mav.setViewName("/admin/adminBoard");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("/admin/adminBoard");
 		  
-		  return mav;
-	  }
+		return mav;
+	}
 	 
-	  @RequestMapping(value="/all/memberDelete",method=RequestMethod.POST)
-	  public String memberDelete(@RequestParam String username) {
-			
-		  System.out.println(username);
-		  
-			memberService.memberDelete(username);
+	@RequestMapping(value="/all/memberDelete",method=RequestMethod.POST)
+	public String memberDelete(@RequestParam String username) {
+		memberService.memberDelete(username);
 			
 			
-			return "redirect:/all/adminBoard";
-	  }
+		return "redirect:/all/adminBoard";
+	}
 	  
-	//====================================== 채팅방
+	//============================================================== 채팅방
 		
 	@GetMapping("/member/chatting")
 	public String chatting() {
 		return "/member/chatting";
 	}
+
+	/*
+	 * @PostMapping("/member/sendMessage")
+	 * 
+	 * @ResponseBody public void sendMessage(@RequestParam String
+	 * text, @RequestParam String chattingRoom) { String sender =
+	 * text.split(",")[1]; String message = text.split(",")[0];
+	 * memberService.sendMessage(sender, message, chattingRoom);
+	 * 
+	 * }
+	 */
 	  
 	@GetMapping("/member/chattingList")
 	public String chattingList() {
@@ -281,26 +274,17 @@ public class MemberController{
 		return mav;
 	}
 	  
-	@GetMapping("/member/getChatting")
+	@PostMapping("/member/getChatting")
 	@ResponseBody
-	public ModelAndView getChatting() {
+	public ModelAndView getChatting(@RequestParam String chattingRoom) {
 		ModelAndView mav = new ModelAndView();
-		List<ChattingDTO> list = memberService.getChatting();
+		System.out.println(chattingRoom);
+		List<ChattingDTO> list = memberService.getChatting(chattingRoom);
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		  
 		return mav;
 		  
-	}
-	  
-	@PostMapping("/member/sendMessage")
-	@ResponseBody
-	public void sendMessage(@RequestParam String text) {
-		String sender = text.split(",")[1]; 
-		String message = text.split(",")[0];
-			
-		memberService.sendMessage(sender, message);
-			
 	}
 	  
 	@GetMapping("/member/createChat")

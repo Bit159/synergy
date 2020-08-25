@@ -13,15 +13,11 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import member.service.MemberService;
-import member.service.MemberServiceImpl;
 
-
-@Controller
-@ServerEndpoint(value="/chat")
+//@Controller
+//@ServerEndpoint(value="/chat")
 public class WebSocket {
 	private static final List<Session> sessionList = new ArrayList<Session>();
 	private static final Logger logger = LoggerFactory.getLogger(WebSocket.class);
@@ -68,7 +64,7 @@ public class WebSocket {
 		message = message.split(",")[0]; 
 		logger.info("Message From " + sender + " : " + message); 
 		System.out.println("Message From " + sender + " : "+ message);
-		try { 
+		try { 	
 			final Basic basic = session.getBasicRemote(); 
 			basic.sendText("<나> : " + message); 
 			

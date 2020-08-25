@@ -19,11 +19,15 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-
+	
+	//======================================================= 로그인
+	
 	@Override
 	public MemberDTO login(Map<String, String> map) {
 		return memberDAO.login(map);
 	}
+	
+	//======================================================= 회원가입
 	
 	@Override
 	public void join(Map<String, String> map) {
@@ -47,7 +51,8 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.checkMember(username);
 	}
 
-
+	//======================================================= 마이페이지
+	
 	@Override
 	public MemberDTO getMyPage(Map<String, String> map) {
 		return memberDAO.getMyPage(map);
@@ -55,52 +60,59 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public void withdrawal(String username) {
-		
 		memberDAO.withdrawal(username);
-		
 	}
 
 	@Override
 	public List<MemberDTO> getMember() {
-		
 		return memberDAO.getMember();
 	}
 
 	@Override
 	public void memberDelete(String username) {
 		memberDAO.memberDelete(username);
-		
 	}
-
-	@Override
-	public List<String> autocomplete() {
-		return memberDAO.autocomplete();
-	}
-
-	@Override
-	public void nicknameRevice(Map<String, String> map) {
-		memberDAO.nicknameRevise(map);
-	}
-
-	@Override
+	
+	@Override // 회원정보 수정
 	public void revise(Map<String, String> map) {
 		String password = passwordEncoder.encode(map.get("password"));
 		map.replace("password", password);
 		
 		memberDAO.revise(map);
 	}
-
+	
+	@Override //닉네임만 수정
+	public void nicknameRevice(Map<String, String> map) {
+		memberDAO.nicknameRevise(map);
+	}
+	
+	//======================================================= 자동완성
+	
 	@Override
-	public void sendMessage(String sender, String message) {
+	public List<String> autocomplete() {
+		return memberDAO.autocomplete();
+	}
+	
+	//======================================================= 채팅방
+	
+	@Override
+	public void sendMessage(String sender, String message, String chattingRoom) {
 		Map<String,String> map = new HashedMap<String, String>();
 		map.put("sender", sender);
 		map.put("message", message);
+		map.put("chattingRoom", chattingRoom);
 		memberDAO.sendMessage(map);
 	}
 
 	@Override
-	public List<ChattingDTO> getChatting() {
-		return memberDAO.getChatting();
+	public void sendMessage(ChattingDTO chattingDTO) {
+		memberDAO.sendMessage(chattingDTO);
+		
+	}
+	
+	@Override
+	public List<ChattingDTO> getChatting(String chattingRoom) {
+		return memberDAO.getChatting(chattingRoom);
 	}
 
 	@Override
@@ -112,6 +124,7 @@ public class MemberServiceImpl implements MemberService {
 	public List<ChattingRoomDTO> getChattingRoom(String username) {
 		return memberDAO.getChattingRoom(username);
 	}
+
 	
 	
 }

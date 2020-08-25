@@ -19,17 +19,19 @@ public class MemberDAOImpl implements MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	private int chatNum = 1;
-
+	
+	//======================================================= 로그인
+	
 	@Override
 	public MemberDTO login(Map<String, String> map) {
 		return sqlSession.selectOne("memberSQL.login", map);
-		
 	}
 
+	//======================================================= 회원가입
+	
 	@Override
 	public void join(Map<String, String> map) {
 		sqlSession.insert("memberSQL.join", map);
-		
 	}
 
 	@Override
@@ -42,36 +44,19 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.insert("memberSQL.addInfo", memberDTO);
 	}
 
+	//======================================================= 마이페이지
+	
 	@Override
 	public MemberDTO getMyPage(Map<String, String> map) {
 		return sqlSession.selectOne("memberSQL.getMyPage", map);
-		
 	}
-
-	@Override
-	public List<String> autocomplete() {
-		return sqlSession.selectList("memberSQL.autocomplete");
-		
-	}
-
+	
 	@Override
 	public void withdrawal(String username) {
 		sqlSession.delete("memberSQL.withrawal");
 		
 	}
-
-	@Override
-	public List<MemberDTO> getMember() {
-		return sqlSession.selectList("memberSQL.getMember");
-		
-	}
-
-	@Override
-	public void memberDelete(String username) {
-		sqlSession.delete("memberSQL.memberDelete", username);
-		
-	}
-
+	
 	@Override
 	public void nicknameRevise(Map<String, String> map) {
 		sqlSession.update("memberSQL.nicknameRevise", map);
@@ -83,16 +68,46 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.update("memberSQL.revise", map);
 		
 	}
-
+	
+	//======================================================= 관리자 페이지
+	
+	@Override
+	public List<MemberDTO> getMember() {
+		return sqlSession.selectList("memberSQL.getMember");
+		
+	}
+	
+	@Override
+	public void memberDelete(String username) {
+		sqlSession.delete("memberSQL.memberDelete", username);
+		
+	}
+	
+	//======================================================= 자동완성
+	
+	@Override
+	public List<String> autocomplete() {
+		return sqlSession.selectList("memberSQL.autocomplete");
+		
+	}
+	
+	//======================================================= 채팅방
+	
 	@Override
 	public void sendMessage(Map<String, String> map) {
 		sqlSession.insert("memberSQL.sendMessage", map);
 		
 	}
+	
+	@Override
+	public void sendMessage(ChattingDTO chattingDTO) {
+		sqlSession.insert("memberSQL.sendMessage", chattingDTO);
+		
+	}
 
 	@Override
-	public List<ChattingDTO> getChatting() {
-		return sqlSession.selectList("memberSQL.getChatting");
+	public List<ChattingDTO> getChatting(String chattingRoom) {
+		return sqlSession.selectList("memberSQL.getChatting", chattingRoom);
 		
 	}
 
@@ -116,4 +131,5 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectList("memberSQL.getChattingRoom", username);
 		
 	}
+
 }

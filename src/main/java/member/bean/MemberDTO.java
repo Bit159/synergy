@@ -9,8 +9,8 @@ public class MemberDTO {
 	private String password;
 	private String auth;
 	private String enabled;
-	private String birthYear;
 	
+	private int myCareer;
 	private int github;
 	private int google;
 	private int kakao;

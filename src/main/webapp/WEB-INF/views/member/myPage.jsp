@@ -55,7 +55,7 @@
 		</header>
 		<aside class="content_aside"></aside>
         	<section class="content_section">
-            	<form name="reviseForm" id="reviseForm" method="post" action="/synergy/member/revise">
+            	<form name="reviseForm" id="reviseForm" method="post" action="/member/revise">
             		<table>
                 		<tbody>
                     		<tr>
@@ -99,7 +99,7 @@
 	    
 		    	<div class="withdrawDiv_label">
 		    
-			   		<form name="withdrawalForm" id="withdrawalForm" method="post" action="/synergy/member/withdrawal">
+			   		<form name="withdrawalForm" id="withdrawalForm" method="post" action="/member/withdrawal">
 			    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			      		<input type="hidden" id="username" name="username" value="${memberDTO.username}">
 		        	</form>
@@ -129,12 +129,12 @@
  	</div>
 </div>
 
-<img id="chatting" src="../resources/image/chatting_floating.png" width="100" height="100" style="position:fixed;
-																							   	  top: 700px;
-																							  	  right : 50%;
-																							  	  margin-right: -900px;
-																							  	  cursor:pointer;
-																							  	  z-index : 99;">
+<img id="chatting" src="/resources/image/chatting_floating.png" width="100" height="100" style="position:fixed;
+																							   	top: 700px;
+																							  	right : 50%;
+																							  	margin-right: -900px;
+																							  	cursor:pointer;
+																							    z-index : 99;">
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">

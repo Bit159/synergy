@@ -73,7 +73,7 @@ function writeResponse(text){
 }
 
 //==========================================================db 가져오기
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$.ajax({
 		type : 'get',
 		url  : '/member/getChatting',
@@ -86,6 +86,6 @@ $(document).ready(function(){
 		
 	});
 	
-});
+}); */
 </script>
 </html>
