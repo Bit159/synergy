@@ -1,5 +1,6 @@
 package member.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,6 @@ public class MemberController {
 	public String loginForm() {
 		return "/all/loginForm";
 	}
-	
 //	@RequestMapping(value="/member/login",method=RequestMethod.POST)
 //	public void login(@RequestParam Map<String, String> map, HttpSession session) {
 //		memberService.login(map);
@@ -77,19 +77,17 @@ public class MemberController {
 	 public String createGroup() {
 		 return "/member/createGroup";
 	 }
+	 //모집글 등록
 	 @PostMapping(value="/member/regist")
-	 public String regist(@ModelAttribute CardBoardDTO groupDTO) {
-		 Map<String, Object> map = new HashedMap<String, Object>();
-		 map.put("title", groupDTO.getTitle());
-		 System.out.println(groupDTO.getTitle());
-		 System.out.println(groupDTO.getTopic());
-		 System.out.println(groupDTO.getLocation());
-		 System.out.println(groupDTO.getPeople());
-		 System.out.println(groupDTO.getContent());
-		 cardBoardService.regist(groupDTO);
-		 return "redirect:/member/cardBoard";
+	 public String regist(@ModelAttribute CardBoardDTO cardBoardDTO,Principal principal) {
+		 String username = principal.getName();
+		 String nickname = memberService.getNickname(username);
+		 cardBoardDTO.setNickname(nickname);
+		 System.out.println(cardBoardDTO.getSeq());
+		 cardBoardService.regist(cardBoardDTO);
+		 return "redirect:/member/cardBoardList";
 	 }
-//	 지역 자동완성
+	 //지역 자동완성
 	 @GetMapping(value="/member/autocomplete")
 	 @ResponseBody
 	 public ModelAndView autocomplete() {
@@ -104,21 +102,17 @@ public class MemberController {
 		 mav.setViewName("jsonView");
 		 return mav;
 	 }
-	 @GetMapping(value="/member/cardBoard")
+	 @GetMapping(value="/member/cardBoardList")
 	 public ModelAndView cardBoardList() {
-		 System.out.println();
 		 List<CardBoardDTO> list = cardBoardService.getCardBoardList();
-//		 List<String> locationList = cardBoardService.getLocationList();
 		 ModelAndView mav = new ModelAndView();
 		 mav.addObject("list",list);
-//		 mav.addObject("locationList",locationList);
 		 mav.setViewName("/member/cardBoard");
 		 return mav;
 	 }
 	 @GetMapping(path="/member/getLocation",produces="application/json;charset=UTF-8")
 	 @ResponseBody
 	 public JSONArray getLocation() {
-//		 List<String> list = memberService.autocomplete();
 		 List<List<String>> list = new ArrayList<List<String>>();
 		 List<String> _list = new ArrayList<String>();
 		 _list.add("서울");
@@ -144,6 +138,37 @@ public class MemberController {
 		 JSONArray json = new JSONArray();
 		 json.addAll(list);
 		 return json;
+	 }
+	 @GetMapping(value="/member/searchCard")
+	 @ResponseBody
+	 public JSONArray searchCard(@RequestParam(required=false) String[] locations,@RequestParam String topic){
+		 JSONArray json = new JSONArray();
+		 List<CardBoardDTO> listAll = cardBoardService.searchCardNoloc(topic);
+		 if(locations==null) {
+			 json.addAll(listAll);
+			 return json;
+		 }
+		 Map<String,Object> map = new HashedMap<String,Object>();
+		 for (int i = 0; i < locations.length; i++) {
+			 map.put("locations["+i+"]", locations[i]);
+		 }
+		 map.put("topic",topic);
+		 List<Object> list2 = new ArrayList<Object>(map.values());
+		 List<CardBoardDTO> list = cardBoardService.searchCard(list2);
+		 if(locations!=null) {
+			 json.addAll(list);
+		 }
+		 return json;
+	 }
+//	 cardboardview
+	 @GetMapping(value="/member/cardBoardView")
+	 public ModelAndView cardBoardView(@RequestParam int seq) {
+		 System.out.println(seq);
+		 CardBoardDTO dto = cardBoardService.getCardContent(seq);
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("dto",dto);
+		 mav.setViewName("/member/cardBoardView");
+		 return mav;
 	 }
 	 
 }

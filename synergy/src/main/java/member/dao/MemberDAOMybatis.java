@@ -32,4 +32,9 @@ public class MemberDAOMybatis implements MemberDAO {
 	public List<String> autocomplete() {
 		return sqlSession.selectList("memberSQL.autocomplete");
 	}
+
+	@Override
+	public String getNickname(String username) {
+		return sqlSession.selectOne("memberSQL.getNickname",username);
+	}
 }

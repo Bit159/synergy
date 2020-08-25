@@ -23,6 +23,7 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	public void regist(CardBoardDTO groupDTO) {
 		Map<String, Object> map = new HashedMap<String, Object>();
 		map.put("title", groupDTO.getTitle());
+		map.put("nickname",groupDTO.getNickname());
 		map.put("topic", groupDTO.getTopic());
 		map.put("location", groupDTO.getLocation());
 		map.put("people", groupDTO.getPeople());
@@ -40,5 +41,19 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 		return sqlSession.selectList("cardBoardSQL.getLocationList",location);
 	}
 
+	@Override
+	public List<CardBoardDTO> searchCard(List<Object> list) {
+		return sqlSession.selectList("cardBoardSQL.searchCard",list);
+	}
+
+	@Override
+	public List<CardBoardDTO> searchCardNoloc(String topic) {
+		return sqlSession.selectList("cardBoardSQL.searchCardNoloc",topic);
+	}
+
+	@Override
+	public CardBoardDTO getCardContent(int seq) {
+		return sqlSession.selectOne("cardBoardSQL.getCardContent",seq);
+	}
 
 }

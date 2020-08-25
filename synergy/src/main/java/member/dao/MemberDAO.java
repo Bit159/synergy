@@ -9,5 +9,5 @@ public interface MemberDAO {
 	public MemberDTO login(Map<String, String> map);
 	public void join(Map<String, String> map);
 	public List<String> autocomplete();
-
+	public String getNickname(String username);
 }

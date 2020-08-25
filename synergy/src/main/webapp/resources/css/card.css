@@ -12,11 +12,19 @@ html, body, div,h1,a,p {
     width:1280px;
     height:100%;
     margin:0 auto;
-    border:solid 1px black;
+    border:solid 2px lightgray;
+    border-radius: 10px;
 }
-#selectBar {
-/* 	border:solid 1px blue; */
+#selectBox {
 	background:rgb(243, 243, 243);
+	border-radius: 10px;
+	font-size: 11pt;
+}
+div[id="selectBox"] h1 {
+	width:95px;
+	border-bottom: solid 2px rgb(50, 190, 120);
+	padding:10px 10px 5px 10px;
+	margin:0 0 10px 5px;
 }
 .selectLocation ul {
 	display: flex;
@@ -29,55 +37,103 @@ html, body, div,h1,a,p {
 	padding:8px;
 	float: left;
 	cursor:pointer;
-	align-content: center;
 	display: inline-block;
+	text-align:center;
 }
 .selectLocation ul li:hover {
-	background: rgb(50, 190, 120, 0.1);
+	background: rgb(50, 190, 120, 0.2);
 }
-.selectLocation ul li a {
-	padding:5px;
+#select-si li a {
+	width:80%;
+	display:inline-block;
 	font-size:12pt;
+	font-weight:550;
+	color:black;
 }
 #select-gu {
 	display:block;
-/* 	position:relative; */
 	overflow: auto;
 }
-
 #select-gu li{
 	padding:5px;
-	width:10.1%;
+	width:10.1738%;
 	float:left;
+}
+#select-gu li a {
+	color:black;
+}
+#selected-location {
+	padding:5px 10px 10px 10px;
+}
+#selected-location span {
+	margin-left:10px;
+	padding:5px 5px 5px 5px;
+	color:white;
+	border-radius:5px;
+	font-size: 11pt;
+	font-weight:540;
+	background: rgb(50, 190, 120, 0.6);
+}
+#selected-location span button {
+	margin-left:3px;
+	border-radius:15px;
+	border:none;
+	height: 18px;
 }
 #selectAll {
 	display:none;
 }
-#regist {
-    position: fixed;
-    top:100px;
-    right:20px;
+/* 주제 선택창 */
+#selectTopic {
+	padding:0 0 0 10px;
+	cursor:pointer;
 }
+/* 검색 버튼 */
+div[id="searchCard"] {
+	padding:10px;
+	text-align: center;
+}
+div[id="searchCard"] input {
+	padding:10px;
+	border-style: none;
+	border-radius: 10px;
+	background: rgb(50, 190, 120);
+	color:white;
+	cursor:pointer;
+	outline-style: none;
+	font-size:15px;
+	font-weight:550;
+	width:100px;
+	margin-left:20px;
+} 
 a {
  text-decoration: none;
+}
+.cardboard {
+	width: 100%;
+	display: relative;
+	text-align: center;
 }
 .card {
     height: 200px;
     width: 350px;
+    margin:20px;
     border-radius: 15px;
-    background: seashell;
+    background: white;
     position: relative;
     display: inline-block;
     box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
-    margin:30px 0 0 30px;
     text-decoration: none;
+    text-align:left;
+    display:inline-block;
 }
 h1 {
     font-size: 16pt;
     font: bold;
 }
 .card-header {
-    border-bottom: solid 1px black;
+    border-bottom: solid 2px rgb(50, 190, 120);
+    margin:0 5px 0 5px;
 }
 .card-header-content {
     padding:10px;

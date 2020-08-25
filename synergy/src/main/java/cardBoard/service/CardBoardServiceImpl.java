@@ -30,5 +30,17 @@ public class CardBoardServiceImpl implements CardBoardService {
 	public List<String> getLocationList(String location) {
 		return cardBoardDAO.getLocationList(location);
 	}
+	@Override
+	public List<CardBoardDTO> searchCard(List<Object> list) {
+		return cardBoardDAO.searchCard(list);
+	}
+	@Override
+	public List<CardBoardDTO> searchCardNoloc(String topic) {
+		return cardBoardDAO.searchCardNoloc(topic);
+	}
+	@Override
+	public CardBoardDTO getCardContent(int seq) {
+		return cardBoardDAO.getCardContent(seq);
+	}
 	
 }

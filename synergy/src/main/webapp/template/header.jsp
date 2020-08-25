@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
 <link rel="stylesheet" href="../resources/css/header.css">
 <div id="loginBar_wrapper">
             <div id="loginBar" class="container">
@@ -23,7 +24,7 @@
 							<a href="#">스터디 매칭</a>
 						</li>
 						<li class="createGroup" style="white-space: nowrap;">
-							<a href="/synergy-kh/member/cardBoard">스터디 모집</a>
+							<a href="/synergy-kh/member/cardBoardList">스터디 모집</a>
 						</li>
 						<li class="groupManage" style="white-space: nowrap;">
 							<a href="#">그룹관리</a>

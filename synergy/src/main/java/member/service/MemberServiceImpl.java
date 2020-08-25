@@ -34,5 +34,9 @@ public class MemberServiceImpl implements MemberService {
 	public List<String> autocomplete() {
 		return memberDAO.autocomplete();
 	}
+	@Override
+	public String getNickname(String username) {
+		return memberDAO.getNickname(username);
+	}
 
 }

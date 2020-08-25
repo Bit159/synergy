@@ -3,15 +3,35 @@
 
 <mapper namespace="cardBoardSQL">	
 	<insert id="regist" parameterType="java.util.Map">
-		insert into cardboard(seq,title,topic,location,people,content) 
-		values((select *from (select max(seq)+1 from cardboard) next),#{title},#{topic},#{location},#{people},#{content})
+		insert into cardboard(seq,title,nickname,topic,location,people,content,open,registDate) 
+		values((select *from (select max(seq)+1 from cardboard) next),#{title},#{nickname},#{topic},#{location},#{people},#{content},default,now())
 	</insert>
 	<select id="getCardBoardList" resultType="card">
 		select * from cardboard order by seq desc
 	</select>
 	<select id="getLocationList" parameterType="String" resultType="String">
-		select substring_index(location,' ',-1) from addr where location like concat('%',#{location},'%')
-
+		select substring_index(location,' ',-1) from addr where location like concat(#{location},'%')
 	</select>
-
+	<select id="searchCard" parameterType="java.util.List" resultType="card">
+		select * from cardboard where location 
+		IN(
+		<foreach collection="list" item="item" index="index" separator=",">
+			<if test="index!=0">
+			#{item}
+			</if>
+		</foreach>
+		) and topic like concat
+		<foreach collection="list" item="item" index="index">
+			<if test="index==0">
+			('%',#{item}) 
+			</if>
+		</foreach>
+		order by seq desc
+	</select>
+	<select id="searchCardNoloc" parameterType="String" resultType="card">
+		select * from cardboard where topic like concat('%',#{topic},'%') order by seq desc;
+	</select>
+	<select id="getCardContent" parameterType="int" resultType="card">
+		select * from cardboard where seq=#{seq}
+	</select>
 </mapper>

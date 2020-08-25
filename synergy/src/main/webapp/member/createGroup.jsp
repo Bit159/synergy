@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,19 +14,23 @@
 <body>
 	<jsp:include page="../template/header.jsp"></jsp:include>
 	<form id="registerForm" method="post" action="/synergy-kh/member/regist">
+<%--     <sec:authorize access="isAuthenticated()"> --%>
+<%-- 	<sec:authentication property="principal.username" var="userId" /> --%>
+<%-- 	<input type="hidden" name="userId" id="userId" value="${userId}"> --%>
+<%-- 	</sec:authorize> --%>
 	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
     <div id="body-wrapper">
         <div id="container" style="white-space: nowrap;">
             <div class="registForm-header">
-                <h2>스터디그룹 개설하기</h2>
+                <h2 align=center>스터디그룹 개설하기</h2>
             </div>
             <div class="registForm">
                 <div class="registForm-title">
                     <h1>한 줄 소개<span>*</span></h1>
-                    <input type="text" name="title" id="title" placeholder="소개를 입력해주세요">
+                    <input type="text" name="title" id="title" maxlength="14" placeholder="소개를 입력해주세요">
                 </div>
                 <div class="registForm-topic">
-                    <h1>주제 선택<span>*</span></h1>
+                    <h1>주제 검색<span>*</span></h1>
                     <input type="text" id="topic" name="topic">
                     <div id="AddTopic"></div>
                 </div>
@@ -58,6 +63,7 @@
             </div>
         </div>
     </div>
+
     </form>
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </body>
@@ -82,17 +88,22 @@
 			}
 		});
 	});
-	let topics=["자바","자바스크립트","파이썬","리액트","스프링"]
+	let topics=["Java","JavaScript","Python","React","Spring","Vue","모각코"]
     $('#topic').autocomplete({
         source: topics
       });
 	$('#backBtn').click(function(){
 		var back = confirm('입력하신 정보가 저장되지 않을 수 있습니다');
 		if(back){
-			location.href='/synergy-kh/member/cardBoard';
+			location.href='/synergy-kh/member/cardBoardList';
 		}else{
 			return;
 		}
 	});
+	$(document).ready(function(){ 
+		$('#title').keyup(function(){ 
+			if ($(this).val().length > $(this).attr('maxlength')) { 
+				alert('최대 13글자 까지 입력가능합니다'); $(this).val($(this).val().substr(0, $(this).attr('maxlength'))); } }); });
+
 </script>
 </html>
