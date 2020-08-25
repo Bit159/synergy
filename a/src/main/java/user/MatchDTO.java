@@ -33,6 +33,7 @@ public class MatchDTO {
 	//4 : 4~6명
 	//7 : 7~9명
 	//10 : 10명 이상
+
 	
 //	@Override
 //	public String toString() {

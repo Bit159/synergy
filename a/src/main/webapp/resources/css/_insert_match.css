@@ -249,3 +249,67 @@ span[class="wishSelected"] {
 }
 
 /* End of Wish List*/
+
+
+
+
+
+
+
+/*new wish*/
+div[id="listtitle"] {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+div[id="wishList"] {
+  width: 900px;
+  height: 60vh;
+  margin: 0 auto;
+  margin-top:30px;
+}
+
+ul[id="wishul"] {
+  list-style: none;
+}
+
+li[class="wishes"] {
+  height: 48px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+li[class="wishes"] > * {
+  text-align: center;
+  border: 2px solid rgb(185, 180, 180);
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 550;
+  color: black;
+}
+
+input[class="wishlist_area"] {
+  width: 90px;
+}
+input[class="wishlist_time"],
+input[class="wishlist_topic"] {
+  width: 250px;
+}
+
+input[class="wishlist_career"],
+input[class="wishlist_people"] {
+  width: 100px;
+}
+
+button[class="wishdelete"] {
+  width: 45px;
+  background-color: #e07083;
+  color: white;
+  font-weight: 550;
+  border-radius: 10px;
+}
+
+/* end of new wish*/

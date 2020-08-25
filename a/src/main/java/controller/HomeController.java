@@ -117,7 +117,8 @@ public class HomeController {
 	
 	
 	@PostMapping(path="/admin_map_getList", produces="application/json;charset=UTF-8")
-	public @ResponseBody JSONArray admin_map_getList() {
+	@ResponseBody
+	public JSONArray admin_map_getList() {
 		JSONArray json= new JSONArray();
 		json.addAll(userDAO.getListFromMatch());
 		return json;

@@ -80,7 +80,26 @@ public class AOP_Config {
 		System.out.println(rangeValidatedList);
 
 		//메일발송, db삭제
+		
 	}// after method
+	
+	private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515 * 1.609344;
+        return dist;
+    }
+ 
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+	
+	
 	
 	public List<MatchDTO> rangeValidation(List<MatchDTO> listFromMatch) { // match 테이블 전체 리스트를 파라메타로 받는다.
 		
@@ -92,37 +111,28 @@ public class AOP_Config {
 			System.out.println("\r\n\r\n");
 			//이전 검증에서 visited를 건드렸을 거기 전수 visited false 준다.
 			for(MatchDTO dto : listFromMatch) dto.setVisited(false);
-			System.out.println(i+"번째 for문입니다");
 			
 			List<MatchDTO> candidateList = new ArrayList<>();
 			candidateList.add(listFromMatch.get(i)); //기준이 될 녀석이 후보리스트의 첫번째 요소가 된다.
-			System.out.println("이번 기준입니다 : " + candidateList.get(0).toString());
-			System.out.println("candidateList.size() : " + candidateList.size());
-			for(MatchDTO dto : candidateList) System.out.print(dto.toString()+" ");
-			
+			System.out.println(i+"번째 for문 기준 : " + candidateList.get(0).toString());
 			
 			List<MatchDTO> sourceList = new ArrayList<>();
 			for(MatchDTO dto : listFromMatch) sourceList.add(dto);
-			System.out.println();
-			System.out.println();
-			System.out.println("sourceList.size() : " + sourceList.size());
-			for(MatchDTO dto : sourceList) System.out.print(dto.toString()+" ");
 			sourceList.remove(i); //기준이 되는 녀석은 검증할 리스트에서 제거한다.
+			System.out.print("sourceList : ");
+			for(MatchDTO dto : sourceList) System.out.print(dto.toString()+" ");
 			
 			//매칭 성공값을 받을 리스트 생성
 			List<MatchDTO> rangeValidatedList = new ArrayList<>();
 			
 			rangeValidation(sourceList, candidateList, rangeValidatedList, 0);
 			if(rangeValidatedList.isEmpty()) {
-				System.out.println(i + "번째 기준 매칭 실패");
+				System.out.println(i + "번째 기준 " + listFromMatch.get(i).toString() + "매칭 실패");
 			}else {
-				System.out.println("매칭발생");
-				System.out.println(rangeValidatedList);
 				result = rangeValidatedList;
 				break;
 			}
 		}
-		if(result == null)	System.out.println("매칭 실패");
 		return result;
 	}// 메소드 끝
 	
@@ -143,24 +153,34 @@ public class AOP_Config {
 			//소스리스트를 순회하며 후보리스트에 있는 모든 요소와 접면이 있는 요소를 후보리스트에 추가한다.
 			for (int j = 0; j < candidateList.size(); j++) {
  				double sumOfTwoRanges = (candidateList.get(j).getRange() + sourceList.get(i).getRange()) / 1000.0;
-				double distance = distanceInKmBetweenEarthCoordinates
-						(candidateList.get(j).getX(), candidateList.get(j).getY(),
-								sourceList.get(i).getX(), sourceList.get(i).getY());
+				double distance = distance
+						(candidateList.get(j).getY(), candidateList.get(j).getX(),
+								sourceList.get(i).getY(), sourceList.get(i).getX());
+				System.out.println(sumOfTwoRanges);
+				System.out.println(distance);
 				if (sumOfTwoRanges < distance)	{
 					rangeMatchWithAllCandidates = false;
 				}
+				
+				//위에는 접면 검증. 접면이 존재하지 않으면 false를 줘서 후보리스트에 추가되지 않게 조치한다.
+				//아래는 인원 검증. 
+				//기준의 인원이 0이면 무관이니까 건드릴 필요 없고
+				//기준의 인원이 0이 아닐 경우에만 후보리스트 추가하기 전에 인원검증을 추가한다
+				
+				//기준의 인원이 무관이 아닌데 기준과 희망인원이 다르면 false를 주어 추가되지 않게 한다  
+				if(!(candidateList.get(0).getPeople() == 0) && !(candidateList.get(0).getPeople() == sourceList.get(i).getPeople()))
+					rangeMatchWithAllCandidates = false;
 			}
 			if(rangeMatchWithAllCandidates)	{
-				System.out.println("현재 후보리스트 목록");
-				for(MatchDTO dto : candidateList) System.out.print(dto.toString() + " ");
-				System.out.println();
-				System.out.println("후보리스트들과 접면이 존재하여 추가합니다 : " + sourceList.get(i).toString());
-				System.out.println("추가 후 후보리스트 목록");
+				System.out.print("후보리스트들과 접면이 존재하여 추가합니다 : " + sourceList.get(i).toString() + "\t");
+				System.out.print("추가 후 후보리스트 목록 : ");
 				boolean isExist = false;
 				for(MatchDTO dto : candidateList) {
 					if(dto.toString().equals(sourceList.get(i).toString()))
 						isExist = true;
 				}
+				//모늗 후보리스트 요소와 접면이 존재하고, + 후보리스트에 이미 존재하지 않을 경우 후보리스트에 추가한다.
+				//기준의 인원수 제한을 넘기지 않았는지 검증을 추가해야 한다.
 				if(!isExist) candidateList.add(sourceList.get(i));
 				for(MatchDTO dto : candidateList) System.out.print(dto.toString() + " ");
 				System.out.println();
@@ -184,6 +204,13 @@ public class AOP_Config {
 			}
 		//후보리스트의 규모가 희망규모보다 크거나 같을 경우 rangeValidatedList에 후보리스트값을 주고 메소드를 종료한다.
 		}else {
+			switch(candidateList.get(0).getPeople()) {
+			case 0:
+			case 3:
+			case 4:
+			case 7:
+			case 10:
+			}
 			for(MatchDTO dto : candidateList) rangeValidatedList.add(dto);
 		}
 	}
@@ -264,18 +291,7 @@ public class AOP_Config {
 		return return_list;
 	}
 
-	// 지역 검증 : 비교기준 x,y,range 와 접면이 있는 위시들을 리스트에 담아서 리턴
-	// 기준, 전체리스트, 인덱스, 예비리스트 준비
-	// 주어진 인덱스부터 돌면서(처음엔0을 주어서 자기자신이 예비리스트에 담겨지도록 한다) 전체리스트에서 기준과 접면이 있는 녀석을 찾는다.
-	// 재귀가 무조건 필요한거같다.
-	// 1번(기준) 으로 돌다가
-	// 3번에서 1번과 매칭이 된다 하면.
-	// 1-3 에다가 추가로 되는애들 다 찾고
-	// 찾을때 인원수 조건도 동시에 갖춰서 찾자.
-	// 1 3 조합으로 못찾는다.
-	// 그러면 1 4 부터 다시 시작해서 다시 돌리기..
-	
-
+/* 갸색갸.. ㅠㅠㅠㅠㅠ
 	public double degreesToRadians(double degrees) {
 		return (degrees * Math.PI) / 180;
 	}
@@ -294,7 +310,7 @@ public class AOP_Config {
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		return earthRadiusKm * c;
 	}
-
+*/
 //	@Before("execution(public * sample01.MessageBeanImpl.*Before(..))")
 //	public void beforeTrace() {
 //		System.out.println();

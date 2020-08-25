@@ -1,3 +1,12 @@
+document.querySelectorAll("button.wishdelete").forEach((e) => {
+    e.addEventListener("click", function () {
+      if (confirm("정말 삭제하시겠습니까?"))
+       this.parentElement.remove();
+    });
+  });
+
+
+
 //-------------------------------------------------
 //열고 닫기 할 때 사용할 스위치 요소
 let time_sw = false;
