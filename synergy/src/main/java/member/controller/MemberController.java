@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cardBoard.bean.CardBoardDTO;
+import cardBoard.bean.CardBoardPaging;
 import cardBoard.service.CardBoardService;
 import member.service.MemberService;
 import net.sf.json.JSONArray;
@@ -73,6 +74,8 @@ public class MemberController {
 	 public String welcome() {
 		 return "/all/welcome";
 	 }
+	 
+//	 =============카드게시판 관련================
 	 @GetMapping(value="/member/createGroup")
 	 public String createGroup() {
 		 return "/member/createGroup";
@@ -102,14 +105,25 @@ public class MemberController {
 		 mav.setViewName("jsonView");
 		 return mav;
 	 }
+	 //게시판 카드리스트 뿌리기
 	 @GetMapping(value="/member/cardBoardList")
-	 public ModelAndView cardBoardList() {
-		 List<CardBoardDTO> list = cardBoardService.getCardBoardList();
+	 public ModelAndView cardBoardList(
+			 @RequestParam(required=false, defaultValue = "1") int pg
+			,@RequestParam(required=false, defaultValue = "1") int range) {
+		 int page =  pg;
+		 System.out.println("페이지"+page+"범위"+range);
+		 int listCnt = cardBoardService.getBoardListCnt();
+		 CardBoardPaging paging = new CardBoardPaging();
+		 paging.pageInfo(page, range, listCnt);
+		 
+		 List<CardBoardDTO> list = cardBoardService.getCardBoardList(paging);
 		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("paging",paging);
 		 mav.addObject("list",list);
 		 mav.setViewName("/member/cardBoard");
 		 return mav;
 	 }
+	 //지역 선택창
 	 @GetMapping(path="/member/getLocation",produces="application/json;charset=UTF-8")
 	 @ResponseBody
 	 public JSONArray getLocation() {
@@ -139,6 +153,7 @@ public class MemberController {
 		 json.addAll(list);
 		 return json;
 	 }
+	 //조건설정 후 검색
 	 @GetMapping(value="/member/searchCard")
 	 @ResponseBody
 	 public JSONArray searchCard(@RequestParam(required=false) String[] locations,@RequestParam String topic){
@@ -160,7 +175,7 @@ public class MemberController {
 		 }
 		 return json;
 	 }
-//	 cardboardview
+	 //글 보기
 	 @GetMapping(value="/member/cardBoardView")
 	 public ModelAndView cardBoardView(@RequestParam int seq) {
 		 System.out.println(seq);
@@ -170,5 +185,6 @@ public class MemberController {
 		 mav.setViewName("/member/cardBoardView");
 		 return mav;
 	 }
+	 
 	 
 }

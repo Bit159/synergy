@@ -6,9 +6,13 @@
 		insert into cardboard(seq,title,nickname,topic,location,people,content,open,registDate) 
 		values((select *from (select max(seq)+1 from cardboard) next),#{title},#{nickname},#{topic},#{location},#{people},#{content},default,now())
 	</insert>
-	<select id="getCardBoardList" resultType="card">
-		select * from cardboard order by seq desc
+	<select id="getCardBoardList" parameterType="paging" resultType="card">
+		select * from cardboard order by seq desc limit #{startList},#{listSize};
 	</select>
+	<select id="getBoardListCnt" resultType="int">
+		SELECT count(*) as listCnt FROM cardboard
+	</select>
+
 	<select id="getLocationList" parameterType="String" resultType="String">
 		select substring_index(location,' ',-1) from addr where location like concat(#{location},'%')
 	</select>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import cardBoard.bean.CardBoardDTO;
+import cardBoard.bean.CardBoardPaging;
 import member.bean.MemberDTO;
 
 @Repository
@@ -32,8 +33,8 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	}
 
 	@Override
-	public List<CardBoardDTO> getCardBoardList() {
-		return sqlSession.selectList("cardBoardSQL.getCardBoardList");
+	public List<CardBoardDTO> getCardBoardList(CardBoardPaging paging) {
+		return sqlSession.selectList("cardBoardSQL.getCardBoardList",paging);
 	}
 	@Override
 	public List<String> getLocationList(String location) {
@@ -54,6 +55,11 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	@Override
 	public CardBoardDTO getCardContent(int seq) {
 		return sqlSession.selectOne("cardBoardSQL.getCardContent",seq);
+	}
+
+	@Override
+	public int getBoardListCnt() {
+		return sqlSession.selectOne("cardBoardSQL.getBoardListCnt");
 	}
 
 }

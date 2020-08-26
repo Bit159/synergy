@@ -1,16 +1,14 @@
 package cardBoard.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cardBoard.bean.CardBoardDTO;
+import cardBoard.bean.CardBoardPaging;
 import cardBoard.dao.CardBoardDAO;
-import member.bean.MemberDTO;
-import member.dao.MemberDAO;
 
 @Service
 public class CardBoardServiceImpl implements CardBoardService {
@@ -23,8 +21,8 @@ public class CardBoardServiceImpl implements CardBoardService {
 		 cardBoardDAO.regist(groupDTO);
 	}
 	@Override
-	public List<CardBoardDTO> getCardBoardList() {
-		return cardBoardDAO.getCardBoardList();
+	public List<CardBoardDTO> getCardBoardList(CardBoardPaging paging) {
+		return cardBoardDAO.getCardBoardList(paging);
 	}
 	@Override
 	public List<String> getLocationList(String location) {
@@ -41,6 +39,10 @@ public class CardBoardServiceImpl implements CardBoardService {
 	@Override
 	public CardBoardDTO getCardContent(int seq) {
 		return cardBoardDAO.getCardContent(seq);
+	}
+	@Override
+	public int getBoardListCnt() {
+		return cardBoardDAO.getBoardListCnt();
 	}
 	
 }

@@ -44,7 +44,6 @@
 	        	선택한 지역:
 	        	</div>
         	</div>
-        	<br>
         	<div class="selectTopic">
         		<h1>주제 선택</h1>
         		<div id="selectTopic">
@@ -103,6 +102,21 @@
 	        </c:forEach>
         </div>
         </form>
+        <!-- pagination{s} -->
+		<div id="paginationBox">
+			<ul class="pagination">
+				<c:if test="${paging.prev}">
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}')">〈</a></li>
+				</c:if>
+				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="idx">
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}')"> ${idx} </a></li>
+				</c:forEach>
+				<c:if test="${paging.next}">
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}')" >〉</a></li>
+				</c:if>
+			</ul>
+		</div>
+		<!-- pagination{e} -->
     </div>
     <jsp:include page="../template/footer.jsp"></jsp:include>
     </div>
@@ -114,7 +128,7 @@
 	let gu='';
 	let sigu='';
 	let count=0;
-	let locations = new Array();
+	let locations = [];
 	$(document).ready(function(){
 		$.ajax({
 			type:'get',
@@ -170,7 +184,6 @@
 		}else alert('최대 3개까지 선택할 수 있습니다.')
 	});
 	$('#searchCardBtn').click(function(){
-		console.log(locations);
 		$.ajax({
 			type:'get',
 			url:'/synergy-kh/member/searchCard',
@@ -182,6 +195,8 @@
 				$.each(data, function(i,item){
 					/* foreach문 안에 있는 코드 그대로.. */
 					$('.cardboard').append("<a href=/synergy-kh/member/cardBoardView?seq="+item.seq+"><div class=card><div class=card-header><div class=card-header-content><div class=card-header-text>모집중</div><div class=card-header-count>1 /"+item.people+"</div></div></div><div class=card-body><div class=card-body-content><h1 class=card-body-title>"+item.title+"</h1><p class=card-body-nickname>작성자: "+item.nickname+"</p><p class=card-body-location>지역: "+item.location+"</p></div></div><div class=card-footer></div></div></a>");
+					
+					
 				});
 			},
 			error:function(){
@@ -189,6 +204,32 @@
 			}
 		});
 	});
+	
+	//이전 버튼 이벤트
+	function fn_prev(page, range, rangeSize) {
+			var page = ((range - 2) * rangeSize) + 1;
+			var range = range - 1;
+			var url = "${pageContext.request.contextPath}/member/cardBoardList";
+			url = url + "?pg=" + page;
+			url = url + "&range=" + range;
+			location.href = url;
+		}
+    //페이지 번호 클릭
+	function fn_pagination(page, range, rangeSize) {
+		var url = "${pageContext.request.contextPath}/member/cardBoardList";
+		url = url + "?pg=" + page;
+		url = url + "&range=" + range;
+		location.href = url;	
+	}
+	//다음 버튼 이벤트
+	function fn_next(page, range, rangeSize) {
+		var page = parseInt((range * rangeSize)) + 1;
+		var range = parseInt(range) + 1;
+		var url = "${pageContext.request.contextPath}/member/cardBoardList";
+		url = url + "?pg=" + page;
+		url = url + "&range=" + range;
+		location.href = url;
+	}
 	</script>
 </body>
 </html>

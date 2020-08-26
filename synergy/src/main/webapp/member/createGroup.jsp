@@ -63,7 +63,6 @@
             </div>
         </div>
     </div>
-
     </form>
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </body>
@@ -104,6 +103,5 @@
 		$('#title').keyup(function(){ 
 			if ($(this).val().length > $(this).attr('maxlength')) { 
 				alert('최대 13글자 까지 입력가능합니다'); $(this).val($(this).val().substr(0, $(this).attr('maxlength'))); } }); });
-
 </script>
 </html>
