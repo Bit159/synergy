@@ -28,7 +28,7 @@
 	</delete>
 	
 	<delete id="deleteMatch" parameterType="matchDTO">
-		DELETE FROM db.match WHERE `username`=#{username} and `x`=#{x} and `y`=#{y} and `range`=#{range} and `time1`=#{time1} and `time2`=#{time2} and `time3`=#{time3} and `topic1`=#{topic1} and `topic2`=#{topic2} and `topic3`=#{topic3} and `career`=#{career} and `people`=#{people}	
+		DELETE FROM db.match WHERE `username`=#{username} and `x`=#{x} and `y`=#{y} and `range`=#{range} and `career`=#{career} and `people`=#{people}	
 	</delete>
 	
 	<!-- End of FOR MAP -->

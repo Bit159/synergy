@@ -1,9 +1,58 @@
-document.querySelectorAll("button.wishdelete").forEach((e) => {
-    e.addEventListener("click", function () {
-      if (confirm("정말 삭제하시겠습니까?"))
-       this.parentElement.remove();
-    });
+document.querySelectorAll("button.wishdelete").forEach( (e) => {
+    e.addEventListener("click", ()=>removeWish(e));
   });
+
+/* 위시 제거 펑션 */ 
+function removeWish(btn) {
+	if(!confirm('정말 삭제하시겠습니까?')) return;
+	console.log(btn);
+	let ob = new Object();
+	ob.x = btn.parentElement.children[0].value;
+	ob.y = btn.parentElement.children[1].value;
+	ob.range = btn.parentElement.children[2].value;
+	let ar = btn.parentElement.children[3].value.split('   ');
+	ob.topic1 = ar[0];
+	ob.topic2 = ar[1];
+	ob.topic3 = ar[2];
+	ar = btn.parentElement.children[4].value.split('   ');
+	ob.time1 = ar[0];
+	ob.time2 = ar[1];
+	ob.time3 = ar[2];
+	console.log(btn.parentElement.children[5].value);
+	switch(btn.parentElement.children[5].value) {
+		case '무관': ob.career = 0; break;
+		case '0~2년': ob.career = 2; break;
+		case '3~5년': ob.career = 5; break;
+		case '5년 이상': ob.career = 6; break;
+		case '10년 이상': ob.career = 10; break;
+	}
+	switch(btn.parentElement.children[6].value) {
+		case '무관': ob.people = 0; break;
+		case '3명': ob.people = 3; break;
+		case '4~6명': ob.people = 4; break;
+		case '7~9명': ob.people = 7; break;
+		case '10명  이상': ob.people = 10; break;
+	}
+	console.log(ob)
+	let url = "/delete_match";
+	let options = {
+		method: "POST",
+		headers: {
+			"X-CSRF-TOKEN": document.getElementById('csrf').content,
+			Accept: "application/json",
+			"Content-Type": "application/json; charset=utf-8",
+		},
+		body: JSON.stringify(ob),
+	};
+	
+	fetch(url, options).then((res) => res.json().then( (json)=> {
+		if(json.x === ob.x)	btn.parentElement.remove();
+		else alert('삭제 도중 오류가 발생하였습니다');
+		}));
+
+}
+
+
 
 
 
@@ -34,6 +83,10 @@ let theme_array = new Array();
 let career_array = new Array();
 let people_array = new Array();
 let location_array = new Array();
+
+
+
+
 
 //열기 닫기 추가
 document.getElementById("time_selection").addEventListener("click", () => {

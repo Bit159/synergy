@@ -337,21 +337,21 @@ function getTimeHTML(distance) {
   bycicleMin = '<span class="number">' + (bycicleTime % 60) + "</span>분";
 
   // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
-  var content = '<ul class="info">';
-  content += "    <li>";
-  content +=
-    '        <span class="label">총거리</span><span class="number">' +
-    distance +
-    "</span>m";
-  content += "    </li>";
-  content += "    <li>";
-  content += '        <span class="label">도보</span>' + walkHour + walkMin;
-  content += "    </li>";
-  content += "    <li>";
-  content +=
-    '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
-  content += "    </li>";
-  content += "</ul>";
+		  var content = '<ul class="info">';
+		  content += "    <li>";
+		  content +=
+		    '        <span class="label">총거리</span><span class="number">' +
+		    distance +
+		    "</span>m";
+		  content += "    </li>";
+		  content += "    <li>";
+		  content += '        <span class="label">도보</span>' + walkHour + walkMin;
+		  content += "    </li>";
+		  content += "    <li>";
+		  content +=
+		    '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
+		  content += "    </li>";
+		  content += "</ul>";
 
   return content;
 }

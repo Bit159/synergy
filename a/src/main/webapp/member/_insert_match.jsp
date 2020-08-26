@@ -18,7 +18,7 @@
 	<input type="hidden" id="y" />
 	<input type="hidden" id="range" />
 	<div id="wrap">
-	<h1>제에목 여기다</h1>
+	<h1>나의 매칭 관리</h1>
 		<div id="msg"></div>
 		<div id="option_boss">
 			<div id="location">
@@ -132,9 +132,11 @@
 				<c:forEach var="dto" items="${list}" >
 					<li class="wishes">
 						<input class="wishlist_area" type="text" value="${dto.x}" readonly /> 
+						<input type="hidden" value="${dto.y}" readonly /> 
+						<input type="hidden" value="${dto.range}" readonly /> 
 						<input class="wishlist_time" type="text" value="${dto.time1}  ${dto.time2}  ${dto.time3}" readonly /> 
-						<input	class="wishlist_topic" type="text" value="${dto.topic1}  ${dto.topic2}  ${dto.topic3}" readonly /> 
-						<input	class="wishlist_career" type="text"	value="<c:choose><c:when test="${dto.career eq 0 }">무관</c:when><c:when test="${dto.career eq 2 }">0~2년</c:when><c:when test="${dto.career eq 5 }">3~5년 </c:when><c:when test="${dto.career eq 6 }">5년 이상</c:when><c:when test="${dto.career eq 10 }">10년  이상</c:when></c:choose>" readonly />
+						<input class="wishlist_topic" type="text" value="${dto.topic1}  ${dto.topic2}  ${dto.topic3}" readonly /> 
+						<input class="wishlist_career" type="text"	value="<c:choose><c:when test="${dto.career eq 0 }">무관</c:when><c:when test="${dto.career eq 2 }">0~2년</c:when><c:when test="${dto.career eq 5 }">3~5년</c:when><c:when test="${dto.career eq 6 }">5년 이상</c:when><c:when test="${dto.career eq 10 }">10년  이상</c:when></c:choose>" readonly />
 						<input class="wishlist_people" type="text" value="<c:choose><c:when test="${dto.people eq 0 }">무관</c:when><c:when test="${dto.people eq 3 }">3명</c:when><c:when test="${dto.people eq 4 }">4~6명</c:when><c:when test="${dto.people eq 7 }">7~9명</c:when><c:when test="${dto.people eq 10 }">10명  이상</c:when></c:choose>" readonly />
 						<button type="button" class="wishdelete">삭제</button>
 					</li>

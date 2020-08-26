@@ -98,6 +98,7 @@ public class HomeController {
 	//매칭 위시 삭제
 	@PostMapping(path="/delete_match", produces="application/json;charset=UTF-8")
 	public @ResponseBody JSONObject deleteMatch(@RequestBody JSONObject json, @Autowired MatchDTO matchDTO) {
+		System.out.println(json);
 		matchDTO.setUsername("jpcnani@naver.com");
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
