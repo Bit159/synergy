@@ -143,11 +143,11 @@ div[class="reply_button"]{
 	
 	
 }
-button[class="replyBtn1"]{
+button[class="modifyBtn"]{
 	width: 50%;
 	
 }
-button[class="replyBtn2"]{
+button[class="deleteBtn"]{
 	width: 50%;
 }
 div[class="reply_writer_wrapper"]{

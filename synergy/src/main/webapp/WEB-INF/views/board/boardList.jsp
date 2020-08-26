@@ -52,20 +52,20 @@
             </div>
             
             <ul class="pagination"> 
-    			<li><a href="/synergy/board/getBoard?nowpage=0&searchOption=${searchOption}&keyword=${keyword}">&lt;&lt;</a></li> 
+    			<li><a href="/synergy/board/getCBoard?nowpage=0&searchOption=${searchOption}&keyword=${keyword}">&lt;&lt;</a></li> 
        			<!--현재 페이지가 0보다 작아질 경우 이전 버튼을 disabled하는 조건문 --> 
        				<c:choose> 
        					<c:when test="${nowpage <= 0}"> 
        						<li class="disabled"><a href="#">&lt;</a></li> 
        					</c:when> 
-      						<c:otherwise> 
-      							<li><a href="/synergy/all/getAdminBoard?nowpage=${nowpage-1}&searchOption=${searchOption}&keyword=${keyword}">&lt;</a></li> 
-      						</c:otherwise> 
+ 						<c:otherwise> 
+ 							<li><a href="/synergy/board/getCBoard?nowpage=${nowpage-1}&searchOption=${searchOption}&keyword=${keyword}">&lt;</a></li> 
+ 						</c:otherwise> 
        				</c:choose> 
        				<!--해당하는 페이지로 갈 수 있는 버튼 --> 
        					<c:forEach var="i" begin="0" end="${totalpage}">
  									
-								 <li><a href="/synergy/all/getAdminBoard?nowpage=${i}&searchOption=${searchOption}&keyword=${keyword}">${i+1}</a></li> 									
+								 <li><a href="/synergy/board/getCBoard?nowpage=${i}&searchOption=${searchOption}&keyword=${keyword}">${i+1}</a></li> 									
        						 
        					</c:forEach>
        							<%-- <li><a href="/synergy/all/getAdminBoard?nowpage=${i}&searchOption=${searchOption}&keyword=${keyword}">${i+1}</a></li> --%>  		
@@ -75,17 +75,17 @@
        							<li class="disabled"><a href="#">&gt;</a></li> 
        					</c:when> 
        						<c:otherwise> 
-       							<li><a href="/synergy/all/getAdminBoard?nowpage=${nowpage+1}&searchOption=${searchOption}&keyword=${keyword}">&gt;</a></li> 
+       							<li><a href="/synergy/board/getCBoard?nowpage=${nowpage+1}&searchOption=${searchOption}&keyword=${keyword}">&gt;</a></li> 
        						</c:otherwise> 
     		   			</c:choose> 
-       							<li><a href="/synergy/all/getAdminBoard?nowpage=${totalpage}&searchOption=${searchOption}&keyword=${keyword}">&gt;&gt;</a></li> 
+       							<li><a href="/synergy/board/getCBoard?nowpage=${totalpage}&searchOption=${searchOption}&keyword=${keyword}">&gt;&gt;</a></li> 
        		</ul>
         		
         		<div class="searchDiv">
-	           <form action="/synergy/all/getAdminBoard" method="get">
+	           <form action="/synergy/board/getCBoard" method="get">
 		            <select name="searchOption" id="searchOption">
-		            	<option value="username">아이디</option>
-		            	<option value="nickname">닉네임</option>
+		            	<option value="title">제목</option>
+		            	<option value="nickname">작성자</option>
 		            </select>
 		            <input type="text" name="keyword" id="keyword">
 		            <input type="submit" id="searchBtn" value="검색">

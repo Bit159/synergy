@@ -4,9 +4,11 @@ $(document).ready(function(){
 		var reply = $("#reply_writer_text").val();
 		var bno = document.querySelector('div.view_bno').innerText;
 		var param = "reply="+reply+"&bno="+bno;
+		var header = '${_csrf.header}'; 
+		var token = '${_csrf.token}';		
 		
 		$.ajax({
-			type: "get",
+			type: "post",
 			url: "/synergy/board/boardReply",
 			data: param, /*{'reply':reply,'bno':bno}*/
 			dataType: 'json',
@@ -31,7 +33,7 @@ $(document).ready(function(){
 					    '</div><div class="reply">'
 					    +reply+
 					    '</div><div class="reply_button">'
-					    +'<button type="button" class="replyBtn1">수정</button><button type="button" class="replyBtn2">삭제</button>'+
+					    +'<button type="button" class="modifyBtn">수정</button><button type="button" class="deleteBtn" data-rno="${ replydto.rno }">삭제</button>'+
 					    '</div></li>';
 				
 				let b = document.querySelector('ul.reply_group');
@@ -45,8 +47,57 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
 	//댓글 삭제
-	$("button .replyBtn2").click(function(){
-		var rno = document.querySelector('button.replyBtn2').parentElement.parentElement.children[0].value;
+	$(".deleteBtn").on("click", function(){
+		var $btnObj = $(this);
+		let rno = $(this).data('rno') // data-rno
+		
+		var param = "rno="+rno;
+		let result = confirm("정말 삭제하시겠습니까?");
+		if(result){
+			$.ajax({
+				type: 'get',
+				url: '/synergy/board/replyDelete',
+				data: param,
+				success: function(data){
+					$btnObj.parent().parent().remove();
+				},
+				error: function(err){
+					console.log(err);	
+				}
+			});
+		}
+		
+		/*
+		let a = document.querySelectorAll('button .deleteBtn');
+		let rno;
+		
+		for(let i = 0; i<a.length; i++){
+			rno = a[i].parentElement.parentElement.children[0].value;
+		}
+		
+		var param = "rno="+rno;
+		
+		a[i].addEventListener('click', ()=> {
+			let result = confirm("정말 삭제하시겠습니까?");
+			
+			if(result){
+				$.ajax({
+					type: 'get',
+					url: '/synergy/board/replyDelete',
+					data: param,
+					success: function(data){
+						alert("삭제 성공");
+						a[i].parentElement.parentElement.remove();
+					},
+					error: function(err){
+						console.log(err);	
+					}
+				});
+				
+			}
+		});
+		*/
 	});
 });

@@ -21,6 +21,10 @@ public interface BoardDAO {
 	public void boardReply(Map<String, Object> map);
 
 	public void hitUpdate(int bno);
+
+	public void replyDelete(int rno);
+
+	public void replyWrite(String text);
 	
 	
 }

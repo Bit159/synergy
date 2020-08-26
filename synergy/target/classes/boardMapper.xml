@@ -47,7 +47,7 @@
   		<!-- begin -->
   			insert into db.reply (bno, reply, nickname, replydate, updatedate) values(#{bno}, #{reply}, #{nickname}, #{now}, #{now});
   			
-  			<!-- update db.cboard set reply=reply+1 where bno=#{bno}; -->
+  			<!-- update db.cb+\+\-oard set reply=reply+1 where bno=#{bno}; -->
   		<!-- end; -->
   	</insert>	
   	<!-- 크롤링 보드 댓글 생성 -->
@@ -57,5 +57,12 @@
   		update db.cboard set hit=hit+1 where bno=#{bno}
   	</update>
   	<!-- 조회수 증가 -->
+  	
+  	<!-- 크롤링 보드 댓글 삭제 -->
+  	<delete id="replyDelete" parameterType="int">
+  		delete from db.reply where rno=#{rno}
+  	</delete>
+  	<!-- 크롤링 보드 댓글 삭제 -->
+  	
   	
   </mapper>

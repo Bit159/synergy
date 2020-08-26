@@ -59,4 +59,15 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.update("boardSQL.hitUpdate", bno);
 	}
 
+	@Override
+	public void replyDelete(int rno) {
+		System.out.println("---- rno : " + rno);
+		sqlSession.delete("boardSQL.replyDelete", rno);
+	}
+
+	@Override
+	public void replyWrite(String text) {
+		sqlSession.insert("boardSQL.replyWrite", text);
+	}
+
 }

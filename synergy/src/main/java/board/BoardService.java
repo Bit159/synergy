@@ -21,4 +21,8 @@ public interface BoardService {
 
 	public void hitUpdate(int bno);
 
+	public void replyDelete(int rno);
+
+	public void replyWrite(String text);
+
 }

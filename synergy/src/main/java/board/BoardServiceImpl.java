@@ -80,4 +80,15 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.hitUpdate(bno);
 	}
 
+	@Override
+	public void replyDelete(int rno) {
+		boardDAO.replyDelete(rno);
+		
+	}
+
+	@Override
+	public void replyWrite(String text) {
+		boardDAO.replyWrite(text);
+	}
+
 }

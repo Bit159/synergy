@@ -101,7 +101,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
-	@GetMapping(path="/board/boardReply")
+	@PostMapping(path="/board/boardReply")
 	public ModelAndView boardReply(@RequestParam String reply, int bno, HttpSession session) {
 		System.out.println("reply:"+reply+" bno:"+bno);
 		/* String nickname = (String) session.getAttribute("nickname"); */
@@ -110,6 +110,7 @@ public class BoardController {
 		List<CBoardReplyDTO> replyList = boardService.getCBoardReplyList(bno);
 		System.out.println("replyList:"+replyList);
 		Date now = new Date();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bno",bno);
 		map.put("reply", reply);
@@ -122,5 +123,29 @@ public class BoardController {
 		return mav;
 	}
 	
+	@GetMapping("/board/replyDelete")
+	public ModelAndView replyDelete(@RequestParam int rno, HttpSession session) {
+		System.out.println("rno="+rno);
+		/* String nickname = (String) session.getAttribute("nickname"); */
+		boardService.replyDelete(rno);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/boardView");
+		return mav;
+	}
 	
+	@PostMapping("/board/replyWrite") 
+	public ModelAndView replyWrite(@RequestParam String reply_writer_text, int bno, HttpSession session) {
+		System.out.println(reply_writer_text);
+		System.out.println(bno);
+		String text = reply_writer_text;
+		boardService.replyWrite(text);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/boardView");
+		return mav;
+	}
+	 
+	
+	/*
+	 * @GetMapping("/board/getCBoard") public ModelAndView getCBoard()
+	 */
 }
