@@ -66,8 +66,13 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void replyWrite(String text) {
-		sqlSession.insert("boardSQL.replyWrite", text);
+	public void replyWrite(Map map) {
+		sqlSession.insert("boardSQL.replyWrite", map);
+	}
+
+	@Override
+	public void replyModify(Map<String, Object> map) {
+		sqlSession.update("boardSQL.replyModify", map);
 	}
 
 }

@@ -123,7 +123,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	@GetMapping("/board/replyDelete")
+	@PostMapping("/board/replyDelete")
 	public ModelAndView replyDelete(@RequestParam int rno, HttpSession session) {
 		System.out.println("rno="+rno);
 		/* String nickname = (String) session.getAttribute("nickname"); */
@@ -138,14 +138,30 @@ public class BoardController {
 		System.out.println(reply_writer_text);
 		System.out.println(bno);
 		String text = reply_writer_text;
-		boardService.replyWrite(text);
+		String nickname = "nickname";
+		Date now = new Date();
+		
+		Map map = new HashMap();
+		map.put("text",text);
+		map.put("bno",bno);
+		map.put("nickname", nickname);
+		map.put("now", now);
+		boardService.replyWrite(map);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/boardView");
 		return mav;
 	}
-	 
 	
-	/*
-	 * @GetMapping("/board/getCBoard") public ModelAndView getCBoard()
-	 */
+	@PostMapping("/board/replyModify")
+	public ModelAndView replyModify(@RequestParam String reply, int rno, HttpSession session) {
+		System.out.println(rno);
+		/* String nickname = (String) session.getAttribute("nickname"); */
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bno",rno);
+		map.put("reply", reply);
+		boardService.replyModify(map);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/boardView");
+		return mav;
+	}
 }

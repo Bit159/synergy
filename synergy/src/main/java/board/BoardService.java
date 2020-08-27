@@ -23,6 +23,8 @@ public interface BoardService {
 
 	public void replyDelete(int rno);
 
-	public void replyWrite(String text);
+	public void replyWrite(Map map);
+
+	public void replyModify(Map<String, Object> map);
 
 }

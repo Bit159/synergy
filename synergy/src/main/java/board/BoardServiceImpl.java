@@ -87,8 +87,14 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void replyWrite(String text) {
-		boardDAO.replyWrite(text);
+	public void replyWrite(Map map) {
+		boardDAO.replyWrite(map);
+		
+	}
+
+	@Override
+	public void replyModify(Map<String, Object> map) {
+		boardDAO.replyModify(map);
 	}
 
 }

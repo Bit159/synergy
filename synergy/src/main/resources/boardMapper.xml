@@ -47,7 +47,7 @@
   		<!-- begin -->
   			insert into db.reply (bno, reply, nickname, replydate, updatedate) values(#{bno}, #{reply}, #{nickname}, #{now}, #{now});
   			
-  			<!-- update db.cb+\+\-oard set reply=reply+1 where bno=#{bno}; -->
+  			<!-- update db.cboard set reply=reply+1 where bno=#{bno}; -->
   		<!-- end; -->
   	</insert>	
   	<!-- 크롤링 보드 댓글 생성 -->
@@ -64,5 +64,16 @@
   	</delete>
   	<!-- 크롤링 보드 댓글 삭제 -->
   	
+  	<!-- 크롤링 보드 댓글 생성 -->
+  	<insert id="replyWrite" parameterType="java.util.Map" >
+  		insert into db.reply (bno, reply, nickname, replydate, updatedate) values(#{bno}, #{reply}, #{nickname}, #{now}, #{now});
+  	</insert>
+  	<!-- 크롤링 보드 댓글 생성 -->
+  	
+  	<!--  크롤링 보드 댓글 수정 -->
+  	<update id="replyModify" parameterType="java.util.Map">
+  		update db.reply set reply = #{reply} where rno = #{rno}
+  	</update>
+  	<!--  크롤링 보드 댓글 수정 -->
   	
   </mapper>

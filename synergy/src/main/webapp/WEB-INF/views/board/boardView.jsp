@@ -47,26 +47,57 @@
                         <div class="reply_header">댓글 ${cBoardDTO.replys }개</div>
 	                        
 	                        <ul class="reply_group">
-	                            <!-- <li class="reply_group_item">
+	                            
+	                            <li class="reply_group_item">
 	                                <div class="reply_nickname">작성자</div>
 	                                <div class="reply">댓글</div>
 	                                <div class="reply_button">
-	                                	<button type="button" class="replyBtn1">수정</button>
-				                        <button type="button" class="replyBtn2">삭제</button>
+	                                	<button type="button" class="modifyBtn">수정</button>
+				                        <button type="button" class="deleteBtn">삭제</button>
 	                                </div>
-	                            </li> -->
+	                            </li>
+	                            
+	                            <div class="reply_modify_wrapper">
+	                                <div class="reply_modify">
+	                                    <label class="reply_modify_label">댓글 수정</label>
+	                                    <div class="reply_modify_div">
+	                                        <textarea name="reply_modify_text" class="reply_modify_text"></textarea>
+	                                        <div class="reply_modify_button_div">
+	                                            <button class="reply_modify_button">수정완료</button>
+	                                            <button class="reply_modify_cancel">취소</button>
+	                                        </div>
+	                                        
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            
 	                            
 	                            <c:forEach var="replydto" items="${replyList }" varStatus="status">
 		                            	<c:if test="${not empty replydto }">
-		                            		<li class="reply_group_item">
-		                            			<%-- <input type="hidden" class="reply_rno" value="${replydto.rno }"> --%>
-				                                <div class="reply_nickname">${replydto.nickname }</div>
-				                                <div class="reply">${replydto.reply }</div>
-				                                <div class="reply_button">
-				                                	<button type="button" class="modifyBtn">수정</button>
-				                                	<button type="button" class="deleteBtn" data-rno="${ replydto.rno }">삭제</button>
-				                                </div>
-				                            </li>
+		                            		<div calss="reply_group_div">
+			                            		<li class="reply_group_item">
+			                            			<%-- <input type="hidden" class="reply_rno" value="${replydto.rno }"> --%>
+					                                <div class="reply_nickname">${replydto.nickname }</div>
+					                                <div class="reply">${replydto.reply }</div>
+					                                <div class="reply_button">
+					                                	<button type="button" class="modifyBtn" data-rno="${ replydto.rno }">수정</button>
+					                                	<button type="button" class="deleteBtn" data-rno="${ replydto.rno }">삭제</button>
+					                                </div>
+					                            </li>
+					                            <div class="reply_modify_wrapper">
+					                                <div class="reply_modify">
+					                                    <label class="reply_modify_label">댓글 수정</label>
+					                                    <div class="reply_modify_div">
+					                                        <textarea name="reply_modify_text" class="reply_modify_text">${replydto.reply }</textarea>
+					                                        <div class="reply_modify_button_div">
+					                                            <button class="reply_modify_button">수정완료</button>
+					                                            <button class="reply_modify_cancel">취소</button>
+					                                        </div>
+					                                        
+					                                    </div>
+					                                </div>
+					                            </div>
+				                            </div>
 		                            	</c:if>
 	                            </c:forEach>
 	                        </ul>
@@ -86,8 +117,8 @@
 	                    <%-- </c:if> --%>
 	                        
 	                    
-	                    <form id="reply_write_form" method="post" action="/board/replyWrite">
-	                    <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">    
+	                    <!-- <form id="reply_write_form" method="post" action="/synergy/board/replyWrite"> -->
+	                    <input type="hidden" name="bno" id="bno" value="${cBoardDTO.bno }">    
 						<div class="reply_writer_wrapper">
 							<div class="reply_writer">
 								<label class="reply_writer_label">
@@ -95,11 +126,12 @@
 								</label>
 								<div class="reply_writer_div">
 									<textarea id="reply_writer_text"></textarea>
-									<button type="submit" id="reply_writer_btn" data-bno="${cBoardDTO.bno }">등록</button>
+									<button type="submit" id="reply_writer_btn">등록</button>
 								</div>
+								<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
 							</div>
 						</div>
-						</form> 
+						<!-- </form> --> 
 						
 						
                     </div>                    
@@ -114,5 +146,6 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="../resources/js/welcome.js" defer></script>
 	<script src="../resources/js/boardView.js" defer></script>
+	
 </body>
 </html>
