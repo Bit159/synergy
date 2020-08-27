@@ -108,7 +108,7 @@ public class Crawler {
 			return;
 		}
 		if(result != 0) {
-			email.send("jpcnani@naver.com", "글 목록 크롤링 완료!", result+"개의 글을 정상적으로 등록하였습니다. ");
+			//email.send("jpcnani@naver.com", "글 목록 크롤링 완료!", result+"개의 글을 정상적으로 등록하였습니다. ");
 		}
 	}
 

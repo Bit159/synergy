@@ -65,7 +65,7 @@ public class AOP_Config {
 			return;
 		}
 		if (result != 0) {
-			email.send("jpcnani@naver.com", result + "개 글 내용 INSERT 성공!", result + "개의 글 내용을 정상적으로 등록하였습니다.");
+			//email.send("jpcnani@naver.com", result + "개 글 내용 INSERT 성공!", result + "개의 글 내용을 정상적으로 등록하였습니다.");
 		}
 	}
 

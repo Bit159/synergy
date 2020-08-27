@@ -11,6 +11,7 @@
 <link rel="shortcut icon" href="/resources/image/symbol.png">
 <meta id="csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
 <meta id="csrf" name="_csrf" content="${_csrf.token}" />
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41be22a5170d5fc6115853c77dc3d45e"></script>
 </head>
 <body>
 	<%@ include file="/template/header.jsp"%>
@@ -143,20 +144,6 @@
 				</c:forEach>
 			</ul>
 		</div>
-<!-- 
-	switch(career_array[0]){
-		case "무관": ob.career = 0; break;
-		case "0~2년": ob.career = 2; break;
-		case "3~5년": ob.career = 5; break;
-		case "5년 이상": ob.career = 6; break;
-		case "10년 이상": ob.career = 10; break; 
-	}
- -->
-
-
-
-		<!-- End of Wish List Div -->
-
 	</div>
 	<!--End of Body Wrapper-->
 	<%@ include file="/template/footer.jsp"%>

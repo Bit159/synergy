@@ -28,7 +28,6 @@ public class HomeController {
 	private UserDAO userDAO;
 	
 	@GetMapping("/")public String home(Locale locale, Model model) {
-		System.out.println(userDAO.getListFromMatch());
 		return "/all/welcome"; 
 	}
 	@GetMapping("/info") public String info() { return "/WEB-INF/views/all/info"; }
