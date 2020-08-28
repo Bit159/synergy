@@ -5,43 +5,246 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>채팅룸 리스트</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyPage</title>
 <style type="text/css">
-.content{
-    width: 1024px;
-    display: grid;
-    grid-template-columns: 3fr 7fr;
-}
+	* {
+	    margin: 0;
+	    padding: 0;
+	}
+	
+	body {
+	    font-size: 11px;
+	    
+	}
+	
+	.chat_list_wrap {
+	    list-style: none;
+	    width: 400px;
+	    height : 600px;
+	    background-color: white;
 
-div{
-	border : 1px solid black;
-}
+	}
+	
+	.chat_list_wrap .header {
+	    font-size: 14px;
+	    padding: 15px 0;
+	    background: #32be78;
+	    color: white;
+	    text-align: center;
+	    font-family: "Josefin Sans", sans-serif;
+	}
+	
+	.chat_list_wrap .search {
+	    background: #eee;
+	    padding: 5px;
+	}
+	
+	.chat_list_wrap .search input[type="text"] {
+	    width: 100%;
+	    border-radius: 4px;
+	    padding: 5px 0;
+	    border: 0;
+	    text-align: center;
+	}
+	
+	.chat_list_wrap .list {
+	    padding: 0 16px;
+	}
+	
+	.chat_list_wrap .list ul {
+	    width: 100%;
+	    list-style: none;
+	    margin-top: 3px;
+	}
+	
+	.chat_list_wrap .list ul li {
+	    padding-top: 10px;
+	    padding-bottom: 10px;
+	    border-bottom: 1px solid #e5e5e5;
+	}
+	
+	.chat_list_wrap .list ul li table {
+	    width: 100%;
+	    background-color: white;
+	}
+	
+	.chat_list_wrap .list ul li table td.profile_td {
+	    width: 50px;
+	    padding-right: 11px;
+	}
+	
+	.chat_list_wrap .list ul li table td.profile_td img {
+	    width: 50px;
+	    height: auto;
+	}
+	
+	.chat_list_wrap .list ul li table td.chat_td .email {
+	    font-size: 12px;
+	    font-weight: bold;
+	}
+	
+	.chat_list_wrap .list ul li table td.time_td {
+	    width: 90px;
+	    text-align: center;
+	}
+	
+	.chat_list_wrap .list ul li table td.time_td .time {
+	    padding-bottom: 4px;
+	}
+	
+	.chat_list_wrap .list ul li table td.time_td .check p {
+	    width: 5px;
+	    height: 5px;
+	    margin: 0 auto;
+	    -webkit-border-radius: 50%;
+	    -moz-border-radius: 50%;
+	    border-radius: 50%;
+	    background: #e51c23;
+	}
+	
+	li{
+	    cursor: pointer;
+	}
+	
+	<%-- ========================= 채팅방 css ========================= --%>
+	
+	#chatWrap{
+        width :400px;
+        top : 100px;
+        border : 1px solid #ddd;
+        background-color: white;
+    }
+
+    #chatHeader{
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        font-size: 25px;
+        font-weight: 900;
+        border-bottom: 1px solid #ddd;
+        background-color: #32be78;
+    }
+
+    #messages{
+        height: 500px;
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    .myMessage{
+        text-align: right;
+    }
+
+    .otherMessage{
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .message{
+        display: inline-block;
+        border-radius: 15px;
+        padding : 7px 15px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+
+    .otherMessage > .message{
+        background-color: #f1f0f0;
+    }
+
+    .myMessage > .message{
+        background-color: #32be78;
+    }
+
+    .otherName{
+        font-size: 12px;
+        display: block;
+    }
+
+    #messageForm{
+        display: block;
+        width:  100%;
+        height: 50px;
+        border-top: 2px solid #f0f0f0;
+    }
+
+    #messageInput{
+        width: 80%;
+        height: calc(100% - 1px);
+        border : none;
+        padding-bottom : 0;
+    }
+
+    #messageInput:focus{
+        outline: none;
+    }
+
+    #messageForm > input[type=button]{
+        outline: none;
+        border : none;
+        background :none;
+        color : #32be78;
+        font-size: 17px;
+        cursor: pointer;
+    }
 </style>
-<script defer type="text/javascript" src="/resources/js/chattingList.js"></script>
 </head>
 <body>
 <sec:authentication property="principal.username" var="username"/>
-<%-- <jsp:include page="../template/header.jsp"/> --%>
-<div class="wrapDiv" align="center">
-    <div class="content">
-        <div id="roomList">
-            <div>채팅방 리스트</div>
-            <div id="chattingRoom" onclick="getChatting(chattingRoom);connect();">전체 채팅방</div>
-        </div>
-        
-        <div id="room">
-            <div>채팅방 영역</div>
-            <div id="messages"><img id="home" src="/resources/image/home.jpg"></div>
-        </div>
+<div class="chat_list_wrap" id="chat_list_wrap">
+    <div class="header">
+        Synergy
     </div>
-    <div>
-    	<input type="text" size="100" id="messageInput">
-    	<input type="button" value="보내기" id="sendBtn">
-    	<input type="hidden" value="${username }" id="sender">
+    <div class="search">
+        <input type="text" placeholder="이메일 검색" />
+    </div>
+    <div class="list">
+        <ul id="chattingRoomList">
+            <li id="chattingRoom" class="chattingRoom" onclick="getChatting(chattingRoom);connect();">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="profile_td">
+                            <img src="/resources/image/chatting.png" />
+                        </td>
+                        <td class="chat_td">
+                            <div class="email">
+                                byungjoo3011@naver.com
+                            </div>
+                            <div class="chat_preview">
+                               	 안녕하세요~
+                            </div>
+                        </td>
+                        <td class="time_td">
+                            <div class="time">
+                                2020.08.25 21:54
+                            </div>
+                            <div class="check">
+                                <p> </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+    <input type="button" value="채팅방 생성" name="createChat" id="createChat">
+</div>
+
+<div id="contentCover" align="center" style="display:none;">
+    <div id="chatWrap">
+        <div id="chatHeader">
+			
+        </div>
+        <div id="messages">
+            
+        </div>
+        <div id="messageForm">
+            <input type="text" autocomplete="off" size="30" id="messageInput" placeholder="메시지 입력">
+            <input type="button" value="보내기" id="sendBtn">
+        </div>
     </div>
 </div>
-<input type="button" value="채팅방 생성" name="createChat" id="createChat">
-<%-- <jsp:include page="../template/footer.jsp"/> --%>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/sockjs.min.js"></script>
@@ -55,6 +258,9 @@ let messages = document.getElementById("messages");
 let chattingRoomNum = chattingRoom.id;
 let username = '${username}'
 let stompClient = null;
+let list_wrap = document.getElementById('chat_list_wrap');
+let contentCover = document.getElementById('contentCover');
+
 //======================================================== 채팅방 리스트 가져오기
 
 $(document).ready(function(){
@@ -68,12 +274,13 @@ $(document).ready(function(){
 		dataType : 'json',
 		success : function(data){
 			$.each(data.list, function(index, items){
-				$('<div/>',{
-					id : items.chattingRoom,
-					onclick : 'getChatting(' + items.chattingRoom + '); connect();',
-					text : items.chattingRoom
-				}).appendTo($('#roomList'));
+				document.getElementById("chattingRoomList").innerHTML += "<li><table><tr><td class='profile_td'><img src='/resources/image/chatting.png' width='50' height='50'/></td>"
+																		+ "<td class='chat_td'><div class='email'>" + items.members + "</div><div class='chat_preview'>채팅방 프리뷰</div></td>"
+																		+ "<td class='time_td'><div class='time'>2020.08.26 21:32</div><div class='check'><p></p></div></td></tr></table></li>";
 			});
+		},
+		error : function(err){
+			console.log(err);
 		}
 	});
 });
@@ -96,7 +303,10 @@ $('#createChat').click(function(){
 //======================================================== 채팅방 정보 가져오기
 
 function getChatting(chattingRoom){
-	$('div.message').remove();
+	list_wrap.style.display = 'none';
+	contentCover.style.display = 'block';
+	let messages = document.getElementById('messages');
+	
 	$.ajax({
 		type : 'post',
 		beforeSend: function(xhr){
@@ -106,16 +316,34 @@ function getChatting(chattingRoom){
 		data : 'chattingRoom=' + chattingRoom.id,
 		dataType : 'json',
 		success : function(data){
-			$('#home').css('display', 'none');
-			$('#sendBtn').attr('onclick', 'send(' + chattingRoom.id + ')');
+			document.getElementById('chatHeader').innerHTML += chattingRoom.id + "<span id='close' onclick='roomList()' style='cursor: pointer;'>&times;</span>";
+			
 			$.each(data.list, function(index, items){
-				messages.innerHTML += '<div class="message" align="left">' + items.username + " : " + items.chat + '</div>';
+				if(username == items.username) {
+					messages.innerHTML += "<div class='myMessage'><span class='message'>" + items.chat + "</span></div>";
+				
+				}else {
+					messages.innerHTML += "<div class='otherMessage'><span class='otherName'>" + items.username + "</span>"
+										+ "<span class='message'>" + items.chat + "</span></div>";
+				}
 			});
+			
+			document.getElementById("sendBtn").setAttribute("onclick", "send(" + chattingRoom.id + ")");
+			document.getElementById("messageInput").setAttribute("onkeydown", "enterKey(" + chattingRoom.id + ")");
+			document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
 		}
 	});
 }
 
-//======================================================== Stomp, SockJS 
+function roomList(){
+	$('#chatHeader').empty();
+	$('#messages').empty();
+	
+	list_wrap.style.display = 'block';
+	contentCover.style.display = 'none';
+}
+
+//================================================== ====== Stomp, SockJS 
 
 function connect(){
 	let socket = new SockJS('/chat');
@@ -155,9 +383,20 @@ function onMessageReceived(payload){
 	console.log(payload.chat);
 	let message = JSON.parse(payload.body);
 	
-	messages.innerHTML+="<div class='message' align='left'>" + message.username + " : " + message.chat + "</div>";
+	if(username == message.username){
+		messages.innerHTML += "<div class='myMessage'><span class='message'>" + message.chat + "</span></div>";
+		
+	}else {
+		messages.innerHTML += "<div class='otherMessage'><span class='otherName'>" + message.username + "</span>"
+							+ "<span class='message'>" + message.chat + "</span></div>";
+	}
+	document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
 }
 
-
+function enterKey(data){
+	if(window.event.keyCode == 13){
+		send(data);
+	}
+}
 </script>
 </html>

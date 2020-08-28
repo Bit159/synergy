@@ -262,11 +262,10 @@ public class MemberController{
 	@PostMapping("/member/getChattingRoom")
 	@ResponseBody
 	public ModelAndView getChattingRoom(@RequestParam String username) {
-		System.out.println(username);
 		ModelAndView mav = new ModelAndView();
 		List<ChattingRoomDTO> list = memberService.getChattingRoom(username);
 		for(ChattingRoomDTO dto : list) {
-			System.out.println(dto.getMembers());
+			System.out.println(dto.getChattingRoom());
 		}
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");

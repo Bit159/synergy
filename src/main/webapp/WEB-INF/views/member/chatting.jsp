@@ -7,85 +7,113 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    #chatWrap{
+        width :400px;
+        border : 1px solid #ddd;
+    }
+
+    #chatHeader{
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        font-size: 25px;
+        font-weight: 900;
+        border-bottom: 1px solid #ddd;
+        background-color: #32be78;
+    }
+
+    #messages{
+        height: 500px;
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    .myMessage{
+        text-align: right;
+    }
+
+    .otherMessage{
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .message{
+        display: inline-block;
+        border-radius: 15px;
+        padding : 7px 15px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+
+    .otherMessage > .message{
+        background-color: #f1f0f0;
+    }
+
+    .myMessage > .message{
+        background-color: #32be78;
+    }
+
+    .otherName{
+        font-size: 12px;
+        display: block;
+    }
+
+    #messageForm{
+        display: block;
+        width:  100%;
+        height: 50px;
+        border-top: 2px solid #f0f0f0;
+    }
+
+    #messageInput{
+        width: 80%;
+        height: calc(100% - 1px);
+        border : none;
+        padding-bottom : 0;
+    }
+
+    #messageInput:focus{
+        outline: none;
+    }
+
+    #messageForm > input[type=submit]{
+        outline: none;
+        border : none;
+        background :none;
+        color : #32be78;
+        font-size: 17px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
 <sec:authentication property="principal.username" var="username"/>
-<div id="messages" align="left"></div>
-<div align="center">
-    <input type="hidden" id="sender" value="${username }">
-    <input type="text" id="messageinput">
-    <button type="button" onclick="send();">Send</button>
-    <button type="button" onclick="closeSocket();">Close</button>
+<div id="contentCover" align="center">
+    <div id="chatWrap">
+        <div id="chatHeader">
+			채팅방 이름
+        </div>
+        <div id="messages">
+            <div class="otherMessage">
+                <span class="otherName">byungjoo104@gmail.com</span>
+                <span class="message">앙뇽하세용</span>
+                <span class="otherName">byungjoo3011@naver.com</span>
+                <span class="message">가나다라마바사아차카타파하오렌지먹고싶다바나나먹고싶다고양이멍멍이</span>
+            </div>
+            <div class="myMessage">
+                <span class="message">네 안녕하세용</span>
+
+            </div>
+        </div>
+        <form id="messageForm">
+            <input type="text" autocomplete="off" size="30" id="messageInput" placeholder="메시지 입력">
+            <input type="submit" value="보내기">
+        </form>
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-let ws;
-let messages = document.getElementById("messages");
-
-window.onload=function openSocket(){
-    if(ws!==undefined && ws.readyState!==ws.CLOSED){
-        writeResponse("WebSocket is already opened.");
-        return;
-    }
-    //웹소켓 객체를 만든다.
-    ws=new WebSocket("ws://localhost:8080/chat");
-    
-    ws.onopen=function(event){
-        if(event.data===undefined) return;
-        
-        writeResponse(event.data);
-    };
-    
-    ws.onmessage=function(event){
-        writeResponse(event.data);
-    };
-    
-    ws.onclose=function(event){
-        writeResponse("Connection closed");
-    }
-}
-
-function send(){
-    let text = document.getElementById("messageinput").value + "," + document.getElementById("sender").value;
-    ws.send(text); 
-    $.ajax({
-    	type : 'post',
-    	url  : '/member/sendMessage',
-		beforeSend: function(xhr){
-    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-    		
-    	},
-    	data : 'text=' + text,
-    	success : function(){
-    	}
-    });
-    text = "";
-    document.getElementById("messageinput").value="";
-}
-
-function closeSocket(){
-	ws.close();
-}
-
-function writeResponse(text){
-    messages.innerHTML+="<br/>"+text;
-}
-
-//==========================================================db 가져오기
-/* $(document).ready(function(){
-	$.ajax({
-		type : 'get',
-		url  : '/member/getChatting',
-		dataType : 'json',
-		success : function(data){
-			$.each(data.list, function(index, items){
-				 messages.innerHTML+="<br/>"+ items.username + " : " + items.chat;
-			});
-		}
-		
-	});
-	
-}); */
 </script>
 </html>

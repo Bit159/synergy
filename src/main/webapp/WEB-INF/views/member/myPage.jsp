@@ -20,14 +20,16 @@
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
+    align-content: right;
 }
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
-    width: 50%;                         
+    width: 400px;
+    right : 40%;
+    top : 30%;
+                     
 }
 /* The Close Button */
 .close {
@@ -43,7 +45,6 @@
     cursor: pointer;
 }
 </style>
-    
 </head>
 <body>
 <div id=body_wrapper>
@@ -116,25 +117,12 @@
 </div>
 <div id="myModal" class="modal">
 	<div class="modal-content">
-		<div id="messages"></div>
-	
-	   	<span class="close">&times;</span>                                                               
-	   	<input type="hidden" id="sender" value="${user }">
-	   	<input type="text" name="messageinput" id="messageinput" size="70%">
-	   	
-	   	<div class="modal_footer">
-	   		<input type="button" value="Send" onclick="send()">
-	   		<input type="button" value="Close" onclick="closeSocket()">
-	   	</div>
- 	</div>
+		<span class="close">&times;</span>      
+		<jsp:include page="chattingList.jsp"/>                                            
+	</div>
 </div>
 
-<img id="chatting" src="/resources/image/chatting_floating.png" width="100" height="100" style="position:fixed;
-																							   	top: 700px;
-																							  	right : 50%;
-																							  	margin-right: -900px;
-																							  	cursor:pointer;
-																							    z-index : 99;">
+<img id="chatting" src="/resources/image/chatting_floating.png" width="100" height="100" style="position:fixed;	top: 700px;right : 50%;margin-right: -900px;cursor:pointer;z-index : 99;">
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
@@ -203,51 +191,6 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
-//==============================================채팅 스크립트
-
-let ws;
-let messages = document.getElementById("messages");
-
-window.onload=function openSocket(){
-    if(ws!==undefined && ws.readyState!==ws.CLOSED){
-        writeResponse("WebSocket is already opened.");
-        return;
-    }
-    //웹소켓 객체를 만든다.
-    ws=new WebSocket("ws://localhost:8080/chat");
-    
-    ws.onopen=function(event){
-        if(event.data===undefined) return;
-        
-        writeResponse(event.data);
-    };
-    
-    ws.onmessage=function(event){
-        writeResponse(event.data);
-    };
-    
-    ws.onclose=function(event){
-        writeResponse("Connection closed");
-    }
-}
-
-function send(){
-    let text = document.getElementById("messageinput").value + "," + document.getElementById("nickname").value;
-    console.log(text);
-    ws.send(text);
-    text = "";
-    document.getElementById("messageinput").value="";
-}
-
-function closeSocket(){
-	ws.close();
-}
-
-function writeResponse(text){
-    messages.innerHTML+="<br/>"+text;
-}
-
 </script>
 </body>
 </html>

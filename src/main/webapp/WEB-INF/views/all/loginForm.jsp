@@ -29,7 +29,7 @@
 			</div>
 
 			<div class="info-area">
-				<input type="password" name="password" id="password" autocomplete="off" required>
+				<input type="password" name="password" id="password" autocomplete="off" onkeyup="enterKey()" required>
 				<input type="hidden" name="redirect" id="redirect" value="${password }">
 				<label for="password">PASSWORD</label>
 			</div>
@@ -115,4 +115,11 @@
 	</section>
 	<jsp:include page="../template/footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+function enterKey(){
+	if(window.event.keyCode == 13){
+		document.loginForm.submit();
+	}
+}
+</script>
 </html>

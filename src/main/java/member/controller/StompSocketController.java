@@ -22,7 +22,7 @@ public class StompSocketController {
 	@MessageMapping("/message")
 	public void send(ChattingDTO chattingDTO) {
 		memberService.sendMessage(chattingDTO);
-		
+	
 		simpMessagingTemplate.convertAndSend("/topic/" + chattingDTO.getChattingRoom(), chattingDTO);
 	}
 }

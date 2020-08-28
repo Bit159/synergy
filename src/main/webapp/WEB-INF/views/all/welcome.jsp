@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Synergy</title>
     <link rel="stylesheet" href="/resources/css/welcome.css">
     <script src="http://code.jquery.com/jquery-latest.min.js" defer></script>
     <script src="/resources/js/welcome.js" defer></script>
@@ -24,7 +24,7 @@
                         	<img src="/resources/image/home.jpg">
                         </div>
                     </div>
-                    <div class="banner_right">
+                    <div class="banner_right" id="banner_right">
                         <h2 style="white-space: nowrap;">Synergy Together</h2>
                         <p style="white-space: nowrap;">쉽고 빠른 스터디 매칭</p>
                         <ul>
@@ -68,8 +68,14 @@
                 </div>
             </div>
         </div>
+        <img id="chatting" src="/resources/image/chatting_floating.png" width="100" height="100" onclick="chatting()" style="position:fixed;top: 700px;right : 50%;margin-right: -900px;cursor:pointer;z-index : 99;">
         <!-- 푸터 -->
         <jsp:include page="../template/footer.jsp"/>
 	</div>
 </body>
+<script type="text/javascript">
+function chatting(){
+	
+}
+</script>
 </html>
