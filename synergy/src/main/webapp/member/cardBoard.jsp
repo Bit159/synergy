@@ -14,7 +14,6 @@
 	<div id="body-wrapper">
 	<jsp:include page="../template/header.jsp"></jsp:include>
     <div id="container">
-        
         <div id="selectBox">
         	<h1>지역 선택</h1>
         	<div class="selectLocation">
@@ -105,6 +104,9 @@
         <!-- pagination{s} -->
 		<div id="paginationBox">
 			<ul class="pagination">
+				<c:if test="${paging.first}">
+					<li class="page-item"><a class="page-link" href="#" onClick="location.href='/synergy-kh/member/cardBoardList?pg=1&range=1'">《</a></li>
+				</c:if>
 				<c:if test="${paging.prev}">
 					<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}')">〈</a></li>
 				</c:if>
@@ -114,6 +116,10 @@
 				<c:if test="${paging.next}">
 					<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}')" >〉</a></li>
 				</c:if>
+				<c:if test="${paging.last}">
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}')" >》</a></li>
+				</c:if>
+				
 			</ul>
 		</div>
 		<!-- pagination{e} -->
@@ -121,7 +127,11 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="../resources/js/pagination.js"></script>
 	<script type="text/javascript">
+
+	let myData = new Array();
+
 	let aIndex=0;
 	let guIndex=0;
 	let si='';
@@ -129,6 +139,7 @@
 	let sigu='';
 	let count=0;
 	let locations = [];
+	let pageA= 0;
 	$(document).ready(function(){
 		$.ajax({
 			type:'get',
@@ -140,6 +151,11 @@
 					aIndex = $(this).index();
 					si = $('#select-si li:nth-child('+(aIndex+1)+')').children('a').text();
 				
+					$('#select-gu li:gt(0)').remove();
+					$.each(data[aIndex], function(i,item){
+						$('#select-gu').append("<li><a>"+data[aIndex][i]+"</li></a>")
+					});
+					
 					var color = $(this).css('background-color');
 					if(color!='rgb(50, 190, 120, 0.7)'){
 						$('#select-si > li').css('background-color','white');
@@ -149,11 +165,6 @@
 					}else {
 						$(this).css('background-color','white');
 					}
-					
-					$('#select-gu li:gt(0)').remove();
-					$.each(data[aIndex], function(i,item){
-						$('#select-gu').append("<li><a>"+data[aIndex][i]+"</li></a>")
-					});
 				});
 				$('#select-si > li:nth-child(1)').trigger('click');
 			},
@@ -192,11 +203,24 @@
 			traditional:true,
 			success:function(data){
 				$('.card').parent().remove();
-				$.each(data, function(i,item){
-					/* foreach문 안에 있는 코드 그대로.. */
-					$('.cardboard').append("<a href=/synergy-kh/member/cardBoardView?seq="+item.seq+"><div class=card><div class=card-header><div class=card-header-content><div class=card-header-text>모집중</div><div class=card-header-count>1 /"+item.people+"</div></div></div><div class=card-body><div class=card-body-content><h1 class=card-body-title>"+item.title+"</h1><p class=card-body-nickname>작성자: "+item.nickname+"</p><p class=card-body-location>지역: "+item.location+"</p></div></div><div class=card-footer></div></div></a>");
-					
-					
+				$('#paginationBox').children().remove();
+				myData = data;
+				$('#paginationBox').pagination({
+				    dataSource: data,
+				    pageSize: 9,
+				    autoHidePrevious: true,
+				    autoHideNext: true,
+				    callback: function(data, pagination) {
+						$('.card').parent().remove();
+						data.forEach(function(item, index){
+						$('.cardboard').append("<a href=/synergy-kh/member/cardBoardView?seq="+item.seq+"><div class=card><div class=card-header><div class=card-header-content><div class=card-header-text>모집중</div><div class=card-header-count>1 /"+item.people+"</div></div></div><div class=card-body><div class=card-body-content><h1 class=card-body-title>"+item.title+"</h1><p class=card-body-nickname>작성자: "+item.nickname+"</p><p class=card-body-location>지역: "+item.location+"</p></div></div><div class=card-footer></div></div></a>");	
+						});
+				    }
+				})
+				$('.paginationjs-pages ul li').on('click','a',function(){
+					pageA = $(this).text();
+					pageA = parseInt(pageA);
+// 					alert("pageA = " + pageA);
 				});
 			},
 			error:function(){
@@ -204,7 +228,6 @@
 			}
 		});
 	});
-	
 	//이전 버튼 이벤트
 	function fn_prev(page, range, rangeSize) {
 			var page = ((range - 2) * rangeSize) + 1;
@@ -227,6 +250,14 @@
 		var range = parseInt(range) + 1;
 		var url = "${pageContext.request.contextPath}/member/cardBoardList";
 		url = url + "?pg=" + page;
+		url = url + "&range=" + range;
+		location.href = url;
+	}
+	//맨끝 버튼 이벤트
+	function fn_last(pageCnt, rangeSize) {
+		var url = "${pageContext.request.contextPath}/member/cardBoardList";
+		var range = Math.ceil(pageCnt/rangeSize);
+		url = url + "?pg=" + pageCnt;
 		url = url + "&range=" + range;
 		location.href = url;
 	}
