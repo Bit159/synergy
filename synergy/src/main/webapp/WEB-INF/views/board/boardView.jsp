@@ -48,7 +48,7 @@
 	                        
 	                        <ul class="reply_group">
 	                            
-	                            <li class="reply_group_item">
+	                            <!-- <li class="reply_group_item">
 	                                <div class="reply_nickname">작성자</div>
 	                                <div class="reply">댓글</div>
 	                                <div class="reply_button">
@@ -69,7 +69,7 @@
 	                                        
 	                                    </div>
 	                                </div>
-	                            </div>
+	                            </div> -->
 	                            
 	                            
 	                            <c:forEach var="replydto" items="${replyList }" varStatus="status">
@@ -90,7 +90,7 @@
 					                                    <div class="reply_modify_div">
 					                                        <textarea name="reply_modify_text" class="reply_modify_text">${replydto.reply }</textarea>
 					                                        <div class="reply_modify_button_div">
-					                                            <button class="reply_modify_button">수정완료</button>
+					                                            <button class="reply_modify_button" data-rno="${ replydto.rno }">수정완료</button>
 					                                            <button class="reply_modify_cancel">취소</button>
 					                                        </div>
 					                                        
@@ -118,7 +118,6 @@
 	                        
 	                    
 	                    <!-- <form id="reply_write_form" method="post" action="/synergy/board/replyWrite"> -->
-	                    <input type="hidden" name="bno" id="bno" value="${cBoardDTO.bno }">    
 						<div class="reply_writer_wrapper">
 							<div class="reply_writer">
 								<label class="reply_writer_label">

@@ -94,6 +94,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void replyModify(Map<String, Object> map) {
+		System.out.println(map);
 		boardDAO.replyModify(map);
 	}
 

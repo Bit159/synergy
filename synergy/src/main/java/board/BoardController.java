@@ -154,10 +154,11 @@ public class BoardController {
 	
 	@PostMapping("/board/replyModify")
 	public ModelAndView replyModify(@RequestParam String reply, int rno, HttpSession session) {
+		System.out.println(reply);
 		System.out.println(rno);
 		/* String nickname = (String) session.getAttribute("nickname"); */
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("bno",rno);
+		map.put("rno",rno);
 		map.put("reply", reply);
 		boardService.replyModify(map);
 		ModelAndView mav = new ModelAndView();

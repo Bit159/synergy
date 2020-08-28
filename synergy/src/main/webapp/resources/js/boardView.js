@@ -116,14 +116,16 @@ $(document).ready(function(){
 	});
 	
 	$(document).on("click",".reply_modify_button",function(){
-		var $btnObj = $(this);
 		var bno = document.querySelector('div.view_bno').innerText;
+		console.log(bno);
 		let rno = $(this).data('rno') // data-rno
-		var reply = $("#reply_writer_text").val();
+		var reply = $(this).parent().parent().children('textarea.reply_modify_text').val();
+		console.log(reply);
 		var csrfHeader = document.getElementById('_csrf_header').content;
 		var csrfToken = document.getElementById('_csrf').content;
 		
 		var param = "reply="+reply+"&rno="+rno;
+		console.log(param);
 		let result = confirm("정말 수정하시겠습니까?");
 		if(result){
 			$.ajax({
@@ -135,8 +137,7 @@ $(document).ready(function(){
 		    	data: param,
 		    	success: function(data){
 		    		alert("댓글 수정 완료");
-		    		/*$btnObj.parent().parent().parent().parent().css('display','none');*/
-		    		location.href="/synergy/board/${bno}"
+		    		location.href='/synergy/board/'+bno
 		    	},
 		    	error: function(err){
 					console.log(err);
