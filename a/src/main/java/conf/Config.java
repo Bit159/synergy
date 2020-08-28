@@ -25,7 +25,7 @@ import controller.HomeController;
 
 @EnableAsync
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = { "user", "controller", "aop", "security","crawl" })
+@ComponentScan(basePackages = { "user", "controller", "aop", "security","crawl", "notifier" })
 @PropertySource("classpath:/db.properties")
 @Configuration
 public class Config {

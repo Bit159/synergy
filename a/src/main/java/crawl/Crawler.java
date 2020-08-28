@@ -32,10 +32,11 @@ public class Crawler {
 	private Email email;
 
 	@Async
-	@Scheduled(fixedDelay = HOUR)
+	//@Scheduled(fixedDelay = HOUR)
+	//매 정각 시행
+	@Scheduled(cron="0 0 0/1 * * *")
 	public void getList() {
 		System.out.println("클제목 크롤링 시도");
-
 		/*
 		 * Document 클래스 : 연결해서 얻어온 HTML 전체 문서 Element 클래스 : Documnet의 HTML 요소 Elements
 		 * 클래스 : Element가 모인 자료형

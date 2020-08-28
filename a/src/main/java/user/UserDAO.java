@@ -1,6 +1,9 @@
 package user;
 
+import java.util.Date;
 import java.util.List;
+
+import notifier.NotDTO;
 
 public interface UserDAO {
 	public abstract int insert(UserDTO userDTO);
@@ -24,4 +27,8 @@ public interface UserDAO {
 	
 	//크롤게시판용
 	public abstract List<CBoardDTO> getBoardList();
+	
+	//알림용
+	public abstract List<NotDTO> getOnTimeList();
+	public abstract Date getDBTime();
 }

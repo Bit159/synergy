@@ -4,6 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="userSQL">
+
+	<!-- To get Database Server Time -->
+	<select id="getDBTime" resultType="java.util.Date">
+		SELECT now() FROM dual
+	</select>
+
+	<!-- FOR Notification -->
+	<select id="getOnTimeList" resultType="notifier.NotDTO">
+		<!-- 10분간격으로 돌면서 현재시간에서 1분 뺀 시간보다 더 이후 시간의 값을 갖고 있는 알림들을 가져온다. -->
+		<!-- <![CDATA[내용]]> 이렇게 작성해도 되고... <는 &lt; >는 &gt; -->
+		SELECT * FROM db.notify WHERE (`time` <![CDATA[>]]> DATE_SUB(now(), INTERVAL 1 MINUTE)) AND (`time` <![CDATA[<]]> DATE_ADD(now(), INTERVAL 1 MINUTE))
+	</select>
+	<!-- End of Notification -->
+
 	<!-- FOR MAP -->
 	<select id="getMycareer" parameterType="java.lang.String" resultType="int">
 		SELECT `mycareer` FROM membertable WHERE username=#{username}

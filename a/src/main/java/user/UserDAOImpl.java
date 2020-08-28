@@ -1,5 +1,6 @@
 package user;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
+import notifier.NotDTO;
 
 @Repository
 @Transactional
@@ -107,7 +109,19 @@ public class UserDAOImpl implements UserDAO {
 	public List<CBoardDTO> getBoardList() {
 		return sqlSession.selectList("userSQL.getBoardList");
 	}
-	
+
 	// END OF  CRAWAL BOARD
 
+	
+	// FOR Notification function
+	@Override
+	public List<NotDTO> getOnTimeList() {
+		return sqlSession.selectList("userSQL.getOnTimeList");
+	}
+	@Override
+	public Date getDBTime() {
+		return sqlSession.selectOne("userSQL.getDBTime");
+	}
+	// End of Notification Methods
+	
 }
