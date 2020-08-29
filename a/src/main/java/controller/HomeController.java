@@ -27,6 +27,25 @@ public class HomeController {
 	@Autowired
 	private UserDAO userDAO;
 	
+	@GetMapping("/schedules")
+	public String schedules() {
+		return "/all/schedules";
+	}
+	@PostMapping(path="/getSchedules", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public JSONArray getMySchedules() {
+		System.out.println("왔으");
+		JSONArray json = new JSONArray();
+		try {
+			json.addAll(userDAO.getSchedules());
+		}catch(Exception e) {
+			System.out.println("애드올이 문제네...");
+			e.printStackTrace();
+		}
+		System.out.println(json);
+		return json;
+	}
+	
 	@GetMapping("/")public String home(Locale locale, Model model) {
 		return "/all/welcome"; 
 	}

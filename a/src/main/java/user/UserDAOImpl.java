@@ -122,6 +122,13 @@ public class UserDAOImpl implements UserDAO {
 	public Date getDBTime() {
 		return sqlSession.selectOne("userSQL.getDBTime");
 	}
+
 	// End of Notification Methods
 	
+	// FOR DISPLAYING SCHEDULES
+	@Override
+	public List<NotDTO> getSchedules() {
+		return sqlSession.selectList("userSQL.getSchedules");
+	}
+	// END OF SCHEDULES
 }

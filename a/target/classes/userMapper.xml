@@ -5,6 +5,12 @@
 
 <mapper namespace="userSQL">
 
+	<!-- To get Schedules -->
+	<select id="getSchedules" resultType="notifier.NotDTO">
+		SELECT * FROM db.notify ORDER BY `created` ASC
+	</select>
+	<!-- End of Getting Schedules -->
+
 	<!-- To get Database Server Time -->
 	<select id="getDBTime" resultType="java.util.Date">
 		SELECT now() FROM dual

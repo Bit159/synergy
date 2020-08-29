@@ -31,4 +31,7 @@ public interface UserDAO {
 	//알림용
 	public abstract List<NotDTO> getOnTimeList();
 	public abstract Date getDBTime();
+	
+	//스케쥴용
+	public abstract List<NotDTO> getSchedules();
 }

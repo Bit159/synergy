@@ -1,6 +1,5 @@
 package notifier;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +24,8 @@ public class Notifier {
 	@Async
 	@Scheduled(cron = "0 0/10 * * * *")
 	public void getOnTimeList() {
-		System.out.println("현재 DB 서버시간 :" + userDAO.getDBTime());
 		List<NotDTO> onTimeList = userDAO.getOnTimeList();
-		System.out.println(onTimeList);
-		NotDTO d = onTimeList.get(0);
-		email.send(d.getUsername(), d.getTitle(), d.getContent()+"\r\n\r\n"+d.getPlace()+d.getTime());
+		for(NotDTO dto : onTimeList) email.send(dto.getUsername(), dto.getTitle(), dto.getContent());
 	}
 
-	public static void main(String[] args) {
-		System.out.println(new Date());
-	}
 }
