@@ -21,8 +21,10 @@ $(document).ready(function(){
 				dataType: 'json',
 				success: function(data){
 					alert("댓글 등록");
+					console.log(data);
 					
-					let a = '<li class="reply_group_item"><div class="reply_nickname">'
+					// 비동기 방식
+					/*let a = '<li class="reply_group_item"><div class="reply_nickname">'
 						    +"nickname"+
 						    '</div><div class="reply">'
 						    +reply+
@@ -35,6 +37,19 @@ $(document).ready(function(){
 					b.innerHTML = b.innerHTML + a;
 					
 					$("#reply_writer_text").val('');
+					
+					let target = document.querySelector('.reply_header');
+					let newnum = target.innerText.substring(6);
+					newnum++;
+					target.innerText = `댓글수 : ${newnum}`;
+					
+					let target1 = document.querySelector('.view_replys');
+					let newnum1 = target1.innerText.substring(6);
+					newnum1++;
+					target1.innerText = `댓글수 : ${newnum1}`;*/
+					
+					//동기 방식
+					location.href='/synergy/board/'+bno
 				},
 				error: function(err){
 					console.log(err);
@@ -50,10 +65,12 @@ $(document).ready(function(){
 	$(document).on("click",".deleteBtn", function(){
 		var $btnObj = $(this);
 		let rno = $(this).data('rno') // data-rno
+		var bno = document.querySelector('div.view_bno').innerText;
+		
 		var csrfHeader = document.getElementById('_csrf_header').content;
 		var csrfToken = document.getElementById('_csrf').content;
 		
-		var param = "rno="+rno;
+		var param = "rno="+rno+"&bno="+bno;
 		let result = confirm("정말 삭제하시겠습니까?");
 		if(result){
 			$.ajax({
@@ -65,6 +82,16 @@ $(document).ready(function(){
 				data: param,
 				success: function(data){
 					$btnObj.parent().parent().remove();
+					
+					let target = document.querySelector('.reply_header');
+					let newnum = target.innerText.substring(6);
+					newnum--;
+					target.innerText = `댓글수 : ${newnum}`;
+					
+					let target1 = document.querySelector('.view_replys');
+					let newnum1 = target1.innerText.substring(6);
+					newnum1--;
+					target1.innerText = `댓글수 : ${newnum1}`;
 				},
 				error: function(err){
 					console.log(err);

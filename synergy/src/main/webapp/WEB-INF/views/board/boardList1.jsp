@@ -24,6 +24,7 @@
                         <div class="title">제목</div>                        
                         <div class="nickname">작성자</div>
                         <div class="boarddate">작성시간</div>
+                        <div class="replys">댓글수</div>
                         <div class="hit">조회수</div>
                     </li>
                     
@@ -41,12 +42,16 @@
 	                        		<c:when test="${nowdate eq boarddate }">${boardtime }</c:when>
 	                        		<c:otherwise>${boarddate }</c:otherwise>
 	                        	</c:choose>
-	                        </div>	                        
+	                        </div>
+	                        <div class="replys"><c:out value="${dto.replys }"></c:out></div>	                        
 	                        <div class="hit"><c:out value="${dto.hit}" /></div>
                     	</li>
                     </c:forEach>
                 </ul>
             </div>
+            
+            
+            
         </div>
     </div>	
 </body>

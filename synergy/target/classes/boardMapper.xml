@@ -26,9 +26,21 @@
 	
 	<!-- 크롤링 보드 체크용 -->
 	<select id="getCBoardList" resultType="board.CBoardDTO">
-		SELECT * FROM db.cboard order by bno desc limit 20
+		SELECT * 
+		FROM db.cboard 
+		ORDER BY bno desc 
+		LIMIT 0,20
 	</select>
 	<!-- 크롤링 보드 체크용 -->
+	
+	<!-- 크롤링 보드 페이징 -->
+	<select id="getCBoardList1" parameterType="board.Pagination" resultType="board.CBoardDTO">
+		SELECT * 
+		FROM db.cboard 
+		ORDER BY bno desc 
+		LIMIT #{startList},#{listSize};
+	</select>
+	<!-- 크롤링 보드 페이징 -->
   	
   	<!-- 크롤링 보드 게시글 정보 -->
   	<select id="getCBoard" parameterType="int" resultType="board.CBoardDTO">
@@ -52,6 +64,12 @@
   	</insert>	
   	<!-- 크롤링 보드 댓글 생성 -->
   	
+  	<!-- 크롤링 보드 댓글수 증가 -->
+  	<update id="replyUpdate" parameterType="int">
+  		update db.cboard set replys=replys+1 where bno=#{bno}
+  	</update>
+  	<!-- 크롤링 보드 댓글수 증가 -->
+  	
   	<!-- 조회수 증가 -->
   	<update id="hitUpdate" parameterType="int">
   		update db.cboard set hit=hit+1 where bno=#{bno}
@@ -64,6 +82,12 @@
   	</delete>
   	<!-- 크롤링 보드 댓글 삭제 -->
   	
+  	<!-- 크롤링 보드 댓글수 감소 -->
+  	<update id="replyDeleteUpdate" parameterType="int">
+  		update db.cboard set replys=replys-1 where bno = #{bno}
+  	</update>
+  	<!-- 크롤링 보드 댓글수 감소 -->
+  	
   	<!-- 크롤링 보드 댓글 생성 -->
   	<insert id="replyWrite" parameterType="java.util.Map" >
   		insert into db.reply (bno, reply, nickname, replydate, updatedate) values(#{bno}, #{reply}, #{nickname}, #{now}, #{now});
@@ -75,5 +99,11 @@
   		update db.reply set reply = #{reply} where rno = #{rno}
   	</update>
   	<!--  크롤링 보드 댓글 수정 -->
+  	
+  	<!-- 게시글 총 개수 -->
+  	<select id="getBoardListCnt" resultType="int">
+		SELECT count(*) as listCnt FROM db.cboard
+	</select>
+	<!-- 게시글 총 개수 -->
   	
   </mapper>

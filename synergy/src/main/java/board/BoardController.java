@@ -30,12 +30,22 @@ public class BoardController {
 	private BoardDAO boardDAO;
 	
 	@GetMapping("/board/boardList")
-	public ModelAndView boardList() {
-		List<CBoardDTO> list = boardService.getCBoardList();
+	public ModelAndView boardList(
+			@RequestParam(required=false, defaultValue = "1") int pg
+			,@RequestParam(required=false, defaultValue = "1") int range) {
+		int page =  pg;
+		System.out.println("페이지"+page+"범위"+range);
+		int listCnt = boardService.getBoardListCnt(); 
+		Pagination paging = new Pagination();
+		paging.pageInfo(page, range, listCnt); 
+		System.out.println("paging: "+paging);
+		
+		List<CBoardDTO> list = boardService.getCBoardList(paging);
 		System.out.println(list.get(0).getContent());
 		Date now = new Date();
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("paging",paging);
 		mav.addObject("list", list);
 		mav.addObject("now", now);
 		mav.setViewName("/board/boardList");
@@ -117,6 +127,7 @@ public class BoardController {
 		map.put("nickname", nickname);
 		map.put("now", now);
 		boardService.boardReply(map);
+		boardService.replyUpdate(bno);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("replyList", replyList);
 		mav.setViewName("jsonView");
@@ -124,10 +135,12 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/replyDelete")
-	public ModelAndView replyDelete(@RequestParam int rno, HttpSession session) {
+	public ModelAndView replyDelete(@RequestParam int rno, int bno, HttpSession session) {
 		System.out.println("rno="+rno);
 		/* String nickname = (String) session.getAttribute("nickname"); */
 		boardService.replyDelete(rno);
+		System.out.println("bno="+bno);
+		boardService.replyDeleteUpdate(bno);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/boardView");
 		return mav;

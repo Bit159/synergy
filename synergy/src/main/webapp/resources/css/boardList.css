@@ -10,7 +10,7 @@ div[class="body_wrapper"]{
     padding: 0;
     margin: 0 auto;
     max-width: 1280px;
-    min-height: 1200px;
+    min-height: 500px;
     
 }
 div[class="body_container"]{
@@ -72,12 +72,18 @@ div[class="title"]{
     width: 50%;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+div[class="replys"]{
+    width: 5%;
 }        
 div[class="hit"]{
-    width: 10%;
+    width: 5%;
 }
 div[class="nickname"]{
+	white-space: nowrap;
     width: 10%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 div[class="boarddate"]{
     width: 10%;

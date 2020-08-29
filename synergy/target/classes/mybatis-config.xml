@@ -8,5 +8,6 @@
 		<typeAlias type="user.UserDTO" alias="userDTO" />
 		<typeAlias type="board.BoardDTO" alias="boardDTO"/>
 		<typeAlias type="board.CBoardDTO" alias="cBoardDTO"/>
+		<typeAlias type="board.Pagination" alias="pagination"/>
 	</typeAliases>
 </configuration>

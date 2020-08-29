@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../resources/css/welcome.css">
 <link rel="stylesheet" href="../resources/css/boardList.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="../resources/js/pagination.js"></script>
 <script src="../resources/js/welcome.js" defer></script>
 
 </head>
@@ -27,6 +28,7 @@
                         <div class="title" id="titleHeader">제목</div>                        
                         <div class="nickname">작성자</div>
                         <div class="boarddate">작성시간</div>
+                        <div class="replys">댓글수</div>
                         <div class="hit">조회수</div>
                     </li>
                     
@@ -44,14 +46,37 @@
 	                        		<c:when test="${nowdate eq boarddate }">${boardtime }</c:when>
 	                        		<c:otherwise>${boarddate }</c:otherwise>
 	                        	</c:choose>
-	                        </div>	                        
+	                        </div>
+	                        <div class="replys"><c:out value="${dto.replys }"></c:out></div>	                        
 	                        <div class="hit"><c:out value="${dto.hit}" /></div>
                     	</li>
                     </c:forEach>
                 </ul>
             </div>
             
-            <ul class="pagination"> 
+            <!-- pagination{s} -->
+			<div id="paginationBox">
+				<ul class="pagination">
+					<c:if test="${paging.first}">
+						<li class="page-item"><a class="page-link" href="#" onClick="location.href='/synergy/board/boardList?pg=1&range=1'">《</a></li>
+					</c:if>
+					<c:if test="${paging.prev}">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}')">〈</a></li>
+					</c:if>
+					<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="idx">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}')"> ${idx} </a></li>
+					</c:forEach>
+					<c:if test="${paging.next}">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}')" >〉</a></li>
+					</c:if>
+					<c:if test="${paging.last}">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}')" >》</a></li>
+					</c:if>
+				</ul>
+			</div>
+			<!-- pagination{e} -->
+            
+            <%-- <ul class="pagination"> 
     			<li><a href="/synergy/board/getCBoard?nowpage=0&searchOption=${searchOption}&keyword=${keyword}">&lt;&lt;</a></li> 
        			<!--현재 페이지가 0보다 작아질 경우 이전 버튼을 disabled하는 조건문 --> 
        				<c:choose> 
@@ -68,7 +93,7 @@
 								 <li><a href="/synergy/board/getCBoard?nowpage=${i}&searchOption=${searchOption}&keyword=${keyword}">${i+1}</a></li> 									
        						 
        					</c:forEach>
-       							<%-- <li><a href="/synergy/all/getAdminBoard?nowpage=${i}&searchOption=${searchOption}&keyword=${keyword}">${i+1}</a></li> --%>  		
+       							<li><a href="/synergy/all/getAdminBoard?nowpage=${i}&searchOption=${searchOption}&keyword=${keyword}">${i+1}</a></li>  		
        				<!--현재 페이지가 totalpage보다 커질 경우 다음 버튼을 disabled하는 조건문 --> 
        				<c:choose> 
        					<c:when test="${nowpage >= totalpage }"> 
@@ -89,9 +114,10 @@
 		            </select>
 		            <input type="text" name="keyword" id="keyword">
 		            <input type="submit" id="searchBtn" value="검색">
-	        	
 	        	</form>
-	        	</div>
+	        	</div> --%>
+	        	
+	        	
         		
         		            
             
@@ -99,5 +125,31 @@
     </div>
 	
 	<jsp:include page="footer.jsp" flush="false"/>
+	<script type="text/javascript">
+		//페이지 번호 클릭
+		function fn_pagination(page, range, rangeSize) {
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			url = url + "?pg=" + page;
+			url = url + "&range=" + range;
+			location.href = url;	
+		}
+		//다음 버튼 이벤트
+		function fn_next(page, range, rangeSize) {
+			var page = parseInt((range * rangeSize)) + 1;
+			var range = parseInt(range) + 1;
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			url = url + "?pg=" + page;
+			url = url + "&range=" + range;
+			location.href = url;
+		}
+		//맨끝 버튼 이벤트
+		function fn_last(pageCnt, rangeSize) {
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			var range = Math.ceil(pageCnt/rangeSize);
+			url = url + "?pg=" + pageCnt;
+			url = url + "&range=" + range;
+			location.href = url;
+		}
+	</script>
 </body>
 </html>

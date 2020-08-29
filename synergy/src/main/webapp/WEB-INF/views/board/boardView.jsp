@@ -44,7 +44,7 @@
                 </div>
                 <div class="board_footer">
                     <div class="replywrapper">
-                        <div class="reply_header">댓글 ${cBoardDTO.replys }개</div>
+                        <div class="reply_header">댓글수 : ${cBoardDTO.replys }</div>
 	                        
 	                        <ul class="reply_group">
 	                            

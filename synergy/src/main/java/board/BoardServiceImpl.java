@@ -98,4 +98,26 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.replyModify(map);
 	}
 
+	@Override
+	public void replyUpdate(int bno) {
+		boardDAO.replyUpdate(bno);
+	}
+
+	@Override
+	public void replyDeleteUpdate(int bno) {
+		boardDAO.replyDeleteUpdate(bno);
+	}
+
+	@Override
+	public int getBoardListCnt() {
+		return boardDAO.getBoardListCnt();
+	}
+
+	@Override
+	public List<CBoardDTO> getCBoardList(Pagination paging) {
+		List<CBoardDTO> list = boardDAO.getCBoardList(paging);
+		
+		return list;
+	}
+
 }

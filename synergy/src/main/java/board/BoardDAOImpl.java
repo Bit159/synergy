@@ -75,4 +75,24 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.update("boardSQL.replyModify", map);
 	}
 
+	@Override
+	public void replyUpdate(int bno) {
+		sqlSession.update("boardSQL.replyUpdate", bno);
+	}
+
+	@Override
+	public void replyDeleteUpdate(int bno) {
+		sqlSession.update("boardSQL.replyDeleteUpdate",bno);
+	}
+
+	@Override
+	public int getBoardListCnt() {
+		return sqlSession.selectOne("boardSQL.getBoardListCnt");
+	}
+
+	@Override
+	public List<CBoardDTO> getCBoardList(Pagination paging) {
+		return sqlSession.selectList("boardSQL.getCBoardList1", paging);
+	}
+
 }

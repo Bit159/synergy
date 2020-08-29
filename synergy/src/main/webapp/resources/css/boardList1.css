@@ -10,7 +10,7 @@
     padding: 0;
     margin: 0 auto;
     max-width: 1280px;
-    height: 1200px;
+    /* min-height: 1200px; */
     
 }
 .body_container{
@@ -67,9 +67,12 @@ div.topic{
 }
 div.title{
     width: 50%;
+}
+div[class="replys"]{
+    width: 5%;
 }        
 div.hit{
-    width: 10%;
+    width: 5%;
 }
 div.nickname{
     width: 10%;

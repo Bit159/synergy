@@ -27,6 +27,14 @@ public interface BoardDAO {
 	public void replyWrite(Map map);
 
 	public void replyModify(Map<String, Object> map);
+
+	public void replyUpdate(int bno);
+
+	public void replyDeleteUpdate(int bno);
+
+	public int getBoardListCnt();
+
+	public List<CBoardDTO> getCBoardList(Pagination paging);
 	
 	
 }
