@@ -5,6 +5,7 @@ import java.util.Map;
 
 import cardBoard.bean.CardBoardDTO;
 import cardBoard.bean.CardBoardPaging;
+import cardBoard.bean.CardBoardReplyDTO;
 
 public interface CardBoardService {
 	public void regist(CardBoardDTO groupDTO);
@@ -14,4 +15,5 @@ public interface CardBoardService {
 	public List<CardBoardDTO> searchCardNoloc(String topic);
 	public CardBoardDTO getCardContent(int seq);
 	public int getBoardListCnt();
+	public List<CardBoardReplyDTO> getReplyList(int seq);
 }

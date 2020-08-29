@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cardBoard.bean.CardBoardDTO;
 import cardBoard.bean.CardBoardPaging;
+import cardBoard.bean.CardBoardReplyDTO;
 import member.bean.MemberDTO;
 
 @Repository
@@ -62,4 +63,8 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 		return sqlSession.selectOne("cardBoardSQL.getBoardListCnt");
 	}
 
+	@Override
+	public List<CardBoardReplyDTO> getReplyList(int seq) {
+		return sqlSession.selectList("cardBoardSQL.getReplyList",seq);
+	}
 }

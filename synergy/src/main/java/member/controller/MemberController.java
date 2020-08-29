@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cardBoard.bean.CardBoardDTO;
 import cardBoard.bean.CardBoardPaging;
+import cardBoard.bean.CardBoardReplyDTO;
 import cardBoard.service.CardBoardService;
 import member.service.MemberService;
 import net.sf.json.JSONArray;
@@ -180,11 +181,21 @@ public class MemberController {
 	 public ModelAndView cardBoardView(@RequestParam int seq) {
 		 System.out.println(seq);
 		 CardBoardDTO dto = cardBoardService.getCardContent(seq);
+		 List<CardBoardReplyDTO> replyList= cardBoardService.getReplyList(seq);
+		 System.out.println(replyList);
 		 ModelAndView mav = new ModelAndView();
 		 mav.addObject("dto",dto);
+		 mav.addObject("replyList",replyList);
 		 mav.setViewName("/member/cardBoardView");
 		 return mav;
 	 }
-	 
-	 
+//	 //댓글리스트
+//	 @GetMapping(value="/member/getReplyList")
+//	 public ModelAndView getReplyList(@RequsetParam int seq) {
+//		 List<CardBoardReplyDTO> replyList= cardBoardService.getReplyList();
+//		 ModelAndView mav = new ModelAndView();
+//		 mav.addObject("replyList",replyList);
+//		 mav.setViewName("/member/cardBoardView");
+//		 return mav;
+//	 } 
 }

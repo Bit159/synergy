@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import cardBoard.bean.CardBoardDTO;
 import cardBoard.bean.CardBoardPaging;
+import cardBoard.bean.CardBoardReplyDTO;
 import cardBoard.dao.CardBoardDAO;
 
 @Service
@@ -43,6 +44,10 @@ public class CardBoardServiceImpl implements CardBoardService {
 	@Override
 	public int getBoardListCnt() {
 		return cardBoardDAO.getBoardListCnt();
+	}
+	@Override
+	public List<CardBoardReplyDTO> getReplyList(int seq) {
+		return cardBoardDAO.getReplyList(seq);
 	}
 	
 }

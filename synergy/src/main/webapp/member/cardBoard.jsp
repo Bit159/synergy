@@ -217,11 +217,6 @@
 						});
 				    }
 				})
-				$('.paginationjs-pages ul li').on('click','a',function(){
-					pageA = $(this).text();
-					pageA = parseInt(pageA);
-// 					alert("pageA = " + pageA);
-				});
 			},
 			error:function(){
 				console.log('에러러러럴')
