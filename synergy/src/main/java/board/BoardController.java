@@ -30,9 +30,8 @@ public class BoardController {
 	private BoardDAO boardDAO;
 	
 	@GetMapping("/board/boardList")
-	public ModelAndView boardList(
-			@RequestParam(required=false, defaultValue = "1") int pg
-			,@RequestParam(required=false, defaultValue = "1") int range) {
+	public ModelAndView boardList(@RequestParam(required=false, defaultValue = "1") int pg
+							   	 ,@RequestParam(required=false, defaultValue = "1") int range) {
 		int page =  pg;
 		System.out.println("페이지"+page+"범위"+range);
 		int listCnt = boardService.getBoardListCnt(); 
@@ -41,6 +40,7 @@ public class BoardController {
 		System.out.println("paging: "+paging);
 		
 		List<CBoardDTO> list = boardService.getCBoardList(paging);
+		/* List<CBoardDTO> list = boardService.getCBoardList(); */
 		System.out.println(list.get(0).getContent());
 		Date now = new Date();
 		
@@ -53,9 +53,18 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/{bno}")
-	public ModelAndView boardView(@PathVariable("bno") int bno) {
+	public ModelAndView boardView(@PathVariable("bno") int bno,
+								  @RequestParam(required=false, defaultValue = "1") int pg
+								 ,@RequestParam(required=false, defaultValue = "1") int range) {
+		int page =  pg;
+		System.out.println("페이지"+page+"범위"+range);
+		int listCnt = boardService.getBoardListCnt(); 
+		Pagination paging = new Pagination();
+		paging.pageInfo(page, range, listCnt); 
+		System.out.println("paging: "+paging);
+		
 		CBoardDTO cBoardDTO = boardService.getCBoard(bno);
-		List<CBoardDTO> list = boardService.getCBoardList();
+		List<CBoardDTO> list = boardService.getCBoardList(paging);
 		System.out.println(cBoardDTO.getTitle());
 		List<CBoardReplyDTO> replyList = boardService.getCBoardReplyList(bno);
 		System.out.println(replyList);
@@ -63,6 +72,7 @@ public class BoardController {
 		
 		Date now = new Date();
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("paging",paging);
 		mav.addObject("cBoardDTO", cBoardDTO);
 		mav.addObject("list", list);
 		mav.addObject("now", now);
@@ -73,6 +83,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardList1", method = RequestMethod.GET)
 	public ModelAndView boardList1() {
+		
 		List<CBoardDTO> list = boardDAO.getCBoardList();
 		System.out.println(list.get(0).getContent());
 		Date now = new Date();

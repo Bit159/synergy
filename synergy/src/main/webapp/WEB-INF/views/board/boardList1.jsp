@@ -32,7 +32,7 @@
                     	<li class="list_group_item">
                     		<div class="bno"><c:out value="${dto.bno}" /></div>
 	                        <div class="topic"><c:out value="${dto.topic}" /></div>
-	                        <div class="title"><a id="titleA" href="/synergy/board/${dto.bno }"><c:out value="${dto.title}" /></a></div>                        
+	                        <div class="title"><a id="titleA" href="/synergy/board/${dto.bno }?pg=${paging.page}&range=${paging.range}"><c:out value="${dto.title}" /></a></div>                        
 	                        <div class="nickname"><c:out value="${dto.nickname}" /></div>
 	                        <div class="boarddate">
 	                        	<fmt:formatDate var="nowdate" pattern="yyyy-MM-dd" value="${now }"/>
@@ -50,9 +50,80 @@
                 </ul>
             </div>
             
-            
+            <!-- pagination{s} -->
+			<div id="paginationBox">
+				<ul class="pagination">
+					<c:if test="${paging.first}">
+						<li class="page-item"><a class="page-link" href="#" onClick="location.href='/synergy/board/boardList?pg=1&range=1'">《</a></li>
+					</c:if>
+					<c:if test="${paging.prev}">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}')">〈</a></li>
+					</c:if>
+					<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="idx">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}')"> ${idx} </a></li>
+					</c:forEach>
+					<c:if test="${paging.next}">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}')" >〉</a></li>
+					</c:if>
+					<c:if test="${paging.last}">
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}')" >》</a></li>
+					</c:if>
+				</ul>
+			</div>
+			<!-- pagination{e} -->
+			
+			<!-- searching -->
+			<div class="searchDiv">
+				<form action="/synergy/board/getCBoard" method="get">
+					<select name="searchOption" id="searchOption">
+						<option value="title">제목</option>
+						<option value="nickname">작성자</option>
+					</select>
+					<input type="text" name="keyword" id="keyword">
+					<input type="submit" id="searchBtn" value="검색">
+				</form>
+			</div>
+			<!-- searching -->
             
         </div>
     </div>	
+    <script type="text/javascript">
+		//이전 버튼 이벤트
+		function fn_prev(page, range, rangeSize) {
+			var page = ((range - 1) * rangeSize);
+			var range = range - 1;
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			url = url + "?pg=" + page;
+			url = url + "&range=" + range;
+			location.href = url;
+		}
+		
+		//페이지 번호 클릭
+		function fn_pagination(page, range, rangeSize) {
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			url = url + "?pg=" + page;
+			url = url + "&range=" + range;
+			location.href = url;	
+		}
+		
+		//다음 버튼 이벤트
+		function fn_next(page, range, rangeSize) {
+			var page = parseInt((range * rangeSize)) + 1;
+			var range = parseInt(range) + 1;
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			url = url + "?pg=" + page;
+			url = url + "&range=" + range;
+			location.href = url;
+		}
+		
+		//맨끝 버튼 이벤트
+		function fn_last(pageCnt, rangeSize) {
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			var range = Math.ceil(pageCnt/rangeSize);
+			url = url + "?pg=" + pageCnt;
+			url = url + "&range=" + range;
+			location.href = url;
+		}
+	</script>
 </body>
 </html>

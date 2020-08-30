@@ -49,7 +49,7 @@
 	            <span></span>
 	            <span></span>
 	        </label>
-	        <div class="sidebar">
+	        <!-- <div class="sidebar">
 	            <ul>
 	                <li><a>Welcome</a></li>
 	                <li><a>스터디 매칭</a></li>
@@ -58,7 +58,7 @@
 	                <li><a>메뉴</a></li>
 	                <li><a>문의</a></li>
 	            </ul>
-	        </div>
+	        </div> -->
 	    </header>
 	</div>
 </body>

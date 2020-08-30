@@ -26,6 +26,154 @@ public class Pagination {
 	private boolean prev;
 
 	private boolean next;
+	
+	private boolean first;
+	
+	private boolean last;
+	
+	
+	
+	public int getRangeSize() {
+
+		return rangeSize;
+
+	}
+
+
+
+	public int getPage() {
+
+		return page;
+
+	}
+
+
+
+	public void setPage(int page) {
+
+		this.page = page;
+
+	}
+
+
+
+	public int getRange() {
+
+		return range;
+
+	}
+
+
+
+	public void setRange(int range) {
+
+		this.range = range;
+
+	}
+
+
+
+	public int getStartPage() {
+
+		return startPage;
+
+	}
+
+
+
+	public void setStartPage(int startPage) {
+
+		this.startPage = startPage;
+
+	}
+
+
+
+	public int getEndPage() {
+
+		return endPage;
+
+	}
+
+
+
+	public void setEndPage(int endPage) {
+
+		this.endPage = endPage;
+
+	}
+
+
+
+	public boolean isPrev() {
+
+		return prev;
+
+	}
+
+
+
+	public void setPrev(boolean prev) {
+
+		this.prev = prev;
+
+	}
+
+
+
+	public boolean isNext() {
+
+		return next;
+
+	}
+
+
+
+	public void setNext(boolean next) {
+
+		this.next = next;
+
+	}
+
+
+
+	public int getListSize() {
+
+		return listSize;
+
+	}
+
+
+
+	public void setListSize(int listSize) {
+
+		this.listSize = listSize;
+
+	}
+
+	
+
+	public int getListCnt() {
+
+		return listCnt;
+
+	}
+
+
+
+	public void setListCnt(int listCnt) {
+
+		this.listCnt = listCnt;
+
+	}
+
+	
+
+	public int getStartList() {
+
+		return startList;
+
+	}
 
 	
 	public void pageInfo(int page, int range, int listCnt) {
@@ -79,6 +227,16 @@ public class Pagination {
 			this.next = false;
 
 		}
+		
+		//맨 처음으로
+		
+		this.first = page == 1 ? false : true;
+		
+		
+		//맨 마지막으로
+		
+		this.last = pageCnt == page ? false : true;
+		
 
 	}
 

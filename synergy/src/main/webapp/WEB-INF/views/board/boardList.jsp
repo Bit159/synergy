@@ -36,7 +36,7 @@
                     	<li class="list_group_item">
                     		<div class="bno"><c:out value="${dto.bno}" /></div>
 	                        <div class="topic"><c:out value="${dto.topic}" /></div>
-	                        <div class="title"><a id="titleA" href="/synergy/board/${dto.bno }"><c:out value="${dto.title}" /></a></div>                        
+	                        <div class="title"><a id="titleA" href="/synergy/board/${dto.bno }?pg=${paging.page}&range=${paging.range}"><c:out value="${dto.title}" /></a></div>                        
 	                        <div class="nickname"><c:out value="${dto.nickname}" /></div>
 	                        <div class="boarddate">
 	                        	<fmt:formatDate var="nowdate" pattern="yyyy-MM-dd" value="${now }"/>
@@ -75,6 +75,20 @@
 				</ul>
 			</div>
 			<!-- pagination{e} -->
+			
+			
+			<!-- searching -->
+			<div class="searchDiv">
+				<form action="/synergy/board/getCBoard" method="get">
+					<select name="searchOption" id="searchOption">
+						<option value="title">제목</option>
+						<option value="nickname">작성자</option>
+					</select>
+					<input type="text" name="keyword" id="keyword">
+					<input type="submit" id="searchBtn" value="검색">
+				</form>
+			</div>
+			<!-- searching -->
             
             <%-- <ul class="pagination"> 
     			<li><a href="/synergy/board/getCBoard?nowpage=0&searchOption=${searchOption}&keyword=${keyword}">&lt;&lt;</a></li> 
@@ -126,6 +140,16 @@
 	
 	<jsp:include page="footer.jsp" flush="false"/>
 	<script type="text/javascript">
+		//이전 버튼 이벤트
+		function fn_prev(page, range, rangeSize) {
+			var page = ((range - 1) * rangeSize);
+			var range = range - 1;
+			var url = "${pageContext.request.contextPath}/board/boardList";
+			url = url + "?pg=" + page;
+			url = url + "&range=" + range;
+			location.href = url;
+		}
+		
 		//페이지 번호 클릭
 		function fn_pagination(page, range, rangeSize) {
 			var url = "${pageContext.request.contextPath}/board/boardList";
@@ -133,6 +157,7 @@
 			url = url + "&range=" + range;
 			location.href = url;	
 		}
+		
 		//다음 버튼 이벤트
 		function fn_next(page, range, rangeSize) {
 			var page = parseInt((range * rangeSize)) + 1;
@@ -142,6 +167,7 @@
 			url = url + "&range=" + range;
 			location.href = url;
 		}
+		
 		//맨끝 버튼 이벤트
 		function fn_last(pageCnt, rangeSize) {
 			var url = "${pageContext.request.contextPath}/board/boardList";
