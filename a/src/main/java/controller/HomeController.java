@@ -27,6 +27,12 @@ public class HomeController {
 	@Autowired
 	private UserDAO userDAO;
 	
+	@PostMapping("/deleteSchedule")
+	@ResponseBody
+	public int deleteSchedule(@RequestBody int no) {
+		return userDAO.deleteSchedule(no);
+	}
+	
 	@GetMapping("/schedules")
 	public String schedules() {
 		return "/all/schedules";

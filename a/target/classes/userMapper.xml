@@ -9,6 +9,10 @@
 	<select id="getSchedules" resultType="notifier.NotDTO">
 		SELECT * FROM db.notify ORDER BY `created` ASC
 	</select>
+	
+	<delete id="deleteSchedule" parameterType="int">
+		DELETE FROM db.notify WHERE `no`=#{no}
+	</delete>
 	<!-- End of Getting Schedules -->
 
 	<!-- To get Database Server Time -->

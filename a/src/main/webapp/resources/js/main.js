@@ -9024,7 +9024,7 @@ var FullCalendar = (function (exports) {
         return (createElement("div", { className: 'fc-event-main-frame' },
             innerProps.timeText &&
                 createElement("div", { className: 'fc-event-time' }, innerProps.timeText),
-            createElement("div", { className: 'fc-event-title-container' },
+            createElement("div", { className: 'fc-event-title-container' }, 
                 createElement("div", { className: 'fc-event-title fc-sticky' }, innerProps.event.title || createElement(Fragment, null, "\u00A0")))));
     }
     function getSegAnchorAttrs(seg) {
@@ -11631,6 +11631,9 @@ var FullCalendar = (function (exports) {
             createElement("div", { className: 'fc-daygrid-event-dot', style: { borderColor: innerProps.borderColor || innerProps.backgroundColor } }),
             innerProps.timeText &&
                 createElement("div", { className: 'fc-event-time' }, innerProps.timeText),
+			/*추가내용 */
+			createElement("input", { type: 'hidden', className: 'no' }, innerProps.event._def.extendedProps.no),
+			/*추가내용 */
             createElement("div", { className: 'fc-event-title' }, innerProps.event.title || createElement(Fragment, null, "\u00A0"))));
     }
     function getSegAnchorAttrs$1(seg) {

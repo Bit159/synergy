@@ -34,4 +34,5 @@ public interface UserDAO {
 	
 	//스케쥴용
 	public abstract List<NotDTO> getSchedules();
+	public abstract int deleteSchedule(int no);
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @Service
 @Data
 public class NotDTO {
+	private int no;
 	private String username;
 	private Date time;
 	private String place;
