@@ -125,6 +125,21 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.getChattingRoom(username);
 	}
 
+	@Override
+	public String getNickname(String username) {
+		return memberDAO.getNickname(username);
+	}
+
+	@Override
+	public ChattingDTO getLastChatting(String chattingRoom) {
+		return memberDAO.getLastChatting(chattingRoom);
+	}
+
+	@Override
+	public ChattingRoomDTO getAllChatting() {
+		return memberDAO.getAllChatting();
+	}
+
 	
 	
 }

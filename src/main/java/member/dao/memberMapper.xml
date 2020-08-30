@@ -8,6 +8,11 @@
 		insert into authorities values(#{username}, #{auth});
 	</insert>
 	
+	<!-- 로그인  -->
+	<select id="getNickname" parameterType="String" resultType="String">
+		select nickname from membertable where username=#{username}
+	</select>
+	
 	<!-- 회원가입 -->
 	
 	<insert id="join" parameterType="java.util.Map">
@@ -67,13 +72,25 @@
   	<!-- 채팅 저장 -->
   	
   	<insert id="sendMessage" parameterType="chatting">
-  		insert into ${chattingRoom} values(#{username}, #{chat}, now())
+  		insert into ${chattingRoom} values(#{username}, #{nickname}, #{chat}, #{chat_date})
   	</insert>
   	
   	<!-- 채팅 가져오기 -->
   	
   	<select id="getChatting" resultType="chatting">
   		select * from ${chattingRoom}
+  	</select>
+  	
+  	<!-- 채팅방 프리뷰 가져오기 -->
+  	
+  	<select id="getLastChatting" parameterType="String" resultType="chatting">
+  		select * from ${chattingRoom} order by chat_date desc limit 1
+  	</select>
+  	
+  	<!-- 전체 채팅방 프리뷰 가져오기 -->
+  	
+  	<select id="getAllChatting" resultType="chattingRoom">
+  		select * from chattingRoom order by chat_date desc limit 1
   	</select>
   	
   	<!-- 채팅방 생성 -->

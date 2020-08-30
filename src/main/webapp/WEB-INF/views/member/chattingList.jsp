@@ -93,7 +93,7 @@
 	    padding-bottom: 4px;
 	}
 	
-	.chat_list_wrap .list ul li table td.time_td .check p {
+	.chat_list_wrap .list ul li table td.time_td div p {
 	    width: 5px;
 	    height: 5px;
 	    margin: 0 auto;
@@ -145,9 +145,16 @@
         display: inline-block;
         border-radius: 15px;
         padding : 7px 15px;
-        margin-bottom: 10px;
+        margin-bottom: 1px;
         margin-top: 5px;
     }
+    
+	.date{
+		padding : 0px 5px;
+		margin-bottom: 10px;
+		font-size: 8px;
+		display: block;
+	}
 
     .otherMessage > .message{
         background-color: #f1f0f0;
@@ -158,6 +165,7 @@
     }
 
     .otherName{
+    	padding : 0px 5px;
         font-size: 12px;
         display: block;
     }
@@ -201,26 +209,26 @@
     </div>
     <div class="list">
         <ul id="chattingRoomList">
-            <li id="chattingRoom" class="chattingRoom" onclick="getChatting(chattingRoom);connect();">
+            <li id="chattingRoom" class="chattingRoom" onclick="getChatting(chattingRoom)">
                 <table cellpadding="0" cellspacing="0">
                     <tr>
                         <td class="profile_td">
                             <img src="/resources/image/chatting.png" />
                         </td>
                         <td class="chat_td">
-                            <div class="email">
-                                byungjoo3011@naver.com
+                            <div class="email" id="email">
+                                
                             </div>
-                            <div class="chat_preview">
-                               	 안녕하세요~
+                            <div class="chat_preview" id="chat_preview">
+                               	 
                             </div>
                         </td>
                         <td class="time_td">
-                            <div class="time">
-                                2020.08.25 21:54
+                            <div class="time" id="time">
+                                
                             </div>
-                            <div class="check">
-                                <p> </p>
+                            <div id="chattingRoom_check">
+                                
                             </div>
                         </td>
                     </tr>
@@ -228,7 +236,6 @@
             </li>
         </ul>
     </div>
-    <input type="button" value="채팅방 생성" name="createChat" id="createChat">
 </div>
 
 <div id="contentCover" align="center" style="display:none;">
@@ -264,6 +271,8 @@ let contentCover = document.getElementById('contentCover');
 //======================================================== 채팅방 리스트 가져오기
 
 $(document).ready(function(){
+	connect(chattingRoomNum);
+	
 	$.ajax({
 		type : 'post',
 		beforeSend: function(xhr){
@@ -274,14 +283,27 @@ $(document).ready(function(){
 		dataType : 'json',
 		success : function(data){
 			$.each(data.list, function(index, items){
-				document.getElementById("chattingRoomList").innerHTML += "<li><table><tr><td class='profile_td'><img src='/resources/image/chatting.png' width='50' height='50'/></td>"
-																		+ "<td class='chat_td'><div class='email'>" + items.members + "</div><div class='chat_preview'>채팅방 프리뷰</div></td>"
-																		+ "<td class='time_td'><div class='time'>2020.08.26 21:32</div><div class='check'><p></p></div></td></tr></table></li>";
+				document.getElementById("chattingRoomList").innerHTML += "<li id='" + items.chattingRoom + "' onclick='getChatting(" + items.chattingRoom + ")'><table><tr><td class='profile_td'><img src='/resources/image/chatting.png' width='50' height='50'/></td>"
+																		+ "<td class='chat_td'><div class='email'>" + items.nickname + "</div><div class='chat_preview'>" + items.chat + "</div></td>"
+																		+ "<td class='time_td'><div class='time'>" + items.chat_date + "</div><div id='" + items.chattingRoom + "_check'></div></td></tr></table></li>";
+				connect(items.chattingRoom);														
 			});
+			
 		},
 		error : function(err){
 			console.log(err);
 		}
+	});
+	
+	$.ajax({
+		type : 'get',
+    	url : '/member/getAllChatting',
+    	dataType : 'json',
+    	success : function(data){
+    		document.getElementById("email").innerHTML += data.chattingRoomDTO.nickname;
+    		document.getElementById("time").innerHTML += data.chattingRoomDTO.chat_date;
+    		document.getElementById("chat_preview").innerHTML += data.chattingRoomDTO.chat;
+    	}
 	});
 });
 
@@ -320,11 +342,13 @@ function getChatting(chattingRoom){
 			
 			$.each(data.list, function(index, items){
 				if(username == items.username) {
-					messages.innerHTML += "<div class='myMessage'><span class='message'>" + items.chat + "</span></div>";
-				
+					messages.innerHTML += "<div class='myMessage'><span class='message'>" + items.chat + "</span>"
+										+ "<span class='date'>" + items.chat_date + "</span></div>";
+					
 				}else {
-					messages.innerHTML += "<div class='otherMessage'><span class='otherName'>" + items.username + "</span>"
-										+ "<span class='message'>" + items.chat + "</span></div>";
+					messages.innerHTML += "<div class='otherMessage'><span class='otherName'>" + items.nickname + "</span>"
+										+ "<span class='message'>" + items.chat + "</span>"
+										+ "<span class='date'>" + items.chat_date + "</span></div>";
 				}
 			});
 			
@@ -338,6 +362,7 @@ function getChatting(chattingRoom){
 function roomList(){
 	$('#chatHeader').empty();
 	$('#messages').empty();
+	$('p#check').remove();
 	
 	list_wrap.style.display = 'block';
 	contentCover.style.display = 'none';
@@ -345,11 +370,11 @@ function roomList(){
 
 //================================================== ====== Stomp, SockJS 
 
-function connect(){
+function connect(chattingRoom){
 	let socket = new SockJS('/chat');
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(){
-		stompClient.subscribe('/topic/' + chattingRoom.id, onMessageReceived); 
+		stompClient.subscribe('/topic/' + chattingRoom, onMessageReceived); 
 		/* 
 		첫번째 매개변수는 구독할 주소를 말하고
 		두번째 매개변수는 메시지를 받았을 때 수행할 메소드를 넣으면 된다.
@@ -360,7 +385,7 @@ function connect(){
 function send(data){
 	let chat = document.getElementById('messageInput').value;
 	
-	stompClient.send("/app/message", {}, JSON.stringify({'username' : username, 'chat' : chat, 'chattingRoom' : data.id }))
+	stompClient.send("/app/message", {}, JSON.stringify({'nickname' : '${nickname}', 'chat' : chat, 'chattingRoom' : data.id, 'username' : username }))
 	
 	document.getElementById("messageInput").value="";
 	
@@ -380,16 +405,39 @@ function disconnect() {
 }
 
 function onMessageReceived(payload){
+	let chat_preview = document.getElementById('chat_preview');
+	let email = document.getElementById('email');
+	let time = document.getElementById('time');
+	
+	$('#chat_preview').empty();
+	$('#email').empty();
+	$('#time').empty();
+	
 	console.log(payload.chat);
 	let message = JSON.parse(payload.body);
 	
 	if(username == message.username){
-		messages.innerHTML += "<div class='myMessage'><span class='message'>" + message.chat + "</span></div>";
+		messages.innerHTML += "<div class='myMessage'><span class='message'>" + message.chat + "</span>"
+							 +"<span class='date'>" + message.chat_date +  "</span></div>" ;
+							 
+		chat_preview.innerHTML += message.chat;
+		time.innerHTML += message.chat_date;
+		email.innerHTML += message.nickname;
 		
 	}else {
-		messages.innerHTML += "<div class='otherMessage'><span class='otherName'>" + message.username + "</span>"
-							+ "<span class='message'>" + message.chat + "</span></div>";
+		messages.innerHTML += "<div class='otherMessage'><span class='otherName'>" + message.nickname + "</span>"
+							+ "<span class='message'>" + message.chat + "</span>"
+							+ "<span class='date'>" + message.chat_date + "</span></div>" ;
+							
+		chat_preview.innerHTML += message.chat;
+		time.innerHTML += message.chat_date;
+		email.innerHTML += message.nickname;					
 	}
+	
+	if(document.getElementById('check') == null){
+		document.getElementById(message.chattingRoom + '_check').innerHTML += "<p id='check'></p>";
+	}
+	
 	document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
 }
 
@@ -398,5 +446,6 @@ function enterKey(data){
 		send(data);
 	}
 }
+
 </script>
 </html>

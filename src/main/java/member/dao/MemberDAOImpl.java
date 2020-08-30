@@ -132,4 +132,19 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
+	@Override
+	public String getNickname(String username) {
+		return sqlSession.selectOne("memberSQL.getNickname",username);
+	}
+
+	@Override
+	public ChattingDTO getLastChatting(String chattingRoom) {
+		return sqlSession.selectOne("memberSQL.getLastChatting", chattingRoom);
+	}
+
+	@Override
+	public ChattingRoomDTO getAllChatting() {
+		return sqlSession.selectOne("memberSQL.getAllChatting");
+	}
+
 }

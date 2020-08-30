@@ -1,5 +1,6 @@
 package member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -264,10 +265,27 @@ public class MemberController{
 	public ModelAndView getChattingRoom(@RequestParam String username) {
 		ModelAndView mav = new ModelAndView();
 		List<ChattingRoomDTO> list = memberService.getChattingRoom(username);
+		
 		for(ChattingRoomDTO dto : list) {
-			System.out.println(dto.getChattingRoom());
+			ChattingDTO chattingDTO = memberService.getLastChatting(dto.getChattingRoom());
+			dto.setChat(chattingDTO.getChat());
+			dto.setChat_date(chattingDTO.getChat_date());
+			dto.setNickname(chattingDTO.getNickname());
+			dto.setUsername(username);
 		}
+		
 		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	@GetMapping("/member/getAllChatting")
+	@ResponseBody
+	public ModelAndView getAllChatting() {
+		ModelAndView mav = new ModelAndView();
+		ChattingRoomDTO chattingRoomDTO = memberService.getAllChatting();
+		System.out.println(chattingRoomDTO.getChat());
+		mav.addObject("chattingRoomDTO", chattingRoomDTO);
 		mav.setViewName("jsonView");
 		
 		return mav;
@@ -291,5 +309,5 @@ public class MemberController{
 	public void createChat() {
 		memberService.createChat();
 	}
-
+	
 }

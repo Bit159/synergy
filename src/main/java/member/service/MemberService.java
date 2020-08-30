@@ -41,4 +41,10 @@ public interface MemberService {
 
 	public void sendMessage(ChattingDTO chattingDTO);
 
+	public String getNickname(String username);
+
+	public ChattingDTO getLastChatting(String chattingRoom);
+
+	public ChattingRoomDTO getAllChatting();
+
 }
