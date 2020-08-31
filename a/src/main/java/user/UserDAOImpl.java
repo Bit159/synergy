@@ -127,10 +127,17 @@ public class UserDAOImpl implements UserDAO {
 	
 	// FOR DISPLAYING SCHEDULES
 	@Override
+	public int createSchedule(NotDTO dto) {
+		return sqlSession.insert("userSQL.createSchedule", dto);
+	}
+	@Override
 	public List<NotDTO> getSchedules() {
 		return sqlSession.selectList("userSQL.getSchedules");
 	}
-
+	@Override
+	public int updateSchedule(NotDTO dto) {
+		return sqlSession.delete("userSQL.updateSchedule", dto);
+	}
 	@Override
 	public int deleteSchedule(int no) {
 		return sqlSession.delete("userSQL.deleteSchedule", no);

@@ -6,9 +6,18 @@
 <mapper namespace="userSQL">
 
 	<!-- To get Schedules -->
+	<insert id="createSchedule" parameterType="notifier.NotDTO">
+		INSERT db.notify(`username`, `alert`, `time`, `place`, `title`, `content`, `link`, `created`, `updated`)
+		VALUES(#{username}, #alert{}, #{time}, #{place}, #{title}, #{content}, #{link}, #{created}, #{updated})
+	</insert>
+	
 	<select id="getSchedules" resultType="notifier.NotDTO">
 		SELECT * FROM db.notify ORDER BY `created` ASC
 	</select>
+	
+	<update id="updateSchedule" parameterType="notifier.NotDTO">
+		UPDATE db.notify SET `alert`=#{alert}, `time`=#{time}, `title`=#{title}, `content`=#{content}, `link`=#{link}, `updated`=NOW() WHERE `no`=#{no};
+	</update>
 	
 	<delete id="deleteSchedule" parameterType="int">
 		DELETE FROM db.notify WHERE `no`=#{no}

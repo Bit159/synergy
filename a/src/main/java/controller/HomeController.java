@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import notifier.NotDTO;
 import user.CBoardDTO;
 import user.MatchDTO;
 import user.UserDAO;
@@ -27,10 +28,25 @@ public class HomeController {
 	@Autowired
 	private UserDAO userDAO;
 	
+	@PostMapping(path="/createSchedule", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public int createSchedule(@RequestBody JSONObject json) {
+		System.out.println(json);
+		int result = 0;
+		return result;
+	}
+	
 	@PostMapping("/deleteSchedule")
 	@ResponseBody
 	public int deleteSchedule(@RequestBody int no) {
 		return userDAO.deleteSchedule(no);
+	}
+	@PostMapping("/updateSchedule")
+	@ResponseBody
+	public int updateSchedule(@RequestBody JSONObject json) {
+		NotDTO dto = new NotDTO();
+		System.out.println(json);
+		return 0;
 	}
 	
 	@GetMapping("/schedules")

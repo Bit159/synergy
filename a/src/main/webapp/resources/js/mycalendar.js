@@ -45,19 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	    editable: true,
 	    selectable: true,
 	    selectMirror: true,
-	    select: function (arg) {
-	      var title = prompt("Event Title:");
-	
-	      if (title) {
-	        calendar.addEvent({
-	          title: title,
-	          start: arg.start,
-	          end: arg.end,
-	          allDay: arg.allDay,
-	        });
-	      }
-	      calendar.unselect();
-	    },
+	    select: function (arg) {createSchedule(arg, this)},
 	    eventClick: function (arg) {myEventClick(arg)},
 	    editable: true,
 	    dayMaxEvents: true, // allow "more" link when too many events
@@ -149,3 +137,51 @@ function myEventClick(arg) {
 	}
 }
 /*End of 일정 클릭했을 때의 이벤트 */
+
+/*일정 생성하기 이벤트*/
+function createSchedule(arg, calendar) {
+	console.log(arg);
+	console.log(calendar);
+	
+	let ob = new Object();
+	ob.username = 'jpcnani@naver.com';
+	ob.alert = new Date();
+	ob.time = new Date();
+	ob.place = prompt("Place");;
+	ob.title = prompt("Title:");
+	ob.content = prompt("Content:");
+	ob.created = new Date();
+	ob.updated = new Date();
+
+	if (ob.title) {
+		let url = "/createSchedule";
+		let options = {
+						method: "POST",
+						headers: {
+									"X-CSRF-TOKEN": document.getElementById('csrf').content,
+									Accept: "application/json",
+									"Content-Type": "application/json; charset=utf-8",
+								},
+						body: JSON.stringify(ob),
+					};
+		fetch(url, options).then((res)=>res.text().then((text)=>{console.log(text);}));
+		
+		
+		calendar.addEvent({
+			title: title,
+			start: arg.start,
+			end: arg.end,
+			/*allDay: arg.allDay,*/
+			allDay: false,
+			username: username,
+			alert: alert,
+			time: time,
+			place: place,
+			content: content,
+			created: created,
+			updated: updated
+		});
+	}
+	calendar.unselect();
+}
+/* End of 일정 생성하기 이벤트*/ 

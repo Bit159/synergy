@@ -10,9 +10,9 @@
     <title>일정관리</title>
     <link rel="stylesheet" href="/resources/css/mycalendar.css" />
     <link rel="stylesheet" href="/resources/css/main.css" />
-    <script src="resources/js/main.js"></script>
-    <script src="resources/js/locales-all.js"></script>
-    <script src="resources/js/mycalendar.js"></script>
+    <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/locales-all.js"></script>
+    <script src="/resources/js/mycalendar.js"></script>
   </head>
   <body>
   	<%@ include file="/template/header.jsp"%>

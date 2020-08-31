@@ -9,6 +9,7 @@ import lombok.Data;
 public class NotDTO {
 	private int no;
 	private String username;
+	private Date alert;
 	private Date time;
 	private String place;
 	private String title;
