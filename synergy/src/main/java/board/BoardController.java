@@ -31,21 +31,35 @@ public class BoardController {
 	
 	@GetMapping("/board/boardList")
 	public ModelAndView boardList(@RequestParam(required=false, defaultValue = "1") int pg
-							   	 ,@RequestParam(required=false, defaultValue = "1") int range) {
+							   	 ,@RequestParam(required=false, defaultValue = "1") int range
+							   	 , @RequestParam(required = false, defaultValue = "title") String searchType
+								 , @RequestParam(required = false) String keyword)  {
+		
+		Search search = new Search();
+		search.setSearchType(searchType);
+		search.setKeyword(keyword);
+		
 		int page =  pg;
 		System.out.println("페이지"+page+"범위"+range);
-		int listCnt = boardService.getBoardListCnt(); 
+		
+		//전체 게시글 수
+		int listCnt = boardService.getBoardListCnt(search); 
+		
+		search.pageInfo(page, range, listCnt);
+		
 		Pagination paging = new Pagination();
 		paging.pageInfo(page, range, listCnt); 
 		System.out.println("paging: "+paging);
 		
-		List<CBoardDTO> list = boardService.getCBoardList(paging);
+		List<CBoardDTO> list = boardService.getCBoardList(search);
+		/* List<CBoardDTO> list = boardService.getCBoardList(paging); */
 		/* List<CBoardDTO> list = boardService.getCBoardList(); */
 		System.out.println(list.get(0).getContent());
+		
 		Date now = new Date();
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("paging",paging);
+		mav.addObject("paging",search);
 		mav.addObject("list", list);
 		mav.addObject("now", now);
 		mav.setViewName("/board/boardList");
@@ -55,24 +69,36 @@ public class BoardController {
 	@GetMapping("/board/{bno}")
 	public ModelAndView boardView(@PathVariable("bno") int bno,
 								  @RequestParam(required=false, defaultValue = "1") int pg
-								 ,@RequestParam(required=false, defaultValue = "1") int range) {
+								 ,@RequestParam(required=false, defaultValue = "1") int range
+								 , @RequestParam(required = false, defaultValue = "title") String searchType
+								 , @RequestParam(required = false) String keyword) {
+		Search search = new Search();
+		search.setSearchType(searchType);
+		search.setKeyword(keyword);
+		
 		int page =  pg;
 		System.out.println("페이지"+page+"범위"+range);
-		int listCnt = boardService.getBoardListCnt(); 
+		//전체 게시글 수
+		int listCnt = boardService.getBoardListCnt(search); 
+		
+		search.pageInfo(page, range, listCnt);
+		
 		Pagination paging = new Pagination();
 		paging.pageInfo(page, range, listCnt); 
 		System.out.println("paging: "+paging);
 		
 		CBoardDTO cBoardDTO = boardService.getCBoard(bno);
-		List<CBoardDTO> list = boardService.getCBoardList(paging);
+		List<CBoardDTO> list = boardService.getCBoardList(search);
+		/* List<CBoardDTO> list = boardService.getCBoardList(paging); */
 		System.out.println(cBoardDTO.getTitle());
 		List<CBoardReplyDTO> replyList = boardService.getCBoardReplyList(bno);
 		System.out.println(replyList);
 		boardService.hitUpdate(bno);
 		
 		Date now = new Date();
+		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("paging",paging);
+		mav.addObject("paging",search);
 		mav.addObject("cBoardDTO", cBoardDTO);
 		mav.addObject("list", list);
 		mav.addObject("now", now);

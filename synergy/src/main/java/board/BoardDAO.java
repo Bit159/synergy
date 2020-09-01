@@ -36,5 +36,9 @@ public interface BoardDAO {
 
 	public List<CBoardDTO> getCBoardList(Pagination paging);
 	
+	public List<CBoardDTO> getCBoardList(Search search);
+
+	public int getBoardListCnt(Search search);
+	
 	
 }

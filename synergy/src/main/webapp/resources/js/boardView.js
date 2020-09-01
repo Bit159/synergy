@@ -137,13 +137,13 @@ $(document).ready(function(){
 	//댓글 수정
 	$(document).on("click",".modifyBtn", function(){
 		var $btnObj = $(this);
-		$btnObj.parent().parent().css('display','none');
-		$btnObj.parent().parent().parent().children('div.reply_modify_wrapper').css('display','block');
+		$btnObj.parent().parent().parent().css('display','none');
+		$btnObj.parent().parent().parent().parent().children('div.reply_modify_wrapper').css('display','block');
 	});
 	
 	$(document).on("click",".reply_modify_cancel", function(){
 		var $btnObj = $(this);
-		$btnObj.parent().parent().parent().parent().parent().children('li.reply_group_item').css('display','flex');
+		$btnObj.parent().parent().parent().parent().parent().children('li.reply_group_item2').css('display','flex');
 		$btnObj.parent().parent().parent().parent().css('display','none');
 	});
 	

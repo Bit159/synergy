@@ -1,4 +1,4 @@
-var header = $('#header_wrapper').offset().top;
+/*var header = $('#header_wrapper').offset().top;
 var sidebar = $('.sidebar').offset().top;
 $(window).scroll(function(){
     var window = $(this).scrollTop();
@@ -10,4 +10,4 @@ $(window).scroll(function(){
         $('#header_wrapper').removeClass("fixed");
         $('.sidebar').removeClass("fixed");
     }
-});
+});*/

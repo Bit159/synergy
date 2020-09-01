@@ -236,6 +236,7 @@ textarea[class="reply_modify_text"]{
 	margin-bottom: 10px;
 	resize: vertical;
 	font-size: 20px;
+	
 }
 div[class="reply_modify_button_div"]{
     width: 120px;
@@ -288,13 +289,15 @@ div.replydate2{
 }
 textarea[class="reply_modify_text1"]{
     width: 100%;
-	min-height: 100px;
-	padding: 4px 8px;
+    min-height:100px;
+	overflow: hidden;
+	padding: 0px;
 	border: 1px solid #ddd;
 	margin-bottom: 10px;
 	resize: none;
 	font-size: 20px;
 	readonly;
+	border: none
 }
 button.modify{
     width:70px;

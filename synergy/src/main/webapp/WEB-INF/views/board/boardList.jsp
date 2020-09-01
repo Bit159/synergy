@@ -78,8 +78,8 @@
 			
 			
 			<!-- searching -->
-			<div class="searchDiv">
-				<form action="/synergy/board/getCBoard" method="get">
+			<!-- <div class="searchDiv">
+				<form action="/synergy/board/boardList" method="get">
 					<select name="searchOption" id="searchOption">
 						<option value="title">제목</option>
 						<option value="nickname">작성자</option>
@@ -87,8 +87,46 @@
 					<input type="text" name="keyword" id="keyword">
 					<input type="submit" id="searchBtn" value="검색">
 				</form>
-			</div>
+			</div> -->
 			<!-- searching -->
+			
+			<!-- search{s} -->
+
+			<div class="form-group row justify-content-center">
+	
+				<div class="w100" style="padding-right:10px">
+	
+					<select class="form-control form-control-sm" name="searchType" id="searchType">
+	
+						<option value="title">제목</option>
+	
+						<!-- <option value="Content">본문</option> -->
+	
+						<option value="nickname">작성자</option>
+	
+					</select>
+	
+				</div>
+	
+				<div class="w300" style="padding-right:10px">
+	
+					<input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
+	
+				</div>
+	
+				<div>
+	
+					<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
+	
+				</div>
+	
+			</div>
+	
+			<!-- search{e} -->
+
+
+
+			
             
             <%-- <ul class="pagination"> 
     			<li><a href="/synergy/board/getCBoard?nowpage=0&searchOption=${searchOption}&keyword=${keyword}">&lt;&lt;</a></li> 
@@ -139,7 +177,11 @@
     </div>
 	
 	<jsp:include page="footer.jsp" flush="false"/>
+	
+	<c:url var="boardListURL" value="/synergy/board/boardList"></c:url>
+
 	<script type="text/javascript">
+		//페이징처리
 		//이전 버튼 이벤트
 		function fn_prev(page, range, rangeSize) {
 			var page = ((range - 1) * rangeSize);
@@ -176,6 +218,27 @@
 			url = url + "&range=" + range;
 			location.href = url;
 		}
+		
+		//검색 버튼
+		$(document).on('click', '#btnSearch', function(e){
+
+			e.preventDefault();
+	
+			var url = "${boardList}";
+	
+			url = url + "?searchType=" + $('#searchType').val();
+	
+			url = url + "&keyword=" + $('#keyword').val();
+	
+			location.href = url;
+	
+			console.log(url);
+	
+		});
+
+
+
+
 	</script>
 </body>
 </html>

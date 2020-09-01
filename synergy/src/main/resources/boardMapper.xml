@@ -29,6 +29,7 @@
 		SELECT * 
 		FROM db.cboard 
 		ORDER BY bno desc 
+		
 		LIMIT 0,20
 	</select>
 	<!-- 크롤링 보드 체크용 -->
@@ -37,7 +38,22 @@
 	<select id="getCBoardList1" parameterType="board.Pagination" resultType="board.CBoardDTO">
 		SELECT * 
 		FROM db.cboard 
-		ORDER BY bno desc 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+
+			<if test="searchType=='title' and keyword != null and keyword != '' ">
+
+				AND title like CONCAT('%', #{keyword}, '%')
+
+			</if>
+
+			<if test="searchType=='nickname' and keyword != null and keyword != '' ">
+
+				AND nickname like CONCAT('%', #{keyword}, '%')
+
+			</if>	
+
+		</trim>
+		ORDER BY bno desc
 		LIMIT #{startList},#{listSize};
 	</select>
 	<!-- 크롤링 보드 페이징 -->
@@ -102,7 +118,57 @@
   	
   	<!-- 게시글 총 개수 -->
   	<select id="getBoardListCnt" resultType="int">
-		SELECT count(*) as listCnt FROM db.cboard
+		SELECT count(*) as listCnt 
+		FROM db.cboard
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+
+			<if test="keyword != null and keyword != '' ">
+	
+				<if test="searchType=='title'">
+	
+					AND title like CONCAT('%', #{keyword}, '%')
+	
+				</if>
+	
+				<if test="searchType=='nickname'">
+	
+					AND nickname like CONCAT('%', #{keyword}, '%')
+	
+				</if>
+	
+	      </if>
+	
+		</trim>
+		
+		
+	</select>
+	<!-- 게시글 총 개수 -->
+	
+	<!-- 게시글 총 개수 -->
+  	<select id="getBoardListCnt1" resultType="int">
+		SELECT count(*) as listCnt 
+		FROM db.cboard
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+
+			<if test="keyword != null and keyword != '' ">
+	
+				<if test="searchType=='title'">
+	
+					AND TITLE like CONCAT('%', #{keyword}, '%')
+	
+				</if>
+	
+				<if test="searchType=='nickname'">
+	
+					AND nickname like CONCAT('%', #{keyword}, '%')
+	
+				</if>
+	
+	      </if>
+	
+		</trim>
+		
+		
 	</select>
 	<!-- 게시글 총 개수 -->
   	

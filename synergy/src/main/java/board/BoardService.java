@@ -33,6 +33,10 @@ public interface BoardService {
 
 	public int getBoardListCnt();
 
-	public List<CBoardDTO> getCBoardList(Pagination paging);
+	public List<CBoardDTO> getCBoardList(Pagination paging); 
+	
+	public List<CBoardDTO> getCBoardList(Search search);
+
+	public int getBoardListCnt(Search search);
 
 }

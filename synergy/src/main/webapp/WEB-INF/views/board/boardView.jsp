@@ -72,7 +72,7 @@
 	                            </div> -->
 	                            
 	                            
-	                            <li class="reply_group_item2">
+	                            <!-- <li class="reply_group_item2">
 	                                <div class="itemwrapper">
 	                                    <div class="reply_nickname2">작성자</div>
 	                                    <div class="replydate2">작성시간, 수정시간</div>
@@ -83,7 +83,7 @@
 	                                        <button class="delete">삭제</button>
 	                                    </div>
 	                                </div>
-	                            </li>
+	                            </li> -->
 	                            
 	                            
 	                            
@@ -152,6 +152,8 @@
 	                            
 	                        </ul>
 	                        
+	                        <br><br><br><br>
+	                        
 	                    <%-- <c:if test="${not empty session }"> --%>
 	                    <!-- <div class="reply_writer_wrapper">
 							<div class="reply_writer">
@@ -190,9 +192,14 @@
     <jsp:include page="boardList1.jsp" flush="false"/>
     <jsp:include page="footer.jsp" flush="false"/>
     
+    <c:url var="boardListURL" value="/synergy/board/boardList"></c:url>
+    
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="../resources/js/welcome.js" defer></script>
 	<script src="../resources/js/boardView.js" defer></script>
+	<!-- <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js">
+	autosize($('textarea'));
+	</script> -->
 	
 </body>
 </html>

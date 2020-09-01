@@ -119,5 +119,18 @@ public class BoardServiceImpl implements BoardService {
 		
 		return list;
 	}
+	
+	@Override
+	public List<CBoardDTO> getCBoardList(Search search) {
+		List<CBoardDTO> list = boardDAO.getCBoardList(search);
+		
+		return list;
+	}
+
+	@Override
+	public int getBoardListCnt(Search search) {
+		return boardDAO.getBoardListCnt(search);
+
+	}
 
 }

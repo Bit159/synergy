@@ -94,5 +94,15 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<CBoardDTO> getCBoardList(Pagination paging) {
 		return sqlSession.selectList("boardSQL.getCBoardList1", paging);
 	}
+	
+	@Override
+	public List<CBoardDTO> getCBoardList(Search search) {
+		return sqlSession.selectList("boardSQL.getCBoardList1", search);
+	}
+
+	@Override
+	public int getBoardListCnt(Search search) {
+		return sqlSession.selectOne("boardSQL.getBoardListCnt1",search);
+	}
 
 }
