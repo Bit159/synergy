@@ -83,7 +83,7 @@
 	                    <div class="card-header-content">
 	                    	<input type=hidden name="seq" id="seq" value="${dto.seq}">
 	                        <div class="card-header-text"> 모집중  </div>
-	                        <div class="card-header-count">1 / ${dto.people}  </div>
+	                        <div class="card-header-count">${dto.people}  </div>
 	                    </div>
 	                </div>
 	                <!-- 카드 바디 -->
@@ -119,7 +119,6 @@
 				<c:if test="${paging.last}">
 					<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}')" >》</a></li>
 				</c:if>
-				
 			</ul>
 		</div>
 		<!-- pagination{e} -->

@@ -17,5 +17,8 @@ public interface CardBoardDAO {
 	public CardBoardDTO getCardContent(int seq);
 	public int getBoardListCnt();
 	public List<CardBoardReplyDTO> getReplyList(int seq);
+	public void writeReply(CardBoardReplyDTO dto);
+	public void deleteReply(int rseq);
+	public void modifyReply(CardBoardReplyDTO dto);
 
 }

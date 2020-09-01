@@ -49,5 +49,17 @@ public class CardBoardServiceImpl implements CardBoardService {
 	public List<CardBoardReplyDTO> getReplyList(int seq) {
 		return cardBoardDAO.getReplyList(seq);
 	}
+	@Override
+	public void writeReply(CardBoardReplyDTO dto) {
+		cardBoardDAO.writeReply(dto);
+	}
+	@Override
+	public void deleteReply(int rseq) {
+		cardBoardDAO.deleteReply(rseq);
+	}
+	@Override
+	public void modifyReply(CardBoardReplyDTO dto) {
+		cardBoardDAO.modifyReply(dto);
+	}
 	
 }

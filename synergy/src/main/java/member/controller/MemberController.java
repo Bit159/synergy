@@ -178,24 +178,43 @@ public class MemberController {
 	 }
 	 //글 보기
 	 @GetMapping(value="/member/cardBoardView")
-	 public ModelAndView cardBoardView(@RequestParam int seq) {
-		 System.out.println(seq);
+	 public ModelAndView cardBoardView(@RequestParam int seq,Principal principal) {
 		 CardBoardDTO dto = cardBoardService.getCardContent(seq);
 		 List<CardBoardReplyDTO> replyList= cardBoardService.getReplyList(seq);
-		 System.out.println(replyList);
+		 String username = principal.getName();
+		 String nickname = memberService.getNickname(username);
 		 ModelAndView mav = new ModelAndView();
 		 mav.addObject("dto",dto);
 		 mav.addObject("replyList",replyList);
+		 mav.addObject("nickname",nickname);
 		 mav.setViewName("/member/cardBoardView");
 		 return mav;
 	 }
-//	 //댓글리스트
-//	 @GetMapping(value="/member/getReplyList")
-//	 public ModelAndView getReplyList(@RequsetParam int seq) {
-//		 List<CardBoardReplyDTO> replyList= cardBoardService.getReplyList();
-//		 ModelAndView mav = new ModelAndView();
-//		 mav.addObject("replyList",replyList);
-//		 mav.setViewName("/member/cardBoardView");
-//		 return mav;
-//	 } 
+	 //댓글등록
+	 @GetMapping(value="/member/writeReply")
+	 public String writeReply(@RequestParam String reply,@RequestParam int seq,Principal principal) {
+		 String username = principal.getName();
+		 String nickname = memberService.getNickname(username);
+		 CardBoardReplyDTO dto = new CardBoardReplyDTO();
+		 dto.setSeq(seq);
+		 dto.setReply(reply);
+		 dto.setNickname(nickname);
+		 cardBoardService.writeReply(dto);
+		 return "/member/cardBoardView";
+	 }
+	 //댓글 삭제
+	 @GetMapping(value="/member/deleteReply")
+	 public String deleteReply(@RequestParam int rseq){
+		 cardBoardService.deleteReply(rseq);
+		 return "/member/cardBoardView";
+	 }
+	 //댓글 수정
+	 @GetMapping(value="/member/modifyReply")
+	 public String modifyReply(@RequestParam int rseq,@RequestParam String reply){
+		 CardBoardReplyDTO dto = new CardBoardReplyDTO();
+		 dto.setRseq(rseq);
+		 dto.setReply(reply);
+		 cardBoardService.modifyReply(dto);
+		 return "/member/cardBoardView";
+	 }
 }

@@ -35,9 +35,125 @@ table[id="viewTable"] td {
     padding:5px
 }
 div[id="card-content"] pre {
-	padding:10px 10px 10px 10px;
+	padding:10px;
 	color:black;
-	border:solid 1px lightgray;
+	border:solid 2px lightgray;
 	margin:0px 10px 0px 10px;
-	border-radius: 10px;
+/* 	border-radius: 10px; */
+	margin-bottom: 20px;
+}
+
+/* ===============댓글==================== */
+div[class="view-reply"] {
+	margin:10px;
+}
+li[class="reply_group_item"]{
+    display: flex;
+}
+div[class="reply_group_div"] {
+	width:100%;
+	border: solid 2px lightgray;
+	border-bottom-style: none;
+	padding:10px;
+}
+div[class="reply_nickname"]{
+	font-size:14pt;
+	font-weight:550;
+	margin-bottom: 5px;
+}
+div[id="reply_regDate"] {
+	color:lightgrey;
+}
+div[id="reply_editDate"] {
+	color:lightgrey;
+	display:none;
+}
+div[class="reply"]{
+	padding:10px 0 20px 0;
+	white-space: pre-line;
+}
+div[class="reply_button"]{
+	display:flex;
+	width: 10%;
+	line-height: 40px;
+	margin-bottom: 10px;
+}
+button[id="modifyReplyBtn"]{
+	width: 50%;
+	margin-right: 5px;
+}
+button[id="deleteReplyBtn"]{
+	width: 50%;
+}
+div[class="reply_write"] {
+	padding:10px;
+	border:solid 2px lightgray;
+}
+textarea[id="reply"] {
+	width:92%;
+	margin-top:10px;
+	padding:10px;
+	font-size: 12pt;
+	font-weight: 550;
+	margin:0;
+}
+div[class="reply_write_item"] {
+	display:flex;
+}
+div[class="reply_write_button"] {
+	width:8%;
+	display:flex;
+	padding:15px;
+}
+div[class="reply_write_button"] button {
+	width:100%;
+	padding:5px;
+	margin:5px;
+}
+div[class="reply_modify_wrapper"]{
+    width: 100%;
+	min-height: 100px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    display: none;
+}
+div[class="reply_modify"]{
+    margin-top: 0px;
+}
+label[class="reply_modify_label"]{
+    padding-bottom: 10px;
+	padding-left: 20px;
+	font-weight: bold;
+}
+div[class="reply_modify_div"]{
+    display: flex;
+	 justify-content: space-between;
+	 padding: 10px;
+}
+textarea[id="reply_modify_text"]{
+    width: 92%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	resize: vertical;
+	font-size: 13pt;
+}
+div[class="reply_modify_button_div"]{
+    width: 8%;
+    margin-left: 10px;
+}
+button[id="reply_modify_button"]{
+    width: 100%;
+	border: 1px solid black;
+	border-radius: 3px;
+	text-align: center;
+    line-height: 50px;
+    vertical-align: bottom;
+    margin-bottom: 5px;
+}
+button[id="reply_modify_cancel"]{
+    width: 100%;
+	border: 1px solid black;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 50px;
 }

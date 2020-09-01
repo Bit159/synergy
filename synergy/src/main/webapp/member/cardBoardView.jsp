@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta id="_csrf" name="_csrf" content="${_csrf.token}">
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/cardBoardView.css">
@@ -44,36 +46,103 @@
                     </div>
                 </div>
                 <div class="view-reply">
-                	<ul>
-                	<c:forEach var="dto" items="${replyList}">
-                	<li>
-                		<div id= >
-                		</div>
-                		<div id="replyContent">
-                			<p>${dto.reply}</p>
-                		</div>
-                	</li>
-                	</c:forEach>
-                	</ul>
+                	<ul class="reply_group">
+ 					<c:forEach var="replydto" items="${replyList }">
+                   	<c:if test="${not empty replydto }">
+                    	<li class="reply_group_item">
+                   		<div class="reply_group_div">
+                    		<%-- <input type="hidden" class="reply_rno" value="${replydto.rno }"> --%>
+                          <div class="reply_nickname">${replydto.nickname }</div>
+                          <fmt:formatDate var="regDate" pattern="yyyy-MM-dd HH:mm:ss" value="${replydto.regDate }"/>
+                          <fmt:formatDate var="editDate" pattern="yyyy-MM-dd HH:mm:ss" value="${replydto.editDate }"/>
+                          <div id="reply_regDate">${regDate}</div>
+                          <div id="reply_editDate" >${editDate} 수정</div>
+                          <div class="reply">${replydto.reply }</div>
+                          <c:if test="${replydto.nickname eq nickname} ">
+                          <div class="reply_button">
+                          	<button type="button" id="modifyReplyBtn" data-rseq="${ replydto.rseq }">수정</button>
+                          	<button type="button" id="deleteReplyBtn" data-rseq="${ replydto.rseq }">삭제</button>
+                          </div>
+                          </c:if>
+                     	  <div class="reply_modify_wrapper">
+                          <div class="reply_modify">
+<!--                               <label class="reply_modify_label">댓글 수정</label> -->
+                              <div class="reply_modify_div">
+                                  <textarea name="reply_modify_text" id="reply_modify_text">${replydto.reply }</textarea>
+                                  <div class="reply_modify_button_div">
+                                      <button id="reply_modify_button" data-rseq="${ replydto.rseq }">수정</button>
+                                      <button id="reply_modify_cancel">취소</button>
+                                  </div>
+                              </div>
+                          </div>
+                      	</div>
+                     </div>
+               		</li>
+                   	</c:if>
+                  </c:forEach>
+                </ul>
+                <div class="reply_write">
+                	<div class="reply_write_item">
+                	<textarea name="reply" id="reply" rows="3"></textarea>
+                	<div class="reply_write_button">
+                		<button type="button" id="reply_write_regist">등록</button>
+                	</div>
+                	</div>
+                </div>
                 </div>
             </div>
 		<jsp:include page="/template/footer.jsp"></jsp:include>
 	</div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-// $(document).ready(function(){
-// 	$.ajax({
-// 		type:'get',
-// 		url:'synergy-kh/member/getReplyList',
-// 		data: 'seq='+$('#boardSeq').val(),
-// 		success:function(){
-			
-// 		},
-// 		error:function(){
-// 			alert('댓글에러남')
-// 		}
-// 	});
-// });
+$('#reply_write_regist').click(function(){
+	$.ajax({
+		type:'get',
+		url:'/synergy-kh/member/writeReply',
+		data:{'reply':$('#reply').val(),'seq':$('#boardSeq').val()},
+		success:function(){
+			location.reload();
+		},
+		error:function(){
+			alert('다시 시도해 주세요')
+		}
+	});
+});
+$('.reply_button').on('click','#deleteReplyBtn',function(){
+	let rseq = $(this).data('rseq')
+	$.ajax({
+		type:'get',
+		url:'/synergy-kh/member/deleteReply',
+		data:'rseq='+rseq,
+		success:function(){
+			location.reload();
+		},
+		error:function(){
+		}
+	});
+})
+$('.reply_button').on('click','#modifyReplyBtn',function(){
+	$(this).parent().parent().children('.reply_modify_wrapper').css('display','block')
+});
+$('.reply_modify_button_div').on('click','#reply_modify_button',function(){
+// 	$(this).parent().parent().parent().parent().parent().children('#reply_editDate').css('display','block');
+	let rseq = $(this).data('rseq');
+	reply = $(this).parent().parent().children('textarea').val();
+	$.ajax({
+		type:'get',
+		url:'/synergy-kh/member/modifyReply',
+		data:{'rseq':rseq,'reply':reply},
+		success:function(){
+			location.reload();
+		},
+		error:function(){
+		}
+	});
+});
+$('.reply_modify_button_div').on('click','#reply_modify_cancel',function(){
+	$(this).parent().parent().parent().parent().css('display','none');
+	$(this).parent().parent().children('textarea').val('');
+});
 </script>
 </body>
 </html>

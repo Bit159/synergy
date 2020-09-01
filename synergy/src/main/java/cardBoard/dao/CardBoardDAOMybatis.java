@@ -67,4 +67,19 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	public List<CardBoardReplyDTO> getReplyList(int seq) {
 		return sqlSession.selectList("cardBoardSQL.getReplyList",seq);
 	}
+
+	@Override
+	public void writeReply(CardBoardReplyDTO dto) {
+		sqlSession.insert("cardBoardSQL.writeReply",dto);
+	}
+
+	@Override
+	public void deleteReply(int rseq) {
+		sqlSession.delete("cardBoardSQL.deleteReply", rseq);
+	}
+
+	@Override
+	public void modifyReply(CardBoardReplyDTO dto) {
+		sqlSession.update("cardBoardSQL.modifyReply", dto);
+	}
 }

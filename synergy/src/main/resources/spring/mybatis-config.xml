@@ -6,5 +6,6 @@
 		<typeAlias type="java.util.Map" alias="map"/>
 		<typeAlias type="cardBoard.bean.CardBoardDTO" alias="card"/>
 		<typeAlias type="cardBoard.bean.CardBoardPaging" alias="paging"/>
+		<typeAlias type="cardBoard.bean.CardBoardReplyDTO" alias="reply"/>
 	</typeAliases>
 </configuration>
