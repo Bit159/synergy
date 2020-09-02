@@ -284,7 +284,6 @@ public class MemberController{
 	public ModelAndView getAllChatting() {
 		ModelAndView mav = new ModelAndView();
 		ChattingRoomDTO chattingRoomDTO = memberService.getAllChatting();
-		System.out.println(chattingRoomDTO.getChat());
 		mav.addObject("chattingRoomDTO", chattingRoomDTO);
 		mav.setViewName("jsonView");
 		
@@ -301,7 +300,6 @@ public class MemberController{
 		mav.setViewName("jsonView");
 		  
 		return mav;
-		  
 	}
 	  
 	@GetMapping("/member/createChat")

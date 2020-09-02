@@ -9,41 +9,7 @@
     <link rel="shortcut icon" href="../resources/image/logo.png" />
     <link rel="stylesheet" href="../resources/css/myPage.css">
     <style type="text/css">
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 4;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-    align-content: right;
-}
-/* Modal Content/Box */
-.modal-content {
-    margin: 15% auto;
-    padding: 20px;
-    width: 400px;
-    right : 40%;
-    top : 30%;
-                     
-}
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+
 </style>
 </head>
 <body>
@@ -115,14 +81,13 @@
 	</div>
 	<jsp:include page="../template/footer.jsp"/>
 </div>
-<div id="myModal" class="modal">
+<!-- <div id="myModal" class="modal">
 	<div class="modal-content">
-		<span class="close">&times;</span>      
+		<span class="close">&times;</span>    -->   
 		<jsp:include page="chattingList.jsp"/>                                            
-	</div>
+	<!-- </div>
 </div>
-
-<img id="chatting" src="/resources/image/chatting_floating.png" width="100" height="100" style="position:fixed;	top: 700px;right : 50%;margin-right: -900px;cursor:pointer;z-index : 99;">
+ -->
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
@@ -166,18 +131,20 @@ let withdrawal = confirm("정말 회원을 탈퇴 하시겠습니까?");
 
 //============================================================ modal 창
 
-//Get the modal
-let modal = document.getElementById('myModal');
+/* //Get the modal
+let modal = document.getElementById('modal');
 
 // Get the button that opens the modal
 let chatting = document.getElementById("chatting");
 
 // Get the <span> element that closes the modal
-let span = document.getElementsByClassName("close")[0];                                          
+let span = document.getElementsByClassName("close")[0];   
+
+let chattingRoom = document.getElementById('chat_list_wrap');
 
 // When the user clicks on the button, open the modal 
 chatting.onclick = function() {
-    modal.style.display = "block";
+	modal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -190,7 +157,7 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-}
+} */
 </script>
 </body>
 </html>

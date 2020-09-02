@@ -13,17 +13,36 @@
 	    padding: 0;
 	}
 	
-	body {
-	    font-size: 11px;
-	    
+	.modal {
+		font-size : 11px;
+	    display: none;
+	    position: fixed;
+	    z-index: 4;
+	    left: 0;
+	    top: 0;
+	    width: 100%;
+	    height: 100%;
+	    overflow: auto;
+	    background-color: rgba(0,0,0,0.4);
+	    align-content: right;
 	}
 	
 	.chat_list_wrap {
+		margin: 15% auto;
 	    list-style: none;
 	    width: 400px;
 	    height : 600px;
 	    background-color: white;
+	    right : 40%;
+    	top : 30%;
 
+	}
+	
+	.close:hover,
+	.close:focus {
+	    color: black;
+	    text-decoration: none;
+	    cursor: pointer;
 	}
 	
 	.chat_list_wrap .header {
@@ -70,13 +89,18 @@
 	}
 	
 	.chat_list_wrap .list ul li table td.profile_td {
-	    width: 50px;
+	    width: 60px;
 	    padding-right: 11px;
+	}
+	
+	.chat_name{
+		font-size: 15px;
+		font-weight : 1000;
 	}
 	
 	.chat_list_wrap .list ul li table td.profile_td img {
 	    width: 50px;
-	    height: auto;
+	    heigth: 50px;
 	}
 	
 	.chat_list_wrap .list ul li table td.chat_td .email {
@@ -107,13 +131,17 @@
 	    cursor: pointer;
 	}
 	
-	<%-- ========================= 채팅방 css ========================= --%>
+	<!-- 채팅방 css -->
 	
 	#chatWrap{
-        width :400px;
-        top : 100px;
-        border : 1px solid #ddd;
-        background-color: white;
+        border : 1px solid #ddd;    
+        margin: 15% auto;
+	    list-style: none;
+	    width: 400px;
+	    height : 600px;
+	    background-color: white;
+	    right : 40%;
+    	top : 30%;
     }
 
     #chatHeader{
@@ -197,67 +225,77 @@
         cursor: pointer;
     }
 </style>
+<script defer type="text/javascript" src="/resources/js/sockjs.min.js"></script>
+<script defer type="text/javascript" src="/resources/js/stomp.min.js"></script>
 </head>
 <body>
 <sec:authentication property="principal.username" var="username"/>
-<div class="chat_list_wrap" id="chat_list_wrap">
-    <div class="header">
-        Synergy
-    </div>
-    <div class="search">
-        <input type="text" placeholder="이메일 검색" />
-    </div>
-    <div class="list">
-        <ul id="chattingRoomList">
-            <li id="chattingRoom" class="chattingRoom" onclick="getChatting(chattingRoom)">
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td class="profile_td">
-                            <img src="/resources/image/chatting.png" />
-                        </td>
-                        <td class="chat_td">
-                            <div class="email" id="email">
-                                
-                            </div>
-                            <div class="chat_preview" id="chat_preview">
-                               	 
-                            </div>
-                        </td>
-                        <td class="time_td">
-                            <div class="time" id="time">
-                                
-                            </div>
-                            <div id="chattingRoom_check">
-                                
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </li>
-        </ul>
-    </div>
+<div class="modal" id="modal">
+	<div class="chat_list_wrap" id="chat_list_wrap">
+	    <div class="header">
+	    	<span class="close">&times;</span> 
+	        Synergy
+	    </div>
+	    <div class="search">
+	        <input type="text" placeholder="이메일 검색" />
+	    </div>
+	    <div class="list">
+	        <ul id="chattingRoomList">
+	            <li id="chattingRoom" class="chattingRoom" onclick="getChatting(chattingRoom)">
+	                <table cellpadding="0" cellspacing="0">
+	                    <tr>
+	                        <td class="profile_td">
+	                            <img src="/resources/image/chatting_floating.png"/>
+	                        </td>
+	                        <td class="chat_td">
+	                        	<div class="chat_name">
+	                        		전체 채팅방
+	                        	</div>
+	                        	
+	                            <div class="email" id="email">
+	                                
+	                            </div>
+	                            
+	                            <div class="chat_preview" id="chat_preview">
+	                               	 
+	                            </div>
+	                        </td>
+	                        <td class="time_td">
+	                            <div class="time" id="time">
+	                                
+	                            </div>
+	                            <div id="chattingRoom_check">
+	                                
+	                            </div>
+	                        </td>
+	                    </tr>
+	                </table>
+	            </li>
+	        </ul>
+	    </div>
+	</div>
+	
+	<div id="contentCover" align="center" style="display:none;">
+	    <div id="chatWrap">
+	        <div id="chatHeader">
+				
+	        </div>
+	        <div id="messages">
+	            
+	        </div>
+	        <div id="messageForm">
+	            <input type="text" autocomplete="off" size="30" id="messageInput" placeholder="메시지 입력">
+	            <input type="button" value="보내기" id="sendBtn">
+	        </div>
+	    </div>
+	</div>
 </div>
+<img id="chatting" src="/resources/image/chatting_floating.png" width="100" height="100" style="position:fixed;	top: 700px;right : 50%;margin-right: -900px;cursor:pointer;z-index : 99;">
 
-<div id="contentCover" align="center" style="display:none;">
-    <div id="chatWrap">
-        <div id="chatHeader">
-			
-        </div>
-        <div id="messages">
-            
-        </div>
-        <div id="messageForm">
-            <input type="text" autocomplete="off" size="30" id="messageInput" placeholder="메시지 입력">
-            <input type="button" value="보내기" id="sendBtn">
-        </div>
-    </div>
-</div>
 </body>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src="/resources/js/sockjs.min.js"></script>
-<script type="text/javascript" src="/resources/js/stomp.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 let csrfHeaderName = "${_csrf.headerName}";
 let csrfTokenValue = "${_csrf.token}";
@@ -283,8 +321,8 @@ $(document).ready(function(){
 		dataType : 'json',
 		success : function(data){
 			$.each(data.list, function(index, items){
-				document.getElementById("chattingRoomList").innerHTML += "<li id='" + items.chattingRoom + "' onclick='getChatting(" + items.chattingRoom + ")'><table><tr><td class='profile_td'><img src='/resources/image/chatting.png' width='50' height='50'/></td>"
-																		+ "<td class='chat_td'><div class='email'>" + items.nickname + "</div><div class='chat_preview'>" + items.chat + "</div></td>"
+				document.getElementById("chattingRoomList").innerHTML += "<li id='" + items.chattingRoom + "' onclick='getChatting(" + items.chattingRoom + ")'><table><tr><td class='profile_td'><img src='/resources/image/chatting.png'/></td>"
+																		+ "<td class='chat_td'><div class='chat_name'>" + items.chattingRoom + "</div><div class='email'>" + items.nickname + "</div><div class='chat_preview'>" + items.chat + "</div></td>"
 																		+ "<td class='time_td'><div class='time'>" + items.chat_date + "</div><div id='" + items.chattingRoom + "_check'></div></td></tr></table></li>";
 				connect(items.chattingRoom);														
 			});
@@ -368,7 +406,7 @@ function roomList(){
 	contentCover.style.display = 'none';
 }
 
-//================================================== ====== Stomp, SockJS 
+//======================================================== Stomp, SockJS 
 
 function connect(chattingRoom){
 	let socket = new SockJS('/chat');
@@ -445,6 +483,34 @@ function enterKey(data){
 	if(window.event.keyCode == 13){
 		send(data);
 	}
+}
+
+//========================================================== 모달창 관련
+
+//Get the modal
+let modal = document.getElementById('modal');
+
+// Get the button that opens the modal
+let chatting = document.getElementById("chatting");
+
+// Get the <span> element that closes the modal
+let span = document.getElementsByClassName("close")[0];   
+
+// When the user clicks on the button, open the modal 
+chatting.onclick = function() {
+	modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
 </script>
