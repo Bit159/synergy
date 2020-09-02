@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,18 +34,19 @@ public class BoardController {
 	public ModelAndView boardList(@RequestParam(required=false, defaultValue = "1") int pg
 							   	 ,@RequestParam(required=false, defaultValue = "1") int range
 							   	 , @RequestParam(required = false, defaultValue = "title") String searchType
-								 , @RequestParam(required = false) String keyword)  {
-		
-		Search search = new Search();
+								 , @RequestParam(required = false) String keyword
+								 , @ModelAttribute("search") Search search)  {
+		// 검색
+		/* Search search = new Search(); */
 		search.setSearchType(searchType);
 		search.setKeyword(keyword);
 		
 		int page =  pg;
 		System.out.println("페이지"+page+"범위"+range);
 		
-		//전체 게시글 수
+		// 전체 게시글 수
 		int listCnt = boardService.getBoardListCnt(search); 
-		
+		// 검색
 		search.pageInfo(page, range, listCnt);
 		
 		Pagination paging = new Pagination();
@@ -59,6 +61,9 @@ public class BoardController {
 		Date now = new Date();
 		
 		ModelAndView mav = new ModelAndView();
+		// 검색
+		mav.addObject("search",search);
+		// 페이징
 		mav.addObject("paging",search);
 		mav.addObject("list", list);
 		mav.addObject("now", now);
@@ -71,7 +76,8 @@ public class BoardController {
 								  @RequestParam(required=false, defaultValue = "1") int pg
 								 ,@RequestParam(required=false, defaultValue = "1") int range
 								 , @RequestParam(required = false, defaultValue = "title") String searchType
-								 , @RequestParam(required = false) String keyword) {
+								 , @RequestParam(required = false) String keyword
+								 ) {
 		Search search = new Search();
 		search.setSearchType(searchType);
 		search.setKeyword(keyword);

@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Pagination {
 
-	private int listSize = 20;                //초기값으로 목록개수를 20으로 셋팅
+	private int listSize = 10;                //초기값으로 목록개수를 20으로 셋팅
 
-	private int rangeSize = 10;            //초기값으로 페이지범위를 10으로 셋팅
+	private int rangeSize = 5;            //초기값으로 페이지범위를 10으로 셋팅
 
 	private int page;
 
