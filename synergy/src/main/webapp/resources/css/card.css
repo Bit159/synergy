@@ -22,6 +22,7 @@ html, body, div,h1,a,p {
 }
 div[id="selectBox"] h1 {
 	width:95px;
+	font-size:15pt;
 	border-bottom: solid 2px rgb(50, 190, 120);
 	padding:10px 10px 5px 10px;
 	margin:0 0 10px 5px;
@@ -115,7 +116,7 @@ a {
 	text-align: center;
 }
 .card {
-    height: 200px;
+    height: 183px;
     width: 350px;
     margin:20px;
     border-radius: 15px;
@@ -127,29 +128,68 @@ a {
     text-align:left;
     display:inline-block;
 }
-h1 {
+div[class=card-header-content] {
+    padding:5px;
+    display: flex;
+    text-align: right;;
+}
+span[id="topicIcon"] {
+	line-height: 34.4px;
+	font-size: 17pt;
+}
+div[id="card-header-text"] {
+	line-height: 34px;
+	font-size: 12pt;
+	float: right;
+	width:100%;
+}
+div[class=card-header-content] div {
+    padding-left:5px;
+}
+div[class="card-body-content"] a {
     font-size: 16pt;
     font: bold;
 }
-.card-header {
+div[class="card-body-info"] {
+	margin-top: 5px;
+}
+div[class="card-body-info"] p {
+	font-size: 13pt;
+	font-weight: bold;
+}
+div[class="card-header"] {
     border-bottom: solid 2px rgb(50, 190, 120);
     margin:0 5px 0 5px;
 }
-.card-header-content {
-    padding:10px;
-    display: flex;
-    right: 100px;
+div[class="card-body-info-nickname"] {
+	display:flex;
+	margin-bottom: 3px;
 }
-.card-header-content div {
-    padding-left:5px;
+div[class="card-body-info-nickname"] span {
+	font-size: 13pt;
 }
-.card-body {
+div[class="card-body-info-location"] {
+	display:flex;
+} 
+div[class="card-body-content"] {
+    padding: 5px 10px 0 10px;
+    margin-bottom: 10px;
 }
-.card-body-content {
-    padding: 10px;
+a[id="card-body-title"] {
+	font-weight: 550;
 }
 .card-body-content h1 {
     margin-bottom: 10px;
+}
+div[class="card-footer"] {
+	padding:6px 10px 0 10px;
+	border-top: 1px solid lightgray;
+	margin:0 5px 0 5px;
+}
+div[class="card-footer"] span{
+	color:lightgray;
+	margin-right: 160px;
+	font-size: 12pt;
 }
 div[id="paginationBox"] {
 	text-align: center;

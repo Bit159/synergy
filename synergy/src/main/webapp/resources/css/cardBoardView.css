@@ -10,7 +10,7 @@ html, body, div,h1,a,p {
     width:1280px;
     height:100%;
     margin:0 auto;
-    border:solid 1px lightgray;
+    border:solid 2px lightgray;
     border-radius: 10px;
 }
 div[id="card-title"] h1 {
@@ -37,7 +37,7 @@ table[id="viewTable"] td {
 div[id="card-content"] pre {
 	padding:10px;
 	color:black;
-	border:solid 2px lightgray;
+	border:solid 1px lightgray;
 	margin:0px 10px 0px 10px;
 /* 	border-radius: 10px; */
 	margin-bottom: 20px;
@@ -52,7 +52,7 @@ li[class="reply_group_item"]{
 }
 div[class="reply_group_div"] {
 	width:100%;
-	border: solid 2px lightgray;
+	border: solid 1px lightgray;
 	border-bottom-style: none;
 	padding:10px;
 }
@@ -69,7 +69,7 @@ div[id="reply_editDate"] {
 	display:none;
 }
 div[class="reply"]{
-	padding:10px 0 20px 0;
+	padding:10px 0 15px 0;
 	white-space: pre-line;
 }
 div[class="reply_button"]{
@@ -87,7 +87,7 @@ button[id="deleteReplyBtn"]{
 }
 div[class="reply_write"] {
 	padding:10px;
-	border:solid 2px lightgray;
+	border:solid 1px lightgray;
 }
 textarea[id="reply"] {
 	width:92%;

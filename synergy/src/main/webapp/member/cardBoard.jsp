@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -7,8 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf" name="_csrf" content="${_csrf.token}">
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}">
     <title>Document</title>
     <link rel="stylesheet" href="../resources/css/card.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css"/>
 </head>
 <body>
 	<div id="body-wrapper">
@@ -47,7 +50,7 @@
         		<h1>주제 선택</h1>
         		<div id="selectTopic">
         			<select id="sel">
-        				<option value=''>선택</option>
+        				<option value="" selected>선택</option>
         				<option value="Java">Java</option>
         				<option value="JavaScript">JavaScript</option>
         				<option value="Python">Python</option>
@@ -62,6 +65,7 @@
         				<option value="SQL">SQL</option>
         				<option value="Android">Android</option>
         				<option value="iOS">iOS</option>
+        				<option value="Swift">Swift</option>
         				<option value="FrontEnd">FrontEnd</option>
         				<option value="BackEnd">BackEnd</option>
         				<option value="모각코">모각코</option>
@@ -76,28 +80,71 @@
        	<form id="listForm">
         <div class="cardboard">
 	        <c:forEach var="dto" items="${list}">
-        	 <a href="/synergy-kh/member/cardBoardView?seq=${dto.seq}" id="card1">
 	           	 <div class="card">
 	                <!-- 카드 헤더 -->
 	                <div class="card-header">
 	                    <div class="card-header-content">
 	                    	<input type=hidden name="seq" id="seq" value="${dto.seq}">
-	                        <div class="card-header-text"> 모집중  </div>
-	                        <div class="card-header-count">${dto.people}  </div>
+	                        <c:set var="topic" value="${dto.topic }"/>
+	                        <c:choose>
+	                        <c:when test="${topic eq 'Java'}">
+	                        <i class="fab fa-java fa-2x" style="color:orange;"></i><span id="topicIcon">&nbsp;Java</span>
+	                        </c:when>
+	                        <c:when test="${topic eq 'JavaScript'}">
+	                        <i class="fab fa-js-square fa-2x" style="color:#EBEB1D;"></i><span id="topicIcon">&nbsp;JavaScript</span>
+	                        </c:when>
+	                       	<c:when test="${topic eq 'Python'}">
+	                        <i class="fab fa-python fa-2x" style="color:navy;"></i><span id="topicIcon">&nbsp;Python</span>
+	                        </c:when>
+	                       	<c:when test="${topic eq 'React'}">
+	                        <i class="fab fa-react fa-2x" style="color:blue;"></i><span id="topicIcon">&nbsp;React</span>
+	                        </c:when>
+	                       	<c:when test="${topic eq 'Vue'}">
+	                        <i class="fab fa-vuejs fa-2x" style="color:green;"></i><span id="topicIcon">&nbsp;Vue</span>
+	                        </c:when>
+	                       	<c:when test="${topic eq 'Android'}">
+	                        <i class="fab fa-android fa-2x" style="color:green;"></i><span id="topicIcon">&nbsp;Android</span>
+	                        </c:when>
+	                       	<c:when test="${topic eq 'iOS'}">
+	                        <i class="fab fa-apple fa-2x" style="color:black;"></i><span id="topicIcon">&nbsp;iOS</span>
+	                        </c:when>
+	                       	<c:when test="${topic eq 'Swift'}">
+	                        <i class="fab fa-swift fa-2x" style="color:Orange;"></i><span id="topicIcon">&nbsp;Swift</span>
+	                        </c:when>
+	                       	<c:when test="${topic eq '모각코'}">
+	                        <i class="fas fa-laptop-code fa-2x" style="color:silver;"></i><span id="topicIcon" style="width:100px;font-size: 15pt">&nbsp;모각코</span>
+	                        </c:when>
+	                        </c:choose>
+	                        <c:if test="${dto.open eq 0}">
+	                        <div id="card-header-text"> 모집중 </div>
+	                        </c:if>
 	                    </div>
 	                </div>
 	                <!-- 카드 바디 -->
 	                <div class="card-body">
 	                    <div class="card-body-content">
-	                        <h1 id="card-body-title">${dto.title }</h1>
-	                        <p id="card-body-nickname">작성자 ${dto.nickname} </p>
-	                        <p id="card-body-location">지역 ${dto.location }</p>
+	                        <a href="/synergy-kh/member/cardBoardView?seq=${dto.seq}" id="card-body-title">${dto.title }</a>
+	                        <div class="card-body-info">
+	                        	<div class="card-body-info-nickname">
+		                        	<span>작성자</span>&nbsp;&nbsp;
+			                        <p id="card-body-nickname"> ${dto.nickname} </p>
+		                    	</div>
+		                    	<div class="card-body-info-location">
+		                    		<span>지역</span>&nbsp;&nbsp;
+		                        	<p id="card-body-location"> ${dto.location }</p>
+								</div>
+<%-- 		                        <p id="card-body-people">인원 ${dto.people}명</p> --%>
+	                   		</div> 
 	                    </div>
 	                </div>
 	                <!-- 카드 푸터 -->
-	                <div class="card-footer"></div>
+	                <div class="card-footer">
+	                <fmt:formatDate var="regDate" pattern="yyyy-MM-dd" value="${dto.registDate }"/>
+	                	<span>${regDate}</span>
+	                	<i class="far fa-user" > ${dto.people }</i> &nbsp;&nbsp;
+	                	<i class="far fa-comment-dots" > ${dto.replys}</i>
+	                </div>
             	</div>
-	       	 </a>
 	        </c:forEach>
         </div>
         </form>
@@ -128,9 +175,6 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="../resources/js/pagination.js"></script>
 	<script type="text/javascript">
-
-	let myData = new Array();
-
 	let aIndex=0;
 	let guIndex=0;
 	let si='';
@@ -149,12 +193,10 @@
 				$('#select-si').on('click','li',function(){
 					aIndex = $(this).index();
 					si = $('#select-si li:nth-child('+(aIndex+1)+')').children('a').text();
-				
 					$('#select-gu li:gt(0)').remove();
 					$.each(data[aIndex], function(i,item){
 						$('#select-gu').append("<li><a>"+data[aIndex][i]+"</li></a>")
 					});
-					
 					var color = $(this).css('background-color');
 					if(color!='rgb(50, 190, 120, 0.7)'){
 						$('#select-si > li').css('background-color','white');
@@ -196,26 +238,28 @@
 	$('#searchCardBtn').click(function(){
 		$.ajax({
 			type:'get',
-			url:'/synergy-kh/member/searchCard',
+			url:'/synergy-kh/member/cardBoardList?pg=1&range=1',
 			data:{'locations':locations,'topic':$('#sel').val()},
-			dataType:'json',
-			traditional:true,
+// 			dataType:'json',
+// 			traditional:true,
 			success:function(data){
-				$('.card').parent().remove();
-				$('#paginationBox').children().remove();
-				myData = data;
-				$('#paginationBox').pagination({
-				    dataSource: data,
-				    pageSize: 9,
-				    autoHidePrevious: true,
-				    autoHideNext: true,
-				    callback: function(data, pagination) {
-						$('.card').parent().remove();
-						data.forEach(function(item, index){
-						$('.cardboard').append("<a href=/synergy-kh/member/cardBoardView?seq="+item.seq+"><div class=card><div class=card-header><div class=card-header-content><div class=card-header-text>모집중</div><div class=card-header-count>1 /"+item.people+"</div></div></div><div class=card-body><div class=card-body-content><h1 class=card-body-title>"+item.title+"</h1><p class=card-body-nickname>작성자: "+item.nickname+"</p><p class=card-body-location>지역: "+item.location+"</p></div></div><div class=card-footer></div></div></a>");	
-						});
-				    }
-				})
+				location.href='/synergy-kh/member/cardBoardList?pg=1&range=1&locations='+locations+'&topic='+$('#sel').val()
+// 				$('.card').parent().remove();
+// 				$('#paginationBox').children().remove();
+// 				location.reload();
+
+// 				$('#paginationBox').pagination({
+// 				    dataSource: data,
+// 				    pageSize: 9,
+// 				    autoHidePrevious: true,
+// 				    autoHideNext: true,
+// 				    callback: function(data, pagination) {
+// 						$('.card').parent().remove();
+// 						data.forEach(function(item, index){
+// 						$('.cardboard').append("<a href=/synergy-kh/member/cardBoardView?seq="+item.seq+"><div class=card><div class=card-header><div class=card-header-content><div class=card-header-text>모집중</div><div class=card-header-count>1"+item.people+"</div></div></div><div class=card-body><div class=card-body-content><h1 class=card-body-title>"+item.title+"</h1><p class=card-body-nickname>작성자: "+item.nickname+"</p><p class=card-body-location>지역: "+item.location+"</p></div></div><div class=card-footer></div></div></a>");	
+// 						});
+// 				    }
+// 				})
 			},
 			error:function(){
 				console.log('에러러러럴')
@@ -230,7 +274,7 @@
 			url = url + "?pg=" + page;
 			url = url + "&range=" + range;
 			location.href = url;
-		}
+	}
     //페이지 번호 클릭
 	function fn_pagination(page, range, rangeSize) {
 		var url = "${pageContext.request.contextPath}/member/cardBoardList";

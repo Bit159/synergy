@@ -61,5 +61,13 @@ public class CardBoardServiceImpl implements CardBoardService {
 	public void modifyReply(CardBoardReplyDTO dto) {
 		cardBoardDAO.modifyReply(dto);
 	}
+	@Override
+	public void replyCntup(CardBoardDTO cardDTO) {
+		cardBoardDAO.replyCntup(cardDTO);
+	}
+	@Override
+	public void replyCntdown(CardBoardDTO cardDTO) {
+		cardBoardDAO.replyCntdown(cardDTO);
+	}
 	
 }

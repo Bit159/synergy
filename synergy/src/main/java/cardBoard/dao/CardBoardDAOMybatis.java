@@ -82,4 +82,14 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	public void modifyReply(CardBoardReplyDTO dto) {
 		sqlSession.update("cardBoardSQL.modifyReply", dto);
 	}
+
+	@Override
+	public void replyCntup(CardBoardDTO cardDTO) {
+		sqlSession.update("cardBoardSQL.replyCntup", cardDTO);
+	}
+
+	@Override
+	public void replyCntdown(CardBoardDTO cardDTO) {
+		sqlSession.update("cardBoardSQL.replyCntdown", cardDTO);
+	}
 }

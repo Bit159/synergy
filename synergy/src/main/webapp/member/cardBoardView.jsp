@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/cardBoardView.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="../resources/js/autolink.js"></script>
 </head>
 <body>
 	<div class="body-wrapper">
@@ -35,7 +37,7 @@
                         <td>${dto.location }</td>
                         </tr>
                         <tr>
-                        <th>인원</th>
+                        <th>최대인원</th>
                         <td>${dto.people }명</td>
                         </tr>
                         </table>
@@ -58,17 +60,17 @@
                           <div id="reply_regDate">${regDate}</div>
                           <div id="reply_editDate" >${editDate} 수정</div>
                           <div class="reply">${replydto.reply }</div>
-                          <c:if test="${replydto.nickname eq nickname} ">
+                          <c:if test="${replydto.nickname eq nickname}" >
                           <div class="reply_button">
                           	<button type="button" id="modifyReplyBtn" data-rseq="${ replydto.rseq }">수정</button>
-                          	<button type="button" id="deleteReplyBtn" data-rseq="${ replydto.rseq }">삭제</button>
+                          	<button type="button" id="deleteReplyBtn" data-rseq="${ replydto.rseq }" data-seq="${replydto.seq }">삭제</button>
                           </div>
                           </c:if>
                      	  <div class="reply_modify_wrapper">
                           <div class="reply_modify">
 <!--                               <label class="reply_modify_label">댓글 수정</label> -->
                               <div class="reply_modify_div">
-                                  <textarea name="reply_modify_text" id="reply_modify_text">${replydto.reply }</textarea>
+                                  <textarea name="reply_modify_text" id="reply_modify_text"></textarea>
                                   <div class="reply_modify_button_div">
                                       <button id="reply_modify_button" data-rseq="${ replydto.rseq }">수정</button>
                                       <button id="reply_modify_cancel">취소</button>
@@ -95,6 +97,8 @@
 	</div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
+autolink($('.reply, #card-content pre'));
+/* ===========댓글 등록================= */
 $('#reply_write_regist').click(function(){
 	$.ajax({
 		type:'get',
@@ -108,12 +112,14 @@ $('#reply_write_regist').click(function(){
 		}
 	});
 });
+/* ==================댓글삭제========== */
 $('.reply_button').on('click','#deleteReplyBtn',function(){
 	let rseq = $(this).data('rseq')
+	let seq = $(this).data('seq')
 	$.ajax({
 		type:'get',
 		url:'/synergy-kh/member/deleteReply',
-		data:'rseq='+rseq,
+		data:{'rseq':rseq,'seq':seq},
 		success:function(){
 			location.reload();
 		},
@@ -124,6 +130,7 @@ $('.reply_button').on('click','#deleteReplyBtn',function(){
 $('.reply_button').on('click','#modifyReplyBtn',function(){
 	$(this).parent().parent().children('.reply_modify_wrapper').css('display','block')
 });
+/* ============댓글 수정============= */
 $('.reply_modify_button_div').on('click','#reply_modify_button',function(){
 // 	$(this).parent().parent().parent().parent().parent().children('#reply_editDate').css('display','block');
 	let rseq = $(this).data('rseq');

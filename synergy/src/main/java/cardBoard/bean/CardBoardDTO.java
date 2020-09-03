@@ -14,5 +14,7 @@ public class CardBoardDTO {
 	private String location;
 	private int people;
 	private String content;
+	private int open;
+	private int replys;
 	private Date registDate;
 }

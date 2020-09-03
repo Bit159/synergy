@@ -19,4 +19,6 @@ public interface CardBoardService {
 	public void writeReply(CardBoardReplyDTO dto);
 	public void deleteReply(int rseq);
 	public void modifyReply(CardBoardReplyDTO dto);
+	public void replyCntup(CardBoardDTO cardDTO);
+	public void replyCntdown(CardBoardDTO cardDTO);
 }

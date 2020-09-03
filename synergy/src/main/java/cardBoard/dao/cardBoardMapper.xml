@@ -11,17 +11,16 @@
 	<select id="getBoardListCnt" resultType="int">
 		SELECT count(*) as listCnt FROM cardboard
 	</select>
-
+	<!-- ========지역 리스트 뿌리기======  -->
 	<select id="getLocationList" parameterType="String" resultType="String">
 		select substring_index(location,' ',-1) from addr where location like concat(#{location},'%')
 	</select>
 	<!-- =========조건설정 후 검색 ============ -->
 	<select id="searchCard" parameterType="java.util.List" resultType="card">
-		select * from cardboard where location 
-		IN(
+		select * from cardboard where location  IN (
 		<foreach collection="list" item="item" index="index" separator=",">
 			<if test="index!=0">
-			#{item}
+			#{item} 
 			</if>
 		</foreach>
 		) and topic like concat
@@ -31,10 +30,14 @@
 			</if>
 		</foreach>
 		order by seq desc
+		
 	</select>
+	<!-- ======= 지역설정 없이 검색 =====  -->
 	<select id="searchCardNoloc" parameterType="String" resultType="card">
-		select * from cardboard where topic like concat('%',#{topic},'%') order by seq desc;
+		select * from cardboard where topic like concat('%',#{topic}) order by seq desc;
 	</select>
+	
+	<!-- =========뷰 페이지 =========  -->
 	<select id="getCardContent" parameterType="int" resultType="card">
 		select * from cardboard where seq=#{seq}
 	</select>
@@ -58,5 +61,15 @@
 	<!-- =============댓글 수정=================  -->
 	<update id="modifyReply" parameterType="reply">
 		update cardBoardReply set reply=#{reply}, editdate=now() where rseq=#{rseq}
+	</update>
+	
+	<!-- ============댓글 수 증가================= -->
+	<update id="replyCntup" parameterType="card">
+		update cardboard set replys=replys+1 where seq=#{seq}
+	</update>
+	
+	<!-- ============댓글 수 감소================= -->
+	<update id="replyCntdown" parameterType="card">
+		update cardboard set replys=replys-1 where seq=#{seq}
 	</update>
 </mapper>

@@ -87,7 +87,7 @@
 			}
 		});
 	});
-	let topics=["Java","JavaScript","Python","React","Spring","Vue","모각코"]
+	let topics=["Java","JavaScript","Python","React","Spring","Vue","모각코","Android","iOS","Swift"]
     $('#topic').autocomplete({
         source: topics
       });
