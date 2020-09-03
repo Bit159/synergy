@@ -16,6 +16,7 @@ fetch(url, options).then((res) => res.json().then((json)=> {
 	for(let i =0; i <json.length; i++) {
 		drawCircle(json[i].y, json[i].x, json[i].range);
 	}
+	drawInfo();
 }));
 
 function drawInfo() {

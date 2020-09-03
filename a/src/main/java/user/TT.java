@@ -4,6 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TT {
+	
+	public static void main(String[] args) {
+		String alert()
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public List<MatchDTO> rangeValidation(List<MatchDTO> listFromMatch) { // match 테이블 전체 리스트를 파라메타로 받는다.
 		for (int i = 0; i < listFromMatch.size(); i++) { // 리스트를 돌면서 한 명씩 돌아가면서 기준이 되어 검증한다.
 			List<MatchDTO> candidateList = new ArrayList<>(); // 후보들을 담을 리스트. 후보들의 숫자가 people 숫자보다 크면 당선이다.

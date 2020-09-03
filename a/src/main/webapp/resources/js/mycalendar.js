@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	    headerToolbar: {
 	      left: "prevYear,prev,next,nextYear today",
 	      center: "title",
-	      right: "dayGridMonth,timeGridWeek,timeGridDay,listDay,listWeek,listMonth",
+	      right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
 	    },
 	    initialDate: new Date(),
 	    locale: "ko",
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	    selectable: true,
 	    selectMirror: true,
 	    select: function (arg) {createSchedule(arg, this)},
-	    eventClick: function (arg) {myEventClick(arg)},
+	    eventClick: function (arg) {myEventClick(arg, this)},
 	    editable: true,
 	    dayMaxEvents: true, // allow "more" link when too many events
 	    events: schedules,
@@ -118,10 +118,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /*일정 클릭했을 때의 이벤트 */
-function myEventClick(arg) {
-	console.log(arg);
-	let no = arg.event._def.extendedProps.no;
-	if (confirm("Are you sure you want to delete this event?")) {
+function myEventClick(arg, target) {
+	//html: 속성으로 직접 넣기, customClass: 속성으로 클래스값 넣기 onOpen: 속성으로 열렸을때 특정 펑션 수행하기 가능
+	/*
+       html:true,
+    showCancelButton: true,
+    confirmButtonClass: "btn-success",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+    closeOnConfirm: false,
+    closeOnCancel: false,
+    showLoaderOnConfirm: true
+	*/
+	swal({
+	  title: "일정 제거",
+	  text: "이 일정을 제거하시겠습니까?",
+	  icon: "warning",
+	  buttons: ["취소", "제거"],
+	  dangerMode: true,
+	}).then((willDelete) => {
+	  if (willDelete) {
+		let no = arg.event._def.extendedProps.no;
 		let url = "/deleteSchedule";
 		let options = {
 			method: "POST",
@@ -132,56 +149,108 @@ function myEventClick(arg) {
 			},
 			body: no
 		};
-		fetch(url, options).then((res)=>res.text().then((text)=>{if(text==='1')arg.remove();}));
-		
-	}
+		fetch(url, options).then((res)=>res.text().then((text)=>{
+			if(text==='1')	document.querySelectorAll('input.no').forEach((e)=>{
+				if(e.innerText==no) e.parentElement.parentElement.remove();	});
+		}));
+	    swal("일정 제거가 완료되었습니다", {
+	      icon: "success",
+	    });
+	  } else {
+	    swal("일정 제거가 취소되었습니다");
+	  }
+	});
 }
 /*End of 일정 클릭했을 때의 이벤트 */
 
 /*일정 생성하기 이벤트*/
 function createSchedule(arg, calendar) {
+	/*
+	swal("제목", "내용", "warning",{
+	  content: {
+	    element: "input",
+	    attributes: {
+	      placeholder: "Type your password",
+	      type: "datetime",
+	    },
+	  },
+	}).then((result)=>console.log(result));
+	*/
+	
 	console.log(arg);
 	console.log(calendar);
-	
+	//alert는 삭제했음.
+	//그냥 1일전, 2시간전, 15분전 이렇게 세번 알림 그냥 보내는걸로 고정 가자.
 	let ob = new Object();
 	ob.username = 'jpcnani@naver.com';
-	ob.alert = new Date();
-	ob.time = new Date();
+	ob.time = arg.start.getTime();
 	ob.place = prompt("Place");;
 	ob.title = prompt("Title:");
 	ob.content = prompt("Content:");
-	ob.created = new Date();
-	ob.updated = new Date();
+	ob.created = new Date().getTime();
+	ob.updated = new Date().getTime();
+	//유효성검증 추가해야할 부분
+	if(ob.place.length===0 || ob.title.length===0 || ob.content.length===0) return;
 
-	if (ob.title) {
-		let url = "/createSchedule";
-		let options = {
-						method: "POST",
-						headers: {
-									"X-CSRF-TOKEN": document.getElementById('csrf').content,
-									Accept: "application/json",
-									"Content-Type": "application/json; charset=utf-8",
-								},
-						body: JSON.stringify(ob),
-					};
-		fetch(url, options).then((res)=>res.text().then((text)=>{console.log(text);}));
+
+	let url = "/createSchedule";
+	let options = {
+					method: "POST",
+					headers: {
+								"X-CSRF-TOKEN": document.getElementById('csrf').content,
+								Accept: "application/json",
+								"Content-Type": "application/json; charset=utf-8",
+							},
+					body: JSON.stringify(ob),
+				};
+	fetch(url, options).then((res)=>res.text().then((text)=>{
+			let no = parseInt(text);
+				calendar.addEvent({
+				title: ob.title,
+				start: arg.start,
+				end: arg.end,
+				/*allDay: arg.allDay,*/
+				
+				allDay: false,
+				username: ob.username,
+				time: ob.time,
+				place: ob.place,
+				content: ob.content,
+				created: ob.created,
+				updated: ob.updated,
+				no: no
+			});
+	}));
 		
-		
-		calendar.addEvent({
-			title: title,
-			start: arg.start,
-			end: arg.end,
-			/*allDay: arg.allDay,*/
-			allDay: false,
-			username: username,
-			alert: alert,
-			time: time,
-			place: place,
-			content: content,
-			created: created,
-			updated: updated
-		});
-	}
 	calendar.unselect();
+	completeAlert();
+	
 }
 /* End of 일정 생성하기 이벤트*/ 
+
+function completeAlert() {
+	swal({
+		title: "등록 완료",
+		text: "정상적으로 등록되었습니다",
+		icon: "success",
+		button: "완료",
+	});
+}
+
+  function removeConfirm() {
+    swal({
+      title: "삭제하시겠습니까?",
+      text: "삭제 후엔 되돌릴 수 없습니다",
+      icon: "warning",
+      buttons: ["취소", "삭제"],
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("삭제되었습니다", {
+          icon: "success",
+        });
+      } else {
+        swal("삭제가 취소되었습니다");
+      }
+    });
+  }

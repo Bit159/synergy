@@ -33,6 +33,7 @@ public interface UserDAO {
 	public abstract Date getDBTime();
 	
 	//스케쥴용
+	public abstract int getGreatestNo();
 	public abstract int createSchedule(NotDTO dto);
 	public abstract List<NotDTO> getSchedules();
 	public abstract int updateSchedule(NotDTO dto);

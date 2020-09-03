@@ -12,7 +12,7 @@
 <script defer src="/resources/js/admin_map.js" ></script>
 <link rel="stylesheet" href="/resources/css/admin_map.css" />
 </head>
-<body onload="drawInfo()">
+<body>
 	<%@ include file="/template/header.jsp"%>
 	<div id="map" style="width: 800px; height: 600px; margin: 0 auto; border: 3px solid #32be78;"></div>
 	<%@ include file="/template/footer.jsp"%>

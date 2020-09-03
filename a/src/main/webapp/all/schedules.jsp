@@ -13,6 +13,7 @@
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/locales-all.js"></script>
     <script src="/resources/js/mycalendar.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>
   <body>
   	<%@ include file="/template/header.jsp"%>

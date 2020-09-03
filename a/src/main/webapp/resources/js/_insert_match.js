@@ -473,7 +473,7 @@ function nullValidator() {
 		},
 		body: JSON.stringify(ob),
 	};
-	
+	/*
 						<li class="wishes">
 						<input class="wishlist_area" type="text" value="${dto.x}" readonly /> 
 						<input type="hidden" value="${dto.y}" readonly /> 
@@ -484,7 +484,7 @@ function nullValidator() {
 						<input class="wishlist_people" type="text" value="<c:choose><c:when test="${dto.people eq 0 }">무관</c:when><c:when test="${dto.people eq 3 }">3명</c:when><c:when test="${dto.people eq 4 }">4~6명</c:when><c:when test="${dto.people eq 7 }">7~9명</c:when><c:when test="${dto.people eq 10 }">10명  이상</c:when></c:choose>" readonly />
 						<button type="button" class="wishdelete">삭제</button>
 					</li>
-	
+	*/
 	
 	fetch(url, options).then((res) =>
 		res.json().then((json)=>{

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,12 +30,19 @@ public class HomeController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@PostMapping(path="/createSchedule", produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public int createSchedule(@RequestBody JSONObject json) {
-		System.out.println(json);
-		int result = 0;
-		return result;
+	@PostMapping(path="/createSchedule", produces="application/json;charset=UTF-8")
+	public int createSchedule(@RequestBody JSONObject json, @Autowired NotDTO dto) {
+		dto.setUsername(json.getString("username"));
+		dto.setTime(new Date(json.getLong("time")));
+		dto.setPlace(json.getString("place"));
+		dto.setTitle(json.getString("title"));
+		dto.setContent(json.getString("content"));
+		dto.setCreated(new Date(json.getLong("created")));
+		dto.setUpdated(new Date(json.getLong("updated")));
+		int result = userDAO.createSchedule(dto);
+		if (result != 1) logger.info("일정 생성중 에러가 발생하였습니다.");
+		return userDAO.getGreatestNo();
 	}
 	
 	@PostMapping("/deleteSchedule")
@@ -56,21 +65,11 @@ public class HomeController {
 	@PostMapping(path="/getSchedules", produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public JSONArray getMySchedules() {
-		System.out.println("왔으");
 		JSONArray json = new JSONArray();
-		try {
-			json.addAll(userDAO.getSchedules());
-		}catch(Exception e) {
-			System.out.println("애드올이 문제네...");
-			e.printStackTrace();
-		}
-		System.out.println(json);
+		json.addAll(userDAO.getSchedules());
 		return json;
 	}
 	
-	@GetMapping("/")public String home(Locale locale, Model model) {
-		return "/all/welcome"; 
-	}
 	@GetMapping("/info") public String info() { return "/WEB-INF/views/all/info"; }
 	@GetMapping("/map") public String map() { return "/WEB-INF/views/member/map";	}
 	@GetMapping("/board") public ModelAndView board() { 
@@ -165,6 +164,73 @@ public class HomeController {
 		return json;
 	}
 	//-----------
+	
+	
+	
+	@GetMapping("/")public String home(Locale locale, Model model) {
+		List<MatchDTO> originalList = userDAO.getListFromMatch();
+		System.out.println("originalList : " + originalList);
+		peopleFilter(originalList);
+		
+		return "/all/welcome"; 
+	}
+	
+	public List<MatchDTO> peopleFilter(List<MatchDTO> originalList) {
+		List<MatchDTO> result = new ArrayList<>();
+		
+		for (int i = 0; i < originalList.size(); i++) {
+			for (int j = 0; j < originalList.size(); j++) {
+				//인원 기준이 0(무관)이 아닌 경우
+				if(originalList.get(i).getPeople() != 0) {
+					//현재 기준과 인원 기준이 같은 녀석들만 리스트에 담는다.
+					if(originalList.get(i).getPeople() == originalList.get(j).getPeople()) {
+						
+					}
+				//인원 기준이 0(무관)인 경우
+				}else {
+					
+				}
+			}
+		}
+		
+		return result; 
+	}
+	
+	
+	
+	public List<MatchDTO> timeFilter(List<MatchDTO> originalList) {
+		List<MatchDTO> result = new ArrayList<>();
+		for (int i = 0; i < originalList.size(); i++) {
+			String time = originalList.get(i).getTime1();
+			for (int j = 0; j < originalList.size(); j++) {
+				MatchDTO dto = originalList.get(j);
+				if(time.equals(dto.getTime1()) || time.equals(dto.getTime2()) || time.equals(dto.getTime3())) {
+					//기준의 인원수와 일치해야함.
+					//기준이 0(무관)이면 리스트에 담긴 모든 녀석들과 
+					
+					
+				}
+			}
+		}
+		//people 규칙
+		//0 : 무관
+		//3 : 3명
+		//4 : 4~6명
+		//7 : 7~9명
+		//10 : 10명 이상
+		System.out.println("result : " +result);
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
