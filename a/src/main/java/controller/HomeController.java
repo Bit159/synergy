@@ -116,16 +116,8 @@ public class HomeController {
 		matchDTO.setX(json.getDouble("x"));
 		matchDTO.setY(json.getDouble("y"));
 		matchDTO.setRange(json.getDouble("range"));
-		matchDTO.setTime1(json.getString("time1"));
-		try{matchDTO.setTime2(json.getString("time2"));
-		}catch(JSONException e) {matchDTO.setTime2(null);}
-		try{matchDTO.setTime3(json.getString("time3"));
-		}catch(JSONException e) {matchDTO.setTime3(null);}
-		matchDTO.setTopic1(json.getString("topic1"));
-		try{matchDTO.setTopic2(json.getString("topic2"));
-		}catch(JSONException e) {matchDTO.setTopic2(null);}
-		try{matchDTO.setTopic3(json.getString("topic3"));
-		}catch(JSONException e) {matchDTO.setTopic3(null);}
+		matchDTO.setTime(json.getString("time"));
+		matchDTO.setTopic(json.getString("topic"));
 		matchDTO.setCareer(json.getInt("career"));
 		matchDTO.setPeople(json.getInt("people"));
 		int result = userDAO.insertMatch(matchDTO);
@@ -167,69 +159,9 @@ public class HomeController {
 	
 	
 	
-	@GetMapping("/")public String home(Locale locale, Model model) {
-		List<MatchDTO> originalList = userDAO.getListFromMatch();
-		System.out.println("originalList : " + originalList);
-		peopleFilter(originalList);
-		
+	@GetMapping("/")public String home() {
 		return "/all/welcome"; 
 	}
-	
-	public List<MatchDTO> peopleFilter(List<MatchDTO> originalList) {
-		List<MatchDTO> result = new ArrayList<>();
-		
-		for (int i = 0; i < originalList.size(); i++) {
-			for (int j = 0; j < originalList.size(); j++) {
-				//인원 기준이 0(무관)이 아닌 경우
-				if(originalList.get(i).getPeople() != 0) {
-					//현재 기준과 인원 기준이 같은 녀석들만 리스트에 담는다.
-					if(originalList.get(i).getPeople() == originalList.get(j).getPeople()) {
-						
-					}
-				//인원 기준이 0(무관)인 경우
-				}else {
-					
-				}
-			}
-		}
-		
-		return result; 
-	}
-	
-	
-	
-	public List<MatchDTO> timeFilter(List<MatchDTO> originalList) {
-		List<MatchDTO> result = new ArrayList<>();
-		for (int i = 0; i < originalList.size(); i++) {
-			String time = originalList.get(i).getTime1();
-			for (int j = 0; j < originalList.size(); j++) {
-				MatchDTO dto = originalList.get(j);
-				if(time.equals(dto.getTime1()) || time.equals(dto.getTime2()) || time.equals(dto.getTime3())) {
-					//기준의 인원수와 일치해야함.
-					//기준이 0(무관)이면 리스트에 담긴 모든 녀석들과 
-					
-					
-				}
-			}
-		}
-		//people 규칙
-		//0 : 무관
-		//3 : 3명
-		//4 : 4~6명
-		//7 : 7~9명
-		//10 : 10명 이상
-		System.out.println("result : " +result);
-		return result;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

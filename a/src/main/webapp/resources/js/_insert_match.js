@@ -441,21 +441,15 @@ function nullValidator() {
 	ob.x = x.value;
 	ob.y = y.value;
 	ob.range = range.value;
-	ob.time1 = time_array[0];
-	ob.time2 = time_array[1];
-	ob.time3 = time_array[2];
-	ob.topic1 = theme_array[0];
-	ob.topic2 = theme_array[1];
-	ob.topic3 = theme_array[2];
+	ob.time = time_array[0];
+	ob.topic = theme_array[0];
 	switch(career_array[0]){
-		case "무관": ob.career = 0; break;
 		case "0~2년": ob.career = 2; break;
 		case "3~5년": ob.career = 5; break;
 		case "5년 이상": ob.career = 6; break;
 		case "10년 이상": ob.career = 10; break; 
 	}
 	switch(people_array[0]){
-		case "무관": ob.people = 0; break;
 		case "~ 3명": ob.people = 3; break;
 		case "4 ~ 6명": ob.people = 4; break;
 		case "7 ~ 9명": ob.people = 7; break;
@@ -557,21 +551,11 @@ function nullValidator() {
 								}
 						)
 	);
-      document
-    .getElementById("location_selection")
-    .setAttribute("placeHolder", "지역 ▽");
-      document
-    .getElementById("time_selection")
-    .setAttribute("placeHolder", "시간대 ▽");
-      document
-    .getElementById("theme_selection")
-    .setAttribute("placeHolder", "주제 ▽");
-      document
-    .getElementById("career_selection")
-    .setAttribute("placeHolder", "경력 ▽");
-      document
-    .getElementById("people_selection")
-    .setAttribute("placeHolder", "희망인원 ▽");
+      document.getElementById("location_selection").setAttribute("placeHolder", "지역 ▽");
+      document.getElementById("time_selection").setAttribute("placeHolder", "시간대 ▽");
+      document.getElementById("theme_selection").setAttribute("placeHolder", "주제 ▽");
+      document.getElementById("career_selection").setAttribute("placeHolder", "경력 ▽");
+      document.getElementById("people_selection").setAttribute("placeHolder", "희망인원 ▽");
 
 	time_array = new Array();
 	theme_array = new Array();

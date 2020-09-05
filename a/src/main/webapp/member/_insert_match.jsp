@@ -56,7 +56,6 @@
 						placeholder="시간대 ▽" />
 				</div>
 				<div id="time_option_wrapper" class="option_wrappers">
-					<div class="time_options">무관&nbsp;</div>
 					<div class="time_options">평일 낮&nbsp;</div>
 					<div class="time_options">평일 저녁&nbsp;</div>
 					<div class="time_options">주말 낮&nbsp;</div>
@@ -100,7 +99,6 @@
 						placeholder="경력 ▽" />
 				</div>
 				<div id="career_option_wrapper" class="option_wrappers">
-					<div class="career_options">무관&nbsp;</div>
 					<div class="career_options">0~2년&nbsp;</div>
 					<div class="career_options">3~5년&nbsp;</div>
 					<div class="career_options">5년 이상&nbsp;</div>
@@ -115,7 +113,6 @@
 						placeholder="희망인원 ▽" />
 				</div>
 				<div id="people_option_wrapper" class="option_wrappers">
-					<div class="people_options">무관&nbsp;</div>
 					<div class="people_options">&nbsp; ~ 3명&nbsp;</div>
 					<div class="people_options">4 ~ 6명&nbsp;</div>
 					<div class="people_options">7 ~ 9명&nbsp;</div>
@@ -135,10 +132,10 @@
 						<input class="wishlist_area" type="text" value="${dto.x}" readonly /> 
 						<input type="hidden" value="${dto.y}" readonly /> 
 						<input type="hidden" value="${dto.range}" readonly /> 
-						<input class="wishlist_time" type="text" value="${dto.time1}  ${dto.time2}  ${dto.time3}" readonly /> 
-						<input class="wishlist_topic" type="text" value="${dto.topic1}  ${dto.topic2}  ${dto.topic3}" readonly /> 
-						<input class="wishlist_career" type="text"	value="<c:choose><c:when test="${dto.career eq 0 }">무관</c:when><c:when test="${dto.career eq 2 }">0~2년</c:when><c:when test="${dto.career eq 5 }">3~5년</c:when><c:when test="${dto.career eq 6 }">5년 이상</c:when><c:when test="${dto.career eq 10 }">10년  이상</c:when></c:choose>" readonly />
-						<input class="wishlist_people" type="text" value="<c:choose><c:when test="${dto.people eq 0 }">무관</c:when><c:when test="${dto.people eq 3 }">3명</c:when><c:when test="${dto.people eq 4 }">4~6명</c:when><c:when test="${dto.people eq 7 }">7~9명</c:when><c:when test="${dto.people eq 10 }">10명  이상</c:when></c:choose>" readonly />
+						<input class="wishlist_time" type="text" value="${dto.time}" readonly /> 
+						<input class="wishlist_topic" type="text" value="${dto.topic}" readonly /> 
+						<input class="wishlist_career" type="text"	value="<c:choose><c:when test="${dto.career eq 2 }">0~2년</c:when><c:when test="${dto.career eq 5 }">3~5년</c:when><c:when test="${dto.career eq 6 }">5년 이상</c:when><c:when test="${dto.career eq 10 }">10년  이상</c:when></c:choose>" readonly />
+						<input class="wishlist_people" type="text" value="<c:choose><c:when test="${dto.people eq 3 }">3명</c:when><c:when test="${dto.people eq 4 }">4~6명</c:when><c:when test="${dto.people eq 7 }">7~9명</c:when><c:when test="${dto.people eq 10 }">10명  이상</c:when></c:choose>" readonly />
 						<button type="button" class="wishdelete">삭제</button>
 					</li>
 				</c:forEach>
