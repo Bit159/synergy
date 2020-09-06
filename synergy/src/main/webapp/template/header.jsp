@@ -24,7 +24,7 @@
 							<a href="#">스터디 매칭</a>
 						</li>
 						<li class="createGroup" style="white-space: nowrap;">
-							<a href="/synergy-kh/member/cardBoardList?pg=1&range=1">스터디 모집</a>
+							<a href="/synergy-kh/member/cardBoardList?pg=1&range=1&location=&topic=">스터디 모집</a>
 						</li>
 						<li class="groupManage" style="white-space: nowrap;">
 							<a href="#">그룹관리</a>

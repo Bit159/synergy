@@ -2,6 +2,9 @@ package member.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import cardBoard.bean.CardBoardDTO;
 import cardBoard.bean.CardBoardPaging;
@@ -35,25 +40,6 @@ public class MemberController {
 	public String loginForm() {
 		return "/all/loginForm";
 	}
-//	@RequestMapping(value="/member/login",method=RequestMethod.POST)
-//	public void login(@RequestParam Map<String, String> map, HttpSession session) {
-//		memberService.login(map);
-//		String result = "";
-//		if(memberDTO != null) {
-//			return "/member/welcome";
-//		}else {
-//			return "/member/loginForm";
-//		}
-//	}
-//	@RequestMapping(value="/member/welcome",method=RequestMethod.GET)
-//	public String welcome() {
-//		return "/member/welcome";
-//	}
-//	@RequestMapping(value="/member/logout",method=RequestMethod.GET)
-//	public String logout(HttpSession session) {
-//		session.invalidate();
-//		return "/member/loginForm";
-//	}
 	@RequestMapping(value="/member/signUpForm",method=RequestMethod.GET)
 	public String signUpForm() {
 		return "/member/signUpForm";
@@ -87,7 +73,6 @@ public class MemberController {
 		 String username = principal.getName();
 		 String nickname = memberService.getNickname(username);
 		 cardBoardDTO.setNickname(nickname);
-		 System.out.println(cardBoardDTO.getSeq());
 		 cardBoardService.regist(cardBoardDTO);
 		 return "redirect:/member/cardBoardList";
 	 }
@@ -111,39 +96,54 @@ public class MemberController {
 	 public ModelAndView cardBoardList(
 			 @RequestParam(required=false, defaultValue = "1") int pg
 			,@RequestParam(required=false, defaultValue = "1") int range
-	 		,@RequestParam(required=false) String[] locations,
+	 		,@RequestParam(required=false) String[] location,
 	 		 @RequestParam(required=false) String topic){
-
-		 System.out.println("주제 :" + topic);
 		 
 		 CardBoardPaging paging = new CardBoardPaging();
 		 int page =  pg; 
-		 int listCnt = cardBoardService.getBoardListCnt(); //전체갯수
-		 paging.pageInfo(page, range, listCnt);
-		 
-		 Map<String,Object> map = new HashedMap<String,Object>();
+		 int listCnt = 0; //전체갯수
+		 Map<String,Object> map = new HashMap<String,Object>();
 		 ModelAndView mav = new ModelAndView();
-		 if(locations==null && topic==null) {
+		 if(location==null && topic==null) {
 			 //전체리스트
+			 listCnt = cardBoardService.getBoardListCnt();
+			 paging.pageInfo(page, range, listCnt,"", "");
 			 List<CardBoardDTO> listAll = cardBoardService.getCardBoardList(paging);
 			 mav.addObject("list",listAll);
-			 mav.setViewName("/member/cardBoard");
-		 } else if(locations==null && topic!=null) {
-			 List<CardBoardDTO> listNoloc = cardBoardService.searchCardNoloc(topic);
-			 mav.addObject("list",listNoloc);
-			 mav.setViewName("/member/cardBoard");
-		 } else if(locations!=null && topic!=null) {
-			 for (int i = 0; i < locations.length; i++) {
-				 map.put("locations["+i+"]", locations[i]);
+			 mav.addObject("paging",paging);
+			 
+		 }else if(location!=null && topic!=null){
+			 for (int i = 0; i < location.length; i++) {
+				 map.put("locations["+i+"]", location[i]);
 			 }
+			 String loc = Arrays.toString(location).replace("[", "").replace("]", "").replace(", ", ",");
 			 map.put("topic",topic);
+			 paging.pageInfo(page, range, 0, "" , "");
+			 map.put("listSize", paging.getListSize());
+			 map.put("startList", paging.getStartList());
+			 
 			 List<Object> list2 = new ArrayList<Object>(map.values());
-			 //지역 및 주제 검색
+			 listCnt = cardBoardService.getSearchBoardListCnt(list2);
+			 paging.pageInfo(page, range, listCnt, loc, topic);
+			 System.out.println(page + ", " + range +", "+ listCnt+", " + loc+ ", "+ topic);
+			 
+			 for (int i = 0; i < list2.size(); i++) {
+				System.out.println("페이징 이후"+list2.get(i));
+			 }
 			 List<CardBoardDTO> list = cardBoardService.searchCard(list2);
 			 mav.addObject("list",list);
+			 mav.addObject("paging",paging);
+			 
+		 }else if(location==null && topic!=null) {
+			 listCnt = cardBoardService.getNolocBoardListCnt(topic);
+			 String loc = Arrays.toString(location).replace("[", "").replace("]", "").replace(", ", ",");
+			 paging.pageInfo(page, range, listCnt, loc, topic);
+			 System.out.println(page + ", " + range +", "+ listCnt+", " + loc+ ", "+ topic);
+			 List<CardBoardDTO> listNoloc = cardBoardService.searchCardNoloc(topic, paging);
+			 mav.addObject("list",listNoloc);
+			 mav.addObject("paging",paging);
 		 }
-		 
-		 mav.addObject("paging",paging);
+		 mav.setViewName("/member/cardBoard");
 		 return mav;
 	 }
 	 //지역 선택창
@@ -175,31 +175,6 @@ public class MemberController {
 		 JSONArray json = new JSONArray();
 		 json.addAll(list);
 		 return json;
-	 }
-	 //조건설정 후 검색
-	 @GetMapping(value="/member/searchCard")
-	 public ModelAndView searchCard(@RequestParam(required=false) String[] locations,@RequestParam String topic){
-		 JSONArray json = new JSONArray();
-		 ModelAndView mav = new ModelAndView();
-		 List<CardBoardDTO> listAll = cardBoardService.searchCardNoloc(topic);
-		 if(locations==null) {
-//			 json.addAll(listAll);
-			 mav.addObject("listAll",listAll);
-		 }
-		 Map<String,Object> map = new HashedMap<String,Object>();
-		 for (int i = 0; i < locations.length; i++) {
-			 map.put("locations["+i+"]", locations[i]);
-		 }
-		 map.put("topic",topic);
-		 
-		 List<Object> list2 = new ArrayList<Object>(map.values());
-		 List<CardBoardDTO> list = cardBoardService.searchCard(list2);
-		 if(locations!=null) {
-//			 json.addAll(list);
-			 mav.addObject("listAll",list);
-		 }
-		 mav.setViewName("/member/cardBoard");
-		 return mav;
 	 }
 	 //댓글 보기
 	 @GetMapping(value="/member/cardBoardView")

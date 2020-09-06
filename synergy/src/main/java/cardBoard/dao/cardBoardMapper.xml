@@ -6,10 +6,13 @@
 		values((select *from (select max(seq)+1 from cardboard) next),#{title},#{nickname},#{topic},#{location},#{people},#{content},default,now())
 	</insert>
 	<select id="getCardBoardList" parameterType="paging" resultType="card">
-		select * from cardboard order by seq desc limit #{startList},#{listSize};
+		select * from cardboard order by seq desc limit #{startList},#{listSize}
 	</select>
 	<select id="getBoardListCnt" resultType="int">
 		SELECT count(*) as listCnt FROM cardboard
+	</select>
+	<select id="getNolocBoardListCnt" parameterType="java.util.Map" resultType="int">
+		SELECT count(*) as listCnt FROM cardboard where topic=#{topic}
 	</select>
 	<!-- ========지역 리스트 뿌리기======  -->
 	<select id="getLocationList" parameterType="String" resultType="String">
@@ -17,26 +20,70 @@
 	</select>
 	<!-- =========조건설정 후 검색 ============ -->
 	<select id="searchCard" parameterType="java.util.List" resultType="card">
-		select * from cardboard where location  IN (
+		select * from cardboard where
+		<foreach collection="list" item="item" index="index">
+		<if test="list.get(2)!=null and index==3">
+		 location  IN (
+		</if>
+		</foreach>
 		<foreach collection="list" item="item" index="index" separator=",">
-			<if test="index!=0">
-			#{item} 
+			<if test="list.get(2)!=null and index!=0 and index!=1 and index!=2">
+			#{item}
 			</if>
 		</foreach>
-		) and topic like concat
 		<foreach collection="list" item="item" index="index">
-			<if test="index==0">
+		<if test="list.get(2)!=null and index==3">
+		 ) and 
+		</if>
+		</foreach>
+		topic like concat
+		<foreach collection="list" item="item" index="index">
+			<if test="index==1">
 			('%',#{item}) 
 			</if>
 		</foreach>
-		order by seq desc
-		
+		order by seq desc limit
+		<foreach collection="list" item="item" index="index">
+			<if test="index==0">
+			#{item} 
+			</if>
+		</foreach>
+		,
+		<foreach collection="list" item="item" index="index">
+			<if test="index==2">
+			#{item} 
+			</if>
+		</foreach>
 	</select>
-	<!-- ======= 지역설정 없이 검색 =====  -->
-	<select id="searchCardNoloc" parameterType="String" resultType="card">
-		select * from cardboard where topic like concat('%',#{topic}) order by seq desc;
+	<!-- =========조건설정 후 검색 리스트 개수 ============ -->
+	<select id="getSearchBoardListCnt" parameterType="java.util.List" resultType="int">
+		select count(*) from cardboard where 
+		<foreach collection="list" item="item" index="index">
+		<if test="list.get(2)!=null and index==3">
+		 location  IN (
+		</if>
+		</foreach>
+		<foreach collection="list" item="item" index="index" separator=",">
+			<if test="list.get(2)!=null and index!=0 and index!=1 and index!=2">
+			#{item}
+			</if>
+		</foreach>
+		<foreach collection="list" item="item" index="index">
+		<if test="list.get(2)!=null and index==3">
+		 ) and 
+		</if>
+		</foreach>
+		topic like concat
+		<foreach collection="list" item="item" index="index">
+			<if test="index==1">
+			('%',#{item}) 
+			</if>
+		</foreach>
 	</select>
-	
+	<!-- ======= 지역설정 없이 검색 ======  -->
+	<select id="searchCardNoloc" parameterType="java.util.Map" resultType="card">
+		select * from cardboard where topic like concat('%',#{topic}) order by seq desc limit #{startList},#{listSize}
+	</select>
 	<!-- =========뷰 페이지 =========  -->
 	<select id="getCardContent" parameterType="int" resultType="card">
 		select * from cardboard where seq=#{seq}

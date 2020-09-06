@@ -12,7 +12,7 @@ public interface CardBoardService {
 	public List<CardBoardDTO> getCardBoardList(CardBoardPaging paging);
 	public List<String> getLocationList(String location);
 	public List<CardBoardDTO> searchCard(List<Object> list);
-	public List<CardBoardDTO> searchCardNoloc(String topic);
+	public List<CardBoardDTO> searchCardNoloc(String topic, CardBoardPaging paging);
 	public CardBoardDTO getCardContent(int seq);
 	public int getBoardListCnt();
 	public List<CardBoardReplyDTO> getReplyList(int seq);
@@ -21,4 +21,6 @@ public interface CardBoardService {
 	public void modifyReply(CardBoardReplyDTO dto);
 	public void replyCntup(CardBoardDTO cardDTO);
 	public void replyCntdown(CardBoardDTO cardDTO);
+	public int getNolocBoardListCnt(String topic);
+	public int getSearchBoardListCnt(List<Object> list);
 }

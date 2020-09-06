@@ -152,19 +152,19 @@
 		<div id="paginationBox">
 			<ul class="pagination">
 				<c:if test="${paging.first}">
-					<li class="page-item"><a class="page-link" href="#" onClick="location.href='/synergy-kh/member/cardBoardList?pg=1&range=1'">《</a></li>
+					<li class="page-item"><a class="page-link" href="#" onClick="location.href='/synergy-kh/member/cardBoardList?pg=1&range=1&location=${paging.location}&topic=${paging.topic}'">《</a></li>
 				</c:if>
 				<c:if test="${paging.prev}">
-					<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}')">〈</a></li>
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}','${paging.location}','${paging.topic }')">〈</a></li>
 				</c:if>
 				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="idx">
-					<li class="page-item"><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}')"> ${idx} </a></li>
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}','${paging.location}','${paging.topic }')"> ${idx} </a></li>
 				</c:forEach>
 				<c:if test="${paging.next}">
-					<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}')" >〉</a></li>
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}','${paging.location}','${paging.topic }')" >〉</a></li>
 				</c:if>
 				<c:if test="${paging.last}">
-					<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}')" >》</a></li>
+					<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}','${paging.location}','${paging.topic }')" >》</a></li>
 				</c:if>
 			</ul>
 		</div>
@@ -239,15 +239,11 @@
 		$.ajax({
 			type:'get',
 			url:'/synergy-kh/member/cardBoardList?pg=1&range=1',
-			data:{'locations':locations,'topic':$('#sel').val()},
+			data:{'location':locations,'topic':$('#sel').val()},
 // 			dataType:'json',
 // 			traditional:true,
 			success:function(data){
-				location.href='/synergy-kh/member/cardBoardList?pg=1&range=1&locations='+locations+'&topic='+$('#sel').val()
-// 				$('.card').parent().remove();
-// 				$('#paginationBox').children().remove();
-// 				location.reload();
-
+				location.href='/synergy-kh/member/cardBoardList?pg=1&range=1&location='+locations+'&topic='+$('#sel').val()
 // 				$('#paginationBox').pagination({
 // 				    dataSource: data,
 // 				    pageSize: 9,
@@ -267,37 +263,46 @@
 		});
 	});
 	//이전 버튼 이벤트
-	function fn_prev(page, range, rangeSize) {
-			var page = ((range - 2) * rangeSize) + 1;
-			var range = range - 1;
-			var url = "${pageContext.request.contextPath}/member/cardBoardList";
-			url = url + "?pg=" + page;
-			url = url + "&range=" + range;
-			location.href = url;
-	}
-    //페이지 번호 클릭
-	function fn_pagination(page, range, rangeSize) {
+	function fn_prev(page, range, rangeSize, loc, topic) {
+		var page = ((range - 2) * rangeSize) + 1;
+		var range = range - 1;
 		var url = "${pageContext.request.contextPath}/member/cardBoardList";
 		url = url + "?pg=" + page;
 		url = url + "&range=" + range;
-		location.href = url;	
+		url = url + "&location=" + loc;
+		url = url + "&topic=" +topic;
+		location.href = encodeURI(url);
+	}
+    //페이지 번호 클릭
+	function fn_pagination(page, range, rangeSize, loc, topic) {
+		var url = "${pageContext.request.contextPath}/member/cardBoardList";
+		url = url + "?pg=" + page;
+		url = url + "&range=" + range;
+		url = url + "&location=" + loc;
+		url = url + "&topic=" + topic;
+		location.href = encodeURI(url);	
 	}
 	//다음 버튼 이벤트
-	function fn_next(page, range, rangeSize) {
+	function fn_next(page, range, rangeSize,loc,topic) {
 		var page = parseInt((range * rangeSize)) + 1;
 		var range = parseInt(range) + 1;
 		var url = "${pageContext.request.contextPath}/member/cardBoardList";
 		url = url + "?pg=" + page;
 		url = url + "&range=" + range;
-		location.href = url;
+		url = url + "&location=" + loc;
+		url = url + "&topic=" +topic;
+		location.href = encodeURI(url);
 	}
 	//맨끝 버튼 이벤트
-	function fn_last(pageCnt, rangeSize) {
+	function fn_last(pageCnt, rangeSize, loc, topic) {
 		var url = "${pageContext.request.contextPath}/member/cardBoardList";
 		var range = Math.ceil(pageCnt/rangeSize);
 		url = url + "?pg=" + pageCnt;
 		url = url + "&range=" + range;
-		location.href = url;
+		url = url + "&location=" +loc;
+		url = url + "&topic=" +topic;
+		alert(url);
+		location.href = encodeURI(url);
 	}
 	</script>
 </body>

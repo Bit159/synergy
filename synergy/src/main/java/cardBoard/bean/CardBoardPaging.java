@@ -17,7 +17,10 @@ public class CardBoardPaging {
 	private boolean next;
 	private boolean first;
 	private boolean last;
-	public void pageInfo(int page, int range, int listCnt) {
+	private String location;
+	private String topic;
+	
+	public void pageInfo(int page, int range, int listCnt, String location, String topic) {
 		this.page = page;
 		this.range = range;
 		this.listCnt = listCnt;
@@ -41,5 +44,12 @@ public class CardBoardPaging {
 		this.first = page == 1 ? false : true;
 		//맨 마지막으로
 		this.last = pageCnt == page ? false : true;
+		if(this.pageCnt == 0) {
+			this.last = false;
+		}
+		
+		this.location = location;
+		this.topic = topic;
+		
 	}
 }

@@ -34,8 +34,8 @@ public class CardBoardServiceImpl implements CardBoardService {
 		return cardBoardDAO.searchCard(list);
 	}
 	@Override
-	public List<CardBoardDTO> searchCardNoloc(String topic) {
-		return cardBoardDAO.searchCardNoloc(topic);
+	public List<CardBoardDTO> searchCardNoloc(String topic,CardBoardPaging paging) {
+		return cardBoardDAO.searchCardNoloc(topic,paging);
 	}
 	@Override
 	public CardBoardDTO getCardContent(int seq) {
@@ -68,6 +68,14 @@ public class CardBoardServiceImpl implements CardBoardService {
 	@Override
 	public void replyCntdown(CardBoardDTO cardDTO) {
 		cardBoardDAO.replyCntdown(cardDTO);
+	}
+	@Override
+	public int getNolocBoardListCnt(String topic) {
+		return cardBoardDAO.getNolocBoardListCnt(topic);
+	}
+	@Override
+	public int getSearchBoardListCnt(List<Object> list) {
+		return cardBoardDAO.getSearchBoardListCnt(list);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package cardBoard.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,8 +50,12 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	}
 
 	@Override
-	public List<CardBoardDTO> searchCardNoloc(String topic) {
-		return sqlSession.selectList("cardBoardSQL.searchCardNoloc",topic);
+	public List<CardBoardDTO> searchCardNoloc(String topic,CardBoardPaging paging) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("topic", topic);
+		map.put("startList", paging.getStartList());
+		map.put("listSize", paging.getListSize());
+		return sqlSession.selectList("cardBoardSQL.searchCardNoloc",map);
 	}
 
 	@Override
@@ -91,5 +96,15 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	@Override
 	public void replyCntdown(CardBoardDTO cardDTO) {
 		sqlSession.update("cardBoardSQL.replyCntdown", cardDTO);
+	}
+
+	@Override
+	public int getNolocBoardListCnt(String topic) {
+		return sqlSession.selectOne("cardBoardSQL.getNolocBoardListCnt",topic);
+	}
+
+	@Override
+	public int getSearchBoardListCnt(List<Object> list) {
+		return sqlSession.selectOne("cardBoardSQL.getSearchBoardListCnt" , list);
 	}
 }
