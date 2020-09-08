@@ -11,14 +11,14 @@
 <link rel="stylesheet" href="../resources/css/boardList.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../resources/js/welcome.js" defer></script>
-
 </head>
 <body>
+
 	<jsp:include page="header.jsp" flush="false"/>
-	
+
 	<div class="body_wrapper">
         <div class="body_container">
-            <h1>외부게시판</h1>
+            <h1>자유게시판</h1>
             <div class="list_wrapper">
                 <ul class="list_group">
                     <li class="list_group_item">
@@ -36,7 +36,7 @@
 	                    	<li class="list_group_item">
 	                    		<div class="bno"><c:out value="${dto.bno}" /></div>
 		                        <%-- <div class="topic"><c:out value="${dto.topic}" /></div> --%>
-		                        <div class="title"><a id="titleA" href="/synergy/board/${dto.bno }?pg=${paging.page}&range=${paging.range}"><c:out value="${dto.title}" /></a></div>                        
+		                        <div class="title"><a id="titleA" href="/synergy/bboard/${dto.bno }?pg=${paging.page}&range=${paging.range}"><c:out value="${dto.title}" /></a></div>                        
 		                        <div class="nickname"><c:out value="${dto.nickname}" /></div>
 		                        <div class="boarddate">
 		                        	<fmt:formatDate var="nowdate" pattern="yyyy-MM-dd" value="${now }"/>
@@ -60,7 +60,7 @@
 			<div id="paginationBox">
 				<ul class="pagination">
 					<c:if test="${paging.first}">
-						<li class="page-item"><a class="page-link" href="#" onClick="location.href='/synergy/board/boardList?pg=1&range=1&searchType=${search.searchType }&keyword=${search.keyword }'">《</a></li>
+						<li class="page-item"><a class="page-link" href="#" onClick="location.href='/synergy/bboard/boardList2?pg=1&range=1&searchType=${search.searchType }&keyword=${search.keyword }'">《</a></li>
 					</c:if>
 					<c:if test="${paging.prev}">
 						<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')">〈</a></li>
@@ -69,7 +69,7 @@
 						<li class="page-item"><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')"> ${idx} </a></li>
 					</c:forEach>
 					<c:if test="${paging.next}">
-						<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.page}', '${paging.range}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')" >〉</a></li>
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')" >〉</a></li>
 					</c:if>
 					<c:if test="${paging.last}">
 						<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')" >》</a></li>
@@ -91,6 +91,10 @@
 				</form>
 			</div> -->
 			<!-- searching -->
+			
+			<!-- 글 생성 버튼 -->
+			<button type="button" id="boardWriteBtn" name="boardWriteBtn">글생성</button>
+			<!-- 글 생성 버튼 -->
 			
 			<!-- search{s} -->
 
@@ -126,9 +130,7 @@
 	
 			<!-- search{e} -->
 			
-			<!-- 글 생성 버튼 -->
-			<button type="button" id="boardWriteBtn" name="boardWriteBtn">글생성</button>
-			<!-- 글 생성 버튼 -->
+			
 
 
 
@@ -174,17 +176,13 @@
 		            <input type="submit" id="searchBtn" value="검색">
 	        	</form>
 	        	</div> --%>
-	        	
-	        	
-        		
-        		            
             
         </div>
     </div>
+    
+    <jsp:include page="footer.jsp" flush="false"/>
 	
-	<jsp:include page="footer.jsp" flush="false"/>
-	
-	<c:url var="boardListURL" value="/synergy/board/boardList"></c:url>
+	<c:url var="boardList2URL" value="/synergy/bboard/boardList2"></c:url>
 
 	<script type="text/javascript">
 		// 페이지 로딩시
@@ -200,7 +198,7 @@
 		function fn_prev(page, range, rangeSize, searchType, keyword) {
 			var page = ((range - 1) * rangeSize) ;
 			var range = range - 1;
-			var url = "${pageContext.request.contextPath}/board/boardList";
+			var url = "${pageContext.request.contextPath}/bboard/boardList2";
 			url = url + "?pg=" + page;
 			url = url + "&range=" + range;
 			url = url + "&searchType=" + $('#searchType').val();
@@ -210,7 +208,7 @@
 		
 		// 페이지 번호 클릭
 		function fn_pagination(page, range, rangeSize, searchType, keyword) {
-			var url = "${pageContext.request.contextPath}/board/boardList";
+			var url = "${pageContext.request.contextPath}/bboard/boardList2";
 			url = url + "?pg=" + page;
 			url = url + "&range=" + range;
 			url = url + "&searchType=" + $('#searchType').val();
@@ -222,7 +220,7 @@
 		function fn_next(page, range, rangeSize, searchType, keyword) {
 			var page = parseInt((range * rangeSize)) + 1;
 			var range = parseInt(range) + 1;
-			var url = "${pageContext.request.contextPath}/board/boardList";
+			var url = "${pageContext.request.contextPath}/bboard/boardList2";
 			url = url + "?pg=" + page;
 			url = url + "&range=" + range;
 			url = url + "&searchType=" + $('#searchType').val();
@@ -232,7 +230,7 @@
 		
 		// 맨끝 버튼 이벤트
 		function fn_last(pageCnt, rangeSize, searchType, keyword) {
-			var url = "${pageContext.request.contextPath}/board/boardList";
+			var url = "${pageContext.request.contextPath}/bboard/boardList2";
 			var range = Math.ceil(pageCnt/rangeSize);
 			url = url + "?pg=" + pageCnt;
 			url = url + "&range=" + range;
@@ -246,24 +244,22 @@
 
 			e.preventDefault();
 	
-			var url = "${boardList}";
+			var url = "${boardList2}";
 	
 			url = url + "?searchType=" + $('#searchType').val();
 	
 			url = url + "&keyword=" + $('#keyword').val();
 	
-			location.href = encodeURI(url);
+			location.href = url;
 	
 			console.log(url);
 	
 		});
-		
+
 		// 글생성 버튼
 		$(document).on('click', '#boardWriteBtn', function(){
-			location.href = "/synergy/board/boardWriteForm";
+			location.href = "/synergy/bboard/boardWriteForm";
 		});
-
-
 
 
 	</script>

@@ -19,32 +19,33 @@
 
 	<div class="bodywrapper">
         <div class="boardwrapper">
-            <h1>${cBoardDTO.topic }</h1>
+            <h1>${bBoardDTO.topic }</h1>
             <div class="boardcontainer">                
                 <div class="board_header">
                     <div class="header_upside">
-                        <div class="view_bno">${cBoardDTO.bno }</div>
+                        <div class="view_bno">${bBoardDTO.bno }</div>
                         
-                        <div class="view_title">${cBoardDTO.title }</div>
+                        <div class="view_title">${bBoardDTO.title }</div>
                     </div>
                     <div class="header_downside">
                         <div class="downside_left">                                                   
-                            <div class="view_nickname">${cBoardDTO.nickname }&emsp;</div>
-                            <div class="view_boarddate"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${cBoardDTO.boarddate }"/></div>
-                            <button type="button" class="origin" onclick="window.open('https://okky.kr/article/${cBoardDTO.bno }')">출처</button>
+                            <div class="view_nickname">${bBoardDTO.nickname }&emsp;</div>
+                            <div class="view_boarddate"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${bBoardDTO.boarddate }"/></div>
+                            <button type="button" id="modifyBoardBtn" style="width: 70px">수정</button>
+                            <button type="button" id="deleteBoardBtn" style="width: 70px">삭제</button>
                         </div>
                         <div class="downside_right">
-                            <div class="view_replys">댓글수 : ${cBoardDTO.replys }</div>
-                            <div class="view_hit">조회수 : ${cBoardDTO.hit }</div>
+                            <div class="view_replys">댓글수 : ${bBoardDTO.replys }</div>
+                            <div class="view_hit">조회수 : ${bBoardDTO.hit }</div>
                         </div>               
                     </div>
                 </div>
                 <div class="board_body">
-                    <div class="content">${cBoardDTO.content }</div>
+                    <div class="content" style="white-space:pre;">${bBoardDTO.content }</div>
                 </div>
                 <div class="board_footer">
                     <div class="replywrapper">
-                        <div class="reply_header">댓글수 : ${cBoardDTO.replys }</div>
+                        <div class="reply_header">댓글수 : ${bBoardDTO.replys }</div>
 	                        
 	                        <ul class="reply_group">
 	                            
@@ -176,7 +177,7 @@
 								</label>
 								<div class="reply_writer_div">
 									<textarea id="reply_writer_text"></textarea>
-									<button type="button" id="reply_writer_btn" data-page="${paging.page }" data-range="${paging.range }">등록</button>
+									<button type="submit" id="reply_writer_btn" data-page="${paging.page }" data-range="${paging.range }">등록</button>
 								</div>
 								<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
 							</div>
@@ -189,14 +190,14 @@
         </div>
     </div>
     
-    <jsp:include page="boardList1.jsp" flush="false"/>
+    <jsp:include page="boardList3.jsp" flush="false"/>
     <jsp:include page="footer.jsp" flush="false"/>
     
     <c:url var="boardListURL" value="/synergy/board/boardList"></c:url>
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="../resources/js/welcome.js" defer></script>
-	<script src="../resources/js/boardView.js" defer></script>
+	<script src="../resources/js/boardView2.js" defer></script>
 	
 	
 </body>

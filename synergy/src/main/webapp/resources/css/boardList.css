@@ -64,12 +64,10 @@ div[id="titleHeader"]{
 div[class="bno"]{
     width: 10%;
 }
-div[class="topic"]{
-    width: 10%;
-}
+
 div[class="title"]{
 	white-space: nowrap;
-    width: 50%;
+    width: 60%;
     overflow: hidden;
     text-overflow: ellipsis;
 }

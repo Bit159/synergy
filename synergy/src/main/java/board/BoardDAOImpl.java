@@ -43,26 +43,50 @@ public class BoardDAOImpl implements BoardDAO {
 	public CBoardDTO getCBoard(int bno) {
 		return sqlSession.selectOne("boardSQL.getCBoard", bno);
 	}
+	
+	@Override
+	public BBoardDTO getBBoard(int bno) {
+		return sqlSession.selectOne("boardSQL.getBBoard", bno);
+	}
 
 	@Override
 	public List<CBoardReplyDTO> getCBoardReplyList(int bno) {
 		return sqlSession.selectList("boardSQL.getCBoardReplyList", bno);
+	}
+	
+	@Override
+	public List<BBoardReplyDTO> getBBoardReplyList(int bno) {
+		return sqlSession.selectList("boardSQL.getBBoardReplyList", bno);
 	}
 
 	@Override
 	public void boardReply(Map<String, Object> map) {
 		sqlSession.insert("boardSQL.boardReply", map);
 	}
+	
+	@Override
+	public void boardReply2(Map<String, Object> map) {
+		sqlSession.insert("boardSQL.boardReply2", map);
+	}
 
 	@Override
 	public void hitUpdate(int bno) {
 		sqlSession.update("boardSQL.hitUpdate", bno);
 	}
+	
+	@Override
+	public void boardHitUpdate(int bno) {
+		sqlSession.update("boardSQL.boardHitUpdate", bno);
+	}
 
 	@Override
 	public void replyDelete(int rno) {
-		System.out.println("---- rno : " + rno);
 		sqlSession.delete("boardSQL.replyDelete", rno);
+	}
+	
+	@Override
+	public void replyDelete2(int rno) {
+		sqlSession.delete("boardSQL.replyDelete2", rno);
 	}
 
 	@Override
@@ -74,15 +98,30 @@ public class BoardDAOImpl implements BoardDAO {
 	public void replyModify(Map<String, Object> map) {
 		sqlSession.update("boardSQL.replyModify", map);
 	}
+	
+	@Override
+	public void replyModify2(Map<String, Object> map) {
+		sqlSession.update("boardSQL.replyModify2", map);
+	}
 
 	@Override
 	public void replyUpdate(int bno) {
 		sqlSession.update("boardSQL.replyUpdate", bno);
 	}
+	
+	@Override
+	public void replyUpdate2(int bno) {
+		sqlSession.update("boardSQL.replyUpdate2", bno);
+	}
 
 	@Override
 	public void replyDeleteUpdate(int bno) {
 		sqlSession.update("boardSQL.replyDeleteUpdate",bno);
+	}
+	
+	@Override
+	public void replyDeleteUpdate2(int bno) {
+		sqlSession.update("boardSQL.replyDeleteUpdate2",bno);
 	}
 
 	@Override
@@ -96,13 +135,54 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<CBoardDTO> getCBoardList(Search search) {
+	public List<CBoardDTO> getCBoardList(Search search) throws Exception {
 		return sqlSession.selectList("boardSQL.getCBoardList1", search);
 	}
 
 	@Override
-	public int getBoardListCnt(Search search) {
+	public int getBoardListCnt(Search search) throws Exception {
 		return sqlSession.selectOne("boardSQL.getBoardListCnt1",search);
 	}
+	
+	@Override
+	public int getCBoardListCnt(Search search) throws Exception {
+		return sqlSession.selectOne("boardSQL.getCBoardListCnt",search);
+	}
+
+	@Override
+	public int getBBoardListCnt(Search search) throws Exception {
+		return sqlSession.selectOne("boardSQL.getBBoardListCnt",search);
+	}
+	
+	@Override
+	public List<BBoardDTO> getBBoardList(Map<String, String> map) {
+		return sqlSession.selectList("boardSQL.getBBoardList", map);
+	}
+
+	@Override
+	public void writeBBoard(Map<String, Object> map) {
+		sqlSession.insert("boardSQL.writeBBoard", map);
+	}
+
+	@Override
+	public List<BBoardDTO> getBBoardList(Search search) {
+		return sqlSession.selectList("boardSQL.getBBoardList", search);
+	}
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
 
 }

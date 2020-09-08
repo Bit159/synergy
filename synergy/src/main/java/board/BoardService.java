@@ -7,36 +7,74 @@ public interface BoardService {
 
 	public List<BoardDTO> getBoardList(String pg);
 
-	public BoardPaging boardPaging(String pg);
-
 	public List<CBoardDTO> getBoardList1();
 
 	public List<CBoardDTO> getCBoardList();
 
 	public CBoardDTO getCBoard(int bno);
+	
+	public BBoardDTO getBBoard(int bno);
 
 	public List<CBoardReplyDTO> getCBoardReplyList(int bno);
+	
+	public List<BBoardReplyDTO> getBBoardReplyList(int bno);
 
 	public void boardReply(Map<String, Object> map);
+	
+	public void boardReply2(Map<String, Object> map);
 
 	public void hitUpdate(int bno);
+	
+	public void boardHitUpdate(int bno);
 
 	public void replyDelete(int rno);
+	
+	public void replyDelete2(int rno);
 
 	public void replyWrite(Map map);
 
 	public void replyModify(Map<String, Object> map);
+	
+	public void replyModify2(Map<String, Object> map);
 
 	public void replyUpdate(int bno);
+	
+	public void replyUpdate2(int bno);
 
 	public void replyDeleteUpdate(int bno);
+	
+	public void replyDeleteUpdate2(int bno);
 
 	public int getBoardListCnt();
 
 	public List<CBoardDTO> getCBoardList(Pagination paging); 
 	
-	public List<CBoardDTO> getCBoardList(Search search);
+	public List<CBoardDTO> getCBoardList(Search search) throws Exception;
 
-	public int getBoardListCnt(Search search);
+	public int getBoardListCnt(Search search) throws Exception;
+
+	public int getCBoardListCnt(Search search) throws Exception;
+	
+	public int getBBoardListCnt(Search search) throws Exception;
+	
+	public List<BBoardDTO> getBBoardList(Map<String, String> map);
+
+	public void writeBBoard(Map<String, Object> map);
+
+	public List<BBoardDTO> getBBoardList(Search search);
+
+	
+
+	
+
+	
+
+
+
+	
+
+
+
+
 
 }

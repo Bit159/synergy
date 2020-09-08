@@ -37,18 +37,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardPaging boardPaging(String pg) {
-		int totalA = boardDAO.getBoardTotalA();//총글수
-		
-		boardPaging.setCurrentPage(Integer.parseInt(pg));
-		boardPaging.setPageBlock(3);
-		boardPaging.setPageSize(5);
-		boardPaging.setTotalA(totalA);
-		boardPaging.makePagingHTML();
-		return boardPaging;
-	}
-
-	@Override
 	public List<CBoardDTO> getBoardList1() {
 		return boardDAO.getBoardList1();
 	}
@@ -64,26 +52,51 @@ public class BoardServiceImpl implements BoardService {
 	public CBoardDTO getCBoard(int bno) {
 		return boardDAO.getCBoard(bno);
 	}
+	
+	@Override
+	public BBoardDTO getBBoard(int bno) {
+		return boardDAO.getBBoard(bno);
+	}
 
 	@Override
 	public List<CBoardReplyDTO> getCBoardReplyList(int bno) {
 		return boardDAO.getCBoardReplyList(bno);
+	}
+	
+	@Override
+	public List<BBoardReplyDTO> getBBoardReplyList(int bno) {
+		return boardDAO.getBBoardReplyList(bno);
 	}
 
 	@Override
 	public void boardReply(Map<String, Object> map) {
 		boardDAO.boardReply(map);
 	}
+	
+	@Override
+	public void boardReply2(Map<String, Object> map) {
+		boardDAO.boardReply2(map);
+	}
 
 	@Override
 	public void hitUpdate(int bno) {
 		boardDAO.hitUpdate(bno);
+	}
+	
+	@Override
+	public void boardHitUpdate(int bno) {
+		boardDAO.boardHitUpdate(bno);
 	}
 
 	@Override
 	public void replyDelete(int rno) {
 		boardDAO.replyDelete(rno);
 		
+	}
+	
+	@Override
+	public void replyDelete2(int rno) {
+		boardDAO.replyDelete2(rno);
 	}
 
 	@Override
@@ -94,18 +107,33 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void replyModify(Map<String, Object> map) {
-		System.out.println(map);
 		boardDAO.replyModify(map);
 	}
+	
+	@Override
+	public void replyModify2(Map<String, Object> map) {
+		boardDAO.replyModify2(map);
+	}
+
 
 	@Override
 	public void replyUpdate(int bno) {
 		boardDAO.replyUpdate(bno);
 	}
+	
+	@Override
+	public void replyUpdate2(int bno) {
+		boardDAO.replyUpdate2(bno);
+	}
 
 	@Override
 	public void replyDeleteUpdate(int bno) {
 		boardDAO.replyDeleteUpdate(bno);
+	}
+	
+	@Override
+	public void replyDeleteUpdate2(int bno) {
+		boardDAO.replyDeleteUpdate2(bno);
 	}
 
 	@Override
@@ -121,16 +149,56 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public List<CBoardDTO> getCBoardList(Search search) {
+	public List<CBoardDTO> getCBoardList(Search search) throws Exception {
 		List<CBoardDTO> list = boardDAO.getCBoardList(search);
 		
 		return list;
 	}
 
 	@Override
-	public int getBoardListCnt(Search search) {
+	public int getBoardListCnt(Search search) throws Exception {
 		return boardDAO.getBoardListCnt(search);
 
 	}
+	
+	@Override
+	public int getCBoardListCnt(Search search) throws Exception {
+		return boardDAO.getCBoardListCnt(search);
+	}
+	
+	@Override
+	public int getBBoardListCnt(Search search) throws Exception {
+		return boardDAO.getBBoardListCnt(search);
+	}
+
+	@Override
+	public List<BBoardDTO> getBBoardList(Map<String, String> map) {
+		return boardDAO.getBBoardList(map);
+	}
+
+	@Override
+	public void writeBBoard(Map<String, Object> map) {
+		boardDAO.writeBBoard(map);
+	}
+
+	@Override
+	public List<BBoardDTO> getBBoardList(Search search) {
+		return boardDAO.getBBoardList(search);
+	}
+
+	
+	
+
+	
+
+	
+
+	
+
+
+	
+
+
+	
 
 }
