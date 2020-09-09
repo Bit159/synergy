@@ -12,6 +12,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../resources/css/card.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css"/>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
 	<div id="body-wrapper">
@@ -50,7 +51,7 @@
         		<h1>주제 선택</h1>
         		<div id="selectTopic">
         			<select id="sel">
-        				<option value="" selected>선택</option>
+        				<option value="" selected>전체</option>
         				<option value="Java">Java</option>
         				<option value="JavaScript">JavaScript</option>
         				<option value="Python">Python</option>
@@ -158,7 +159,8 @@
 					<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${paging.page}', '${paging.range}', '${paging.rangeSize}','${paging.location}','${paging.topic }')">〈</a></li>
 				</c:if>
 				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="idx">
-					<li class="page-item"><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}','${paging.location}','${paging.topic }')"> ${idx} </a></li>
+					<li class="page-item"><a class="page-link-${idx }" href="#" onClick="fn_pagination('${idx}', '${paging.range}', '${paging.rangeSize}','${paging.location}','${paging.topic }')"> ${idx} </a></li>
+					<input type="hidden" id="hidden-page" value="${paging.page }">
 				</c:forEach>
 				<c:if test="${paging.next}">
 					<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.range}', '${paging.range}', '${paging.rangeSize}','${paging.location}','${paging.topic }')" >〉</a></li>
@@ -173,7 +175,8 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="../resources/js/pagination.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 	<script type="text/javascript">
 	let aIndex=0;
 	let guIndex=0;
@@ -183,6 +186,7 @@
 	let count=0;
 	let locations = [];
 	let pageA= 0;
+	$('#sel').select2();
 	$(document).ready(function(){
 		$.ajax({
 			type:'get',
@@ -213,6 +217,7 @@
 				console.log('error');
 			}
 		});
+		$('.page-link-'+$('#hidden-page').val()).css('background','green').css('color','white');
 	});		
 	/* 하위지역 선택 */	
 	$('#select-gu').on('click','li',function(){
@@ -233,7 +238,13 @@
 				let sliceChar = text.slice(0,-1); //마지막 글자인 x를 빼기
 				locations.splice(locations.indexOf(sliceChar),1); //그 인덱스값을 제거
 			});
-		}else alert('최대 3개까지 선택할 수 있습니다.')
+		}else {
+			Swal.fire(
+			  '최대 3개까지 선택 가능합니다',
+			  '',
+			  'warning'
+			)
+		}
 	});
 	$('#searchCardBtn').click(function(){
 		$.ajax({
@@ -244,18 +255,6 @@
 // 			traditional:true,
 			success:function(data){
 				location.href='/synergy-kh/member/cardBoardList?pg=1&range=1&location='+locations+'&topic='+$('#sel').val()
-// 				$('#paginationBox').pagination({
-// 				    dataSource: data,
-// 				    pageSize: 9,
-// 				    autoHidePrevious: true,
-// 				    autoHideNext: true,
-// 				    callback: function(data, pagination) {
-// 						$('.card').parent().remove();
-// 						data.forEach(function(item, index){
-// 						$('.cardboard').append("<a href=/synergy-kh/member/cardBoardView?seq="+item.seq+"><div class=card><div class=card-header><div class=card-header-content><div class=card-header-text>모집중</div><div class=card-header-count>1"+item.people+"</div></div></div><div class=card-body><div class=card-body-content><h1 class=card-body-title>"+item.title+"</h1><p class=card-body-nickname>작성자: "+item.nickname+"</p><p class=card-body-location>지역: "+item.location+"</p></div></div><div class=card-footer></div></div></a>");	
-// 						});
-// 				    }
-// 				})
 			},
 			error:function(){
 				console.log('에러러러럴')
@@ -301,7 +300,6 @@
 		url = url + "&range=" + range;
 		url = url + "&location=" +loc;
 		url = url + "&topic=" +topic;
-		alert(url);
 		location.href = encodeURI(url);
 	}
 	</script>

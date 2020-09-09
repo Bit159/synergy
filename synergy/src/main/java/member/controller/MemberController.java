@@ -125,11 +125,6 @@ public class MemberController {
 			 List<Object> list2 = new ArrayList<Object>(map.values());
 			 listCnt = cardBoardService.getSearchBoardListCnt(list2);
 			 paging.pageInfo(page, range, listCnt, loc, topic);
-			 System.out.println(page + ", " + range +", "+ listCnt+", " + loc+ ", "+ topic);
-			 
-			 for (int i = 0; i < list2.size(); i++) {
-				System.out.println("페이징 이후"+list2.get(i));
-			 }
 			 List<CardBoardDTO> list = cardBoardService.searchCard(list2);
 			 mav.addObject("list",list);
 			 mav.addObject("paging",paging);
@@ -138,7 +133,6 @@ public class MemberController {
 			 listCnt = cardBoardService.getNolocBoardListCnt(topic);
 			 String loc = Arrays.toString(location).replace("[", "").replace("]", "").replace(", ", ",");
 			 paging.pageInfo(page, range, listCnt, loc, topic);
-			 System.out.println(page + ", " + range +", "+ listCnt+", " + loc+ ", "+ topic);
 			 List<CardBoardDTO> listNoloc = cardBoardService.searchCardNoloc(topic, paging);
 			 mav.addObject("list",listNoloc);
 			 mav.addObject("paging",paging);
@@ -222,5 +216,12 @@ public class MemberController {
 		 dto.setReply(reply);
 		 cardBoardService.modifyReply(dto);
 		 return "/member/cardBoardView";
+	 }
+	 @GetMapping(value="/member/modifyCard")
+	 public ModelAndView modifyCard(@RequestParam int seq) {
+		 CardBoardDTO dto = cardBoardService.getCardContent(seq);
+		 ModelAndView mav = new ModelAndView();
+		 mav.addObject("dto",dto);
+		 return mav;
 	 }
 }

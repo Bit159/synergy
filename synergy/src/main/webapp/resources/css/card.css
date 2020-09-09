@@ -87,7 +87,9 @@ div[id="selectBox"] h1 {
 /* 주제 선택창 */
 #selectTopic {
 	padding:0 0 0 10px;
-	cursor:pointer;
+}
+select[id=sel]{
+	width:120px;
 }
 /* 검색 버튼 */
 div[id="searchCard"] {

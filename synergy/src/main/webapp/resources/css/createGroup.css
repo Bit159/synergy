@@ -22,7 +22,8 @@ body{
 .registForm-people{
 	display:flex;
 	padding:20px;
-	border-bottom: dotted 1px rgb(50, 190, 120);
+	margin:0 10px 0 10px;
+	border-bottom: solid 1px rgb(50, 190, 120);
 }
 .registForm-header h2 {
 	margin: 0 30% 0 30%;
@@ -34,70 +35,24 @@ body{
 	padding:5px;
 	border-radius: 4px;
 }
+select[id="selectTopic"] {
+	width:180px;
+}
 /* ===================지역 선택===================== */
-.hidden {
-	display:none;
-}
-/*
-#box_modal {
-	display: none;
-	position: absolute;
-	float: right;
-	width:300px;
-	height: 200px;
-	background: white;
-	border: solid 1px black;
-	overflow: hidden;
-}
-#box_modal2 {
-	display: none;
-	position: absolute;
-	float: right;
-	width:300px;
-	height: 200px;
-	background: white;
-	border: solid 1px black;
-	overflow: hidden;
-}
-*/
-.modal-cancle {
-	float: right;
-	margin-bottom: 10px;
-}
-label[for="modal"] {
-	cursor: pointer;
-	padding: 3px;
+select[id="location"] {
+	width:180px;
 	font-size: 11pt;
-	border: solid 1px gray;
-	background: lightgrey;
-	border-radius: 4px;
 }
-input#modal:checked ~ #box_modal {
-	display: block;
+span[class="selection"] span {
+	font-size: 12pt; 	
 }
-.locationForm a {
-	padding: 3px;
-	border: solid 1px gray;
-	text-decoration: none;
-}
-#AddLocation {
-	font-size: 11pt;
-	margin-left: 10px;
-	line-height: 24px;
-	border: solid 1px gray;
-	border-radius: 4px;
-	padding:0px 5px 0px 5px;
-}
-#AddLocation a{
-	border-radius: 0;
-}
-.modal-cancle label {
- border-radius: 0;
- top:0;
+span[class="select2-results"] li {
+	font-size: 11pt
 }
 /*======================== 모집 인원====================== */
 .registForm-people select {
 	border:solid 1px darkgrey;
+	width:100px;
 } 
 .registForm-content {
 	padding:20px;

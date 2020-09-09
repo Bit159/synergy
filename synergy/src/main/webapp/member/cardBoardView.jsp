@@ -19,10 +19,16 @@
 		 <div class="view-container">
                 <div class="cardView">
                     <div id="card-title">
-                        <h1>${dto.title}</h1>
+                    <div id="card-info">
+                        <h1 id="titleH1">${dto.title}</h1>
+                        <input type="button" id="modifyCard" value="수정" onclick="location.href='/synergy-kh/member/modifyCard?seq=${dto.seq}'">
+                    	<input type="button" id="closeCard" value="마감">
+                    </div>
                         <fmt:formatDate var="registDate" pattern="yyyy-MM-dd HH:mm" value="${dto.registDate }"/>
+                        <div class="card-info2">
                         <span id="writer">작성자 ${dto.nickname}</span>
                         <span id="registDate">등록일 ${registDate}</span>
+                        </div>
                         <input type="hidden" id="boardSeq" value="${dto.seq}">
                     </div>
                     <div id="view-content">
@@ -96,8 +102,22 @@
 		<jsp:include page="/template/footer.jsp"></jsp:include>
 	</div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
 autolink($('.reply, #card-content pre'));
+$('#closeCard').click(function(){
+	$.ajax({
+		type:'get',
+		url:'/synergy-kh/member/closeCard',
+		data:'seq='+$('#boardSeq').val(),
+		success:function(){
+			alert('ㅎㅎㅎ')
+		},
+		error:function(){
+			
+		}
+	});
+});
 /* ===========댓글 등록================= */
 $('#reply_write_regist').click(function(){
 	$.ajax({
@@ -116,21 +136,41 @@ $('#reply_write_regist').click(function(){
 $('.reply_button').on('click','#deleteReplyBtn',function(){
 	let rseq = $(this).data('rseq')
 	let seq = $(this).data('seq')
-	$.ajax({
-		type:'get',
-		url:'/synergy-kh/member/deleteReply',
-		data:{'rseq':rseq,'seq':seq},
-		success:function(){
-			location.reload();
-		},
-		error:function(){
-		}
-	});
+    Swal.fire({
+    title: '삭제하시겠습니까?',
+//     text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: '삭제',
+    cancelButtonText: '취소',
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+        '삭제 완료',
+        '',
+        'success',
+        ).then(result => {
+	        $.ajax({
+	    		type:'get',
+	    		url:'/synergy-kh/member/deleteReply',
+	    		data:{'rseq':rseq,'seq':seq},
+	    		success:function(){
+	    			location.reload();
+	    		},
+	    		error:function(){
+	    		}
+	    	})
+	    	//ajax
+        })
+    }
 })
+});
+/* ============댓글 수정============= */
 $('.reply_button').on('click','#modifyReplyBtn',function(){
 	$(this).parent().parent().children('.reply_modify_wrapper').css('display','block')
 });
-/* ============댓글 수정============= */
 $('.reply_modify_button_div').on('click','#reply_modify_button',function(){
 // 	$(this).parent().parent().parent().parent().parent().children('#reply_editDate').css('display','block');
 	let rseq = $(this).data('rseq');
@@ -150,6 +190,7 @@ $('.reply_modify_button_div').on('click','#reply_modify_cancel',function(){
 	$(this).parent().parent().parent().parent().css('display','none');
 	$(this).parent().parent().children('textarea').val('');
 });
+
 </script>
 </body>
 </html>

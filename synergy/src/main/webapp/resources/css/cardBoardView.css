@@ -14,11 +14,26 @@ html, body, div,h1,a,p {
     border-radius: 10px;
 }
 div[id="card-title"] h1 {
-	padding:5px 0 10px 0;
-    margin: 10px;
+	width:90%;
     font-size: 20pt;
-    border-bottom:solid 3px rgb(50, 190, 120);
-    display:flex;
+}
+div[id="card-info"]{
+	display: flex;
+	border-bottom:solid 3px rgb(50, 190, 120);
+	padding:10px 0 5px 10px;
+	margin:0 10px 0 10px;
+}
+div[class="card-info2"] {
+	padding:10px 0 5px 0;
+}
+input[id="modifyCard"] {
+	width:50px;
+	height:30px;
+	margin-right: 5px;
+}
+input[id="closeCard"] {
+	width:50px;
+	height:30px;
 }
 div[id="card-title"] span {
 	padding-left:10px;
@@ -41,6 +56,8 @@ div[id="card-content"] pre {
 	margin:0px 10px 0px 10px;
 /* 	border-radius: 10px; */
 	margin-bottom: 20px;
+	height:100%;
+	font-weight: bold;
 }
 
 /* ===============댓글==================== */
@@ -69,7 +86,7 @@ div[id="reply_editDate"] {
 	display:none;
 }
 div[class="reply"]{
-	padding:10px 0 15px 0;
+	padding:10px 0 10px 0;
 	white-space: pre-line;
 }
 div[class="reply_button"]{

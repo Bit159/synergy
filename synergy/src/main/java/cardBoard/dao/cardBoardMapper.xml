@@ -93,7 +93,6 @@
 	<select id="getReplyList" parameterType="int" resultType="reply" >
 		select rseq, seq, reply, nickname, regDate, editDate from cardBoardReply where seq=#{seq}
 	</select>
-	
 	<!-- ===============댓글 등록=============== -->
 	<insert id="writeReply" parameterType="reply">
 		insert into cardBoardReply(rseq,seq,reply,nickname,regdate,editdate) 
