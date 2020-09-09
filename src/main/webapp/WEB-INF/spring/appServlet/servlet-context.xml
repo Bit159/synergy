@@ -43,7 +43,7 @@
 	
 	<beans:bean id="googleOAuth2Parameter" class="org.springframework.social.oauth2.OAuth2Parameters">
 		<beans:property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
-		<beans:property name="redirectUri" value="http://localhost:8080/synergy/googleLogin"/>
+		<beans:property name="redirectUri" value="http://localhost:8080/googleLogin"/>
 	</beans:bean>
 	
 	<context:component-scan base-package="member.controller"/>

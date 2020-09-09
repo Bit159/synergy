@@ -16,11 +16,11 @@
 	<!-- 회원가입 -->
 	
 	<insert id="join" parameterType="java.util.Map">
-		insert into membertable(username, nickname, password, birthyear ) values(#{username}, #{nickname}, #{password}, #{birthYear})
+		insert into membertable(username, nickname, password) values(#{username}, #{nickname}, #{password})
 	</insert>
 	
 	<insert id="addInfo" parameterType="member">
-		insert into membertable(username, nickname, password, birthyear) values(#{username}, #{nickname},#{password} ,#{birthYear})
+		insert into membertable(username, nickname, password) values(#{username}, #{nickname},#{password})
 	</insert>
 	
 	<!-- 회원 탈퇴 -->

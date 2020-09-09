@@ -1,28 +1,33 @@
 package member.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections4.map.HashedMap;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,12 +78,77 @@ public class MemberController{
 
 		return "/all/loginForm";
 	}
+	
+	@PostMapping("/socialLogin")
+	@ResponseBody
+	public void socialLogin(@RequestParam String username1) throws Exception{
+		HttpPost httpPost = new HttpPost("http://localhost:8080/login");
+		//model.addAttribute("username", username1);
+		//model.addAttribute("password", "bitcamp159");
+		
+		System.out.println(username1);
+		
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		
+		List<NameValuePair> param = new ArrayList<NameValuePair>();
+		param.add(new BasicNameValuePair("username", username1));
+		param.add(new BasicNameValuePair("password", "bitcamp159"));
+		
+		httpPost.setEntity(new UrlEncodedFormEntity(param));
+		
+		HttpResponse response = httpClient.execute(httpPost);
+
+		HttpEntity entity =  response.getEntity();
+		String content = EntityUtils.toString(entity);
+		System.out.println(content + 1);
+		
+		//return "/all/socialLogin";
+	}
 
 	//==========================================구글 로그인 콜백메소드
 	@RequestMapping(value="/googleLogin", method= {RequestMethod.GET, RequestMethod.POST})
 	public String googleCallBack(@RequestParam String code, RedirectAttributes attr) {
 		//여기서 이메일 값을 받아올 수 없어서 따로 처리를 한다.
 		attr.addAttribute("password", "bitcamp159");
+		System.out.println("콜백메서드");
+		
+		/*
+		 * BufferedReader in = null; InputStream is = null; InputStreamReader isr =
+		 * null; JSONParser jsonParser = new JSONParser();
+		 * 
+		 * String userId = null;
+		 * 
+		 * 
+		 * System.out.println(code); String idToken = code.split("-")[1];
+		 * 
+		 * String url = "https://oauth2.googleapis.com/tokeninfo"; url += "?id_token=" +
+		 * idToken;
+		 * 
+		 * try {
+		 * 
+		 * URL gurl = new URL(url); HttpURLConnection conn =
+		 * (HttpURLConnection)gurl.openConnection();
+		 * 
+		 * is = conn.getInputStream(); isr = new InputStreamReader(is, "UTF-8"); in =
+		 * new BufferedReader(isr);
+		 * 
+		 * JSONObject jsonObj = (JSONObject)jsonParser.parse(in);
+		 * 
+		 * userId= jsonObj.get("sub").toString(); String name =
+		 * jsonObj.get("name").toString(); String email =
+		 * jsonObj.get("email").toString(); String imageUrl =
+		 * jsonObj.get("picture").toString();
+		 * 
+		 * System.out.println(userId); System.out.println(name);
+		 * System.out.println(email); System.out.println(imageUrl);
+		 * 
+		 * 
+		 * } catch (MalformedURLException e) { e.printStackTrace();
+		 * 
+		 * } catch (IOException e1) { e1.printStackTrace();
+		 * 
+		 * } catch (ParseException e2) { e2.printStackTrace(); }
+		 */
 		
 		return "redirect:/all/loginForm";
 
@@ -120,15 +190,28 @@ public class MemberController{
 	public String addInfo(@RequestParam Map<String, String> map) {
 		map.put("password", "bitcamp159");
 		memberService.join(map);
-		return "/all/index";
+		
+		return "redirect:/all/welcome";
 	}
 	
 	@PostMapping("/all/checkMember")
 	@ResponseBody
-	public String checkMember(@RequestParam String username) {
+	public String checkMember(@RequestParam String username, ServletRequest req) {
 		MemberDTO memberDTO = memberService.checkMember(username);
+		HttpServletRequest request = (HttpServletRequest)req;
+		
 		System.out.println(username);
 		if(memberDTO != null) {
+			/*Collection<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+			
+			authList.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
+			User principal = new User(username, "bitcamp159", true, true, true, true, authList);
+			HttpSession session = request.getSession();
+			SecurityContext context = SecurityContextHolder.getContext();
+			
+			
+			session.setAttribute("SPRING_SECURITY_CONTEXT", principal);*/
+			
 			return "ok";
 			
 		}else {
@@ -262,9 +345,12 @@ public class MemberController{
 	
 	@PostMapping("/member/getChattingRoom")
 	@ResponseBody
-	public ModelAndView getChattingRoom(@RequestParam String username) {
+	public ModelAndView getChattingRoom(@RequestParam String username, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		List<ChattingRoomDTO> list = memberService.getChattingRoom(username);
+		
+		session.setAttribute("chattingCheck", "create");	
+		System.out.println(session.getAttribute("SPRING_SECURITY_CONTEXT"));
 		
 		for(ChattingRoomDTO dto : list) {
 			ChattingDTO chattingDTO = memberService.getLastChatting(dto.getChattingRoom());

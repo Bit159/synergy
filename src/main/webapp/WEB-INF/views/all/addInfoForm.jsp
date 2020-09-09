@@ -9,50 +9,30 @@
 </head>
 <body>
 <jsp:include page="../template/header.jsp"/>
-<div class="nav">
-    <nav>
-        <div id="logoDiv">
-            <a href="/index"><img src="/resources/image/logo.png" /></a>
-        </div>
-        <div id="menuButtons">
-            <span>프로젝트소개</span>
-            <span>이용 방법</span>
-            <span>자주 묻는 질문</span>
-            <span>로그인</span>
-            <span>회원가입</span>
-            <span><a href="/member/myPage_Update"><img src="/resources/image/my.png" width="30" height="30"></a></span>
-        </div>
-        <div id="menuButtonsM">
-            <a href="javascript:mobileMenu()">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </a>
-        </div>
-    </nav>
-</div>
-<form action="/all/addInfo" method="post" class="join-form">
-	<div class="join-area">
-		<input type="text" name="username" id="username" autocomplete="off" value="${username}" required readonly>
-		<label for="username">E-MAIL</label>
-	</div>
+<section id="addInfoForm" class="addInfoForm">
+	<form action="/all/addInfo" method="post" class="join-form">
+		<div class="join-area">
+			<input type="text" name="username" id="username" autocomplete="off" value="${username}" required readonly>
+			<label for="username">E-MAIL</label>
+		</div>
+		
+		<div class="join-area">
+			<input type="text" name="nickname" id="nickname" autocomplete="off" required>
+			<label for="nickname">NICKNAME</label>
+		</div>
 	
-	<div class="join-area">
-		<input type="text" name="nickname" id="nickname" autocomplete="off" required>
-		<label for="nickname">NICKNAME</label>
-	</div>
-
-	<div class="join-area">
-		<input type="text" id="birthYear" name="birthYear" style="width: 45%;" autocomplete="off" required>
-		<label for="birthYear">BIRTH YEAR</label>
-	</div>
-	
-	<div class="btn-area">
-		<button>JOIN!</button>
-		<button type="button" name="back" id="back" onclick="javascript='history.go(-1)'">BACK</button>
-	</div>
-	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-</form>
-<jsp:include page="../template/footer.jsp"/>
+		<div class="join-area">
+			<input type="text" id="birthYear" name="birthYear" style="width: 45%;" autocomplete="off" required>
+			<label for="birthYear">BIRTH YEAR</label>
+		</div>
+		
+		<div class="btn-area">
+			<button>JOIN!</button>
+			<button type="button" name="back" id="back" onclick="javascript='history.go(-1)'">BACK</button>
+		</div>
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+	</form>
+</section>
+<%-- <jsp:include page="../template/footer.jsp"/> --%>
 </body>
 </html>

@@ -46,6 +46,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("nickname", nickname);
+		session.setAttribute("chattingCheck", "0");
 		response.sendRedirect("/all/welcome");
 		
 	}

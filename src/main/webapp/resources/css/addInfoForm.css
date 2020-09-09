@@ -2,7 +2,7 @@
 * {margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     /* align-items: center; */
     height: 100vh;
@@ -29,30 +29,11 @@ Viewport Minimum (vmin)
 body::before{
     content: "";
     position: absolute;
-    z-index: 1;
+    /* z-index: 1; */
     top: 0; right: 0; bottom: 0; left: 0;
-    background-color: rgba(0, 0, 0, .3);
+    background-color: rgb(0, 0, 0, 0);
 }
 
-/* =========== nav 영역 ==========*/
-
-.nav {
-    width: 100%;
-    height: 60px;
-    align-content: center;
-    position: absolute;
-    display: flex;
-    justify-content: space-between;
-    transition: all 0.3s;
-  }
-  
-nav {
-    width: 1024px;
-    display: flex;
-    align-items: center;
-    z-index: 2;
-}
-  
 #menuButtons {
     width: 100%;
     display: grid;
@@ -74,10 +55,15 @@ span{
 }
 
 /* =============== section 영역 =============== */
+
+#addInfoForm{
+	align-content: center;
+}
+
 .join-form{
-    position: relative;
-    z-index: 2;
-    padding-top: 60px;
+    position: absolute;
+/*     z-index: 2;
+ */    padding-top: 60px;
 }
 
 .join-form h1 {
@@ -116,11 +102,6 @@ span{
     font-size: 18px;
     color: #999;
     transition: all .5s ease;
-}
-
-#gender {
-    width : 30%;
-    color: aliceblue;
 }
 
 .join-area input:focus + label,

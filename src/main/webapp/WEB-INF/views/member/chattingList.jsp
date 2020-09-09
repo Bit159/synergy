@@ -27,15 +27,27 @@
 	    align-content: right;
 	}
 	
-	.chat_list_wrap {
+	.modal-content{
 		margin: 15% auto;
+		width: 400px;
+		height: 600px;
+		right: 40%;
+		top : 30%;
+		background-color: white;
+	}
+	
+	.chat_list_wrap {
 	    list-style: none;
 	    width: 400px;
 	    height : 600px;
 	    background-color: white;
-	    right : 40%;
-    	top : 30%;
-
+	}
+	
+	.close {	
+	    color: #aaa;	
+	    float: right;	
+	    font-size: 28px;	
+	    font-weight: bold;	
 	}
 	
 	.close:hover,
@@ -133,15 +145,16 @@
 	
 	<!-- 채팅방 css -->
 	
-	#chatWrap{
-        border : 1px solid #ddd;    
-        margin: 15% auto;
-	    list-style: none;
+	#contentCover{
 	    width: 400px;
 	    height : 600px;
-	    background-color: white;
-	    right : 40%;
-    	top : 30%;
+	}
+	
+	#chatWrap{
+        width :400px;
+        top : 100px;
+        border : 1px solid #ddd;
+        background-color: white;
     }
 
     #chatHeader{
@@ -231,63 +244,65 @@
 <body>
 <sec:authentication property="principal.username" var="username"/>
 <div class="modal" id="modal">
-	<div class="chat_list_wrap" id="chat_list_wrap">
-	    <div class="header">
-	    	<span class="close">&times;</span> 
-	        Synergy
-	    </div>
-	    <div class="search">
-	        <input type="text" placeholder="이메일 검색" />
-	    </div>
-	    <div class="list">
-	        <ul id="chattingRoomList">
-	            <li id="chattingRoom" class="chattingRoom" onclick="getChatting(chattingRoom)">
-	                <table cellpadding="0" cellspacing="0">
-	                    <tr>
-	                        <td class="profile_td">
-	                            <img src="/resources/image/chatting_floating.png"/>
-	                        </td>
-	                        <td class="chat_td">
-	                        	<div class="chat_name">
-	                        		전체 채팅방
-	                        	</div>
-	                        	
-	                            <div class="email" id="email">
-	                                
-	                            </div>
-	                            
-	                            <div class="chat_preview" id="chat_preview">
-	                               	 
-	                            </div>
-	                        </td>
-	                        <td class="time_td">
-	                            <div class="time" id="time">
-	                                
-	                            </div>
-	                            <div id="chattingRoom_check">
-	                                
-	                            </div>
-	                        </td>
-	                    </tr>
-	                </table>
-	            </li>
-	        </ul>
-	    </div>
-	</div>
-	
-	<div id="contentCover" align="center" style="display:none;">
-	    <div id="chatWrap">
-	        <div id="chatHeader">
-				
-	        </div>
-	        <div id="messages">
-	            
-	        </div>
-	        <div id="messageForm">
-	            <input type="text" autocomplete="off" size="30" id="messageInput" placeholder="메시지 입력">
-	            <input type="button" value="보내기" id="sendBtn">
-	        </div>
-	    </div>
+	<div id="modal-content" class="modal-content">
+		<span class="close">&times;</span>
+		<div class="chat_list_wrap" id="chat_list_wrap">
+		    <div class="header">
+		        Synergy
+		    </div>
+		    <div class="search">
+		        <input type="text" placeholder="이메일 검색" />
+		    </div>
+		    <div class="list">
+		        <ul id="chattingRoomList">
+		            <li id="chattingRoom" class="chattingRoom" onclick="getChatting(chattingRoom)">
+		                <table cellpadding="0" cellspacing="0">
+		                    <tr>
+		                        <td class="profile_td">
+		                            <img src="/resources/image/chatting_floating.png"/>
+		                        </td>
+		                        <td class="chat_td">
+		                        	<div class="chat_name">
+		                        		전체 채팅방
+		                        	</div>
+		                        	
+		                            <div class="email" id="email">
+		                                
+		                            </div>
+		                            
+		                            <div class="chat_preview" id="chat_preview">
+		                               	 
+		                            </div>
+		                        </td>
+		                        <td class="time_td">
+		                            <div class="time" id="time">
+		                                
+		                            </div>
+		                            <div id="chattingRoom_check">
+		                                
+		                            </div>
+		                        </td>
+		                    </tr>
+		                </table>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+		
+		<div id="contentCover" align="center" style="display:none;">
+		    <div id="chatWrap">
+		        <div id="chatHeader">
+					
+		        </div>
+		        <div id="messages">
+		            
+		        </div>
+		        <div id="messageForm">
+		            <input type="text" autocomplete="off" size="30" id="messageInput" placeholder="메시지 입력">
+		            <input type="button" value="보내기" id="sendBtn">
+		        </div>
+		    </div>
+		</div>
 	</div>
 </div>
 <img id="chatting" src="/resources/image/chatting_floating.png" width="100" height="100" style="position:fixed;	top: 700px;right : 50%;margin-right: -900px;cursor:pointer;z-index : 99;">
@@ -305,11 +320,14 @@ let username = '${username}'
 let stompClient = null;
 let list_wrap = document.getElementById('chat_list_wrap');
 let contentCover = document.getElementById('contentCover');
+let chattingCheck = "${chattingCheck}";
 
 //======================================================== 채팅방 리스트 가져오기
 
 $(document).ready(function(){
-	connect(chattingRoomNum);
+	if(chattingCheck == '0'){
+		connect(chattingRoomNum);
+	}
 	
 	$.ajax({
 		type : 'post',
@@ -324,7 +342,9 @@ $(document).ready(function(){
 				document.getElementById("chattingRoomList").innerHTML += "<li id='" + items.chattingRoom + "' onclick='getChatting(" + items.chattingRoom + ")'><table><tr><td class='profile_td'><img src='/resources/image/chatting.png'/></td>"
 																		+ "<td class='chat_td'><div class='chat_name'>" + items.chattingRoom + "</div><div class='email'>" + items.nickname + "</div><div class='chat_preview'>" + items.chat + "</div></td>"
 																		+ "<td class='time_td'><div class='time'>" + items.chat_date + "</div><div id='" + items.chattingRoom + "_check'></div></td></tr></table></li>";
-				connect(items.chattingRoom);														
+				if(chattingCheck == '0'){
+					connect(items.chattingRoom);														
+				}
 			});
 			
 		},

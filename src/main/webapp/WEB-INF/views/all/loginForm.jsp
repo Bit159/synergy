@@ -44,7 +44,7 @@
 		</form>
 		
 		<div class="thirdParty" align="center" style="margin-top:30px;">
-			<a href="${google_url}"><img src="/resources/image/google.png"></a><br>
+			<%-- <a href="${google_url}"><img src="/resources/image/google.png"></a><br> --%>
 			<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
 		<script>
 		let csrfHeaderName = "${_csrf.headerName}";
@@ -78,9 +78,24 @@
 		    	dataType: 'text',
 		    	success : function(data){
 		    		if(data == 'ok'){
-		    			$('#username').val(username);
-		    			$('#password').val(password);
-		    			document.loginForm.submit();
+		    			//$('#username').val(username);
+		    			//$('#password').val(password);
+		    			//document.loginForm.submit();
+		    			alert("있음");
+		    			
+		    			$.ajax({
+		    				type : 'post',
+		    				url : '/socialLogin',
+		    		    	beforeSend: function(xhr){
+		    		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		    		    		
+		    		    	},
+		    		    	data : 'username1=' + username,
+		    				success : function(){
+		    					alert("에이작스");
+		    					location="/all/welcome";
+		    				}
+		    			});
 		    			
 		    		}else{
 		    			alert("없음");
@@ -102,6 +117,14 @@
 			form.email.value = username;
 			form.action="/all/addInfoForm";
 			form.method="post";
+			form.submit();
+		}
+		
+		function socialLogin(username){
+			let form = document.loginForm;
+			form.username.value= username;
+			form.method="post";
+			form.action="/socialLogin";
 			form.submit();
 		}
 		</script>
