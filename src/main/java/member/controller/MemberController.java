@@ -1,6 +1,5 @@
 package member.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -57,7 +55,7 @@ public class MemberController{
 		return "/all/index";
 	}
 
-	@GetMapping(value="/all/welcome")
+	@GetMapping(value="/")
 	public String welcome() {
 		return "/all/welcome";
 	}
