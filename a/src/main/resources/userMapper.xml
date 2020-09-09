@@ -11,8 +11,8 @@
 	</select>
 	
 	<insert id="createSchedule" parameterType="notifier.NotDTO">
-		INSERT db.notify(`username`, `time`, `place`, `title`, `content`, `link`, `created`, `updated`)
-		VALUES(#{username}, #{time}, #{place}, #{title}, #{content}, #{link}, #{created}, #{updated})
+		INSERT db.notify(`username`, `group`, `start`, `end`, `title`, `place`, `content`, `created`)
+		VALUES(#{username}, #{group}, #{start}, #{end}, #{title}, #{place}, #{content}, now())
 	</insert>
 	
 	<select id="getSchedules" resultType="notifier.NotDTO">
@@ -23,7 +23,7 @@
 		UPDATE db.notify SET `alert`=#{alert}, `time`=#{time}, `title`=#{title}, `content`=#{content}, `link`=#{link}, `updated`=NOW() WHERE `no`=#{no};
 	</update>
 	
-	<delete id="deleteSchedule" parameterType="int">
+	<delete id="removeSchedule" parameterType="int">
 		DELETE FROM db.notify WHERE `no`=#{no}
 	</delete>
 	<!-- End of Getting Schedules -->

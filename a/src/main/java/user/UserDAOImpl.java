@@ -139,8 +139,8 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.delete("userSQL.updateSchedule", dto);
 	}
 	@Override
-	public int deleteSchedule(int no) {
-		return sqlSession.delete("userSQL.deleteSchedule", no);
+	public int removeSchedule(int no) {
+		return sqlSession.delete("userSQL.removeSchedule", no);
 	}
 
 	@Override

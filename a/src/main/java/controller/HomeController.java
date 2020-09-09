@@ -32,23 +32,25 @@ public class HomeController {
 	
 	@ResponseBody
 	@PostMapping(path="/createSchedule", produces="application/json;charset=UTF-8")
-	public int createSchedule(@RequestBody JSONObject json, @Autowired NotDTO dto) {
+	public JSONObject createSchedule(@RequestBody JSONObject json, @Autowired NotDTO dto) {
+		System.out.println(json);
 		dto.setUsername(json.getString("username"));
-		dto.setTime(new Date(json.getLong("time")));
+		dto.setGroup(json.getInt("group"));
+		dto.setStart(new Date(json.getLong("start")));
+		dto.setEnd(new Date(json.getLong("end")));
 		dto.setPlace(json.getString("place"));
 		dto.setTitle(json.getString("title"));
 		dto.setContent(json.getString("content"));
-		dto.setCreated(new Date(json.getLong("created")));
-		dto.setUpdated(new Date(json.getLong("updated")));
 		int result = userDAO.createSchedule(dto);
 		if (result != 1) logger.info("일정 생성중 에러가 발생하였습니다.");
-		return userDAO.getGreatestNo();
+		json.put("no", userDAO.getGreatestNo());
+		return json;
 	}
 	
-	@PostMapping("/deleteSchedule")
+	@PostMapping("/removeSchedule")
 	@ResponseBody
-	public int deleteSchedule(@RequestBody int no) {
-		return userDAO.deleteSchedule(no);
+	public int removeSchedule(@RequestBody int no) {
+		return userDAO.removeSchedule(no);
 	}
 	@PostMapping("/updateSchedule")
 	@ResponseBody
