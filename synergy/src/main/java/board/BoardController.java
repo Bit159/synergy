@@ -407,11 +407,11 @@ public class BoardController {
 		return mav;
 	}
 	
-	// 자유게시판 작성 폼	
-		@GetMapping("/bboard/boardWriteForm")
+	// 자유게시판 수정 폼	
+		@GetMapping("/board/boardModifyForm")
 		public ModelAndView bboardWriteForm() {
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("/board/boardWriteForm");
+			mav.setViewName("/board/boardModifyForm");
 			return mav;
 		}
 	
@@ -426,6 +426,23 @@ public class BoardController {
 		map.put("nickname",nickname);
 		map.put("now", now);
 		boardService.writeBBoard(map); 
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/board/boardList");
+		return mav;
+	}
+	
+	// 자유게시판 삭제
+	@PostMapping("/board/boardDelete")
+	public ModelAndView boardDelete(@RequestParam String title, String content, int bno) {
+		String nickname = "nickname";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("title",title);
+		map.put("content",content);
+		map.put("nickname",nickname);
+		map.put("bno", bno);
+		/* boardService.deleteBBoard(map); */
+		boardService.deleteBBoard(bno);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/board/boardList");

@@ -127,7 +127,7 @@
 			<!-- search{e} -->
 			
 			<!-- 글 생성 버튼 -->
-			<button type="button" id="boardWriteBtn" name="boardWriteBtn">글생성</button>
+			<!-- <button type="button" id="boardWriteBtn" name="boardWriteBtn">글생성</button> -->
 			<!-- 글 생성 버튼 -->
 
 
@@ -258,10 +258,10 @@
 	
 		});
 		
-		// 글생성 버튼
+		/* // 글생성 버튼
 		$(document).on('click', '#boardWriteBtn', function(){
 			location.href = "/synergy/board/boardWriteForm";
-		});
+		}); */
 
 
 

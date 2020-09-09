@@ -29,7 +29,6 @@
 		SELECT * 
 		FROM db.cboard 
 		ORDER BY bno desc 
-		
 		LIMIT 0,20
 	</select>
 	<!-- 크롤링 보드 체크용 -->
@@ -302,6 +301,12 @@
 		ORDER BY bno desc
 		LIMIT #{startList},#{listSize};
 	</select>
-	<!-- 크롤링 보드 페이징, 검색 처리한 리스트 -->
+	<!-- 자유게시판 페이징, 검색 처리한 리스트 -->
+	
+	<!-- 자유게시판 보드 삭제 -->
+	<delete id="deleteBBoard" parameterType="int">
+		DELETE FROM db.board where bno=#{bno}
+	</delete>
+	<!-- 자유게시판 보드 삭제 -->
   	
   </mapper>

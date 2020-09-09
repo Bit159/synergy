@@ -53,14 +53,14 @@
 		if(title != "" & content != ""){
 			$.ajax({
 				type : "post",
-				url : "/synergy/board/boardWrite",
+				url : "/synergy/board/boardModify",
 				beforeSend: function(xhr){
 		    		xhr.setRequestHeader(csrfHeader, csrfToken);
 		    		
 		    	},
 		    	data: param,
 		    	success: function(){
-		    		alert("글 작성 완료");
+		    		alert("글 수정 완료");
 		    		location.href='/synergy/bboard/boardList2';
 		    	},
 		    	error: function(err){

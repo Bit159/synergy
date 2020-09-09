@@ -186,6 +186,16 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBBoardList(search);
 	}
 
+	@Override
+	public void deleteBBoard(Map<String, Object> map) {
+		boardDAO.deleteBBoard(map);
+	}
+
+	@Override
+	public void deleteBBoard(int bno) {
+		boardDAO.deleteBBoard(bno);
+	}
+
 	
 	
 

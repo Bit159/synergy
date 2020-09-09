@@ -24,7 +24,6 @@
                 <div class="board_header">
                     <div class="header_upside">
                         <div class="view_bno">${bBoardDTO.bno }</div>
-                        
                         <div class="view_title">${bBoardDTO.title }</div>
                     </div>
                     <div class="header_downside">
@@ -32,7 +31,7 @@
                             <div class="view_nickname">${bBoardDTO.nickname }&emsp;</div>
                             <div class="view_boarddate"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${bBoardDTO.boarddate }"/></div>
                             <button type="button" id="modifyBoardBtn" style="width: 70px">수정</button>
-                            <button type="button" id="deleteBoardBtn" style="width: 70px">삭제</button>
+                            <button type="button" id="deleteBoardBtn" style="width: 70px" data-bno="${bBoardDTO.bno }" data-page="${paging.page }" data-range="${paging.range }">삭제</button>
                         </div>
                         <div class="downside_right">
                             <div class="view_replys">댓글수 : ${bBoardDTO.replys }</div>
@@ -198,6 +197,15 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="../resources/js/welcome.js" defer></script>
 	<script src="../resources/js/boardView2.js" defer></script>
+	<script type="text/javascript">
+	// 글생성 버튼
+	$(document).on('click', '#modifyBoardBtn', function(){
+		var title = ${bBoardDTO.title };
+		var content = ${bBoardDTO.content };
+		
+		location.href = "/synergy/board/boardModifyForm";
+	});
+	</script>
 	
 	
 </body>

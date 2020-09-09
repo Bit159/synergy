@@ -118,7 +118,7 @@ $(document).ready(function(){
 			    	data: param,
 			    	success: function(data){
 			    		alert("댓글 수정 완료");
-			    		location.href='/synergy/board/'+bno+'?pg='+page+'&range='+range;
+			    		location.href='/synergy/bboard/'+bno+'?pg='+page+'&range='+range;
 			    	},
 			    	error: function(err){
 						console.log(err);
@@ -129,5 +129,36 @@ $(document).ready(function(){
 			
 		});
 		
+		//댓글 삭제
+		$(document).on("click","#deleteBoardBtn", function(){
+			var $btnObj = $(this);
+			var page = $(this).data('page');
+			var range = $(this).data('range');
+			let bno = $(this).data('bno'); // data-rno
+			
+			var csrfHeader = document.getElementById('_csrf_header').content;
+			var csrfToken = document.getElementById('_csrf').content;
+			
+			var param = "bno="+bno;
+			let result = confirm("정말 삭제하시겠습니까?");
+			
+			if(result){
+				$.ajax({
+					type: 'post',
+					url: '/synergy/board/boardDelete',
+					beforeSend: function(xhr){
+			    		xhr.setRequestHeader(csrfHeader, csrfToken);
+			    	},
+					data: param,
+					success: function(data){
+						alert("삭제 완료");
+						location.href='/synergy/bboard/boardList2?pg='+page+'&range='+range;
+					},
+					error: function(err){
+						console.log(err);
+					}
+				});
+			}
+		});
 		
 	});

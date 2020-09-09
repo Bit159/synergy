@@ -169,6 +169,16 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectList("boardSQL.getBBoardList", search);
 	}
 
+	@Override
+	public void deleteBBoard(Map<String, Object> map) {
+		sqlSession.delete("boardSQL.deleteBBoard", map);
+	}
+
+	@Override
+	public void deleteBBoard(int bno) {
+		sqlSession.delete("boardSQL.deleteBBoard", bno);
+	}
+
 	
 
 	

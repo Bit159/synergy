@@ -63,6 +63,10 @@ public interface BoardService {
 
 	public List<BBoardDTO> getBBoardList(Search search);
 
+	public void deleteBBoard(Map<String, Object> map);
+
+	public void deleteBBoard(int bno);
+
 	
 
 	
