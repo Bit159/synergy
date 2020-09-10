@@ -86,7 +86,7 @@ div[id="selectBox"] h1 {
 }
 /* 주제 선택창 */
 #selectTopic {
-	padding:0 0 0 10px;
+	padding:0 0 0 5px;
 }
 select[id=sel]{
 	width:120px;
@@ -133,14 +133,15 @@ a {
 div[class=card-header-content] {
     padding:5px;
     display: flex;
-    text-align: right;;
+    text-align: right;
 }
 span[id="topicIcon"] {
 	line-height: 34.4px;
 	font-size: 17pt;
 }
 div[id="card-header-text"] {
-	line-height: 34px;
+	padding-top:1px;
+	line-height: 34.4px;
 	font-size: 12pt;
 	float: right;
 	width:100%;

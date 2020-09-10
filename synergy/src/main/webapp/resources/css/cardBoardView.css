@@ -70,7 +70,7 @@ li[class="reply_group_item"]{
 div[class="reply_group_div"] {
 	width:100%;
 	border: solid 1px lightgray;
-	border-bottom-style: none;
+/* 	border-bottom-style: none; */
 	padding:10px;
 }
 div[class="reply_nickname"]{

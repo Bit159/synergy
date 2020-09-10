@@ -21,8 +21,10 @@
                     <div id="card-title">
                     <div id="card-info">
                         <h1 id="titleH1">${dto.title}</h1>
+                    	<c:if test="${dto.open ne 1}">
                         <input type="button" id="modifyCard" value="수정" onclick="location.href='/synergy-kh/member/modifyCard?seq=${dto.seq}'">
-                    	<input type="button" id="closeCard" value="마감">
+                    	<input type="button" id="closeCard" value="마감" onclick="location.href='/synergy-kh/member/closeCard?seq=${dto.seq}'">
+						</c:if>
                     </div>
                         <fmt:formatDate var="registDate" pattern="yyyy-MM-dd HH:mm" value="${dto.registDate }"/>
                         <div class="card-info2">
@@ -66,7 +68,7 @@
                           <div id="reply_regDate">${regDate}</div>
                           <div id="reply_editDate" >${editDate} 수정</div>
                           <div class="reply">${replydto.reply }</div>
-                          <c:if test="${replydto.nickname eq nickname}" >
+                          <c:if test="${replydto.nickname eq nickname}">
                           <div class="reply_button">
                           	<button type="button" id="modifyReplyBtn" data-rseq="${ replydto.rseq }">수정</button>
                           	<button type="button" id="deleteReplyBtn" data-rseq="${ replydto.rseq }" data-seq="${replydto.seq }">삭제</button>
@@ -86,9 +88,10 @@
                       	</div>
                      </div>
                		</li>
-                   	</c:if>
+                   </c:if>
                   </c:forEach>
                 </ul>
+                <c:if test="${dto.open ne 1 }">
                 <div class="reply_write">
                 	<div class="reply_write_item">
                 	<textarea name="reply" id="reply" rows="3"></textarea>
@@ -97,6 +100,7 @@
                 	</div>
                 	</div>
                 </div>
+                </c:if>
                 </div>
             </div>
 		<jsp:include page="/template/footer.jsp"></jsp:include>
@@ -138,7 +142,7 @@ $('.reply_button').on('click','#deleteReplyBtn',function(){
 	let seq = $(this).data('seq')
     Swal.fire({
     title: '삭제하시겠습니까?',
-//     text: "You won't be able to revert this!",
+//  text: "You won't be able to revert this!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',

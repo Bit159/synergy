@@ -61,7 +61,6 @@ public class MemberController {
 	 public String welcome() {
 		 return "/all/welcome";
 	 }
-	 
 //	 =============카드게시판 관련================
 	 @GetMapping(value="/member/createGroup")
 	 public String createGroup() {
@@ -217,11 +216,18 @@ public class MemberController {
 		 cardBoardService.modifyReply(dto);
 		 return "/member/cardBoardView";
 	 }
+	 //모집 글 수정
 	 @GetMapping(value="/member/modifyCard")
 	 public ModelAndView modifyCard(@RequestParam int seq) {
 		 CardBoardDTO dto = cardBoardService.getCardContent(seq);
 		 ModelAndView mav = new ModelAndView();
 		 mav.addObject("dto",dto);
 		 return mav;
+	 }
+     //모집 글 마감
+	 @GetMapping(value="/member/closeCard")
+	 public String closeCard(@RequestParam int seq){
+		 cardBoardService.closeCard(seq);
+		 return "redirect:/member/cardBoardList";
 	 }
 }

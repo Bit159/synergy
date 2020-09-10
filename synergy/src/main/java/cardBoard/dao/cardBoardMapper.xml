@@ -6,7 +6,7 @@
 		values((select *from (select max(seq)+1 from cardboard) next),#{title},#{nickname},#{topic},#{location},#{people},#{content},default,now())
 	</insert>
 	<select id="getCardBoardList" parameterType="paging" resultType="card">
-		select * from cardboard order by seq desc limit #{startList},#{listSize}
+		select * from cardboard order by open,seq desc limit #{startList},#{listSize}
 	</select>
 	<select id="getBoardListCnt" resultType="int">
 		SELECT count(*) as listCnt FROM cardboard
@@ -42,7 +42,7 @@
 			('%',#{item}) 
 			</if>
 		</foreach>
-		order by seq desc limit
+		order by open,seq desc limit
 		<foreach collection="list" item="item" index="index">
 			<if test="index==0">
 			#{item} 
@@ -117,5 +117,9 @@
 	<!-- ============댓글 수 감소================= -->
 	<update id="replyCntdown" parameterType="card">
 		update cardboard set replys=replys-1 where seq=#{seq}
+	</update>
+	<!-- ==============모집 글 마감=============== -->
+	<update id="closeCard" parameterType="int">
+		update cardboard set open=1 where seq=#{seq}
 	</update>
 </mapper>

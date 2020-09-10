@@ -80,6 +80,7 @@
         </div>
        	<form id="listForm">
         <div class="cardboard">
+	        <c:if test="${list ne null}">
 	        <c:forEach var="dto" items="${list}">
 	           	 <div class="card">
 	                <!-- 카드 헤더 -->
@@ -116,8 +117,12 @@
 	                        <i class="fas fa-laptop-code fa-2x" style="color:silver;"></i><span id="topicIcon" style="width:100px;font-size: 15pt">&nbsp;모각코</span>
 	                        </c:when>
 	                        </c:choose>
+	                        <input type="hidden" id="hidden-open" value="${dto.open }">
 	                        <c:if test="${dto.open eq 0}">
 	                        <div id="card-header-text"> 모집중 </div>
+	                        </c:if>
+	                        <c:if test="${dto.open eq 1}">
+	                        <div id="card-header-text"> 마감 </div>
 	                        </c:if>
 	                    </div>
 	                </div>
@@ -147,6 +152,10 @@
 	                </div>
             	</div>
 	        </c:forEach>
+            </c:if>
+            <c:if test="${list eq null }">
+            <div><h1>없다아아아ㅏ아아</h1></div>
+	        </c:if>
         </div>
         </form>
         <!-- pagination{s} -->
@@ -218,6 +227,10 @@
 			}
 		});
 		$('.page-link-'+$('#hidden-page').val()).css('background','green').css('color','white');
+		/* 마감 모집글 음영처리 */
+		if($('#hidden-open').val()==1){
+			$('.card').css('background','lightgray');
+		}
 	});		
 	/* 하위지역 선택 */	
 	$('#select-gu').on('click','li',function(){

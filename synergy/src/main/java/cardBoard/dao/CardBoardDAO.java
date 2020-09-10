@@ -24,5 +24,6 @@ public interface CardBoardDAO {
 	public void replyCntdown(CardBoardDTO cardDTO);
 	public int getNolocBoardListCnt(String topic);
 	public int getSearchBoardListCnt(List<Object> list);
+	public void closeCard(int seq);
 
 }

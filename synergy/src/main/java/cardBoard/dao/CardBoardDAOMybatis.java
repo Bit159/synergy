@@ -107,4 +107,9 @@ public class CardBoardDAOMybatis implements CardBoardDAO {
 	public int getSearchBoardListCnt(List<Object> list) {
 		return sqlSession.selectOne("cardBoardSQL.getSearchBoardListCnt" , list);
 	}
+
+	@Override
+	public void closeCard(int seq) {
+		sqlSession.update("cardBoardSQL.closeCard",seq);
+	}
 }

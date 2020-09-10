@@ -77,5 +77,9 @@ public class CardBoardServiceImpl implements CardBoardService {
 	public int getSearchBoardListCnt(List<Object> list) {
 		return cardBoardDAO.getSearchBoardListCnt(list);
 	}
+	@Override
+	public void closeCard(int seq) {
+		cardBoardDAO.closeCard(seq);
+	}
 	
 }
