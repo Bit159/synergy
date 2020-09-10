@@ -197,6 +197,8 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="../resources/js/welcome.js" defer></script>
 	<script src="../resources/js/boardView.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.all.min.js"></script>
 	
 	
 </body>

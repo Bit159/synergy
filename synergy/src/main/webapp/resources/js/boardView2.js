@@ -26,6 +26,11 @@ $(document).ready(function(){
 					dataType: 'json',
 					success: function(data){
 						alert("댓글 등록");
+						Swal.fire(
+								  '댓글 등록 완료',
+								  '댓글이 등록되었습니다.',
+								  'success'
+								);
 						console.log(data);
 						
 						//동기 방식
@@ -37,6 +42,11 @@ $(document).ready(function(){
 				});
 			}else{
 				alert("댓글 내용을 입력하세요");
+				Swal.fire(
+						  '댓글 내용이 없음',
+						  '댓글 내용을 입력하세요',
+						  'question'
+						);
 			}
 			
 		});
@@ -72,6 +82,12 @@ $(document).ready(function(){
 						let newnum1 = target1.innerText.substring(6);
 						newnum1--;
 						target1.innerText = `댓글수 : ${newnum1}`;
+						
+						Swal.fire(
+								  '댓글 삭제 완료',
+								  '댓글이 삭제되었습니다.',
+								  'success'
+								);
 					},
 					error: function(err){
 						console.log(err);
@@ -118,6 +134,11 @@ $(document).ready(function(){
 			    	data: param,
 			    	success: function(data){
 			    		alert("댓글 수정 완료");
+			    		Swal.fire(
+								  '댓글 수정 완료',
+								  '댓글이 수정 되었습니다.',
+								  'success'
+								);
 			    		location.href='/synergy/bboard/'+bno+'?pg='+page+'&range='+range;
 			    	},
 			    	error: function(err){
@@ -129,7 +150,7 @@ $(document).ready(function(){
 			
 		});
 		
-		//댓글 삭제
+		// 보드 삭제
 		$(document).on("click","#deleteBoardBtn", function(){
 			var $btnObj = $(this);
 			var page = $(this).data('page');
@@ -152,12 +173,24 @@ $(document).ready(function(){
 					data: param,
 					success: function(data){
 						alert("삭제 완료");
+						Swal.fire(
+								  '게시글 삭제 완료',
+								  '게시글이 삭제 되었습니다.',
+								  'success'
+								);
 						location.href='/synergy/bboard/boardList2?pg='+page+'&range='+range;
 					},
 					error: function(err){
 						console.log(err);
 					}
 				});
+			}
+			else{
+				Swal.fire(
+						  '게시글 삭제 실패',
+						  '게시글이 삭제 되지 않았습니다',
+						  'error'
+						);
 			}
 		});
 		

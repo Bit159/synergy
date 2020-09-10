@@ -197,16 +197,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="../resources/js/welcome.js" defer></script>
 	<script src="../resources/js/boardView2.js" defer></script>
-	<script type="text/javascript">
-	// 글생성 버튼
-	$(document).on('click', '#modifyBoardBtn', function(){
-		var title = ${bBoardDTO.title };
-		var content = ${bBoardDTO.content };
-		
-		location.href = "/synergy/board/boardModifyForm";
-	});
-	</script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.all.min.js"></script>
 	
 </body>
 </html>

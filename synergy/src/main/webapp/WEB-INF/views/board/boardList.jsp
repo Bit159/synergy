@@ -11,7 +11,11 @@
 <link rel="stylesheet" href="../resources/css/boardList.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../resources/js/welcome.js" defer></script>
-
+<style>
+*:focus {
+	outline-style: none;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="false"/>
@@ -30,8 +34,7 @@
                         <div class="replys">댓글수</div>
                         <div class="hit">조회수</div>
                     </li>
-                    
-                    <c:if test="${list != null }">
+                    <c:if test="${list.size() != 0}">
 	                    <c:forEach var="dto" items="${list }">
 	                    	<li class="list_group_item">
 	                    		<div class="bno"><c:out value="${dto.bno}" /></div>
@@ -52,7 +55,9 @@
 	                    	</li>
 	                    </c:forEach>
                     </c:if>
-                    
+                    <c:if test="${list.size() == 0}">
+                    	<div id="emptyText" style="margin-top:50px;margin-bottom:50px;text-align:center;font-size:13pt;font-weight:550;">대충 결과값이 없다는 자막</div>
+					</c:if>
                 </ul>
             </div>
             
@@ -251,7 +256,7 @@
 			url = url + "?searchType=" + $('#searchType').val();
 	
 			url = url + "&keyword=" + $('#keyword').val();
-	
+			
 			location.href = encodeURI(url);
 	
 			console.log(url);

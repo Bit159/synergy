@@ -56,9 +56,11 @@ public class BoardController {
 		paging.pageInfo(page, range, listCnt); 
 		System.out.println("paging: "+paging);
 		
+		System.out.println(search.getKeyword());
+		System.out.println(search.getSearchType());
+		
 		// 검색, 페이징 적용된 보드리스트
 		List<CBoardDTO> list = boardService.getCBoardList(search);
-		System.out.println(list.get(0).getContent());
 		
 		// 작성시간 표시 위한 현재 Date 객체
 		Date now = new Date();
@@ -415,7 +417,7 @@ public class BoardController {
 			return mav;
 		}
 	
-	// 자유게시판 작성
+	// 자유게시판 보드 작성
 	@PostMapping("/board/boardWrite")
 	public ModelAndView boardWrite(@RequestParam String title, String content, String nickname) {
 		Date now = new Date();
@@ -428,24 +430,17 @@ public class BoardController {
 		boardService.writeBBoard(map); 
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/board/boardList");
+		mav.setViewName("/board/boardList2");
 		return mav;
 	}
 	
-	// 자유게시판 삭제
+	// 자유게시판 보드 삭제
 	@PostMapping("/board/boardDelete")
-	public ModelAndView boardDelete(@RequestParam String title, String content, int bno) {
-		String nickname = "nickname";
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("title",title);
-		map.put("content",content);
-		map.put("nickname",nickname);
-		map.put("bno", bno);
-		/* boardService.deleteBBoard(map); */
+	public ModelAndView boardDelete(@RequestParam int bno) {
 		boardService.deleteBBoard(bno);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/board/boardList");
+		mav.setViewName("/board/boardList2");
 		return mav;
 	}
 	

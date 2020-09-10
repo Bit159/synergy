@@ -20,7 +20,7 @@
                 <ul class="list_group">
                     <li class="list_group_item">
                         <div class="bno">글번호</div>
-                        <div class="topic">말머리</div>
+                        <!-- <div class="topic">말머리</div> -->
                         <div class="title">제목</div>                        
                         <div class="nickname">작성자</div>
                         <div class="boarddate">작성시간</div>
@@ -31,7 +31,7 @@
                     <c:forEach var="dto" items="${list }">
                     	<li class="list_group_item">
                     		<div class="bno"><c:out value="${dto.bno}" /></div>
-	                        <div class="topic"><c:out value="${dto.topic}" /></div>
+	                        <%-- <div class="topic"><c:out value="${dto.topic}" /></div> --%>
 	                        <div class="title"><a id="titleA" href="/synergy/board/${dto.bno }?pg=${paging.page}&range=${paging.range}"><c:out value="${dto.title}" /></a></div>                        
 	                        <div class="nickname"><c:out value="${dto.nickname}" /></div>
 	                        <div class="boarddate">

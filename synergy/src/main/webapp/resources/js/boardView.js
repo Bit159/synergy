@@ -23,8 +23,16 @@ $(document).ready(function(){
 				data: param, 
 				dataType: 'json',
 				success: function(data){
-					alert("댓글 등록");
 					console.log(data);
+					alert("댓글 등록 완료");
+					Swal.fire({
+							  title: '댓글 등록 완료',
+							  text: '댓글이 등록되었습니다.',
+							  icon: 'success',
+					}).then((res)=>{
+						//동기 방식
+						location.href='/synergy/board/'+bno+'?pg='+page+'&range='+range;									
+					});
 					
 					// 비동기 방식
 					/*let a = '<li class="reply_group_item"><div class="reply_nickname">'
@@ -50,16 +58,18 @@ $(document).ready(function(){
 					let newnum1 = target1.innerText.substring(6);
 					newnum1++;
 					target1.innerText = `댓글수 : ${newnum1}`;*/
-					
-					//동기 방식
-					location.href='/synergy/board/'+bno+'?pg='+page+'&range='+range;
+
 				},
 				error: function(err){
 					console.log(err);
 				}
 			});
 		}else{
-			alert("댓글 내용을 입력하세요");
+			Swal.fire(
+					  '댓글 내용이 없음',
+					  '댓글 내용을 입력하세요',
+					  'question'
+					);
 		}
 		
 	});
@@ -95,8 +105,19 @@ $(document).ready(function(){
 					let newnum1 = target1.innerText.substring(6);
 					newnum1--;
 					target1.innerText = `댓글수 : ${newnum1}`;
+					
+					Swal.fire(
+							  '댓글 삭제 완료',
+							  '댓글이 삭제되었습니다.',
+							  'success'
+							);
 				},
 				error: function(err){
+					Swal.fire(
+							  '게시글 삭제 실패',
+							  '게시글이 삭제 되지 않았습니다',
+							  'error'
+							);
 					console.log(err);
 				}
 			});
@@ -160,8 +181,29 @@ $(document).ready(function(){
 		
 		var param = "reply="+reply+"&rno="+rno;
 		console.log(param);
-		let result = confirm("정말 수정하시겠습니까?");
-		if(result){
+		
+		Swal.fire({
+			title:`댓글 수정`,
+			text:`정말 수정하시겠습니까?`,
+			icon:`question`,
+			confirmButtonText:`확인`,
+			showCancelButton:true,
+			cancelButtonText:`취소`,
+		}).then((res)=>{
+			if(res.isConfirmed){
+				console.log('승인, 댓글수정처리가 들어올 곳')
+				updateReply();
+			}else {
+				console.log('비승인');
+				Swal.fire('취소', '댓글 수정이 취소되었습니다', 'info');
+			}
+		});
+		
+		
+		
+		
+		
+		function updateReply() {
 			$.ajax({
 				type: 'post',
 				url: '/synergy/board/replyModify',
@@ -170,8 +212,14 @@ $(document).ready(function(){
 		    	},
 		    	data: param,
 		    	success: function(data){
-		    		alert("댓글 수정 완료");
-		    		location.href='/synergy/board/'+bno+'?pg='+page+'&range='+range;
+		    		Swal.fire({
+							  title: '댓글 수정 완료',
+							  text: '댓글이 수정 되었습니다.',
+							  icon: 'success',
+							  confirmButtonText: `확인`,
+		    		}).then((res)=>{
+		    			location.href='/synergy/board/'+bno+'?pg='+page+'&range='+range;
+		    		});
 		    	},
 		    	error: function(err){
 					console.log(err);

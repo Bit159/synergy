@@ -258,7 +258,7 @@
 
 		// 글생성 버튼
 		$(document).on('click', '#boardWriteBtn', function(){
-			location.href = "/synergy/bboard/boardWriteForm";
+			location.href = "/synergy/board/boardWriteForm";
 		});
 
 

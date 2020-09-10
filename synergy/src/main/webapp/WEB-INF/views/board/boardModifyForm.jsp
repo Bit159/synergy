@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div id="boardWriteButton">
-                <button id="boardWriteBtn">글작성</button>
+                <button id="boardWriteBtn">글수정</button>
                 <button id="boardListBtn">글목록</button>
             </div>
         </div>

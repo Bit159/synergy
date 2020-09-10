@@ -38,6 +38,7 @@
     </div>
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
     $(document).on('click', '#boardWriteBtn', function(){
     	var title = $("#boardWriteTitleText").val();
@@ -61,6 +62,11 @@
 		    	data: param,
 		    	success: function(){
 		    		alert("글 작성 완료");
+		    		Swal.fire(
+							  '게시글 등록 완료',
+							  '게시글이 등록되었습니다.',
+							  'success'
+							);
 		    		location.href='/synergy/bboard/boardList2';
 		    	},
 		    	error: function(err){
@@ -68,7 +74,12 @@
 				}
 			});
 		}else{
-			alert("제목과 내용을 입력해 주세요")
+			alert("제목과 내용을 입력해 주세요");
+			Swal.fire(
+					  '제목과 내용이 없음',
+					  '제목과 내용을 입력하세요',
+					  'question'
+					);
 		}
     });
     </script>
