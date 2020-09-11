@@ -12,6 +12,7 @@
 <body>
 	<div id="boardWriteWrapper">
         <div id="boardWriteContainer">
+        	<h1>게시글 수정</h1>
             <!--
             <div id="boardWriteTopic">
                 <label for="" id="boardWriteTopicLabel"></label>
@@ -31,14 +32,15 @@
                 </div>
             </div>
             <div id="boardWriteButton">
-                <button id="boardWriteBtn">글수정</button>
-                <button id="boardListBtn">글목록</button>
+                <button id="boardWriteBtn">글 수정</button>
+                <button id="boardListBtn">글 목록</button>
             </div>
         </div>
     </div>
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript">
+    // 글 수정 버튼
     $(document).on('click', '#boardWriteBtn', function(){
     	var title = $("#boardWriteTitleText").val();
     	var content = $("#boardWriteContentText").val();
@@ -60,17 +62,28 @@
 		    	},
 		    	data: param,
 		    	success: function(){
-		    		alert("글 수정 완료");
-		    		location.href='/synergy/bboard/boardList2';
+		    		Swal.fire(
+							  '게시글 수정 완료',
+							  '게시글이 수정되었습니다.',
+							  'success'
+							).then((res)=>{
+								location.href='/synergy/bboard/boardList2';
+				    		});;
 		    	},
 		    	error: function(err){
 					console.log(err);
 				}
 			});
 		}else{
-			alert("제목과 내용을 입력해 주세요")
+			Swal.fire(
+					  '제목 또는 내용이 없음',
+					  '제목 또는 내용을 입력하세요',
+					  'question'
+					);
 		}
     });
+    
+    // 글 목록 버튼
     </script>
     
 </body>

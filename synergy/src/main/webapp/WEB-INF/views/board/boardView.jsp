@@ -189,7 +189,7 @@
         </div>
     </div>
     
-    <jsp:include page="boardList1.jsp" flush="false"/>
+    <jsp:include page="boardList1.jsp" flush="true"/>
     <jsp:include page="footer.jsp" flush="false"/>
     
     <c:url var="boardListURL" value="/synergy/board/boardList"></c:url>

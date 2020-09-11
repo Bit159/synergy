@@ -85,6 +85,10 @@
 			</div> -->
 			<!-- searching -->
 			
+			<!-- 글 생성 버튼 -->
+			<button type="button" id="boardWriteBtn" name="boardWriteBtn">글생성</button>
+			<!-- 글 생성 버튼 -->
+			
 			<!-- search{s} -->
 
 			<div class="form-group row justify-content-center">
@@ -167,7 +171,7 @@
 
 			e.preventDefault();
 	
-			var url = "${boardList}";
+			var url = "${pageContext.request.contextPath}/bboard/boardList2";
 	
 			url = url + "?searchType=" + $('#searchType').val();
 	
@@ -177,6 +181,11 @@
 	
 			console.log(url);
 	
+		});
+		
+		// 글생성 버튼
+		$(document).on('click', '#boardWriteBtn', function(){
+			location.href = "/synergy/board/boardWriteForm";
 		});
 	</script>
 </body>

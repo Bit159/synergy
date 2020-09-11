@@ -7,11 +7,13 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}">
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../css/boardWriteForm.css">
+<link rel="stylesheet" href="../resources/css/boardWriteForm.css">
 </head>
 <body>
+	<jsp:include page="header.jsp" flush="false"/>
 	<div id="boardWriteWrapper">
         <div id="boardWriteContainer">
+			<h1>게시글 생성</h1>
             <!--
             <div id="boardWriteTopic">
                 <label for="" id="boardWriteTopicLabel"></label>
@@ -21,25 +23,27 @@
             <div id="boardWriteTitle">
                 <label for="" id="boardWriteTitleLabel"></label>
                 <div id="boardWriteTitleDiv">
-                    <input type="text" id="boardWriteTitleText">
+                    <input type="text" id="boardWriteTitleText" placeholder="제목을 입력하세요.">
                 </div>
             </div>
             <div id="boardWriteContent">
                 <label for="" id="boardWriteContentLabel"></label>
                 <div id="boardWriteContentDiv">
-                    <textarea name="boardWriteContentText" id="boardWriteContentText" ></textarea>
+                    <textarea name="boardWriteContentText" id="boardWriteContentText" placeholder="내용을 입력하세요."></textarea>
                 </div>
             </div>
             <div id="boardWriteButton">
-                <button id="boardWriteBtn">글작성</button>
-                <button id="boardListBtn">글목록</button>
+                <button id="boardWriteBtn">글 작성</button>
+                <button id="boardListBtn">글 목록</button>
             </div>
         </div>
     </div>
+    <jsp:include page="footer.jsp" flush="false"/>
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
+    // 글 작성 버튼
     $(document).on('click', '#boardWriteBtn', function(){
     	var title = $("#boardWriteTitleText").val();
     	var content = $("#boardWriteContentText").val();
@@ -61,26 +65,31 @@
 		    	},
 		    	data: param,
 		    	success: function(){
-		    		alert("글 작성 완료");
 		    		Swal.fire(
 							  '게시글 등록 완료',
 							  '게시글이 등록되었습니다.',
 							  'success'
-							);
-		    		location.href='/synergy/bboard/boardList2';
+							).then((res)=>{
+								location.href='/synergy/bboard/boardList2';
+				    		});;
+		    		
 		    	},
 		    	error: function(err){
 					console.log(err);
 				}
 			});
 		}else{
-			alert("제목과 내용을 입력해 주세요");
 			Swal.fire(
-					  '제목과 내용이 없음',
-					  '제목과 내용을 입력하세요',
+					  '제목 또는 내용이 없음',
+					  '제목 또는 내용을 입력하세요',
 					  'question'
 					);
 		}
+    });
+    
+    // 글목록 버튼
+    $(document).on('click', '#boardListBtn', function(){
+    	location.href='/synergy/bboard/boardList2';
     });
     </script>
     

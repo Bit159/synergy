@@ -56,7 +56,7 @@
 	                    </c:forEach>
                     </c:if>
                     <c:if test="${list.size() == 0}">
-                    	<div id="emptyText" style="margin-top:50px;margin-bottom:50px;text-align:center;font-size:13pt;font-weight:550;">대충 결과값이 없다는 자막</div>
+                    	<div id="emptyText" style="margin-top:50px;margin-bottom:50px;text-align:center;font-size:13pt;font-weight:550;">결과값이 없습니다.</div>
 					</c:if>
                 </ul>
             </div>
@@ -77,7 +77,9 @@
 						<li class="page-item"><a class="page-link" href="#" onClick="fn_next('${paging.page}', '${paging.range}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')" >〉</a></li>
 					</c:if>
 					<c:if test="${paging.last}">
-						<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')" >》</a></li>
+						<c:if test="${list.size() != 0}">
+							<li class="page-item"><a class="page-link" href="#" onClick="fn_last('${paging.pageCnt}', '${paging.rangeSize}', '${search.searchType }', '${search.keyword }')" >》</a></li>
+						</c:if>
 					</c:if>
 				</ul>
 			</div>

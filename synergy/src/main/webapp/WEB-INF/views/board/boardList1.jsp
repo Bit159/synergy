@@ -167,7 +167,7 @@
 
 			e.preventDefault();
 	
-			var url = "${boardList}";
+			var url = "${pageContext.request.contextPath}/board/boardList";
 	
 			url = url + "?searchType=" + $('#searchType').val();
 	

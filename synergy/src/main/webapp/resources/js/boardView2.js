@@ -1,6 +1,6 @@
 $(document).ready(function(){
 		
-		//댓글 쓰기 
+		// 댓글 쓰기
 		$(document).on("click","#reply_writer_btn",function(){
 			var $btnObj = $(this);
 			var page = $(this).data('page');
@@ -25,33 +25,30 @@ $(document).ready(function(){
 					data: param, 
 					dataType: 'json',
 					success: function(data){
-						alert("댓글 등록");
-						Swal.fire(
-								  '댓글 등록 완료',
-								  '댓글이 등록되었습니다.',
-								  'success'
-								);
 						console.log(data);
-						
-						//동기 방식
-						location.href='/synergy/bboard/'+bno+'?pg='+page+'&range='+range;
+						Swal.fire({
+							  title: '댓글 등록 완료',
+							  text: '댓글이 등록되었습니다.',
+							  icon: 'success',
+						}).then((res)=>{
+							location.href='/synergy/bboard/'+bno+'?pg='+page+'&range='+range;									
+						});
 					},
 					error: function(err){
 						console.log(err);
 					}
 				});
 			}else{
-				alert("댓글 내용을 입력하세요");
-				Swal.fire(
-						  '댓글 내용이 없음',
-						  '댓글 내용을 입력하세요',
-						  'question'
-						);
+				Swal.fire({
+					  title: '댓글 내용이 없음',
+					  text: '댓글 내용을 입력하세요',
+					  icon: 'question'
+				});
 			}
 			
 		});
 		
-		//댓글 삭제
+		// 댓글 삭제
 		$(document).on("click",".deleteBtn", function(){
 			var $btnObj = $(this);
 			let rno = $(this).data('rno'); // data-rno
@@ -61,8 +58,26 @@ $(document).ready(function(){
 			var csrfToken = document.getElementById('_csrf').content;
 			
 			var param = "rno="+rno+"&bno="+bno;
-			let result = confirm("정말 삭제하시겠습니까?");
-			if(result){
+			
+			
+			Swal.fire({
+				title:`댓글 삭제`,
+				text:`정말 삭제하시겠습니까?`,
+				icon:`question`,
+				confirmButtonText:`확인`,
+				showCancelButton:true,
+				cancelButtonText:`취소`,
+			}).then((res)=>{
+				if(res.isConfirmed){
+					console.log('승인, 댓글삭제처리가 들어올 곳')
+					deleteReply();
+				}else {
+					console.log('비승인');
+					Swal.fire('취소', '댓글 삭제가 취소되었습니다', 'error');
+				}
+			});
+			
+			function deleteReply(){
 				$.ajax({
 					type: 'post',
 					url: '/synergy/bboard/replyDelete2',
@@ -83,21 +98,32 @@ $(document).ready(function(){
 						newnum1--;
 						target1.innerText = `댓글수 : ${newnum1}`;
 						
-						Swal.fire(
-								  '댓글 삭제 완료',
-								  '댓글이 삭제되었습니다.',
-								  'success'
-								);
+						Swal.fire({
+								  title: '댓글 삭제 완료',
+								  text: '댓글이 삭제되었습니다.',
+								  icon: 'success'
+						});
 					},
 					error: function(err){
 						console.log(err);
+						Swal.fire({
+								  title: '댓글 삭제 실패',
+								  text: '댓글이 삭제 되지 않았습니다',
+								  icon: 'error'
+						});
+						
 					}
 				});
 			}
 			
+			let result = confirm("정말 삭제하시겠습니까?");
+			if(result){
+				
+			}
+			
 		});
 		
-		//댓글 수정
+		// 댓글 수정
 		$(document).on("click",".modifyBtn", function(){
 			var $btnObj = $(this);
 			$btnObj.parent().parent().parent().css('display','none');
@@ -123,23 +149,41 @@ $(document).ready(function(){
 			
 			var param = "reply="+reply+"&rno="+rno;
 			console.log(param);
-			let result = confirm("정말 수정하시겠습니까?");
-			if(result){
+			
+			Swal.fire({
+				title:`댓글 수정`,
+				text:`정말 수정하시겠습니까?`,
+				icon:`question`,
+				confirmButtonText:`확인`,
+				showCancelButton:true,
+				cancelButtonText:`취소`,
+			}).then((res)=>{
+				if(res.isConfirmed){
+					console.log('승인, 댓글수정처리가 들어올 곳')
+					updateReply();
+				}else {
+					console.log('비승인');
+					Swal.fire('취소', '댓글 수정이 취소되었습니다', 'error');
+				}
+			});
+			
+			function updateReply() {
 				$.ajax({
 					type: 'post',
-					url: '/synergy/bboard/replyModify2',
+					url: '/synergy/board/replyModify',
 					beforeSend: function(xhr){
 			    		xhr.setRequestHeader(csrfHeader, csrfToken);
 			    	},
 			    	data: param,
 			    	success: function(data){
-			    		alert("댓글 수정 완료");
-			    		Swal.fire(
-								  '댓글 수정 완료',
-								  '댓글이 수정 되었습니다.',
-								  'success'
-								);
-			    		location.href='/synergy/bboard/'+bno+'?pg='+page+'&range='+range;
+			    		Swal.fire({
+								  title: '댓글 수정 완료',
+								  text: '댓글이 수정 되었습니다.',
+								  icon: 'success',
+								  confirmButtonText: `확인`,
+			    		}).then((res)=>{
+			    			location.href='/synergy/board/'+bno+'?pg='+page+'&range='+range;
+			    		});
 			    	},
 			    	error: function(err){
 						console.log(err);
@@ -148,22 +192,96 @@ $(document).ready(function(){
 				});
 			}
 			
+			
 		});
+		
+		// 보드 수정
+		$(document).on("click","#modifyBoardBtn", function(){
+			var $btnObj = $(this);
+			var page = $(this).data('page');
+			var range = $(this).data('range');
+			let bno = $(this).data('bno'); 
+			
+			var csrfHeader = document.getElementById('_csrf_header').content;
+			var csrfToken = document.getElementById('_csrf').content;
+			
+			var param = "bno="+bno;
+			
+			Swal.fire({
+				title:`게시글 수정`,
+				text:`정말 수정하시겠습니까?`,
+				icon:`question`,
+				confirmButtonText:`확인`,
+				showCancelButton:true,
+				cancelButtonText:`취소`,
+			}).then((res)=>{
+				if(res.isConfirmed){
+					console.log('승인, 게시글 수정처리가 들어올 곳')
+					modifyBoard();
+				}else {
+					console.log('비승인');
+					Swal.fire('취소', '게시글 수정이 취소되었습니다', 'error');
+				}
+			});
+			
+			function modifyBoard(){
+				$.ajax({
+					type: 'post',
+					url: '/synergy/board/boardModifyForm',
+					beforeSend: function(xhr){
+			    		xhr.setRequestHeader(csrfHeader, csrfToken);
+			    	},
+					data: param,
+					success: function(data){
+						Swal.fire({
+								  title: '게시글 삭제 완료',
+								  text: '게시글이 삭제 되었습니다.',
+								  icon: 'success'
+						}).then((res)=>{
+							location.href='/synergy/bboard/boardList2?pg='+page+'&range='+range;
+			    		});
+						
+					},
+					error: function(err){
+						console.log(err);
+					}
+				});
+			}
+			
+		});
+		
+		
 		
 		// 보드 삭제
 		$(document).on("click","#deleteBoardBtn", function(){
 			var $btnObj = $(this);
 			var page = $(this).data('page');
 			var range = $(this).data('range');
-			let bno = $(this).data('bno'); // data-rno
+			let bno = $(this).data('bno'); 
 			
 			var csrfHeader = document.getElementById('_csrf_header').content;
 			var csrfToken = document.getElementById('_csrf').content;
 			
 			var param = "bno="+bno;
-			let result = confirm("정말 삭제하시겠습니까?");
 			
-			if(result){
+			Swal.fire({
+				title:`게시글 삭제`,
+				text:`정말 삭제하시겠습니까?`,
+				icon:`question`,
+				confirmButtonText:`확인`,
+				showCancelButton:true,
+				cancelButtonText:`취소`,
+			}).then((res)=>{
+				if(res.isConfirmed){
+					console.log('승인, 게시글 삭제처리가 들어올 곳')
+					deleteBoard();
+				}else {
+					console.log('비승인');
+					Swal.fire('취소', '게시글 삭제가 취소되었습니다', 'error');
+				}
+			});
+			
+			function deleteBoard(){
 				$.ajax({
 					type: 'post',
 					url: '/synergy/board/boardDelete',
@@ -172,26 +290,22 @@ $(document).ready(function(){
 			    	},
 					data: param,
 					success: function(data){
-						alert("삭제 완료");
-						Swal.fire(
-								  '게시글 삭제 완료',
-								  '게시글이 삭제 되었습니다.',
-								  'success'
-								);
-						location.href='/synergy/bboard/boardList2?pg='+page+'&range='+range;
+						Swal.fire({
+								  title: '게시글 삭제 완료',
+								  text: '게시글이 삭제 되었습니다.',
+								  icon: 'success'
+						}).then((res)=>{
+							location.href='/synergy/bboard/boardList2?pg='+page+'&range='+range;
+			    		});
+						
 					},
 					error: function(err){
 						console.log(err);
 					}
 				});
 			}
-			else{
-				Swal.fire(
-						  '게시글 삭제 실패',
-						  '게시글이 삭제 되지 않았습니다',
-						  'error'
-						);
-			}
+			
+			
 		});
 		
 	});

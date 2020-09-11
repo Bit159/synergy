@@ -106,7 +106,6 @@ public class BoardController {
 		
 		// 검색, 페이징 적용된 보드리스트
 		List<BBoardDTO> list = boardService.getBBoardList(search); 
-		System.out.println(list.get(0).getContent());
 		
 		// 작성시간 표시 위한 현재 Date 객체
 		Date now = new Date();
