@@ -18,6 +18,8 @@
 	<context:annotation-config></context:annotation-config>
 	<beans:bean class="richard.conf.Config" />
 	<!-- End of Richard -->
+	<context:component-scan base-package="*.*.*"/>
+	
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -54,5 +56,4 @@
 		<beans:property name="redirectUri" value="http://localhost:8080/googleLogin"/>
 	</beans:bean>
 	
-	<context:component-scan base-package="byungjooYang.*.*"/>
 </beans:beans>

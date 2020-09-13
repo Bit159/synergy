@@ -16,9 +16,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import richard.user.CBoardDTO;
 import richard.user.Email;
 import richard.user.UserDAO;
+import sejinHan25.board.CBoardDTO;
 
 @Service
 public class Crawler {

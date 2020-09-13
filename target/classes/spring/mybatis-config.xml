@@ -3,10 +3,12 @@
  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
  <configuration>
- <!-- 
+
  	<typeAliases>
 		<typeAlias type="java.util.Map" alias="map"/>
-		
+		<typeAlias type="sejinHan25.board.CBoardDTO" alias="cBoardDTO"/>
+		<typeAlias type="ecosky23.member.bean.MatchDTO" alias="matchDTO"/>
+	 <!-- 	
  		<typeAlias type="byungjooYang.member.bean.MemberDTO" alias="member"/>
  		<typeAlias type="byungjooYang.member.bean.ChattingDTO" alias="chatting"/>
  		<typeAlias type="byungjooYang.member.bean.ChattingRoomDTO" alias="chattingRoom"/>
@@ -22,27 +24,12 @@
 		
 		<typeAlias type="sejinHan25.user.UserDTO" alias="userDTO" />
 		<typeAlias type="sejinHan25.board.BoardDTO" alias="boardDTO"/>
-		<typeAlias type="sejinHan25.board.CBoardDTO" alias="cBoardDTO"/>
+		
 		<typeAlias type="sejinHan25.board.Pagination" alias="pagination"/>
 		
 		<typeAlias type="ecosky23.member.bean.MemberDTO" alias="memberDTO"/>
+		 	 -->
  	</typeAliases>
- 	 -->
- 	
- 	<!-- MyBatis mapper 파일이 추가될 때마다 지정해줘야 . 
-    <mappers>
-        <mapper resource="byungjooYang/memberMapper.xml" />
-        
-        <mapper resource="richard/userMapper.xml" />
-        
-        <mapper resource="ecosky23/memberMapper.xml" />
-        
-        <mapper resource="kkh1595/cardBoardMapper.xml" />
-        <mapper resource="kkh1595/memberMapper.xml" />
-        <mapper resource="kkh1595/UserMapper.xml" />
-        
-        <mapper resource="sejinHan25/boardMapper.xml" />
-        <mapper resource="sejinHan25/userMapper.xml" />
-    </mappers>
-    -->
+
+
  </configuration>

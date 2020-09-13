@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import oracle.jdbc.proxy.annotation.Post;
-import sejinHan25.user.UserDAO;
-
 @Controller
 public class BoardController {
 	@Autowired

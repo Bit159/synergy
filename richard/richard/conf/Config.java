@@ -1,3 +1,5 @@
+/*
+
 package richard.conf;
 
 import org.springframework.context.annotation.ComponentScan;
@@ -12,3 +14,4 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class Config {
 
 }
+*/

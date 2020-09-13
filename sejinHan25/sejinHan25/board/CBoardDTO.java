@@ -2,9 +2,14 @@ package sejinHan25.board;
 
 import java.util.Date;
 
-import lombok.Data;
+import org.springframework.stereotype.Service;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Service
+@Getter
+@Setter
 public class CBoardDTO {
 	private int bno;
 	private String topic;
@@ -17,6 +22,6 @@ public class CBoardDTO {
 	
 	@Override
 	public String toString() {
-		return bno+" "+topic+" "+title+" "+content;
+		return bno+" "+title+" "+nickname+" "+boarddate;
 	}
 }

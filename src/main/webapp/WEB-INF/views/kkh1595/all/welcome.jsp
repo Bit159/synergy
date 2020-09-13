@@ -20,7 +20,8 @@
                 <div class=banner_content>
                     <div class="banner_left">
                         <div class="homeImg">
-                        <img src="../resources/image/home.jpg" alt="">
+                        
+                        <img src="/resources/kkh1595/image/home.jpg" alt="">
                         </div>
                     </div>
                     <div class="banner_right">

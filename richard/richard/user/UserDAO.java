@@ -3,7 +3,9 @@ package richard.user;
 import java.util.Date;
 import java.util.List;
 
+import ecosky23.member.bean.MatchDTO;
 import richard.notifier.NotDTO;
+import sejinHan25.board.CBoardDTO;
 
 public interface UserDAO {
 

@@ -9,14 +9,14 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import byungjooYang.member.bean.ChattingDTO;
-import byungjooYang.member.service.MemberService;
+import byungjooYang.member.service.ChatService;
 
 @Controller
 public class StompSocketController {
 	@Autowired
 	private SimpMessagingTemplate simpMessagingTemplate;
 	@Autowired
-	private MemberService memberService;
+	private ChatService memberService;
 	
 	public StompSocketController() {
 		System.out.println("stomp 객체 생성");

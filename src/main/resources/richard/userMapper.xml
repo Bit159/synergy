@@ -46,12 +46,12 @@
 		SELECT `mycareer` FROM membertable WHERE username=#{username}
 	</select>
 	
-	<insert id="insertMatch" parameterType="richard.user.MatchDTO">
+	<insert id="insertMatch" parameterType="matchDTO">
 		INSERT INTO db.match(`username`, `mycareer`, `x`, `y`, `range`, `time`, `topic`, `career`, `people`, `created`) 
 		VALUES(#{username}, #{mycareer}, #{x}, #{y}, #{range}, #{time}, #{topic}, #{career}, #{people}, now())
 	</insert>
 	
-	<select id="getListFromMatch" resultType="richard.user.MatchDTO">
+	<select id="getListFromMatch" resultType="matchDTO">
 		SELECT * FROM db.match ORDER BY `created` ASC
 	</select>
 	
@@ -65,7 +65,7 @@
 		</where>
 	</delete>
 	
-	<delete id="deleteMatch" parameterType="richard.user.MatchDTO">
+	<delete id="deleteMatch" parameterType="matchDTO">
 		DELETE FROM db.match WHERE `username`=#{username} and `x`=#{x} and `y`=#{y} and `range`=#{range} and `career`=#{career} and `people`=#{people}	
 	</delete>
 	
@@ -101,7 +101,7 @@
 	<!-- End of FOR CRAWL -->
 
 	<!-- FOR BOARD -->
-		<select id="getBoardList" resultType="richard.user.CBoardDTO">
+		<select id="getBoardList" resultType="cBoardDTO">
 			SELECT * FROM cboard order by bno desc limit 20
 		</select>
 	<!-- END OF BOARD -->

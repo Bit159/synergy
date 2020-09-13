@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import richard.user.CBoardDTO;
+import ecosky23.member.bean.MatchDTO;
 import richard.user.Email;
-import richard.user.MatchDTO;
 import richard.user.UserDAO;
+import sejinHan25.board.CBoardDTO;
 
 @Service
 @Aspect

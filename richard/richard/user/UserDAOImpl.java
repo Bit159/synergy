@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import ecosky23.member.bean.MatchDTO;
 import lombok.Setter;
 import richard.notifier.NotDTO;
+import sejinHan25.board.CBoardDTO;
 
 @Repository
 @Transactional

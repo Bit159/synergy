@@ -15,7 +15,7 @@
 		]]>
 	</select>
 	
-	<select id="getBoardList1" resultType="sejinHan25.board.CBoardDTO">
+	<select id="getBoardList1" resultType="cBoardDTO">
 		select * from db.cboard 
 	</select>
 		
@@ -25,16 +25,13 @@
 	</select>
 	
 	<!-- 크롤링 보드 체크용 -->
-	<select id="getCBoardList" resultType="sejinHan25.board.CBoardDTO">
-		SELECT * 
-		FROM db.cboard 
-		ORDER BY bno desc 
-		LIMIT 0,20
+	<select id="getCBoardList" resultType="cBoardDTO">
+		SELECT * FROM db.cboard ORDER BY bno desc LIMIT 0,20
 	</select>
 	<!-- 크롤링 보드 체크용 -->
 	
 	<!-- 크롤링 보드 페이징, 검색 처리 -->
-	<select id="getCBoardList1" parameterType="sejinHan25.board.Pagination" resultType="sejinHan25.board.CBoardDTO">
+	<select id="getCBoardList1" parameterType="sejinHan25.board.Pagination" resultType="cBoardDTO">
 		SELECT * 
 		FROM db.cboard 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
@@ -58,7 +55,7 @@
 	<!-- 크롤링 보드 페이징, 검색 처리 -->
   	
   	<!-- 크롤링 보드 게시글 정보 -->
-  	<select id="getCBoard" parameterType="int" resultType="sejinHan25.board.CBoardDTO">
+  	<select id="getCBoard" parameterType="int" resultType="cBoardDTO">
   		SELECT * from db.cboard where bno=#{bno}
   	</select>
   	<!-- 크롤링 보드 게시글 정보 -->

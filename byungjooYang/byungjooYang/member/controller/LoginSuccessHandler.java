@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import byungjooYang.member.service.MemberService;
+import byungjooYang.member.service.ChatService;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	@Autowired
-	MemberService memberService;
+	ChatService memberService;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
