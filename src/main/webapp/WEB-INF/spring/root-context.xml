@@ -13,60 +13,22 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
-	<bean class="conf.Config" />
-	
+    <context:property-placeholder location="classpath:/spring/db.properties"/>
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:component-scan base-package="member.dao"/>
-	<context:component-scan base-package="member.service"/>
-	<context:component-scan base-package="cardBoard.dao"/>
-	<context:component-scan base-package="cardBoard.service"/>
-	<context:component-scan base-package="board.dao"/>
-	<context:component-scan base-package="board.service"/>
-	
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://security-db.ci3ttblcjdxh.ap-northeast-2.rds.amazonaws.com:3306/db?allowMultiQueries=true"></property>
-		<property name="username" value="jpcnani"></property>
-		<property name="password" value="bitcamp159"></property>
-		<property name="maxTotal" value="20"></property>
-		<property name="maxIdle" value="3"></property>
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="maxTotal" value="${jdbc.maxTotal}"></property>
+		<property name="maxIdle" value="${jdbc.maxIdle}"></property>
 	</bean>
-	
-	<!-- 
-	dataSource 관련 
-	1. DriverManagerDataSource
-	 : 실제 커넥션 풀이 아니며 실제 커넥션 풀 작업을 수행하지 않고 커넥션 풀 작업을 간단하게 대체한다.
-	  그리고 부를때 마다 새 커넥션을 생성해 수행속도가 느리고 수행속도에 편차가 심하다.
-	   테스트 작업이나 독립된환경에서 사용한다.
-	  
-	2. BasicDataSource
-	 : 실제 커넥션풀로 수행속도가 빠르고 일정하다. 
-	 
-	 **properties들
-	 
-	 1. initialSize : 연결 풀이 최초 생성될 때 같이 이 숫자만큼 데이터베이스 연결을 미리 생성한다. 기본값은 0
-	 
-	 2. maxTotal  : 동시에 사용할 수 있는 최대 연결 갯수이다. 음수면 제한이 없다. 기본값은 8.이 갯수를 초과하여 요청이 들어오면 최대 maxWait만큼 대기하고, 그래도 연결을 사용할 수 없을 경우 예외를 발생시킨다.
-					1.x 버전에서는 maxActive  
-					
-	 3. maxIdle   : 풀에서 사용되지 않은 상태로 존재할 수 있는 최대 연결의 숫자. 음수이면 제한이 없다. 기본값 8.
-	 				만약 maxActive가 10이고 maxIdle이 8일 때 연결이 사용을 마치고 하나씩 반환이 되면, maxIdle인 8이 될때까지는 유휴상태로 풀에 남겨진다. 9번째 부터는 연결이 해제되어 제거된다.
-	 				모두 반환된 후 풀에는 유휴상태인 8개의 연결이 남아있다.
-	 				
-	 4. minIdle   : 풀에서 사용되지 않은 상태로 존재할 수 있는 최소연결의 숫자. 기본값은 0이다. 풀을 관리하는 쓰레드는 풀 내의 유휴 연결의 최소 갯수를 이 값으로 유지한다. 주로 발생하는 상황은 오류가 발생한 연결이나, 
-	 				사용되지 않고 오래된 연결은 풀에서 제거된다. 이 경우 풀내의 연결의 갯수가 minIdle 이하로 떨어지면 새로 생성해서 minIdle 갯수에 맞추게 된다.
-	 				
-	 5. maxWait   : 풀에 사용 가능할 연결이 없을 때 대기하는 최대 시간을 밀리초 단위로 나타낸다. 이 대기 시간 후에도 사용 가능한 연결이 없으면 예외를 발생시킨다. 기본값은 -1로  무한대기를 나타낸다. 		
-	
-	-->
-	
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:spring/mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:/**/*Mapper.xml"></property>
 		<property name="dataSource" ref="dataSource"/>
-		<property name="mapperLocations" value="classpath:*/dao/*Mapper.xml"/>
 	</bean>
-	
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"/>

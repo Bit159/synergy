@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberSQL">
+<!-- 	<select id="login" parameterType="map" resultType="member"> -->
+<!-- 		select * from db.users where username=#{login_id} and password=#{login_pw} -->
+<!-- 	</select> -->
+	<insert id="join5" parameterType="map">
+		insert into db.membertable values (#{username},#{password},1);
+		insert into db.authorities values (#{username},#{authority});
+	</insert>
+	<select id="autocomplete" resultType="String">
+		select * from db.addr
+	</select>
+</mapper>

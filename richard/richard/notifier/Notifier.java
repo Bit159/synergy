@@ -1,0 +1,31 @@
+package richard.notifier;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import richard.user.Email;
+import richard.user.UserDAO;
+
+
+//10분 간격으로 알림 발송해야할 목록을 가져와서 메일 발송하는 클래스
+//비동기 처리하여 서버 내 지연을 줄여야하기 때문에 또다른 스케쥴 비동기와 다른 객체에서 선언
+@Service
+public class Notifier {
+
+	@Autowired
+	private UserDAO userDAO;
+	@Autowired
+	private Email email;
+	
+	@Async
+	@Scheduled(cron = "0 0/10 * * * *")
+	public void getOnTimeList() {
+		List<NotDTO> onTimeList = userDAO.getOnTimeList();
+		for(NotDTO dto : onTimeList) email.send(dto.getUsername(), dto.getTitle(), dto.getContent());
+	}
+
+}

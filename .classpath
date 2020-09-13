@@ -8,6 +8,10 @@
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="richard"/>
+	<classpathentry kind="src" path="ecosky23"/>
+	<classpathentry kind="src" path="kkh1595"/>
+	<classpathentry kind="src" path="byungjooYang"/>
+	<classpathentry kind="src" path="sejinHan25"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

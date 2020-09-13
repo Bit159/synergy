@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userSQL">
+
+
+	<!-- 크롤링 보드 체크용 -->
+	<select id="getCBoardList" resultType="sejinHan25.board.CBoardDTO">
+		SELECT * FROM db.cboard order by bno desc limit 20
+	</select>
+	<!-- 크롤링 보드 체크용 -->
+	
+	<select id="selectOne" parameterType="java.lang.String"	resultType="sejinHan25.user.UserDTO">
+		SELECT * FROM db.usertable WHERE id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="sejinHan25.user.UserDTO">
+		INSERT INTO db.usertable(`id`, `pw`, `nickname`, `email`, `birthyear`) values(#{id}, #{password}, #{nickname}, #{email}, #{birthyear})
+	</insert>	
+
+	<update id="update" parameterType="sejinHan25.user.UserDTO">
+		update db.usertable set `id`=#{id}, `pw`=#{pw}, `nickname`=#{nickname}, `birthyear`=#{birthyear} where `email`=#{email}
+	</update>
+
+	<delete id="delete" parameterType="sejinHan25.user.UserDTO">
+		DELETE FROM db.usertable WHERE `email`=#{email}
+	</delete>
+
+	<select id="selectAll" resultType="sejinHan25.user.UserDTO">
+		SELECT * FROM db.usertable
+	</select>
+
+	<select id="searchUserList" parameterType="java.util.Map" resultType="sejinHan25.user.UserDTO">
+		<!-- select * from usertable where ${key} like '%'||#{value}||'%' -->
+		select * from usertable where
+		<if test="key == 'name'">
+			name like '%'||#{value}||'%'
+		</if>
+		<if test="key == 'id'">
+			id like '%'||#{value}||'%'
+		</if>
+	</select>
+	
+	<select id="login" parameterType="map" resultType="sejinHan25.user.UserDTO">
+		select * from db.usertable where id=#{id} and pw=#{pwd};
+	</select>
+
+</mapper>
+
+
