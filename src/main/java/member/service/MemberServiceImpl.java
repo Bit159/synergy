@@ -32,23 +32,37 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void join(Map<String, String> map) {
 		String password = passwordEncoder.encode(map.get("password"));
+		/*String upgradePwd = passwordEncoder.encode(password);
+		
+		System.out.println(password);
+		System.out.println(upgradePwd);
+		
+		map.replace("password", password);
+		passwordEncoder.matches(password, upgradePwd);
+		System.out.println(passwordEncoder.matches("bitcamp159", password));*/
+		
 		map.replace("password", password);
 		memberDAO.join(map);
-		
 	}
 	
 	@Override
 	public void addInfo(MemberDTO memberDTO) {
 		String password = passwordEncoder.encode(memberDTO.getPassword());
-		memberDTO.setPassword(passwordEncoder.encode(password));
-		System.out.println(passwordEncoder.matches("bitcamp159", password));
+		/*String upgradePwd = passwordEncoder.encode(password);
+		
+		System.out.println(password);
+		System.out.println(upgradePwd);
+		
+		memberDTO.setPassword(password);
+		passwordEncoder.matches(password, upgradePwd);
+		System.out.println(passwordEncoder.matches("bitcamp159", password));*/
 		memberDAO.addInfo(memberDTO);
 	} //dto 방식으로 하면 로그인이 안됨. 이유는 모르겠음
 
-
 	@Override
 	public MemberDTO checkMember(String username) {
-		return memberDAO.checkMember(username);
+		MemberDTO memberDTO = memberDAO.checkMember(username);
+		return memberDTO;
 	}
 
 	//======================================================= 마이페이지

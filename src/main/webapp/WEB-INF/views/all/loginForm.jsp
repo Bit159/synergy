@@ -12,7 +12,6 @@
 	<title>로그인</title>
 	<link rel="stylesheet" href="/resources/css/login.css">
 	<script defer type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script defer type="text/javascript" src="/resources/js/login.js"></script>
 	<script defer src="https://apis.google.com/js/platform.js"></script>
 </head>
 <body>
@@ -24,18 +23,16 @@
 		<form id="loginForm" name="loginForm" method="post" action="/login" >
 			<div class="info-area">
 				<input type="text" name="username" id="username" autocomplete="off" required>
-				<input type="hidden" name="email" id="email">
 				<label for="username">EMAIL</label>
 			</div>
 
 			<div class="info-area">
 				<input type="password" name="password" id="password" autocomplete="off" onkeyup="enterKey()" required>
-				<input type="hidden" name="redirect" id="redirect" value="${password }">
 				<label for="password">PASSWORD</label>
 			</div>
 			<div><input type="checkbox" name="remember-me" style="padding-bottom: 5pt">자동로그인</div>
 			<div class="btn-area">
-				<button type="button" id="loginBtn" onclick="checkLogin()">LOGIN</button>
+				<button id="loginBtn">LOGIN</button>
 				<button type="button" onclick="location='/all/welcome'">BACK</button>
 			</div>
 			
@@ -45,7 +42,7 @@
 		
 		<div class="thirdParty" align="center" style="margin-top:30px;">
 			<%-- <a href="${google_url}"><img src="/resources/image/google.png"></a><br> --%>
-			<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+			<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div><br>
 		<script>
 		let csrfHeaderName = "${_csrf.headerName}";
 		let csrfTokenValue = "${_csrf.token}";
@@ -53,15 +50,14 @@
 		function onSignIn(googleUser) {
 		    // Useful data for your client-side scripts:
 			var profile = googleUser.getBasicProfile();
-		    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+		    /*console.log("ID: " + profile.getId()); // Don't send this directly to your server!
 		    console.log("Full Name: " + profile.getName());
 		    console.log("Given Name: " + profile.getGivenName());
 		    console.log("Family Name: " + profile.getFamilyName());
 		    console.log("Image URL: " + profile.getImageUrl());
-		    console.log("Email: " + profile.getEmail());
+		    console.log("Email: " + profile.getEmail());*/
 			
 		    let username = profile.getEmail();
-		    let password = $('#redirect').val();
 		    
 		    if(username == ''){
 		    	return;
@@ -77,56 +73,38 @@
 		    	data : 'username=' + username,
 		    	dataType: 'text',
 		    	success : function(data){
-		    		if(data == 'ok'){
-		    			//$('#username').val(username);
-		    			//$('#password').val(password);
-		    			//document.loginForm.submit();
-		    			alert("있음");
+		    		if(data == 'none'){
+		    		    page_move(username);
 		    			
+		    		}else{
 		    			$.ajax({
 		    				type : 'post',
-		    				url : '/socialLogin',
+		    				url : '/login',
 		    		    	beforeSend: function(xhr){
 		    		    		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		    		    		
 		    		    	},
-		    		    	data : 'username1=' + username,
+		    		    	data : {
+		    		    			'username' : username,
+		    		    			'password' : data
+		    		    			},
 		    				success : function(){
-		    					alert("에이작스");
+		    					let auth2 = gapi.auth2.getAuthInstance(); //소셜로그인은 바로 로그아웃 처리
+		    					auth2.signOut().then(function(){
+		    						console.log('로그아웃');
+		    					})
+		    					auth2.disconnect();
+		    					
 		    					location="/all/welcome";
 		    				}
 		    			});
-		    			
-		    		}else{
-		    			alert("없음");
-		    		    page_move(username);
-		    			
 		    		}
 		    	}
-		    	
 		    });
 	
 		    // The ID token you need to pass to your backend:
-		    var id_token = googleUser.getAuthResponse().id_token;
-		    console.log("ID Token: " + id_token);
-		    
+		   /* var id_token = googleUser.getAuthResponse().id_token;
+		    console.log("ID Token: " + id_token);*/
 		  }
-		
-		function page_move(username){
-			let form = document.loginForm;
-			form.email.value = username;
-			form.action="/all/addInfoForm";
-			form.method="post";
-			form.submit();
-		}
-		
-		function socialLogin(username){
-			let form = document.loginForm;
-			form.username.value= username;
-			form.method="post";
-			form.action="/socialLogin";
-			form.submit();
-		}
 		</script>
 			<img src="/resources/image/kakao_login_medium_narrow.png"><br>
 		</div>
@@ -144,5 +122,13 @@ function enterKey(){
 		document.loginForm.submit();
 	}
 }
+
+function page_move(username){
+	let form = document.loginForm;
+	form.email.value = username;
+	form.action="/all/addInfoForm";
+	form.method="post";
+	form.submit();
+}	
 </script>
 </html>

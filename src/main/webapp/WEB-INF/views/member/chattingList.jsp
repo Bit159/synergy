@@ -238,12 +238,14 @@
         cursor: pointer;
     }
 </style>
+<link rel="stylesheet" type="text/css" href="/resources/css/toastr.min.css"/>
 <script defer type="text/javascript" src="/resources/js/sockjs.min.js"></script>
 <script defer type="text/javascript" src="/resources/js/stomp.min.js"></script>
+<script defer type="text/javascript" src="/resources/js/toastr.min.js"></script>
 </head>
 <body>
 <sec:authentication property="principal.username" var="username"/>
-<div class="modal" id="modal">
+<div class="modal" id="modal" style="display: none;">
 	<div id="modal-content" class="modal-content">
 		<span class="close">&times;</span>
 		<div class="chat_list_wrap" id="chat_list_wrap">
@@ -325,9 +327,9 @@ let chattingCheck = "${chattingCheck}";
 //======================================================== 채팅방 리스트 가져오기
 
 $(document).ready(function(){
-	if(chattingCheck == '0'){
+	//if(chattingCheck == '0'){
 		connect(chattingRoomNum);
-	}
+	//}
 	
 	$.ajax({
 		type : 'post',
@@ -342,9 +344,9 @@ $(document).ready(function(){
 				document.getElementById("chattingRoomList").innerHTML += "<li id='" + items.chattingRoom + "' onclick='getChatting(" + items.chattingRoom + ")'><table><tr><td class='profile_td'><img src='/resources/image/chatting.png'/></td>"
 																		+ "<td class='chat_td'><div class='chat_name'>" + items.chattingRoom + "</div><div class='email'>" + items.nickname + "</div><div class='chat_preview'>" + items.chat + "</div></td>"
 																		+ "<td class='time_td'><div class='time'>" + items.chat_date + "</div><div id='" + items.chattingRoom + "_check'></div></td></tr></table></li>";
-				if(chattingCheck == '0'){
+				//if(chattingCheck == '0'){
 					connect(items.chattingRoom);														
-				}
+				//}
 			});
 			
 		},
@@ -454,6 +456,8 @@ function send(data){
 	*/
 }
 
+//============================================================ 웹소켓 연결 끊기
+
 function disconnect() {
     if (stompClient != null) {
         stompClient.disconnect();
@@ -461,6 +465,8 @@ function disconnect() {
     setConnected(false);
     console.log("Disconnected");
 }
+
+//============================================================= 메시지 받았을 때 수행하는 메서드
 
 function onMessageReceived(payload){
 	let chat_preview = document.getElementById('chat_preview');
@@ -471,9 +477,51 @@ function onMessageReceived(payload){
 	$('#email').empty();
 	$('#time').empty();
 	
-	console.log(payload.chat);
 	let message = JSON.parse(payload.body);
 	
+	/*if(username == message.username){
+		messages.innerHTML += "<div class='myMessage'><span class='message'>" + message.chat + "</span>"
+							 +"<span class='date'>" + message.chat_date +  "</span></div>" ;
+							 
+		chat_preview.innerHTML += message.chat;
+		time.innerHTML += message.chat_date;
+		email.innerHTML += message.nickname;
+		
+	}else {
+		messages.innerHTML += "<div class='otherMessage'><span class='otherName'>" + message.nickname + "</span>"
+							+ "<span class='message'>" + message.chat + "</span>"
+							+ "<span class='date'>" + message.chat_date + "</span></div>" ;
+							
+		chat_preview.innerHTML += message.chat;
+		time.innerHTML += message.chat_date;
+		email.innerHTML += message.nickname;					
+	}*/
+	
+	if(document.getElementById('messages').scrollTop == document.getElementById('messages').scrollHeight){
+		alert("메시지");
+		writeMessage(messge);
+		document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+	
+	} else {
+		writeMessage(message);
+		
+	}
+	
+	if(document.getElementById('check') == null){
+		document.getElementById(message.chattingRoom + '_check').innerHTML += "<p id='check'></p>";
+	}
+	
+	if(document.getElementById('modal').style.display == 'none'){
+		toastr.options = {
+				closeButton : true,
+				progressBar : true,
+				timeOut : 4000
+		}
+		toastr.success(message.chat, message.nickname);
+	}
+}
+
+function writeMessage(message){
 	if(username == message.username){
 		messages.innerHTML += "<div class='myMessage'><span class='message'>" + message.chat + "</span>"
 							 +"<span class='date'>" + message.chat_date +  "</span></div>" ;
@@ -491,13 +539,9 @@ function onMessageReceived(payload){
 		time.innerHTML += message.chat_date;
 		email.innerHTML += message.nickname;					
 	}
-	
-	if(document.getElementById('check') == null){
-		document.getElementById(message.chattingRoom + '_check').innerHTML += "<p id='check'></p>";
-	}
-	
-	document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
 }
+
+//========================================================= 엔터키 설정
 
 function enterKey(data){
 	if(window.event.keyCode == 13){
