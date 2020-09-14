@@ -7,7 +7,7 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}">
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../css/boardWriteForm.css">
+<link rel="stylesheet" href="../resources/css/boardWriteForm.css">
 </head>
 <body>
 	<div id="boardWriteWrapper">
@@ -22,13 +22,13 @@
             <div id="boardWriteTitle">
                 <label for="" id="boardWriteTitleLabel"></label>
                 <div id="boardWriteTitleDiv">
-                    <input type="text" id="boardWriteTitleText">
+                    <input type="text" id="boardWriteTitleText" placeholder="제목을 입력하세요." value="${title }">
                 </div>
             </div>
             <div id="boardWriteContent">
                 <label for="" id="boardWriteContentLabel"></label>
                 <div id="boardWriteContentDiv">
-                    <textarea name="boardWriteContentText" id="boardWriteContentText" ></textarea>
+                    <textarea name="boardWriteContentText" id="boardWriteContentText" placeholder="내용을 입력하세요." value="${content }"></textarea>
                 </div>
             </div>
             <div id="boardWriteButton">
@@ -84,6 +84,9 @@
     });
     
     // 글 목록 버튼
+    $(document).on('click', '#boardListBtn', function(){
+    	location.href='/synergy/bboard/boardList2';
+    });
     </script>
     
 </body>

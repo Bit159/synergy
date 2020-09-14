@@ -409,9 +409,18 @@ public class BoardController {
 	}
 	
 	// 자유게시판 수정 폼	
-		@GetMapping("/board/boardModifyForm")
-		public ModelAndView bboardWriteForm() {
+		@PostMapping("/board/boardModifyForm")
+		public ModelAndView bboardWriteForm(@RequestParam(required=false) int pg
+			   	 						   ,@RequestParam(required=false) int range
+			   	 						   ,@RequestParam(required=false) int bno
+			   	 						   ,@RequestParam String title
+			   	 						   ,@RequestParam String content) {
 			ModelAndView mav = new ModelAndView();
+			mav.addObject("pg", pg);
+			mav.addObject("range", range);
+			mav.addObject("bno", bno);
+			mav.addObject("title", title);
+			mav.addObject("content", content);
 			mav.setViewName("/board/boardModifyForm");
 			return mav;
 		}

@@ -4,6 +4,9 @@
 	padding:0;
 	box-sizing:border-box;
 }
+textarea:focus {
+    outline: none;
+}
 div[class="bodywrapper"]{
     display: flex;
     justify-content: center;

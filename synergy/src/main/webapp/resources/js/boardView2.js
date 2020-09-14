@@ -200,12 +200,14 @@ $(document).ready(function(){
 			var $btnObj = $(this);
 			var page = $(this).data('page');
 			var range = $(this).data('range');
-			let bno = $(this).data('bno'); 
+			let bno = $(this).data('bno');
+			var title = $(this).data('title');
+			var content = $(this).data('content');
 			
 			var csrfHeader = document.getElementById('_csrf_header').content;
 			var csrfToken = document.getElementById('_csrf').content;
 			
-			var param = "bno="+bno;
+			var param = "bno="+bno+"&title="+title+"&content="+content+"&pg="+page+"&range="+range;
 			
 			Swal.fire({
 				title:`게시글 수정`,
@@ -217,14 +219,15 @@ $(document).ready(function(){
 			}).then((res)=>{
 				if(res.isConfirmed){
 					console.log('승인, 게시글 수정처리가 들어올 곳')
-					modifyBoard();
+					/*location.href='/synergy/board/boardModifyForm?pg='+page+'&range='+range+'&bno='+bno;*/
+					modifyBoardForm();
 				}else {
 					console.log('비승인');
 					Swal.fire('취소', '게시글 수정이 취소되었습니다', 'error');
 				}
 			});
 			
-			function modifyBoard(){
+			function modifyBoardForm(){
 				$.ajax({
 					type: 'post',
 					url: '/synergy/board/boardModifyForm',
@@ -234,8 +237,8 @@ $(document).ready(function(){
 					data: param,
 					success: function(data){
 						Swal.fire({
-								  title: '게시글 삭제 완료',
-								  text: '게시글이 삭제 되었습니다.',
+								  title: '게시글 수정 완료',
+								  text: '게시글이 수정 되었습니다.',
 								  icon: 'success'
 						}).then((res)=>{
 							location.href='/synergy/bboard/boardList2?pg='+page+'&range='+range;

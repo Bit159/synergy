@@ -30,7 +30,7 @@
                         <div class="downside_left">                                                   
                             <div class="view_nickname">${bBoardDTO.nickname }&emsp;</div>
                             <div class="view_boarddate"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${bBoardDTO.boarddate }"/></div>
-                            <button type="button" id="modifyBoardBtn" style="width: 70px" data-bno="${bBoardDTO.bno }" data-page="${paging.page }" data-range="${paging.range }">수정</button>
+                            <button type="button" id="modifyBoardBtn" style="width: 70px" data-bno="${bBoardDTO.bno }" data-page="${paging.page }" data-range="${paging.range }" data-title="${bBoardDTO.title }" data-content="${bBoardDTO.content }">수정</button>
                             <button type="button" id="deleteBoardBtn" style="width: 70px" data-bno="${bBoardDTO.bno }" data-page="${paging.page }" data-range="${paging.range }">삭제</button>
                         </div>
                         <div class="downside_right">
